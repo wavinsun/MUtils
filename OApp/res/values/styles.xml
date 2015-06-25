@@ -1,0 +1,212 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar" tools:targetApi="22">false</item>
+    </style>
+
+    <style name="Wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Fill">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="HFill">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="VFill">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="VItemFill">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="HItemFill">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="VItemWrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="HItemWrap">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="VLinearFill" parent="Fill">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="HLinearFill" parent="Fill">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="VLinearVFill" parent="VFill">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="HLinearVFill" parent="VFill">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="VLinearHFill" parent="HFill">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="HLinearHFill" parent="HFill">
+        <item name="android:orientation">horizontal</item>
+    </style>
+    
+    <style name="HLinearWrap" parent="Wrap">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="VLinearWrap" parent="Wrap">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="HLinearHItemFill" parent="HItemFill">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="HLinearVItemFill" parent="VItemFill">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="VLinearHItemFill" parent="HItemFill">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="VLinearVItemFill" parent="VItemFill">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="HLinearHItemWrap" parent="HItemWrap">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="HLinearVItemWrap" parent="VItemWrap">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="VLinearHItemWrap" parent="HItemWrap">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="VLinearVItemWrap" parent="VItemWrap">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="HLineGap">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+    </style>
+
+    <style name="VLineGap">
+        <item name="android:layout_width">1px</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Null">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="CenterMark" parent="Null">
+        <item name="android:id">@id/center_mark</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+    <style name="HCenterMark" parent="Null">
+        <item name="android:id">@id/center_mark</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="VCenterMark" parent="Null">
+        <item name="android:id">@id/center_mark</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    
+    <style name="List">
+        <item name="android:cacheColorHint">#00000000</item>
+        <item name="android:divider">@null</item>
+        <item name="android:listSelector">#00000000</item>
+    </style>
+    
+    <style name="ListWrap" parent="List">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ListFill" parent="List">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="ListHFill" parent="List">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ListVFill" parent="List">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="ListVItemFill" parent="List">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="ListHItemFill" parent="List">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="ListVItemWrap" parent="List">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="ListHItemWrap" parent="List">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+</resources>

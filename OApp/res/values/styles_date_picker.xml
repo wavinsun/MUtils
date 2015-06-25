@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="DatePickerAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/date_picker_enter</item>
+        <item name="android:windowExitAnimation">@anim/date_picker_exit</item>
+    </style>
+
+</resources>

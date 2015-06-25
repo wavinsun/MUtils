@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TipView">
+        <attr name="strokeColor" format ="color"/>
+        <attr name="strokeWidth" format="dimension"/>
+        <attr name="trianglePadding" format="dimension"/>
+        <attr name="triangleHeight" format="dimension"/>
+        <attr name="triangleAngle" format="float"/>
+        <attr name="triangleAlign" format="enum">
+            <enum name="top_left" value="0"/>
+            <enum name="top_center" value="1"/>
+            <enum name="top_right" value="2"/>
+            <enum name="bottom_left" value="3"/>
+            <enum name="bottom_center" value="4"/>
+            <enum name="bottom_right" value="5"/>
+        </attr>
+        <attr name="android:solidColor"/>
+        <attr name="android:radius"/>
+        <attr name="android:topLeftRadius"/>
+        <attr name="android:topRightRadius"/>
+        <attr name="android:bottomLeftRadius"/>
+        <attr name="android:bottomRightRadius"/>
+    </declare-styleable>
+</resources>

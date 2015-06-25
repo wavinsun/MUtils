@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="OEdit">
+        <attr name="android:hint" />
+        <attr name="android:text" />
+        <attr name="android:textColorHint" />
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="android:inputType" />
+        <attr name="android:maxLength" />
+        <attr name="textWidthTip" format="dimension" />
+        <attr name="textColorTip" format="color" />
+        <attr name="textTip" format="string" />
+        <attr name="iconTip" format="reference" />
+        <attr name="iconClear" format="reference" />
+        <attr name="iconPadding" format="dimension" />
+        <attr name="backgroundWarn" format="reference" />
+        <attr name="regex" format="string" />
+    </declare-styleable>
+
+</resources>

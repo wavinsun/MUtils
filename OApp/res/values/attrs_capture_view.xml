@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CaptureView">
+        <attr name="laserLine" format="reference" />
+        <attr name="laserColor" format="color" />
+        <attr name="frameColor" format="color" />
+        <attr name="maskColor" format="color" />
+    </declare-styleable>
+
+</resources>
