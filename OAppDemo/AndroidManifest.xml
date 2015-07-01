@@ -30,6 +30,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity 
+            android:name=".ShellActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity 
+            android:name=".AlertActivity"
+            android:screenOrientation="portrait">
+        </activity>
         
         <!-- 友盟 BEGIN -->
         <meta-data

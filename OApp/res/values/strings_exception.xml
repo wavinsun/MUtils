@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="exception_timeout">网络连接超时，请稍后再试</string>
+    <string name="exception_file_not_found">网络不畅，请稍后再试</string>
+    <string name="exception_connection_not_found">网络不畅，请检查您的网络设置</string>
+    <string name="exception_http_status">HTTP %1$d，请稍后再试</string>
+    <string name="exception_404">客户端版本过低</string>
+    <string name="exception_500">服务器内部错误</string>
+
+</resources>

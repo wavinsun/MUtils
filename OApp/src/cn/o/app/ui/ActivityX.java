@@ -3,6 +3,14 @@ package cn.o.app.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.fb.FeedbackAgent;
+import com.umeng.update.UmengDialogButtonListener;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
+
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +19,6 @@ import cn.jpush.android.api.JPushInterface;
 import cn.o.app.App;
 import cn.o.app.R;
 import cn.o.app.event.listener.VersionUpdateListener;
-
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.fb.FeedbackAgent;
-import com.umeng.update.UmengDialogButtonListener;
-import com.umeng.update.UmengUpdateAgent;
-import com.umeng.update.UmengUpdateListener;
-import com.umeng.update.UpdateResponse;
-import com.umeng.update.UpdateStatus;
 
 @SuppressLint("InflateParams")
 public class ActivityX extends OActivity {
@@ -109,8 +109,7 @@ public class ActivityX extends OActivity {
 			this.mUmengUpdateListener = new UmengUpdateListener() {
 
 				@Override
-				public void onUpdateReturned(int statusCode,
-						final UpdateResponse updateInfo) {
+				public void onUpdateReturned(int statusCode, final UpdateResponse updateInfo) {
 					boolean hasNewVersion = statusCode == UpdateStatus.Yes;
 					synchronized (sSync) {
 						if (hasNewVersion) {
@@ -127,10 +126,8 @@ public class ActivityX extends OActivity {
 							boolean interceptDialog = false;
 							for (VersionUpdateListener listener : mVersionUpdateListeners) {
 								if (hasNewVersion) {
-									boolean intercept = listener
-											.onYes(updateInfo.version);
-									interceptDialog = interceptDialog ? true
-											: intercept;
+									boolean intercept = listener.onYes(updateInfo.version);
+									interceptDialog = interceptDialog ? true : intercept;
 								} else {
 									listener.onNo();
 								}
@@ -158,10 +155,8 @@ public class ActivityX extends OActivity {
 										}
 									};
 								}
-								UmengUpdateAgent
-										.setDialogListener(mUmengDialogButtonListener);
-								UmengUpdateAgent.showUpdateDialog(
-										ActivityX.this, updateInfo);
+								UmengUpdateAgent.setDialogListener(mUmengDialogButtonListener);
+								UmengUpdateAgent.showUpdateDialog(ActivityX.this, updateInfo);
 							}
 						}
 					}
@@ -176,8 +171,7 @@ public class ActivityX extends OActivity {
 	protected View getWaitingViewLayout() {
 		View v = LayoutInflater.from(this).inflate(R.layout.view_waiting, null);
 		View waitingProgress = v.findViewById(R.id.waiting_progress);
-		waitingProgress.startAnimation(AnimationUtils.loadAnimation(this,
-				R.anim.waiting_progress));
+		waitingProgress.startAnimation(AnimationUtils.loadAnimation(this, R.anim.waiting_progress));
 		return v;
 	}
 

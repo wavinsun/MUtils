@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="stroke">#D0D0D0</color>
+    <color name="hint">#E5E5E5</color>
+    <color name="background">#F5F5F5</color>
+    <color name="pressed">#20000000</color>
+    <color name="navigation">#8EC43E</color>
+    <color name="line">#E1E1E1</color>
+
+</resources>
