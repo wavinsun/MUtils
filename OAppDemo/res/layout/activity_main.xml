@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    style="@style/VLinearFill"
+    android:background="@color/background">
     
+    <RelativeLayout style="@style/NavigationBar">
+        <TextView style="@style/NavigationTitle"
+            android:text="OApp Demo"/>
+    </RelativeLayout>
+    
+    <ScrollView style="@style/Fill">
+        <cn.o.app.ui.FlowLayout 
+            style="@style/HFill"
+            android:padding="@dimen/padding">
+            
+            <TextView 
+                android:id="@+id/alert_by_activity"
+                style="@style/MainBtn"
+                android:text="Alert by Activity"/>
+            
+            <TextView
+                android:id="@+id/alert"
+                style="@style/MainBtn"
+                android:text="Alert"/>
+            
+        </cn.o.app.ui.FlowLayout>
+    </ScrollView>
 
 </LinearLayout>

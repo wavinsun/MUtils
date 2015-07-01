@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="MainBtn" parent="Wrap">
+        <item name="android:textColor">#FFF</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingLeft">@dimen/paddingLeft</item>
+        <item name="android:paddingRight">@dimen/paddingRight</item>
+        <item name="android:paddingTop">@dimen/paddingTop</item>
+        <item name="android:paddingBottom">@dimen/paddingBottom</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/round_btn_orange</item>
+    </style>
+</resources>

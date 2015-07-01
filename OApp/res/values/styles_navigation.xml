@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <style name="NavigationBar">
+        <item name="android:id">@id/navigation_bar</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/navigation_size</item>
+        <item name="android:background">@color/navigation</item>
+    </style>
+    
+    <style name="NavigationButton">
+        <item name="android:clickable">true</item>
+        <item name="android:layout_width">@dimen/navigation_size</item>
+        <item name="android:layout_height">@dimen/navigation_size</item>
+        <item name="android:background">@drawable/bg_clickable</item>
+        <item name="android:padding">@dimen/padding</item>
+    </style>
+    
+    <style name="NavigationTitle" parent="Wrap">
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">#FFF</item>
+        <item name="android:textSize">@dimen/navigation_text_size</item>
+        <item name="android:id">@id/navigation_title</item>
+    </style>
+    
+    <style name="NavigationText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/navigation_size</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingLeft">@dimen/paddingLeft</item>
+        <item name="android:paddingRight">@dimen/paddingRight</item>
+        <item name="android:textColor">#FFF</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_clickable</item>
+        <item name="android:clickable">true</item>
+    </style>
+    
+    <style name="NavigationBackButton" parent="NavigationButton">
+        <item name="android:id">@id/navigation_back</item>
+        <item name="android:src">@drawable/ic_navigation_back</item>
+    </style>
+    
+</resources>

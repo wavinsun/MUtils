@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <dimen name="navigation_size">48dp</dimen>
+    <dimen name="navigation_text_size">18sp</dimen>
+    <dimen name="main_tab_size">56dp</dimen>
+    <dimen name="padding">8dp</dimen>
+    <dimen name="margin">8dp</dimen>
+    <dimen name="paddingLeft">12dp</dimen>
+    <dimen name="paddingRight">12dp</dimen>
+    <dimen name="paddingTop">8dp</dimen>
+    <dimen name="paddingBottom">8dp</dimen>
+    <dimen name="marginLeft">16dp</dimen>
+    <dimen name="marginRight">16dp</dimen>
+    <dimen name="marginTop">8dp</dimen>
+    <dimen name="marginBottom">8dp</dimen>
+
+</resources>

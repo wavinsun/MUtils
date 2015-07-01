@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/VLinearFill"
+    android:id="@+id/shell_root"
+    android:background="@color/background">
+    
+    <RelativeLayout style="@style/NavigationBar">
+        <ImageView style="@style/NavigationBackButton"/>
+        <TextView style="@style/NavigationTitle"/>
+    </RelativeLayout>
+
+</LinearLayout>

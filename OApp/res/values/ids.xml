@@ -4,5 +4,9 @@
     <item name="center_mark" type="id"></item>
     <item name="ok" type="id"></item>
     <item name="cancel" type="id"></item>
+    <item name="navigation_back" type="id"></item>
+    <item name="navigation_title" type="id"></item>
+    <item name="navigation_bar" type="id"></item>
+    <item name="empty_info" type="id"></item>
 
 </resources>

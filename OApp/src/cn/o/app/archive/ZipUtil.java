@@ -13,7 +13,6 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import cn.o.app.io.IOUtil;
 
-@SuppressWarnings("resource")
 public class ZipUtil {
 
 	public static byte[] getBytes(InputStream is, String entry) {
@@ -96,8 +95,7 @@ public class ZipUtil {
 		}
 	}
 
-	protected static boolean zip(ZipArchiveOutputStream zaos, File file,
-			String parentEntry) {
+	protected static boolean zip(ZipArchiveOutputStream zaos, File file, String parentEntry) {
 		StringBuilder sb = new StringBuilder();
 		if (parentEntry != null && !parentEntry.isEmpty()) {
 			sb.append(parentEntry);
