@@ -2,15 +2,18 @@ package cn.o.app.pay;
 
 import java.net.URLEncoder;
 
-import android.app.Activity;
-import android.os.AsyncTask;
-
 import com.alipay.sdk.app.PayTask;
 import com.alipay.sdk.pay.demo.PayResult;
 import com.alipay.sdk.pay.demo.SignUtils;
 
-//支付宝支付
+import android.app.Activity;
+import android.os.AsyncTask;
+
+/**
+ * AliPay
+ */
 public class AlipayTask extends OPayTask {
+
 	protected String mPartner;
 
 	protected String mSeller;
@@ -133,9 +136,8 @@ public class AlipayTask extends OPayTask {
 	/**
 	 * create the order info. 创建订单信息
 	 */
-	protected static String getOrderInfo(String partner, String seller,
-			String outTradeNo, String subject, String body, String totalFee,
-			String notifyUrl) {
+	protected static String getOrderInfo(String partner, String seller, String outTradeNo, String subject, String body,
+			String totalFee, String notifyUrl) {
 		// 合作者身份ID
 		String orderInfo = "partner=" + "\"" + partner + "\"";
 
@@ -214,12 +216,10 @@ public class AlipayTask extends OPayTask {
 				if (mNotifyUrl == null) {
 					throw new NullPointerException();
 				}
-				String orderInfo = getOrderInfo(mPartner, mSeller, mOutTradeNo,
-						mSubject, mBody, mTotalFee, mNotifyUrl);
+				String orderInfo = getOrderInfo(mPartner, mSeller, mOutTradeNo, mSubject, mBody, mTotalFee, mNotifyUrl);
 				String sign = SignUtils.sign(orderInfo, mRsaPrivate);
 				sign = URLEncoder.encode(sign, "UTF-8");
-				String payInfo = orderInfo + "&sign=\"" + sign + "\"&"
-						+ "sign_type=\"RSA\"";
+				String payInfo = orderInfo + "&sign=\"" + sign + "\"&" + "sign_type=\"RSA\"";
 				PayTask aliPay = new PayTask((Activity) mContext);
 				String result = aliPay.pay(payInfo);
 				PayResult payResult = new PayResult(result);

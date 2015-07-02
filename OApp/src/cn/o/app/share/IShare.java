@@ -5,11 +5,13 @@ import cn.o.app.context.IContextOwner;
 public interface IShare extends IContextOwner {
 
 	public static interface IShareListener {
+
 		public void onComplete(IShare share);
 
 		public void onError(IShare share);
 
 		public void onCancel(IShare share);
+
 	}
 
 	public static final String PACKAGE_QQ = "com.tencent.mobileqq";

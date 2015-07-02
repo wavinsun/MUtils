@@ -11,7 +11,9 @@ import cn.o.app.runtime.OField;
 import cn.o.app.xml.IXmlItem;
 import cn.o.app.xml.XmlUtil;
 
-//支持以下两种类型数据{"n":3.14} {"n":"3.14"}
+/**
+ * Support two data types:{"n":3.14} {"n":"3.14"}
+ */
 @SuppressWarnings("serial")
 public class ODouble extends Serial<Double> {
 

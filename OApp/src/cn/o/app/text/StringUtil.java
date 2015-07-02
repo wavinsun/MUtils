@@ -16,8 +16,8 @@ import cn.o.app.io.IOUtil;
 
 public class StringUtil {
 
-	protected static final char[] hexDigits = { '0', '1', '2', '3', '4', '5',
-			'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	protected static final char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
+			'e', 'f' };
 
 	public static byte[] md5(byte[] bytes) {
 		try {
@@ -29,7 +29,12 @@ public class StringUtil {
 		}
 	}
 
-	// 转换为小写字母的MD5，如果需要大写请调用toUpperCase()方法
+	/**
+	 * MD5 of string
+	 * 
+	 * @param text
+	 * @return Small letter of MD5
+	 */
 	public static String md5(String text) {
 		try {
 			return toHex(md5(text.getBytes("UTF-8")));
@@ -38,6 +43,12 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * MD5 of string
+	 * 
+	 * @param text
+	 * @return Capital letter of MD5
+	 */
 	public static String MD5(String text) {
 		return md5(text).toUpperCase(Locale.getDefault());
 	}
@@ -64,7 +75,12 @@ public class StringUtil {
 		return md5(file).toUpperCase(Locale.getDefault());
 	}
 
-	// 二进制转16进制字符串
+	/**
+	 * Convert byte data to hex string
+	 * 
+	 * @param data
+	 * @return
+	 */
 	public static String toHex(byte[] data) {
 		char[] str = new char[data.length + data.length];
 		for (int i = data.length - 1, strIndex = str.length - 1; i >= 0; i--) {
@@ -75,13 +91,17 @@ public class StringUtil {
 		return new String(str);
 	}
 
-	// 16进制字符串转二进制
+	/**
+	 * Convert hex string to byte data
+	 * 
+	 * @param hex
+	 * @return
+	 */
 	public static byte[] toBytes(String hex) {
 		byte[] bytes = new byte[hex.length() / 2];
 		for (int i = 0, size = bytes.length; i < size; i++) {
 			int index = 2 * i;
-			bytes[i] = Integer.valueOf(hex.substring(index, index + 2), 16)
-					.byteValue();
+			bytes[i] = Integer.valueOf(hex.substring(index, index + 2), 16).byteValue();
 		}
 		return bytes;
 	}
@@ -138,7 +158,12 @@ public class StringUtil {
 		}
 	}
 
-	// 最后一位版本号是偶数代表是稳定版本
+	/**
+	 * Whether version is stable
+	 * 
+	 * @param version
+	 * @return Return true if last one is even
+	 */
 	public static boolean isVersionStable(String version) {
 		if (version == null) {
 			return false;
@@ -155,7 +180,14 @@ public class StringUtil {
 		}
 	}
 
-	// 比较版本好的大小，前者大则返回一个正数，后者大返回负数，相等则返回0
+	/**
+	 * Compare double versions
+	 * 
+	 * @param v1
+	 * @param v2
+	 * @return Zero for v1==v2, positive number for v1>v2, negative number for
+	 *         v1<v2
+	 */
 	public static int compareVersion(String v1, String v2) {
 		int diff = 0;
 		if (v1 == null || v2 == null) {
@@ -174,7 +206,7 @@ public class StringUtil {
 				break;
 			}
 		}
-		// 如果已经分出大小，则直接返回，如果未分出大小，则再比较位数，有子版本的为大
+		// return if it has result,otherwise who has subversion is bigger.
 		return diff != 0 ? diff : (vs1.length - vs2.length);
 	}
 
@@ -198,8 +230,7 @@ public class StringUtil {
 		String[] parts = locale.split("_");
 		if (parts.length == 1) {
 			return new Locale(parts[0]);
-		} else if (parts.length == 2
-				|| (parts.length == 3 && parts[2].startsWith("#"))) {
+		} else if (parts.length == 2 || (parts.length == 3 && parts[2].startsWith("#"))) {
 			return new Locale(parts[0], parts[1]);
 		} else {
 			return new Locale(parts[0], parts[1], parts[2]);

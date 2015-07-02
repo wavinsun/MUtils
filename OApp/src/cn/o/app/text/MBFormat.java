@@ -4,7 +4,9 @@ import java.text.DecimalFormat;
 
 import android.annotation.SuppressLint;
 
-//以MB为单位的字符串格式化工具 13.4MB
+/**
+ * String format tool for MB:13.4MB
+ */
 @SuppressLint("DefaultLocale")
 public class MBFormat {
 
@@ -19,17 +21,14 @@ public class MBFormat {
 			value = Double.parseDouble(strUp);
 		} catch (Exception e) {
 			try {
-				value = Double.parseDouble(strUp.substring(0,
-						strUp.length() - 1));
+				value = Double.parseDouble(strUp.substring(0, strUp.length() - 1));
 				unit = strUp.substring(strUp.length() - 1);
 			} catch (Exception ex) {
 				try {
-					value = Double.parseDouble(strUp.substring(0,
-							strUp.length() - 2));
-					unit = strUp.substring(strUp.length() - 2,
-							strUp.length() - 1);
+					value = Double.parseDouble(strUp.substring(0, strUp.length() - 2));
+					unit = strUp.substring(strUp.length() - 2, strUp.length() - 1);
 				} catch (Exception exx) {
-					// 无效的字符串
+					// invalid string
 				}
 			}
 		}

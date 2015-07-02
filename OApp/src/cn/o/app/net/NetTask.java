@@ -42,9 +42,8 @@ import cn.o.app.runtime.OField;
 import cn.o.app.runtime.ReflectUtil;
 
 @SuppressWarnings({ "deprecation", "serial", "unchecked" })
-public class NetTask<REQUEST, RESPONSE> extends
-		QueueItem<INetTask<REQUEST, RESPONSE>> implements
-		INetTask<REQUEST, RESPONSE> {
+public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESPONSE>>
+		implements INetTask<REQUEST, RESPONSE> {
 
 	protected static final String EVENT_URL = "event.url";
 	protected static final String EVENT_REQUEST_METHOD = "event.request.method";
@@ -77,36 +76,39 @@ public class NetTask<REQUEST, RESPONSE> extends
 
 	protected String mReferer;
 
-	// 是否是将请求参数的基础数组转换为带逗号分隔符的字符串:ids=1,2,3&name=lounien
+	/** Whether to request by split array parameters: ids=1,2,3&name=lounien */
 	protected boolean mSplitArrayParams;
 
-	// 是否是Rest方式请求:http://www.xxx.cn/detail/{id}/{name}/
+	/**
+	 * Whether to request by restfull url: http://www.xxx.cn/detail/{id}/{name}/
+	 */
 	protected boolean mRestUrl;
 
-	// 是否是POST Params方式请求:id=1&name=lounien
+	/** Whether to request by post parameter:id=1&name=lounien */
 	protected boolean mPostParams;
 
-	// 是否是POST JSON方式请求:{"id":1,name:"lounien"}
+	/** Whether to request by post JSON: {"id":1,name:"lounien"} */
 	protected boolean mPostJson;
 
-	// 是否对POST JSON数据进行签名操作:
-	// 例如使用MD5对data字段进行签名将结果写入sign字段
-	// {"key":"key","sign_type":"MD5","sign":"sign_result","data":"data"}
+	/**
+	 * Whether to request by signed JSON:
+	 * {"key":"key","sign_type":"MD5","sign":"sign_result","data":"data"}
+	 */
 	protected boolean mSignPostJson;
 
-	// 是否缓存服务返回的Cookie
+	/** Whether to cache cookie responded */
 	protected boolean mCookieCacheable;
 
-	// 请求时是否使用缓存的Cookie
+	/** Whether to use cookie cached to make request */
 	protected boolean mCookieCached;
 
-	// 缓存Cookie的标识
+	/** Cookie identity */
 	protected String mCookieCacheId;
 
-	// 服务器内部错误返回的HTML解析正则
+	/** Regular expression for HTTP 500 */
 	protected String mHttp500HtmlRegex;
 
-	// 服务器内部错误返回的HTML解析正则索引
+	/** Server stack trace index of regular expression for HTTP 500 */
 	protected int mHttp500HtmlRegexGroup;
 
 	protected long mResponseTime;
@@ -329,28 +331,21 @@ public class NetTask<REQUEST, RESPONSE> extends
 				if (mRequestConvertible) {
 					mRequest = convertToRequest();
 				}
-				String params = null, spec = mRestUrl ? convertToRestUrl(
-						mRequest, mUrl) : mUrl;
+				String params = null, spec = mRestUrl ? convertToRestUrl(mRequest, mUrl) : mUrl;
 				URL url = new URL(spec);
 				HttpUriRequest httpRequest = null;
 				if (METHOD_POST.equals(mRequestMethod)) {
 					httpRequest = new HttpPost(url.toURI());
-					params = mPostParams ? convertToParameters(mRequest,
-							mSplitArrayParams) : null;
-					params = mPostJson ? JsonUtil
-							.convert(mSignPostJson ? (signPostJson(mRequest))
-									: mRequest) : null;
-					HttpEntity entity = convertToEntity(params != null ? params
-							: mRequest);
+					params = mPostParams ? convertToParameters(mRequest, mSplitArrayParams) : null;
+					params = mPostJson ? JsonUtil.convert(mSignPostJson ? (signPostJson(mRequest)) : mRequest) : null;
+					HttpEntity entity = convertToEntity(params != null ? params : mRequest);
 					if (mPostJson && entity != null) {
-						((StringEntity) entity)
-								.setContentType("application/json");
+						((StringEntity) entity).setContentType("application/json");
 					}
 					((HttpPost) httpRequest).setEntity(entity);
 				} else {
 					params = convertToParameters(mRequest, mSplitArrayParams);
-					httpRequest = new HttpGet(spec
-							+ (spec.contains("?") ? "&" : "?") + params);
+					httpRequest = new HttpGet(spec + (spec.contains("?") ? "&" : "?") + params);
 				}
 				if (BuildConfig.DEBUG) {
 					debuging(EVENT_URL, spec);
@@ -358,8 +353,8 @@ public class NetTask<REQUEST, RESPONSE> extends
 					debuging(EVENT_PARAMS, params);
 				}
 				if (mCookieCached) {
-					String cookie = mCookieCached ? NetCookieCache.getCookie(
-							mContext, url) : (mCookieCacheId + "=Cookie");
+					String cookie = mCookieCached ? NetCookieCache.getCookie(mContext, url)
+							: (mCookieCacheId + "=Cookie");
 					httpRequest.setHeader("Cookie", cookie);
 					if (BuildConfig.DEBUG) {
 						debuging(EVENT_REQUEST_COOKIE, cookie);
@@ -372,27 +367,21 @@ public class NetTask<REQUEST, RESPONSE> extends
 				HttpParams requestParams = httpRequest.getParams();
 				requestParams.setParameter(HTTP.CONTENT_ENCODING, HTTP.UTF_8);
 				requestParams.setParameter(HTTP.CHARSET_PARAM, HTTP.UTF_8);
-				requestParams.setParameter(HTTP.DEFAULT_PROTOCOL_CHARSET,
-						HTTP.UTF_8);
+				requestParams.setParameter(HTTP.DEFAULT_PROTOCOL_CHARSET, HTTP.UTF_8);
 				DefaultHttpClient client = new DefaultHttpClient();
 				HttpParams clientParams = client.getParams();
-				clientParams.setParameter(CoreConnectionPNames.SO_TIMEOUT,
-						60000);
-				clientParams.setParameter(
-						CoreConnectionPNames.CONNECTION_TIMEOUT, 10000);
+				clientParams.setParameter(CoreConnectionPNames.SO_TIMEOUT, 60000);
+				clientParams.setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10000);
 				HttpResponse httpResponse = client.execute(httpRequest);
 				int statusCode = httpResponse.getStatusLine().getStatusCode();
-				if (statusCode != HttpStatus.SC_OK
-						&& statusCode != HttpStatus.SC_INTERNAL_SERVER_ERROR) {
+				if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_INTERNAL_SERVER_ERROR) {
 					throw new HttpStatusException(statusCode);
 				}
 				mResponseTime = System.currentTimeMillis();
-				String response = EntityUtils.toString(
-						httpResponse.getEntity(), HTTP.UTF_8);
+				String response = EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
 				if (statusCode == HttpStatus.SC_INTERNAL_SERVER_ERROR) {
 					throw new HttpStatusException(statusCode,
-							getStackTrace(response, mHttp500HtmlRegex,
-									mHttp500HtmlRegexGroup));
+							getStackTrace(response, mHttp500HtmlRegex, mHttp500HtmlRegexGroup));
 				}
 				if (mCookieCacheable) {
 					List<Cookie> cookies = client.getCookieStore().getCookies();
@@ -435,15 +424,20 @@ public class NetTask<REQUEST, RESPONSE> extends
 				if (object instanceof Exception) {
 					listener.onException(NetTask.this, (Exception) object);
 				} else {
-					listener.onComplete(NetTask.this,
-							NetTask.this.getResponse());
+					listener.onComplete(NetTask.this, NetTask.this.getResponse());
 				}
 			}
 			stop();
 		}
 	}
 
-	// 将REST风格URL进行转换
+	/**
+	 * Convert restful url expression to exactly url
+	 * 
+	 * @param object
+	 * @param url
+	 * @return
+	 */
 	public static String convertToRestUrl(Object object, String url) {
 		if (url == null) {
 			return url;
@@ -463,8 +457,7 @@ public class NetTask<REQUEST, RESPONSE> extends
 					if (!url.contains(restKey)) {
 						continue;
 					}
-					String restValue = URLEncoder.encode(
-							JsonUtil.convert(value), HTTP.UTF_8);
+					String restValue = URLEncoder.encode(JsonUtil.convert(value), HTTP.UTF_8);
 					url = url.replace(restKey, restValue);
 				} catch (Exception e) {
 
@@ -481,8 +474,7 @@ public class NetTask<REQUEST, RESPONSE> extends
 					if (!url.contains(restKey)) {
 						continue;
 					}
-					String restValue = URLEncoder.encode(
-							JsonUtil.convert(value), HTTP.UTF_8);
+					String restValue = URLEncoder.encode(JsonUtil.convert(value), HTTP.UTF_8);
 					url = url.replace(restKey, restValue);
 				} catch (Exception e) {
 
@@ -492,9 +484,14 @@ public class NetTask<REQUEST, RESPONSE> extends
 		return url;
 	}
 
-	// 转换为KEY=VALUE形式的参数
-	public static String convertToParameters(Object object,
-			boolean splitArrayParams) {
+	/**
+	 * Convert object to url parameters like "key=value"
+	 * 
+	 * @param object
+	 * @param splitArrayParams
+	 * @return
+	 */
+	public static String convertToParameters(Object object, boolean splitArrayParams) {
 		if (object == null) {
 			return "";
 		}
@@ -521,8 +518,7 @@ public class NetTask<REQUEST, RESPONSE> extends
 					if ((value instanceof List) && splitArrayParams) {
 						sb.append(convertToSplitArrayParam((List<?>) value));
 					} else {
-						sb.append(URLEncoder.encode(JsonUtil.convert(value),
-								HTTP.UTF_8));
+						sb.append(URLEncoder.encode(JsonUtil.convert(value), HTTP.UTF_8));
 					}
 				} catch (Exception e) {
 
@@ -545,8 +541,7 @@ public class NetTask<REQUEST, RESPONSE> extends
 					if ((value instanceof List) && splitArrayParams) {
 						sb.append(convertToSplitArrayParam((List<?>) value));
 					} else {
-						sb.append(URLEncoder.encode(JsonUtil.convert(value),
-								HTTP.UTF_8));
+						sb.append(URLEncoder.encode(JsonUtil.convert(value), HTTP.UTF_8));
 					}
 				} catch (Exception e) {
 
@@ -556,7 +551,12 @@ public class NetTask<REQUEST, RESPONSE> extends
 		return sb.toString();
 	}
 
-	// 数组参数转换
+	/**
+	 * Convert array to url parameter
+	 * 
+	 * @param value
+	 * @return
+	 */
 	public static String convertToSplitArrayParam(List<?> value) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0, size = value.size(); i < size; i++) {
@@ -564,8 +564,7 @@ public class NetTask<REQUEST, RESPONSE> extends
 				if (i != 0) {
 					sb.append(",");
 				}
-				sb.append(URLEncoder.encode(JsonUtil.convert(value.get(i)),
-						HTTP.UTF_8));
+				sb.append(URLEncoder.encode(JsonUtil.convert(value.get(i)), HTTP.UTF_8));
 			} catch (Exception e) {
 
 			}
@@ -573,7 +572,12 @@ public class NetTask<REQUEST, RESPONSE> extends
 		return sb.toString();
 	}
 
-	// 将请求对象转换为HttpClient识别的HttpEntity进行请求
+	/**
+	 * Convert object to HttpEntity
+	 * 
+	 * @param object
+	 * @return
+	 */
 	public static HttpEntity convertToEntity(Object object) {
 		if (object == null) {
 			return null;
@@ -585,8 +589,7 @@ public class NetTask<REQUEST, RESPONSE> extends
 				return null;
 			}
 		} else {
-			MultipartEntity entity = new MultipartEntity(
-					HttpMultipartMode.BROWSER_COMPATIBLE);
+			MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 			if (object instanceof Map) {
 				for (Entry<?, ?> entry : ((Map<?, ?>) object).entrySet()) {
 					Object key = entry.getKey();
@@ -595,13 +598,11 @@ public class NetTask<REQUEST, RESPONSE> extends
 						continue;
 					}
 					if (value instanceof File) {
-						entity.addPart(key.toString(), new FileBody(
-								(File) value));
+						entity.addPart(key.toString(), new FileBody((File) value));
 					} else {
 						try {
 							entity.addPart(key.toString(),
-									new StringBody(JsonUtil.convert(value),
-											Charset.forName(HTTP.UTF_8)));
+									new StringBody(JsonUtil.convert(value), Charset.forName(HTTP.UTF_8)));
 						} catch (Exception e) {
 
 						}
@@ -615,12 +616,10 @@ public class NetTask<REQUEST, RESPONSE> extends
 							continue;
 						}
 						if (value instanceof File) {
-							entity.addPart(field.getName(), new FileBody(
-									(File) value));
+							entity.addPart(field.getName(), new FileBody((File) value));
 						} else {
 							entity.addPart(field.getName(),
-									new StringBody(JsonUtil.convert(value),
-											Charset.forName(HTTP.UTF_8)));
+									new StringBody(JsonUtil.convert(value), Charset.forName(HTTP.UTF_8)));
 						}
 					} catch (Exception e) {
 
@@ -631,15 +630,20 @@ public class NetTask<REQUEST, RESPONSE> extends
 		}
 	}
 
-	// 解析HTTP500返回的HTML
-	public static String getStackTrace(String html500, String regex,
-			int regexGroup) {
+	/**
+	 * Parse response of HTTP 550 to get server stack trace
+	 * 
+	 * @param html500
+	 * @param regex
+	 * @param regexGroup
+	 * @return
+	 */
+	public static String getStackTrace(String html500, String regex, int regexGroup) {
 		try {
 			if (html500 == null) {
 				return null;
 			}
-			Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE
-					| Pattern.DOTALL);
+			Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 			Matcher m = p.matcher(html500);
 			if (m.find()) {
 				String stackTrace = m.group(regexGroup);

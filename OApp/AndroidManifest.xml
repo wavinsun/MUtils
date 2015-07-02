@@ -21,7 +21,7 @@
     <!-- 友盟 END -->
 
 
-    <!-- 极光 BEGIN -->
+    <!-- JPush BEGIN -->
     <!-- Required 自定义用来收发消息的相关权限 请替换包名 -->
     <!-- 请替换包名 -->
     <permission
@@ -42,7 +42,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <!-- 极光 END -->
+    <!-- JPush END -->
 
     <supports-screens
         android:anyDensity="true"
@@ -112,7 +112,7 @@
         <!-- 微信API回调 END -->
 
 
-        <!-- 极光 BEGIN -->
+        <!-- JPush BEGIN -->
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="jpush_key" />
@@ -193,10 +193,10 @@
                 <category android:name="cn.o.app" />
             </intent-filter>
         </receiver>
-        <!-- 极光 END -->
+        <!-- JPush END -->
 
 
-        <!-- 银联支付 BEGIN -->
+        <!-- UnionPay BEGIN -->
         <activity
             android:name="com.unionpay.uppay.PayActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -204,9 +204,9 @@
             android:label="银联支付"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <!-- 银联支付 END -->
+        <!-- UnionPay END -->
         
-        <!-- 支付宝 BEGIN-->
+        <!-- AliPay BEGIN-->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
@@ -214,7 +214,13 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
-        <!-- 支付宝 END-->
+        <!-- AliPay END-->
+        
+        <!-- AMap BEGIN -->
+        <meta-data 
+            android:name="com.amap.api.v2.apikey"
+            android:value="amap_key"/>
+        <!-- AMap END -->
         
     </application>
 

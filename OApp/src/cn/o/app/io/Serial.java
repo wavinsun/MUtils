@@ -9,7 +9,7 @@ import cn.o.app.xml.IXmlItem;
 @SuppressWarnings({ "rawtypes", "serial" })
 public abstract class Serial<T> implements IJsonItem, IXmlItem, IPropertyItem {
 
-	// 序列化反序列化类型
+	/** Type of of serialization and deserialization */
 	protected PrimitiveType mType = PrimitiveType.STRING;
 
 	protected T mValue;

@@ -12,14 +12,14 @@ import cn.o.app.json.JsonUtil;
 import cn.o.app.runtime.OField;
 import cn.o.app.runtime.ReflectUtil;
 
+/**
+ * It will throw exception when you call "Properties.setProperty("...",null)"
+ */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class PropertiesUtil {
 
-	// Properties.setProperty("...",null);
-	// 不存在可以存放null的属性,序列化时会抛空指针异常
 	public static Properties newProperties(String properties) throws Exception {
-		ByteArrayInputStream bis = new ByteArrayInputStream(
-				properties.getBytes("ISO-8859-1"));
+		ByteArrayInputStream bis = new ByteArrayInputStream(properties.getBytes("ISO-8859-1"));
 		try {
 			Properties p = new Properties();
 			p.load(bis);
@@ -43,13 +43,11 @@ public class PropertiesUtil {
 		}
 	}
 
-	public static <T> T convertFromProperties(Properties p, Class<T> targetClass)
-			throws Exception {
+	public static <T> T convertFromProperties(Properties p, Class<T> targetClass) throws Exception {
 		return convertFromProperties(p, targetClass.newInstance());
 	}
 
-	protected static <T> T convertFromProperties(Properties p, T target)
-			throws Exception {
+	protected static <T> T convertFromProperties(Properties p, T target) throws Exception {
 		if (target instanceof Map) {
 			return (T) convertMapFromProperties(p, (Map<?, ?>) target);
 		}
@@ -60,15 +58,14 @@ public class PropertiesUtil {
 			}
 			Class<?> fClass = f.getType();
 			f.set(target,
-					IPropertyItem.class.isAssignableFrom(fClass) ? (((IPropertyItem) fClass
-							.newInstance()).fromProperty(value, f)) : JsonUtil
-							.convert(value, fClass, f.getGenericType()));
+					IPropertyItem.class.isAssignableFrom(fClass)
+							? (((IPropertyItem) fClass.newInstance()).fromProperty(value, f))
+							: JsonUtil.convert(value, fClass, f.getGenericType()));
 		}
 		return target;
 	}
 
-	protected static <T extends Map> T convertMapFromProperties(Properties p,
-			T target) throws Exception {
+	protected static <T extends Map> T convertMapFromProperties(Properties p, T target) throws Exception {
 		Class<? extends Map> targetClass = target.getClass();
 		Class<?> keyClass = ReflectUtil.getMapKeyClass(targetClass, null);
 		if (!String.class.isAssignableFrom(keyClass)) {
@@ -79,14 +76,12 @@ public class PropertiesUtil {
 		Enumeration<?> enu = p.propertyNames();
 		while (enu.hasMoreElements()) {
 			Object k = enu.nextElement();
-			target.put(k,
-					JsonUtil.convert(p.getProperty((String) k), vClass, vType));
+			target.put(k, JsonUtil.convert(p.getProperty((String) k), vClass, vType));
 		}
 		return target;
 	}
 
-	public static <T> T convert(String str, Class<T> targetClass)
-			throws Exception {
+	public static <T> T convert(String str, Class<T> targetClass) throws Exception {
 		if (str == null) {
 			return null;
 		}
@@ -114,16 +109,13 @@ public class PropertiesUtil {
 			if (v == null) {
 				continue;
 			}
-			p.setProperty(
-					f.getName(),
-					(v instanceof IPropertyItem) ? (((IPropertyItem) v)
-							.toProperty(f)) : JsonUtil.convert(v));
+			p.setProperty(f.getName(),
+					(v instanceof IPropertyItem) ? (((IPropertyItem) v).toProperty(f)) : JsonUtil.convert(v));
 		}
 		return p;
 	}
 
-	protected static <T> Properties convertMapToProperties(T target)
-			throws Exception {
+	protected static <T> Properties convertMapToProperties(T target) throws Exception {
 		Properties p = new Properties();
 		for (Entry<?, ?> entry : ((Map<?, ?>) target).entrySet()) {
 			Object k = entry.getKey();

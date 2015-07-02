@@ -17,6 +17,7 @@ import cn.o.app.ui.core.IStateView;
 
 @SuppressWarnings("unchecked")
 public class OFragment extends StateView implements IFragment, IFragmentManager {
+
 	protected FragmentManager mParentSupportFragmentManager;
 
 	protected FragmentWrapper mFragment;
@@ -104,8 +105,7 @@ public class OFragment extends StateView implements IFragment, IFragmentManager 
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		if (this.getChildCount() != 0) {
-			throw new UnsupportedOperationException(
-					"OFragment must be empty in layout Resource");
+			throw new UnsupportedOperationException("OFragment must be empty in layout Resource");
 		}
 	}
 
@@ -171,8 +171,7 @@ public class OFragment extends StateView implements IFragment, IFragmentManager 
 			Object o = this.getManager();
 			while (o != null) {
 				if (o instanceof IFragmentManager) {
-					mParentSupportFragmentManager = ((IFragmentManager) o)
-							.getSupportFragmentManager();
+					mParentSupportFragmentManager = ((IFragmentManager) o).getSupportFragmentManager();
 				}
 				if (o instanceof IStateView) {
 					o = ((IStateView) o).getManager();
@@ -182,8 +181,7 @@ public class OFragment extends StateView implements IFragment, IFragmentManager 
 			}
 			Context context = this.getContext();
 			if (context instanceof FragmentActivity) {
-				mParentSupportFragmentManager = ((FragmentActivity) context)
-						.getSupportFragmentManager();
+				mParentSupportFragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
 			} else {
 				throw new UnsupportedOperationException();
 			}
@@ -200,8 +198,7 @@ public class OFragment extends StateView implements IFragment, IFragmentManager 
 		}
 
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			if (mContentView == null) {
 				return new View(getActivity());// fix NullPointerException
 			}

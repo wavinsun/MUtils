@@ -7,8 +7,8 @@ import java.util.List;
 import cn.o.app.event.ContextOwnerDispathcer;
 
 @SuppressWarnings("rawtypes")
-public class Queue extends ContextOwnerDispathcer implements IQueue,
-		IQueueItemListener {
+public class Queue extends ContextOwnerDispathcer implements IQueue, IQueueItemListener {
+
 	protected boolean mRunInBackground;
 
 	protected int mMaxRunningCount;

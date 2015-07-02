@@ -4,6 +4,7 @@ import android.content.Context;
 import cn.o.app.context.IContextOwner;
 
 public class ContextOwnerTask extends Task implements IContextOwner {
+
 	protected Context mContext;
 
 	@Override

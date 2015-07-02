@@ -18,14 +18,13 @@ import cn.o.app.ui.core.ICachedViewManager;
 import cn.o.app.ui.core.IStateView;
 import cn.o.app.ui.core.IStateViewManager;
 
-public class StateViewPager extends ViewPager implements IStateView,
-		IStateViewManager, ICachedViewManager {
+public class StateViewPager extends ViewPager implements IStateView, IStateViewManager, ICachedViewManager {
 
 	protected boolean mCreateDispatched;
 
 	protected List<View> mCachedViews = new ArrayList<View>();
 
-	// 默认值为-1
+	/** -1 for default */
 	protected int mSelectedIndex = -1;
 
 	protected OnSelectedChangeListener mOnSelectedChangeListener;
@@ -228,8 +227,7 @@ public class StateViewPager extends ViewPager implements IStateView,
 
 	@Override
 	public List<OnActivityResultListener> getOnActivityResultListeners() {
-		return mDispatcher.getListeners(OnActivityResultListener.EVENT_TYPE,
-				OnActivityResultListener.class);
+		return mDispatcher.getListeners(OnActivityResultListener.EVENT_TYPE, OnActivityResultListener.class);
 	}
 
 	@Override
@@ -239,8 +237,7 @@ public class StateViewPager extends ViewPager implements IStateView,
 
 	@Override
 	public void removeOnActivityResultListener(OnActivityResultListener listener) {
-		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE,
-				listener);
+		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE, listener);
 	}
 
 	@Override
@@ -278,8 +275,7 @@ public class StateViewPager extends ViewPager implements IStateView,
 		}
 
 		@Override
-		public void setPrimaryItem(ViewGroup container, int position,
-				Object object) {
+		public void setPrimaryItem(ViewGroup container, int position, Object object) {
 			setSelectedIndex(position);
 		}
 

@@ -10,6 +10,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.widget.TextView;
 
 public class OToast extends TextView {
+
 	protected Animation mFadeInAnim;
 	protected Animation mFadeOutAnim;
 

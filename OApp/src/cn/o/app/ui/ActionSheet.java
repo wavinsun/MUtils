@@ -26,8 +26,9 @@ import cn.o.app.ui.ActionSheet.ActionItem;
 public class ActionSheet<DATA_ITEM extends ActionItem> {
 
 	public static interface OnActionItemClickListener<DATA_ITEM extends ActionItem> {
-		public void onItemClick(ActionSheet<DATA_ITEM> sheet, View v,
-				int position, DATA_ITEM dataItem);
+
+		public void onItemClick(ActionSheet<DATA_ITEM> sheet, View v, int position, DATA_ITEM dataItem);
+
 	}
 
 	public static class ActionItem {
@@ -78,8 +79,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 		mAdapter = new OActionSheetAdapter<DATA_ITEM>();
 		mAdapter.setActionSheet(this);
 
-		String country = mContext.getResources().getConfiguration().locale
-				.getCountry();
+		String country = mContext.getResources().getConfiguration().locale.getCountry();
 		if (country.equals("CN")) {
 			mCancel = "取消";
 		} else if (country.equals("TW")) {
@@ -89,8 +89,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 		}
 	}
 
-	public void setOnActionItemClickListener(
-			OnActionItemClickListener<DATA_ITEM> listener) {
+	public void setOnActionItemClickListener(OnActionItemClickListener<DATA_ITEM> listener) {
 		mOnActionItemClickListener = listener;
 	}
 
@@ -166,11 +165,10 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 			return;
 		}
 		DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
-		int margin = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 8, metrics);
+		int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, metrics);
 		RelativeLayout realContentView = new RelativeLayout(mContext);
-		realContentView.setPadding(margin + mLeftMargin, margin + mTopMargin,
-				margin + mRightMargin, margin + mBottomMargin);
+		realContentView.setPadding(margin + mLeftMargin, margin + mTopMargin, margin + mRightMargin,
+				margin + mBottomMargin);
 		realContentView.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -181,8 +179,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 		int cancelButtonId = 1;
 		TextView cancelButton = new TextView(mContext);
 		cancelButton.setId(cancelButtonId);
-		int padding = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
+		int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
 		cancelButton.setPadding(padding, padding, padding, padding);
 		cancelButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 		cancelButton.setTextColor(0xFF2F82C7);
@@ -192,8 +189,8 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 		GradientDrawable pressedDrawable = new GradientDrawable();
 		pressedDrawable.setColor(0xFFD9D9D9);
 		pressedDrawable.setCornerRadius(10);
-		stateListDrawable.addState(new int[] { android.R.attr.state_pressed,
-				android.R.attr.state_enabled }, pressedDrawable);
+		stateListDrawable.addState(new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled },
+				pressedDrawable);
 		GradientDrawable normalDrawable = new GradientDrawable();
 		normalDrawable.setColor(mBackgroundColor);
 		normalDrawable.setCornerRadius(10);
@@ -207,8 +204,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 			}
 		});
 		RelativeLayout.LayoutParams cancelParams = new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.MATCH_PARENT,
-				RelativeLayout.LayoutParams.WRAP_CONTENT);
+				RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 		cancelParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		realContentView.addView(cancelButton, cancelParams);
 		ScrollView scrollView = new ScrollView(mContext);
@@ -220,26 +216,22 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 		LinearLayout scrollContent = new LinearLayout(mContext);
 		scrollContent.setOrientation(LinearLayout.VERTICAL);
 		mAdapter.setContainer(scrollContent);
-		scrollView.addView(scrollContent, new FrameLayout.LayoutParams(
-				FrameLayout.LayoutParams.MATCH_PARENT,
+		scrollView.addView(scrollContent, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.WRAP_CONTENT));
 		RelativeLayout.LayoutParams scrollParams = new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.MATCH_PARENT,
-				RelativeLayout.LayoutParams.WRAP_CONTENT);
+				RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 		scrollParams.addRule(RelativeLayout.ABOVE, cancelButtonId);
 		scrollParams.setMargins(0, 0, 0, margin);
 		realContentView.addView(scrollView, scrollParams);
 		mDialog = new ODialog(mContext);
 		mDialog.setWindowAnimations(R.style.ActionSheetAnim);
-		mDialog.setContentView(realContentView, new ViewGroup.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT));
+		mDialog.setContentView(realContentView,
+				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		mDialog.requestHFill();
 		mDialog.show();
 	}
 
-	protected static class OActionSheetAdapter<DATA_ITEM extends ActionItem>
-			extends OVLinearAdapter<DATA_ITEM> {
+	protected static class OActionSheetAdapter<DATA_ITEM extends ActionItem> extends OVLinearAdapter<DATA_ITEM> {
 
 		protected ActionSheet<DATA_ITEM> mActionSheet;
 
@@ -257,8 +249,8 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 		}
 	}
 
-	protected static class OActionItemView<DATA_ITEM extends ActionItem>
-			extends ItemFrame<DATA_ITEM> {
+	protected static class OActionItemView<DATA_ITEM extends ActionItem> extends ItemFrame<DATA_ITEM> {
+
 		protected LinearLayout mRoot;
 
 		protected TextView mTextView;
@@ -273,34 +265,28 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 		public void onCreate() {
 			Context context = getContext();
 			DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-			int padding = (int) TypedValue.applyDimension(
-					TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
+			int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, metrics);
 			mRoot = new LinearLayout(context);
 			mRoot.setOrientation(LinearLayout.VERTICAL);
 			mTextView = new TextView(getContext());
 			mTextView.setPadding(padding, padding, padding, padding);
 			mTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 			mTextView.setGravity(Gravity.CENTER);
-			mRoot.addView(mTextView, new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT,
+			mRoot.addView(mTextView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.WRAP_CONTENT));
 			mLine = new View(context);
 			mLine.setBackgroundDrawable(new ColorDrawable(0xFFCCCCCC));
-			mRoot.addView(mLine, new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT, 1));
+			mRoot.addView(mLine, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1));
 			this.setContentView(mRoot);
 			this.setOnClickListener(new View.OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 					OActionSheetAdapter<DATA_ITEM> adapter = (OActionSheetAdapter<DATA_ITEM>) getAdapter();
-					ActionSheet<DATA_ITEM> actionSheet = adapter
-							.getActionSheet();
-					OnActionItemClickListener<DATA_ITEM> listener = actionSheet
-							.getOnActionItemClickListener();
+					ActionSheet<DATA_ITEM> actionSheet = adapter.getActionSheet();
+					OnActionItemClickListener<DATA_ITEM> listener = actionSheet.getOnActionItemClickListener();
 					if (listener != null) {
-						listener.onItemClick(actionSheet, v, getPosition(),
-								getDataProvider());
+						listener.onItemClick(actionSheet, v, getPosition(), getDataProvider());
 					}
 					actionSheet.dismiss();
 				}
@@ -319,13 +305,10 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 			StateListDrawable stateListDrawable = new StateListDrawable();
 			GradientDrawable gradientDrawable = new GradientDrawable();
 			gradientDrawable.setColor(0xFFD9D9D9);
-			gradientDrawable.setCornerRadii(new float[] { isFirst ? 10 : 0,
-					isFirst ? 10 : 0, isFirst ? 10 : 0, isFirst ? 10 : 0,
-					isLast ? 10 : 0, isLast ? 10 : 0, isLast ? 10 : 0,
-					isLast ? 10 : 0 });
-			stateListDrawable.addState(
-					new int[] { android.R.attr.state_pressed,
-							android.R.attr.state_enabled }, gradientDrawable);
+			gradientDrawable.setCornerRadii(new float[] { isFirst ? 10 : 0, isFirst ? 10 : 0, isFirst ? 10 : 0,
+					isFirst ? 10 : 0, isLast ? 10 : 0, isLast ? 10 : 0, isLast ? 10 : 0, isLast ? 10 : 0 });
+			stateListDrawable.addState(new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled },
+					gradientDrawable);
 			this.setBackgroundDrawable(stateListDrawable);
 		}
 	}

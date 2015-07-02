@@ -11,7 +11,9 @@ import cn.o.app.runtime.OField;
 import cn.o.app.xml.IXmlItem;
 import cn.o.app.xml.XmlUtil;
 
-//支持以下两种类型数据{"n":"0"} {"n":0}
+/**
+ * Support two data types:{"n":"0"} {"n":0}
+ */
 @SuppressWarnings("serial")
 public class OLong extends Serial<Long> {
 

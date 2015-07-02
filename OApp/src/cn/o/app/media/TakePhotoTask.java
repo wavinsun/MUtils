@@ -16,10 +16,15 @@ import cn.o.app.task.ILockable;
 import cn.o.app.ui.core.IActivityResultCatcher;
 import cn.o.app.ui.core.IActivityStarter;
 
-// 拍照
+/**
+ * Take photo by system call
+ */
 public class TakePhotoTask implements ILockable {
+
 	public static interface TakePhotoListener extends Listener {
+
 		public void onComplete(Uri uri);
+
 	}
 
 	public static final int EXPECT_WIDTH = 768;
@@ -38,8 +43,7 @@ public class TakePhotoTask implements ILockable {
 	protected OnActivityResultListener mOnActivityResultListener = new OnActivityResultListener() {
 
 		@Override
-		public void onActivityResult(Context context, int requestCode,
-				int resultCode, Intent data) {
+		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
 			if (mRequestCode != requestCode) {
 				return;
 			}
@@ -50,8 +54,7 @@ public class TakePhotoTask implements ILockable {
 			}
 			Uri uri = data != null ? data.getData() : mExtraOutput;
 			if (OUtil.compress(uri.getPath(), EXPECT_WIDTH, EXPECT_HEIGHT)) {
-				TakePhotoListener listener = (TakePhotoListener) mDispatcher
-						.getListener();
+				TakePhotoListener listener = (TakePhotoListener) mDispatcher.getListener();
 				if (listener != null) {
 					listener.onComplete(uri);
 				}
@@ -76,8 +79,7 @@ public class TakePhotoTask implements ILockable {
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, mExtraOutput);
 		if (mCatcher instanceof IActivityStarter) {
 			mCatcher.addOnActivityResultListener(mOnActivityResultListener);
-			((IActivityStarter) mCatcher).startActivityForResult(intent,
-					mRequestCode);
+			((IActivityStarter) mCatcher).startActivityForResult(intent, mRequestCode);
 			mLocked = true;
 			return true;
 		} else if (mCatcher instanceof Activity) {
@@ -95,8 +97,7 @@ public class TakePhotoTask implements ILockable {
 
 	protected Uri generateExtraOutput() {
 		try {
-			String mediaStorageDir = OUtil.getDiskCacheDir(
-					mCatcher.getContext(), "OApp");
+			String mediaStorageDir = OUtil.getDiskCacheDir(mCatcher.getContext(), "OApp");
 			if (mediaStorageDir == null) {
 				return null;
 			}

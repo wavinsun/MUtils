@@ -6,14 +6,15 @@ import android.view.View;
 import cn.o.app.LogCat;
 import cn.o.app.runtime.ReflectUtil;
 
-//IOC
-//@OnClick支持
+/**
+ * IOC for @OnClick
+ */
 public class OnClickListener implements View.OnClickListener {
 
-	// 回调方法
+	/** Callback */
 	protected Method mCallBack;
 
-	// 代理实例
+	/** Proxy of onClick */
 	protected Object mProxy;
 
 	public void setCallBack(Method m) {

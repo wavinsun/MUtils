@@ -16,11 +16,15 @@ import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.ui.core.IActivityResultCatcher;
 import cn.o.app.ui.core.IActivityStarter;
 
-// 选择照片
+/**
+ * Pick photo by system call
+ */
 public class PickPhotoTask {
 
 	public static interface PickPhotoListener extends Listener {
+
 		public void onComplete(Uri uri);
+
 	}
 
 	public static final int EXPECT_WIDTH = 768;
@@ -35,8 +39,7 @@ public class PickPhotoTask {
 	protected OnActivityResultListener mOnActivityResultListener = new OnActivityResultListener() {
 
 		@Override
-		public void onActivityResult(Context context, int requestCode,
-				int resultCode, Intent data) {
+		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
 			if (mRequestCode != requestCode) {
 				return;
 			}
@@ -44,21 +47,17 @@ public class PickPhotoTask {
 			if (resultCode != Activity.RESULT_OK) {
 				return;
 			}
-			CursorLoader cursorLoader = new CursorLoader(mCatcher.getContext(),
-					data.getData(),
-					new String[] { MediaStore.Images.Media.DATA }, null, null,
-					null);
+			CursorLoader cursorLoader = new CursorLoader(mCatcher.getContext(), data.getData(),
+					new String[] { MediaStore.Images.Media.DATA }, null, null, null);
 			Cursor cursor = cursorLoader.loadInBackground();
 			if (!cursor.moveToFirst()) {
 				return;
 			}
-			String path = cursor.getString(cursor
-					.getColumnIndex(MediaStore.Images.Media.DATA));
+			String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
 			if (path == null || path.isEmpty()) {
 				return;
 			}
-			String mediaStorageDir = OUtil.getDiskCacheDir(
-					mCatcher.getContext(), "OApp");
+			String mediaStorageDir = OUtil.getDiskCacheDir(mCatcher.getContext(), "OApp");
 			if (mediaStorageDir == null) {
 				return;
 			}
@@ -74,8 +73,7 @@ public class PickPhotoTask {
 			sb.append(".jpg");
 			String output = sb.toString();
 			if (OUtil.compress(path, output, EXPECT_WIDTH, EXPECT_HEIGHT)) {
-				PickPhotoListener listener = (PickPhotoListener) mDispatcher
-						.getListener();
+				PickPhotoListener listener = (PickPhotoListener) mDispatcher.getListener();
 				if (listener != null) {
 					listener.onComplete(Uri.fromFile(new File(output)));
 				}
@@ -89,12 +87,10 @@ public class PickPhotoTask {
 	}
 
 	public boolean pickPhoto() {
-		Intent intent = new Intent(Intent.ACTION_PICK,
-				MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 		if (mCatcher instanceof IActivityStarter) {
 			mCatcher.addOnActivityResultListener(mOnActivityResultListener);
-			((IActivityStarter) mCatcher).startActivityForResult(intent,
-					mRequestCode);
+			((IActivityStarter) mCatcher).startActivityForResult(intent, mRequestCode);
 			return true;
 		} else if (mCatcher instanceof Activity) {
 			mCatcher.addOnActivityResultListener(mOnActivityResultListener);

@@ -22,6 +22,7 @@ import cn.o.app.ui.core.IDefaultDrawableView;
 
 @SuppressWarnings("deprecation")
 public class OImageView extends ImageView implements IDefaultDrawableView {
+
 	protected static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 	protected static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
 	protected static final int COLOR_DRAWABLE_DIMENSION = 1;
@@ -63,14 +64,10 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 
 	protected void init(Context context, AttributeSet attrs) {
 		if (attrs != null) {
-			TypedArray typedArray = context.obtainStyledAttributes(attrs,
-					R.styleable.OImageView);
-			mBorderWidth = typedArray.getDimensionPixelSize(
-					R.styleable.OImageView_borderWidth, DEFAULT_BORDER_WIDTH);
-			mBorderColor = typedArray.getColor(
-					R.styleable.OImageView_borderColor, DEFAULT_BORDER_COLOR);
-			mDefaultDrawable = typedArray
-					.getDrawable(R.styleable.OImageView_drawableDefault);
+			TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.OImageView);
+			mBorderWidth = typedArray.getDimensionPixelSize(R.styleable.OImageView_borderWidth, DEFAULT_BORDER_WIDTH);
+			mBorderColor = typedArray.getColor(R.styleable.OImageView_borderColor, DEFAULT_BORDER_COLOR);
+			mDefaultDrawable = typedArray.getDrawable(R.styleable.OImageView_drawableDefault);
 			try {
 				int shape = typedArray.getInt(R.styleable.OImageView_shape, 0);
 				switch (shape) {
@@ -220,8 +217,7 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 			}
 			mBitmapRef = new WeakReference<Bitmap>(bitmap);
 		}
-		mBitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP,
-				Shader.TileMode.CLAMP);
+		mBitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
 
 		int bitmapWidth = bitmap.getWidth();
 		int bitmapHeight = bitmap.getHeight();
@@ -259,11 +255,10 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 		try {
 			Bitmap bitmap = null;
 			if (drawable instanceof ColorDrawable) {
-				bitmap = Bitmap.createBitmap(COLOR_DRAWABLE_DIMENSION,
-						COLOR_DRAWABLE_DIMENSION, BITMAP_CONFIG);
+				bitmap = Bitmap.createBitmap(COLOR_DRAWABLE_DIMENSION, COLOR_DRAWABLE_DIMENSION, BITMAP_CONFIG);
 			} else {
-				bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-						drawable.getIntrinsicHeight(), BITMAP_CONFIG);
+				bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+						BITMAP_CONFIG);
 			}
 			Canvas canvas = new Canvas(bitmap);
 			drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -311,8 +306,7 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 			mPaint.setAntiAlias(true);
 			mPaint.setFilterBitmap(true);
 			mPaint.setShader(mBitmapShader);
-			canvas.drawRoundRect(mRectF, mRoundRectRadius, mRoundRectRadius,
-					mPaint);
+			canvas.drawRoundRect(mRectF, mRoundRectRadius, mRoundRectRadius, mPaint);
 		}
 	}
 

@@ -45,80 +45,69 @@ import cn.o.app.text.StringUtil;
 @SuppressWarnings("deprecation")
 public class OUtil {
 
-	// 框架内部数据键值标识
+	/** Framework internal data identity key */
 	public static final String KEY = "o";
 
-	// 转换为弧度
+	/** Transform for degress to radian */
 	public static final double TO_RADIAN = Math.PI / 180;
-	// 转换为角度
+	/** Transform for radian to degress */
 	public static final double TO_DEGRESS = 180 / Math.PI;
 
 	public static SharedPreferences getPref(Context context, String fileName) {
 		return context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
 	}
 
-	public static String getPrefString(Context context, String fileName,
-			String key, String defValue) {
+	public static String getPrefString(Context context, String fileName, String key, String defValue) {
 		return getPref(context, fileName).getString(key, defValue);
 	}
 
-	public static boolean setPrefString(Context context, String fileName,
-			String key, String value) {
+	public static boolean setPrefString(Context context, String fileName, String key, String value) {
 		Editor editor = getPref(context, fileName).edit();
 		editor.putString(key, value);
 		return editor.commit();
 	}
 
-	public static boolean getPrefBoolean(Context context, String fileName,
-			String key, boolean defValue) {
+	public static boolean getPrefBoolean(Context context, String fileName, String key, boolean defValue) {
 		return getPref(context, fileName).getBoolean(key, defValue);
 	}
 
-	public static boolean setPrefBoolean(Context context, String fileName,
-			String key, Boolean value) {
+	public static boolean setPrefBoolean(Context context, String fileName, String key, Boolean value) {
 		Editor editor = getPref(context, fileName).edit();
 		editor.putBoolean(key, value);
 		return editor.commit();
 	}
 
-	public static int getPrefInt(Context context, String fileName, String key,
-			int defValue) {
+	public static int getPrefInt(Context context, String fileName, String key, int defValue) {
 		return getPref(context, fileName).getInt(key, defValue);
 	}
 
-	public static boolean setPrefInt(Context context, String fileName,
-			String key, int value) {
+	public static boolean setPrefInt(Context context, String fileName, String key, int value) {
 		Editor editor = getPref(context, fileName).edit();
 		editor.putInt(key, value);
 		return editor.commit();
 	}
 
-	public static long getPrefLong(Context context, String fileName,
-			String key, long defValue) {
+	public static long getPrefLong(Context context, String fileName, String key, long defValue) {
 		return getPref(context, fileName).getLong(key, defValue);
 	}
 
-	public static boolean setPrefLong(Context context, String fileName,
-			String key, long value) {
+	public static boolean setPrefLong(Context context, String fileName, String key, long value) {
 		Editor editor = getPref(context, fileName).edit();
 		editor.putLong(key, value);
 		return editor.commit();
 	}
 
-	public static float getPrefFloat(Context context, String fileName,
-			String key, float defValue) {
+	public static float getPrefFloat(Context context, String fileName, String key, float defValue) {
 		return getPref(context, fileName).getFloat(key, defValue);
 	}
 
-	public static boolean setPrefFloat(Context context, String fileName,
-			String key, float value) {
+	public static boolean setPrefFloat(Context context, String fileName, String key, float value) {
 		Editor editor = getPref(context, fileName).edit();
 		editor.putFloat(key, value);
 		return editor.commit();
 	}
 
-	public static double getPrefDouble(Context context, String fileName,
-			String key, double defValue) {
+	public static double getPrefDouble(Context context, String fileName, String key, double defValue) {
 		String doubleStr = getPrefString(context, fileName, key, "");
 		if (doubleStr.isEmpty()) {
 			return defValue;
@@ -130,12 +119,17 @@ public class OUtil {
 		}
 	}
 
-	public static boolean setPrefDouble(Context context, String fileName,
-			String key, double value) {
+	public static boolean setPrefDouble(Context context, String fileName, String key, double value) {
 		return setPrefString(context, fileName, key, value + "");
 	}
 
-	// 获取assets下的文本文件内容
+	/**
+	 * Get string content of assets file
+	 * 
+	 * @param context
+	 * @param fileName
+	 * @return
+	 */
 	public static String getAssetString(Context context, String fileName) {
 		AssetManager am = context.getAssets();
 		InputStream is = null;
@@ -149,9 +143,15 @@ public class OUtil {
 		}
 	}
 
-	// 获取assets下的压缩包中的文本文件内容
-	public static String getAssetZipString(Context context, String fileName,
-			String entryName) {
+	/**
+	 * Get string content of assets zip file
+	 * 
+	 * @param context
+	 * @param fileName
+	 * @param entryName
+	 * @return
+	 */
+	public static String getAssetZipString(Context context, String fileName, String entryName) {
 		byte[] bytes = getAssetZipBytes(context, fileName, entryName);
 		if (bytes == null) {
 			return null;
@@ -163,9 +163,15 @@ public class OUtil {
 		}
 	}
 
-	// 获取assets下的压缩包中的文本文件内容
-	public static byte[] getAssetZipBytes(Context context, String fileName,
-			String entryName) {
+	/**
+	 * Get byte array of assets zip file
+	 * 
+	 * @param context
+	 * @param fileName
+	 * @param entryName
+	 * @return
+	 */
+	public static byte[] getAssetZipBytes(Context context, String fileName, String entryName) {
 		AssetManager am = context.getAssets();
 		InputStream is = null;
 		try {
@@ -180,8 +186,8 @@ public class OUtil {
 
 	public static String getAppVersionName(Context context) {
 		try {
-			PackageInfo info = context.getPackageManager().getPackageInfo(
-					context.getPackageName(), PackageManager.GET_META_DATA);
+			PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(),
+					PackageManager.GET_META_DATA);
 			return info.versionName;
 		} catch (NameNotFoundException e) {
 			return "";
@@ -199,8 +205,7 @@ public class OUtil {
 	public static String getAppName(Context context, String packageName) {
 		try {
 			PackageManager pm = context.getPackageManager();
-			ApplicationInfo info = pm.getApplicationInfo(packageName,
-					PackageManager.GET_META_DATA);
+			ApplicationInfo info = pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
 			return pm.getApplicationLabel(info).toString();
 		} catch (Exception e) {
 			return "";
@@ -209,11 +214,9 @@ public class OUtil {
 
 	public static Bitmap getAppIcon(Context context) {
 		try {
-			Class<?> drawableClass = Class.forName(context.getPackageName()
-					+ ".R$drawable");
+			Class<?> drawableClass = Class.forName(context.getPackageName() + ".R$drawable");
 			Field f = drawableClass.getField("ic_launcher");
-			return BitmapFactory.decodeResource(context.getResources(),
-					f.getInt(null));
+			return BitmapFactory.decodeResource(context.getResources(), f.getInt(null));
 		} catch (Exception e) {
 			return null;
 		}
@@ -229,35 +232,26 @@ public class OUtil {
 	}
 
 	public static float getRawSize(Context context, int unit, float size) {
-		return TypedValue.applyDimension(
-				unit,
-				size,
-				(context == null ? Resources.getSystem() : context
-						.getResources()).getDisplayMetrics());
+		return TypedValue.applyDimension(unit, size,
+				(context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics());
 	}
 
 	public static float dp2px(Context context, float size) {
-		return size
-				* (context == null ? Resources.getSystem() : context
-						.getResources()).getDisplayMetrics().density;
+		return size * (context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics().density;
 	}
 
 	public static float sp2px(Context context, float size) {
 		return size
-				* (context == null ? Resources.getSystem() : context
-						.getResources()).getDisplayMetrics().scaledDensity;
+				* (context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics().scaledDensity;
 	}
 
 	public static float px2dp(Context context, float size) {
-		return size
-				/ (context == null ? Resources.getSystem() : context
-						.getResources()).getDisplayMetrics().density;
+		return size / (context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics().density;
 	}
 
 	public static float px2sp(Context context, float size) {
 		return size
-				/ (context == null ? Resources.getSystem() : context
-						.getResources()).getDisplayMetrics().scaledDensity;
+				/ (context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics().scaledDensity;
 	}
 
 	public static String md5(String text) {
@@ -283,13 +277,11 @@ public class OUtil {
 		return compress(sourceImage, destImage, 0, 0);
 	}
 
-	public static boolean compress(String sourceImage, int expectWidth,
-			int expectHeight) {
+	public static boolean compress(String sourceImage, int expectWidth, int expectHeight) {
 		return compress(sourceImage, sourceImage, expectWidth, expectHeight);
 	}
 
-	public static boolean compress(String sourceImage, String destImage,
-			int expectWidth, int expectHeight) {
+	public static boolean compress(String sourceImage, String destImage, int expectWidth, int expectHeight) {
 		BitmapFactory.Options opts = new BitmapFactory.Options();
 		opts.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(sourceImage, opts);
@@ -351,8 +343,7 @@ public class OUtil {
 	}
 
 	public static Bitmap bitmap2Grey(Bitmap bitmap) {
-		Bitmap grey = Bitmap.createBitmap(bitmap.getWidth(),
-				bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+		Bitmap grey = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 		Canvas c = new Canvas(grey);
 		Paint p = new Paint();
 		ColorMatrix cm = new ColorMatrix();
@@ -367,11 +358,15 @@ public class OUtil {
 		return StringUtil.uuid();
 	}
 
-	// 获得缓存根目录
+	/**
+	 * Get disk cache root directory
+	 * 
+	 * @param context
+	 * @return
+	 */
 	public static String getDiskCacheRoot(Context context) {
 		String cachePath = null;
-		if (Environment.MEDIA_MOUNTED.equals(Environment
-				.getExternalStorageState())) {
+		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
 			File externalCacheDir = context.getExternalCacheDir();
 			if (externalCacheDir != null) {
 				cachePath = externalCacheDir.getPath();
@@ -393,8 +388,7 @@ public class OUtil {
 	}
 
 	public static String getDiskCacheDir(Context context, String dirName) {
-		File dir = new File(getDiskCacheRoot(context) + File.separator
-				+ dirName);
+		File dir = new File(getDiskCacheRoot(context) + File.separator + dirName);
 		if (!dir.exists()) {
 			if (!dir.mkdirs()) {
 				return null;
@@ -403,8 +397,7 @@ public class OUtil {
 		return dir.getPath();
 	}
 
-	public static String getDiskCacheRandomFile(Context context, String prefix,
-			String suffix) {
+	public static String getDiskCacheRandomFile(Context context, String prefix, String suffix) {
 		String cacheDir = getDiskCacheDir(context, "OApp");
 		if (cacheDir == null) {
 			return null;
@@ -426,18 +419,23 @@ public class OUtil {
 		return getDiskCacheRandomFile(context, "IMG_", ".jpg");
 	}
 
-	// 根据经纬度计算距离
-	public static double getDistance(double latitudeA, double longitudeA,
-			double latitudeB, double longitudeB) {
+	/**
+	 * Calculate distance for two points by given latitude and longitude
+	 * 
+	 * @param latitudeA
+	 * @param longitudeA
+	 * @param latitudeB
+	 * @param longitudeB
+	 * @return
+	 */
+	public static double getDistance(double latitudeA, double longitudeA, double latitudeB, double longitudeB) {
 		double radianLatitudeA = latitudeA * TO_RADIAN;
 		double radianLatitudeB = latitudeB * TO_RADIAN;
 		double radianLatidueDistance = radianLatitudeA - radianLatitudeB;
 		double radianLongitudeDistance = (longitudeA - longitudeB) * TO_RADIAN;
-		return 6378137 * 2 * Math.asin(Math.sqrt(Math.pow(
-				Math.sin(radianLatidueDistance * 0.5), 2)
-				+ Math.cos(radianLatitudeA)
-				* Math.cos(radianLatitudeB)
-				* Math.pow(Math.sin(radianLongitudeDistance * 0.5), 2)));
+		return 6378137 * 2
+				* Math.asin(Math.sqrt(Math.pow(Math.sin(radianLatidueDistance * 0.5), 2) + Math.cos(radianLatitudeA)
+						* Math.cos(radianLatitudeB) * Math.pow(Math.sin(radianLongitudeDistance * 0.5), 2)));
 	}
 
 	public static int getYear(Date date) {
@@ -452,13 +450,23 @@ public class OUtil {
 		return date.getDate();
 	}
 
-	// 闰年
+	/**
+	 * Whether is leap year 闰年
+	 * 
+	 * @param date
+	 * @return
+	 */
 	public static boolean isLeap(Date date) {
 		int year = date.getYear() + 1900;
 		return isLeap(year);
 	}
 
-	// 闰年
+	/**
+	 * Whether is leap year 闰年
+	 * 
+	 * @param date
+	 * @return
+	 */
 	public static boolean isLeap(int year) {
 		return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
 	}
@@ -471,8 +479,7 @@ public class OUtil {
 		return new Date(year - 1900, month - 1, day);
 	}
 
-	public static Date getDate(int year, int month, int day, int hour,
-			int minute) {
+	public static Date getDate(int year, int month, int day, int hour, int minute) {
 		return new Date(year - 1900, month - 1, day, hour, minute);
 	}
 
@@ -487,14 +494,14 @@ public class OUtil {
 	}
 
 	public static boolean isSameDay(Date d1, Date d2) {
-		return (d1 != null && d2 != null) ? (d1.getYear() == d2.getYear()
-				&& d1.getMonth() == d2.getMonth() && d1.getDate() == d2
-				.getDate()) : (d1 == d2);
+		return (d1 != null && d2 != null)
+				? (d1.getYear() == d2.getYear() && d1.getMonth() == d2.getMonth() && d1.getDate() == d2.getDate())
+				: (d1 == d2);
 	}
 
 	public static boolean isSameMonth(Date d1, Date d2) {
-		return (d1 != null && d2 != null) ? (d1.getYear() == d2.getYear() && d1
-				.getMonth() == d2.getMonth()) : (d1 == d2);
+		return (d1 != null && d2 != null) ? (d1.getYear() == d2.getYear() && d1.getMonth() == d2.getMonth())
+				: (d1 == d2);
 	}
 
 	public static boolean isEmpty(String str) {
@@ -502,15 +509,18 @@ public class OUtil {
 	}
 
 	public static String getPhoneNumber(Context context) {
-		TelephonyManager tm = (TelephonyManager) context
-				.getSystemService(Context.TELEPHONY_SERVICE);
+		TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		return tm.getLine1Number();
 	}
 
-	// 返回运营商信息 10086 10010 10000
+	/**
+	 * Get phone service provider
+	 * 
+	 * @param context
+	 * @return 10086 10010 10000
+	 */
 	public static String getPhoneServiceProvider(Context context) {
-		TelephonyManager tm = (TelephonyManager) context
-				.getSystemService(Context.TELEPHONY_SERVICE);
+		TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		String id = tm.getSubscriberId();
 		if (id == null) {
 			return null;
@@ -546,8 +556,7 @@ public class OUtil {
 		}
 	}
 
-	public static <T> T findByProperty(List<T> list, String property,
-			Object propertyValue) {
+	public static <T> T findByProperty(List<T> list, String property, Object propertyValue) {
 		if (list == null) {
 			return null;
 		}
@@ -559,16 +568,14 @@ public class OUtil {
 			return null;
 		}
 		for (T element : list) {
-			if (OUtil.equals(propertyValue,
-					ReflectUtil.get(element, propertyField))) {
+			if (OUtil.equals(propertyValue, ReflectUtil.get(element, propertyField))) {
 				return element;
 			}
 		}
 		return null;
 	}
 
-	public static <T> List<T> findAllByProperty(List<T> list, String property,
-			Object propertyValue) {
+	public static <T> List<T> findAllByProperty(List<T> list, String property, Object propertyValue) {
 		if (list == null) {
 			return null;
 		}
@@ -613,12 +620,17 @@ public class OUtil {
 		return StringUtil.printStackTrace(e);
 	}
 
-	// 对于整数使用meta-data方式存储存在BUG
+	/**
+	 * Get meta data of named node: fix bug for integer values
+	 * 
+	 * @param context
+	 * @param name
+	 * @return
+	 */
 	public static String getMetaData(Context context, String name) {
 		try {
-			return context.getPackageManager().getApplicationInfo(
-					context.getPackageName(), PackageManager.GET_META_DATA).metaData
-					.get(name).toString();
+			return context.getPackageManager().getApplicationInfo(context.getPackageName(),
+					PackageManager.GET_META_DATA).metaData.get(name).toString();
 		} catch (Exception e) {
 			return null;
 		}
@@ -630,21 +642,17 @@ public class OUtil {
 
 	public static boolean startApp(Context context, String packageName) {
 		try {
-			ActivityManager am = (ActivityManager) context
-					.getSystemService(Context.ACTIVITY_SERVICE);
+			ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 			for (RunningTaskInfo taskInfo : am.getRunningTasks(500)) {
 				if (taskInfo.topActivity.getPackageName().equals(packageName)) {
 					Intent intent = new Intent();
-					intent.setClassName(packageName,
-							taskInfo.topActivity.getClassName());
-					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-							| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+					intent.setClassName(packageName, taskInfo.topActivity.getClassName());
+					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 					context.startActivity(intent);
 					return true;
 				}
 			}
-			Intent intent = context.getPackageManager()
-					.getLaunchIntentForPackage(packageName);
+			Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
 			if (intent == null) {
 				return false;
 			}
@@ -658,8 +666,7 @@ public class OUtil {
 	public static boolean installApp(Context context, File apkFile) {
 		try {
 			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.fromFile(apkFile),
-					"application/vnd.android.package-archive");
+			intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
 			context.startActivity(intent);
 			return true;
 		} catch (Exception e) {
@@ -667,8 +674,11 @@ public class OUtil {
 		}
 	}
 
-	// 请在Application的onCreate进行调用
-	// 解决AsyncTask的InternalHandler创建BUG导致onPostExecute未执行
+	/**
+	 * Fix bug for AsyncTask.onPostExecute method can not execute because
+	 * InternalHandler creation is not in main thread.Please call this method in
+	 * OnCreate of Application.
+	 */
 	public static void fixAsyncTask() {
 		Looper looper = Looper.getMainLooper();
 		Handler handler = new Handler(looper);
@@ -695,12 +705,24 @@ public class OUtil {
 		OLocale.setLocale(context, StringUtil.getLocale(locale));
 	}
 
-	// AES加密
+	/**
+	 * AES encrypt
+	 * 
+	 * @param text
+	 * @param pwd
+	 * @return
+	 */
 	public static String toAES(String text, String pwd) {
 		return AESUtil.encrypt(text, pwd);
 	}
 
-	// AES解密
+	/**
+	 * AES decrypt
+	 * 
+	 * @param hex
+	 * @param pwd
+	 * @return
+	 */
 	public static String fromAES(String hex, String pwd) {
 		return AESUtil.decrypt(hex, pwd);
 	}

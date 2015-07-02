@@ -1,6 +1,8 @@
 package cn.o.app.text;
 
-//以毫秒数转换为单位转换为时分秒 6000 -> 00:00:06
+/**
+ * String format tool for millisecond: 6000 -> 00:00:06
+ */
 public class MillisFormat {
 
 	public static long parse(String str) {

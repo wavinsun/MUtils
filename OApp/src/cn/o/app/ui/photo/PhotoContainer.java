@@ -2,8 +2,10 @@ package cn.o.app.ui.photo;
 
 import java.util.List;
 
-import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
+import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
+import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -24,13 +26,12 @@ import cn.o.app.event.Dispatcher;
 import cn.o.app.event.Listener;
 import cn.o.app.event.listener.OBitmapLoadCallBack;
 import cn.o.app.event.listener.OnSelectedChangeListener;
-
-import com.lidroid.xutils.BitmapUtils;
-import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
-import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
+import uk.co.senab.photoview.PhotoView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 @SuppressWarnings("deprecation")
 public class PhotoContainer extends RelativeLayout {
+
 	protected final int BOTTOM_ID = 1;
 
 	protected HackyViewPager mPager;
@@ -68,8 +69,7 @@ public class PhotoContainer extends RelativeLayout {
 		mAdapter = new PhotoPagerAdapter();
 		mPager = new HackyViewPager(context);
 		mPager.setAdapter(mAdapter);
-		mPager.setLayoutParams(new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.MATCH_PARENT,
+		mPager.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT));
 		mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -79,8 +79,7 @@ public class PhotoContainer extends RelativeLayout {
 			}
 
 			@Override
-			public void onPageScrolled(int position, float positionOffset,
-					int positionOffsetPixels) {
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
 			}
 
@@ -108,8 +107,7 @@ public class PhotoContainer extends RelativeLayout {
 		mIndicator.setGravity(Gravity.CENTER);
 		mIndicator.setVisibility(View.GONE);
 		RelativeLayout.LayoutParams indicatorParams = new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.WRAP_CONTENT,
-				RelativeLayout.LayoutParams.WRAP_CONTENT);
+				RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 		indicatorParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 		indicatorParams.addRule(RelativeLayout.ABOVE, BOTTOM_ID);
 		indicatorParams.setMargins(10, 10, 10, 10);
@@ -163,78 +161,64 @@ public class PhotoContainer extends RelativeLayout {
 			RelativeLayout layout = new RelativeLayout(getContext());
 			final PhotoView photoView = new PhotoView(getContext());
 			photoView.setTag(position);
-			photoView
-					.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
+			photoView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
 
-						@Override
-						public void onViewTap(View view, float x, float y) {
-							Object o = view.getTag();
-							if (!(o instanceof Integer)) {
-								return;
-							}
-							Integer position = (Integer) o;
-							Listener listener = mDispatcher.getListener();
-							if (listener == null) {
-								return;
-							}
-							((OnSelectedChangeListener) listener).onChanged(
-									PhotoContainer.this, position);
-						}
-					});
-			photoView.setLayoutParams(new RelativeLayout.LayoutParams(
-					RelativeLayout.LayoutParams.MATCH_PARENT,
+				@Override
+				public void onViewTap(View view, float x, float y) {
+					Object o = view.getTag();
+					if (!(o instanceof Integer)) {
+						return;
+					}
+					Integer position = (Integer) o;
+					Listener listener = mDispatcher.getListener();
+					if (listener == null) {
+						return;
+					}
+					((OnSelectedChangeListener) listener).onChanged(PhotoContainer.this, position);
+				}
+			});
+			photoView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 					RelativeLayout.LayoutParams.MATCH_PARENT));
 
-			final ProgressBar progressBar = new ProgressBar(getContext(), null,
-					android.R.attr.progressBarStyleLarge);
+			final ProgressBar progressBar = new ProgressBar(getContext(), null, android.R.attr.progressBarStyleLarge);
 			progressBar.setVisibility(View.GONE);
 			RelativeLayout.LayoutParams progressBarParams = new RelativeLayout.LayoutParams(
-					RelativeLayout.LayoutParams.WRAP_CONTENT,
-					RelativeLayout.LayoutParams.WRAP_CONTENT);
+					RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 			progressBarParams.addRule(RelativeLayout.CENTER_IN_PARENT);
 			progressBar.setLayoutParams(progressBarParams);
 
-			mBitmapUtils.display(photoView, mDataProvider.get(position),
-					new OBitmapLoadCallBack<View>() {
+			mBitmapUtils.display(photoView, mDataProvider.get(position), new OBitmapLoadCallBack<View>() {
 
-						@Override
-						public void onLoadFailed(View container, String uri,
-								Drawable drawable) {
-							progressBar.setVisibility(View.GONE);
-							super.onLoadFailed(container, uri, drawable);
-						}
+				@Override
+				public void onLoadFailed(View container, String uri, Drawable drawable) {
+					progressBar.setVisibility(View.GONE);
+					super.onLoadFailed(container, uri, drawable);
+				}
 
-						@Override
-						public void onLoadCompleted(View container, String uri,
-								Bitmap bitmap, BitmapDisplayConfig config,
-								BitmapLoadFrom from) {
-							progressBar.setVisibility(View.GONE);
-							DisplayMetrics displayMetrics = container
-									.getContext().getResources()
-									.getDisplayMetrics();
-							if (bitmap.getWidth() < displayMetrics.widthPixels * 0.4
-									&& bitmap.getHeight() < displayMetrics.widthPixels * 0.4) {
-								photoView.setScaleType(ScaleType.CENTER_INSIDE);
-							}
-							super.onLoadCompleted(container, uri, bitmap,
-									config, from);
-						}
+				@Override
+				public void onLoadCompleted(View container, String uri, Bitmap bitmap, BitmapDisplayConfig config,
+						BitmapLoadFrom from) {
+					progressBar.setVisibility(View.GONE);
+					DisplayMetrics displayMetrics = container.getContext().getResources().getDisplayMetrics();
+					if (bitmap.getWidth() < displayMetrics.widthPixels * 0.4
+							&& bitmap.getHeight() < displayMetrics.widthPixels * 0.4) {
+						photoView.setScaleType(ScaleType.CENTER_INSIDE);
+					}
+					super.onLoadCompleted(container, uri, bitmap, config, from);
+				}
 
-						@Override
-						public void onLoading(View container, String uri,
-								BitmapDisplayConfig config, long total,
-								long current) {
-							progressBar.setVisibility(View.VISIBLE);
-							super.onLoading(container, uri, config, total,
-									current);
-						}
+				@Override
+				public void onLoading(View container, String uri, BitmapDisplayConfig config, long total,
+						long current) {
+					progressBar.setVisibility(View.VISIBLE);
+					super.onLoading(container, uri, config, total, current);
+				}
 
-					});
+			});
 
 			layout.addView(photoView);
 			layout.addView(progressBar);
-			container.addView(layout, ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.MATCH_PARENT);
+			container.addView(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 			return layout;
 		}
 

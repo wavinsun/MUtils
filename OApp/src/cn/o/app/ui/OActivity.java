@@ -53,9 +53,8 @@ import cn.o.app.ui.pattern.IPatternDataProvider;
 import cn.o.app.ui.pattern.IPatternOwner;
 import cn.o.app.ui.pattern.IPatternView;
 
-public class OActivity extends FragmentActivity implements IFragmentManager,
-		INetQueueOwner, IPatternOwner, IAsyncDataQueueOwner, IToastOwner,
-		IStopableManager, IActivityResultCatcher, IContentViewOwner {
+public class OActivity extends FragmentActivity implements IFragmentManager, INetQueueOwner, IPatternOwner,
+		IAsyncDataQueueOwner, IToastOwner, IStopableManager, IActivityResultCatcher, IContentViewOwner {
 
 	protected AsyncDataQueue mAsyncDataQueue;
 
@@ -166,8 +165,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 	}
 
 	public boolean isHeartbeatEnabled() {
-		return mPatternViewHelper != null
-				&& mPatternViewHelper.isHeartbeatEnabled();
+		return mPatternViewHelper != null && mPatternViewHelper.isHeartbeatEnabled();
 	}
 
 	public void setHeartbeatEnabled(boolean enabled) {
@@ -349,8 +347,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 				@Override
 				public void onRunStateChanged(IQueue queue) {
 					if (mWaitingViewHelper == null) {
-						mWaitingViewHelper = new WaitingViewHelper(
-								OActivity.this);
+						mWaitingViewHelper = new WaitingViewHelper(OActivity.this);
 					}
 					mWaitingViewHelper.postUpdateWaitingViewState();
 				}
@@ -368,8 +365,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 				@Override
 				public void onRunStateChanged(IQueue queue) {
 					if (mWaitingViewHelper == null) {
-						mWaitingViewHelper = new WaitingViewHelper(
-								OActivity.this);
+						mWaitingViewHelper = new WaitingViewHelper(OActivity.this);
 					}
 					mWaitingViewHelper.postUpdateWaitingViewState();
 				}
@@ -401,8 +397,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 					showWaiting();
 				}
 			} else {
-				if ((!mBusy) && mNetQueue.isRunInBackground()
-						&& mAsyncDataQueue.isRunInBackground()) {
+				if ((!mBusy) && mNetQueue.isRunInBackground() && mAsyncDataQueue.isRunInBackground()) {
 					this.hideWaiting();
 				} else {
 					this.showWaiting();
@@ -531,8 +526,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 		if (mDispatcher == null) {
 			mDispatcher = new Dispatcher();
 		}
-		return mDispatcher.getListeners(OnActivityResultListener.EVENT_TYPE,
-				OnActivityResultListener.class);
+		return mDispatcher.getListeners(OnActivityResultListener.EVENT_TYPE, OnActivityResultListener.class);
 	}
 
 	@Override
@@ -548,8 +542,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 		if (mDispatcher == null) {
 			return;
 		}
-		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE,
-				listener);
+		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE, listener);
 	}
 
 	@Override
@@ -557,7 +550,9 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 		return this;
 	}
 
-	// 等待窗口UI辅助类
+	/**
+	 * Helper class for waiting view
+	 */
 	protected static class WaitingViewHelper {
 
 		protected boolean mShowing;
@@ -579,14 +574,13 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 		public WaitingViewHelper(OActivity context) {
 			mContext = context;
 			mView = new FrameLayout(mContext);
-			mViewParams = new WindowManager.LayoutParams(
-					ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.MATCH_PARENT,
-					WindowManager.LayoutParams.TYPE_APPLICATION,
-					WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-							| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+			mViewParams = new WindowManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+					ViewGroup.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.TYPE_APPLICATION,
+					WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
 					PixelFormat.TRANSPARENT);
-			View virtualWaitingView;// 用于实现动画，由于WindowManager添加的View不能拥有自定义动画
+			// Used to implement animation
+			// The view added by WindowManager can not use animation.
+			View virtualWaitingView;
 			View waitingViewLayout = mContext.getWaitingViewLayout();
 			if (waitingViewLayout != null) {
 				virtualWaitingView = waitingViewLayout;
@@ -594,21 +588,16 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 				RelativeLayout defaultWaitingView = new RelativeLayout(mContext);
 				View makLayer = new View(mContext);
 				makLayer.setBackgroundColor(0x30000000);
-				defaultWaitingView.addView(makLayer,
-						new RelativeLayout.LayoutParams(
-								RelativeLayout.LayoutParams.MATCH_PARENT,
-								RelativeLayout.LayoutParams.MATCH_PARENT));
-				ProgressBar progressBar = new ProgressBar(mContext, null,
-						android.R.attr.progressBarStyleLarge);
+				defaultWaitingView.addView(makLayer, new RelativeLayout.LayoutParams(
+						RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+				ProgressBar progressBar = new ProgressBar(mContext, null, android.R.attr.progressBarStyleLarge);
 				RelativeLayout.LayoutParams progressBarParams = new RelativeLayout.LayoutParams(
-						RelativeLayout.LayoutParams.WRAP_CONTENT,
-						RelativeLayout.LayoutParams.WRAP_CONTENT);
+						RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 				progressBarParams.addRule(RelativeLayout.CENTER_IN_PARENT);
 				defaultWaitingView.addView(progressBar, progressBarParams);
 				virtualWaitingView = defaultWaitingView;
 			}
-			mView.addView(virtualWaitingView, new FrameLayout.LayoutParams(
-					FrameLayout.LayoutParams.MATCH_PARENT,
+			mView.addView(virtualWaitingView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 					FrameLayout.LayoutParams.MATCH_PARENT));
 			mFadeInAnim = new AlphaAnimation(0, 1);
 			mFadeInAnim.setDuration(200);
@@ -686,18 +675,20 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 		}
 	}
 
-	// 手势密码UI辅助类
+	/**
+	 * Helper class for pattern view of gestures password
+	 */
 	protected static class PatternViewHelper {
 
-		// 暂停手势密码检测3分钟
+		/** No checking gestures password for three minutes */
 		public static final long PATTERN_DISABLE_SHORT = 180000L;
 
-		// 暂停手势密码检测5分钟
+		/** No checking gestures password for five minutes */
 		public static final long PATTERN_DISABLE_LONG = 300000L;
 
 		protected static long sHeartbeatTime = 0;
 
-		// 是否开启UI心跳
+		/** Whether open UI heart beat */
 		protected boolean mHeartbeatEnable;
 
 		protected long mNoPatternDeadLine = 0;
@@ -723,15 +714,11 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 		public PatternViewHelper(OActivity context) {
 			mContext = context;
 			mView = new FrameLayout(mContext);
-			mViewParams = new WindowManager.LayoutParams(
-					ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.MATCH_PARENT,
-					WindowManager.LayoutParams.TYPE_APPLICATION,
-					WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
-					PixelFormat.TRANSPARENT);
+			mViewParams = new WindowManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+					ViewGroup.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.TYPE_APPLICATION,
+					WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, PixelFormat.TRANSPARENT);
 			View virtualPatternView = (View) mContext.newPattern();
-			mView.addView(virtualPatternView, new FrameLayout.LayoutParams(
-					FrameLayout.LayoutParams.MATCH_PARENT,
+			mView.addView(virtualPatternView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 					FrameLayout.LayoutParams.MATCH_PARENT));
 			mFadeInAnim = new AlphaAnimation(0, 1);
 			mFadeInAnim.setDuration(200);
@@ -797,8 +784,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 		public void onStart() {
 			if (mHeartbeatEnable) {
 				if (mContext.getApplicationContext() instanceof IPatternDataProvider) {
-					((IPatternDataProvider) mContext.getApplicationContext())
-							.isLogined();
+					((IPatternDataProvider) mContext.getApplicationContext()).isLogined();
 				}
 				mHeartbeatHandler.postDelayed(mHeartbeatRunnable, 1000);
 			}
@@ -854,8 +840,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 						public void run() {
 							sHeartbeatTime = System.currentTimeMillis();
 							mHeartbeatHandler.removeCallbacksAndMessages(null);
-							mHeartbeatHandler.postDelayed(mHeartbeatRunnable,
-									1000);
+							mHeartbeatHandler.postDelayed(mHeartbeatRunnable, 1000);
 						}
 					};
 				}
@@ -869,13 +854,11 @@ public class OActivity extends FragmentActivity implements IFragmentManager,
 			if (!(mContext.getApplicationContext() instanceof IPatternDataProvider)) {
 				return;
 			}
-			IPatternDataProvider patternDataProvider = (IPatternDataProvider) mContext
-					.getApplicationContext();
+			IPatternDataProvider patternDataProvider = (IPatternDataProvider) mContext.getApplicationContext();
 			if (patternDataProvider.isLogined()) {
 				if (patternDataProvider.isPatternEnabled()) {
 					if (sHeartbeatTime == 0
-							|| (System.currentTimeMillis() - sHeartbeatTime) > patternDataProvider
-									.getPatternPeriod()) {
+							|| (System.currentTimeMillis() - sHeartbeatTime) > patternDataProvider.getPatternPeriod()) {
 						show();
 					}
 				}

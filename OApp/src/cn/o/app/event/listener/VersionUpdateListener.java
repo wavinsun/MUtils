@@ -2,7 +2,11 @@ package cn.o.app.event.listener;
 
 public interface VersionUpdateListener {
 
-	// return true to intercept update dialog
+	/**
+	 * 
+	 * @param version
+	 * @return Return true to intercept
+	 */
 	public boolean onYes(String version);
 
 	public void onNo();
@@ -10,4 +14,5 @@ public interface VersionUpdateListener {
 	public void onUpdate(String version);
 
 	public void onUpdateCancel(String version);
+
 }

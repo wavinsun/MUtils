@@ -10,15 +10,33 @@ import java.lang.annotation.Target;
 public @interface Primitive {
 
 	public static enum PrimitiveType {
-		STRING, // 字符串
-		STRING_INT, // 整型字符串
-		STRING_LONG, // 长整型字符串
-		STRING_DOUBLE, // 浮点数字符串
-		STRING_BOOL, // 布尔字符串
-		INT, // 整型
-		LONG, // 长整型
-		DOUBLE, // 浮点数
-		BOOL// 布尔
+
+		/** String */
+		STRING,
+
+		/** Integer of string */
+		STRING_INT,
+
+		/** Long of string */
+		STRING_LONG,
+
+		/** Double of string */
+		STRING_DOUBLE,
+
+		/** Boolean of string */
+		STRING_BOOL,
+
+		/** Integer */
+		INT,
+
+		/** Long */
+		LONG,
+
+		/** Double */
+		DOUBLE,
+
+		/** Boolean */
+		BOOL
 	}
 
 	public PrimitiveType value() default PrimitiveType.STRING;

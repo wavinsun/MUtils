@@ -2,8 +2,8 @@ package cn.o.app.socket;
 
 import cn.o.app.queue.IQueueItem;
 
-public interface ISocketTask<REQUEST, RESPONSE> extends
-		IQueueItem<ISocketTask<REQUEST, RESPONSE>> {
+public interface ISocketTask<REQUEST, RESPONSE> extends IQueueItem<ISocketTask<REQUEST, RESPONSE>> {
+
 	public String getUrl();
 
 	public void setUrl(String url);
@@ -19,4 +19,5 @@ public interface ISocketTask<REQUEST, RESPONSE> extends
 	public RESPONSE getResponse();
 
 	public void setResponse(RESPONSE response);
+
 }

@@ -12,7 +12,9 @@ import cn.o.app.runtime.ReflectUtil;
 import cn.o.app.xml.IXmlItem;
 import cn.o.app.xml.XmlUtil;
 
-//支持以下三种种类型数据{"state":"INIT"} {"state":"0"} {"state":0}
+/**
+ * Support three data types:{"state":"INIT"} {"state":"0"} {"state":0}
+ */
 @SuppressWarnings({ "serial", "unchecked" })
 public abstract class OEnum<E extends Enum<E>> extends Serial<Enum<E>> {
 
@@ -36,14 +38,20 @@ public abstract class OEnum<E extends Enum<E>> extends Serial<Enum<E>> {
 		mValue = value;
 	}
 
-	// 如果需要输出整型请子类重写该方法
-	// @Primitive(PrimitiveType.INT)
-	// @Primitive(PrimitiveType.STRING_INT)
+	/**
+	 * Override this method if you want to get integer
+	 * value:@Primitive(PrimitiveType.INT) @Primitive(PrimitiveType.STRING_INT)
+	 * 
+	 * @return
+	 */
 	public abstract int intValue();
 
-	// 如果需要输出整型请子类重写该方法
-	// @Primitive(PrimitiveType.INT)
-	// @Primitive(PrimitiveType.STRING_INT)
+	/**
+	 * Override this method if you want to get integer
+	 * value:@Primitive(PrimitiveType.INT) @Primitive(PrimitiveType.STRING_INT)
+	 * 
+	 * @return
+	 */
 	public abstract E valueOf(int value);
 
 	public E toEnum() {
@@ -64,8 +72,7 @@ public abstract class OEnum<E extends Enum<E>> extends Serial<Enum<E>> {
 		init(itemField);
 		try {
 			if (mType == PrimitiveType.STRING) {
-				mValue = (E) ReflectUtil.valueOfEnum(valueOf(0).getClass(),
-						json.toString());
+				mValue = (E) ReflectUtil.valueOfEnum(valueOf(0).getClass(), json.toString());
 			} else {
 				mValue = valueOf(Integer.parseInt(json.toString()));
 			}
@@ -91,8 +98,7 @@ public abstract class OEnum<E extends Enum<E>> extends Serial<Enum<E>> {
 		init(itemField);
 		try {
 			if (mType == PrimitiveType.STRING) {
-				mValue = (E) ReflectUtil.valueOfEnum(valueOf(0).getClass(),
-						xml.getTextContent());
+				mValue = (E) ReflectUtil.valueOfEnum(valueOf(0).getClass(), xml.getTextContent());
 			} else {
 				mValue = valueOf(Integer.parseInt(xml.getTextContent()));
 			}
@@ -125,8 +131,7 @@ public abstract class OEnum<E extends Enum<E>> extends Serial<Enum<E>> {
 		init(itemField);
 		try {
 			if (mType == PrimitiveType.STRING) {
-				mValue = (E) ReflectUtil.valueOfEnum(valueOf(0).getClass(),
-						value);
+				mValue = (E) ReflectUtil.valueOfEnum(valueOf(0).getClass(), value);
 			} else {
 				mValue = valueOf(Integer.parseInt(value));
 			}

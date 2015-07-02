@@ -2,16 +2,16 @@ package cn.o.app;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UpdateConfig;
+import com.umeng.update.UpdateStatus;
+
 import android.app.Application;
 import android.content.Context;
 import cn.jpush.android.api.JPushInterface;
 import cn.o.app.conf.OLocale;
 import cn.o.app.context.IContextProvider;
-
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.update.UmengUpdateAgent;
-import com.umeng.update.UpdateConfig;
-import com.umeng.update.UpdateStatus;
 
 public class App extends Application implements IContextProvider {
 
@@ -28,27 +28,8 @@ public class App extends Application implements IContextProvider {
 	@Override
 	public void onCreate() {
 
-		// 解决UI停止运行
-		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-
-			@Override
-			public void uncaughtException(Thread thread, Throwable ex) {
-				LogCat.e("AndroidRuntime", thread.getName(), ex);
-				try {
-					Thread.sleep(300L);
-				} catch (Exception e) {
-					// crash again
-				} finally {
-					if (mUmengEnabled) {
-						MobclickAgent.onKillProcess(App.this);
-					}
-					if (mJPushEnabled) {
-						JPushInterface.onKillProcess(App.this);
-					}
-					OUtil.exit(10);
-				}
-			}
-		});
+		// Set exception handler to forbid system crash dialog
+		Thread.setDefaultUncaughtExceptionHandler(new AppExceptionHandler());
 
 		OLocale.syncLocale(this);
 
@@ -77,6 +58,7 @@ public class App extends Application implements IContextProvider {
 			}
 			JPushInterface.init(this);
 		}
+
 	}
 
 	public static App getApp() {
@@ -94,5 +76,26 @@ public class App extends Application implements IContextProvider {
 
 	public boolean isJPushEneabled() {
 		return mJPushEnabled;
+	}
+
+	class AppExceptionHandler implements UncaughtExceptionHandler {
+
+		@Override
+		public void uncaughtException(Thread thread, Throwable ex) {
+			LogCat.e("AndroidRuntime", thread.getName(), ex);
+			try {
+				Thread.sleep(300L);
+			} catch (Exception e) {
+				// crash again
+			} finally {
+				if (mUmengEnabled) {
+					MobclickAgent.onKillProcess(App.this);
+				}
+				if (mJPushEnabled) {
+					JPushInterface.onKillProcess(App.this);
+				}
+				OUtil.exit(10);
+			}
+		}
 	}
 }

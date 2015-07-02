@@ -11,8 +11,7 @@ import cn.o.app.context.IContextProvider;
 import cn.o.app.runtime.ReflectUtil;
 
 @SuppressWarnings("unchecked")
-public class OAdapter<DATA_ITEM> extends BaseAdapter implements
-		IContextProvider {
+public class OAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvider {
 
 	protected ViewGroup mContainer;
 
@@ -20,10 +19,8 @@ public class OAdapter<DATA_ITEM> extends BaseAdapter implements
 
 	protected Constructor<? extends IItemView<DATA_ITEM>> mItemViewConstructor;
 
-	public void setItemViewClass(
-			Class<? extends IItemView<DATA_ITEM>> itemViewClass) {
-		mItemViewConstructor = ReflectUtil.getConstructor(itemViewClass,
-				Context.class);
+	public void setItemViewClass(Class<? extends IItemView<DATA_ITEM>> itemViewClass) {
+		mItemViewConstructor = ReflectUtil.getConstructor(itemViewClass, Context.class);
 	}
 
 	public Context getContext() {
@@ -71,7 +68,11 @@ public class OAdapter<DATA_ITEM> extends BaseAdapter implements
 		return position;
 	}
 
-	// 子类需要覆盖该方法
+	/**
+	 * Subclass need to override this method
+	 * 
+	 * @return
+	 */
 	public IItemView<DATA_ITEM> getItemView() {
 		if (mItemViewConstructor == null) {
 			return null;

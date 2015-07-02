@@ -3,38 +3,40 @@ package cn.o.app.lbs;
 import cn.o.app.io.INoProguard;
 import cn.o.app.json.JsonUtil;
 
-// 添加位置便于兼容百度和高德
+/**
+ * Compatibility for AMap and Baidu Map
+ */
 @SuppressWarnings("serial")
 public class OLocation implements INoProguard {
 
-	// 海拔
+	/** 海拔 */
 	protected double mAltitude;
 
-	// 维度
+	/** 维度 */
 	protected double mLatitude;
 
-	// 经度
+	/** 经度 */
 	protected double mLongitude;
 
-	// 省份
+	/** 省份 */
 	protected String mProvince;
 
-	// 城市
+	/** 城市 */
 	protected String mCity;
 
-	// 行政区
+	/** 行政区 */
 	protected String mDistrict;
 
-	// 街道
+	/** 街道 */
 	protected String mStreet;
 
-	// 地址
+	/** 地址 */
 	protected String mAddress;
 
-	// 时间
+	/** 时间 */
 	protected long mTime;
 
-	// 精度
+	/** 精度 */
 	protected double mRadius;
 
 	public OLocation() {
