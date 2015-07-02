@@ -1,5 +1,8 @@
 package cn.o.app.pay;
 
+import com.unionpay.UPPayAssistEx;
+import com.unionpay.uppay.PayActivity;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -8,13 +11,12 @@ import cn.o.app.event.Listener;
 import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.ui.core.IActivityResultCatcher;
 
-import com.unionpay.UPPayAssistEx;
-import com.unionpay.uppay.PayActivity;
-
-//银联支付
+/**
+ * UnionPay
+ */
 public class UPPayTask extends OPayTask {
 
-	// 交易流水号
+	/** UnionPay trade number */
 	protected String mTradeNo;
 
 	protected OnActivityResultListener mOnActivityResultListener;
@@ -46,8 +48,7 @@ public class UPPayTask extends OPayTask {
 	@Override
 	protected void onStart() {
 		String mode = mDebug ? "01" : "00";
-		UPPayAssistEx.startPayByJAR((Activity) mContext, PayActivity.class,
-				null, null, mTradeNo, mode);
+		UPPayAssistEx.startPayByJAR((Activity) mContext, PayActivity.class, null, null, mTradeNo, mode);
 	}
 
 	@Override
@@ -73,8 +74,7 @@ public class UPPayTask extends OPayTask {
 			mOnActivityResultListener = new OnActivityResultListener() {
 
 				@Override
-				public void onActivityResult(Context context, int requestCode,
-						int resultCode, Intent data) {
+				public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
 					if (data == null) {
 						return;
 					}
@@ -101,8 +101,7 @@ public class UPPayTask extends OPayTask {
 							listener.onError(UPPayTask.this, null);
 						}
 					}
-					((IActivityResultCatcher) context)
-							.removeOnActivityResultListener(mOnActivityResultListener);
+					((IActivityResultCatcher) context).removeOnActivityResultListener(mOnActivityResultListener);
 				}
 			};
 		}

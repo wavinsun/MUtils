@@ -13,7 +13,9 @@ import android.widget.RelativeLayout;
 import cn.o.app.OUtil;
 import cn.o.app.R;
 
-//带三角形指针的圆矩形
+/**
+ * Round rectangle tip view width triangle
+ */
 @SuppressWarnings("unused")
 public class TipView extends RelativeLayout {
 
@@ -74,40 +76,27 @@ public class TipView extends RelativeLayout {
 	protected void init(Context context, AttributeSet attrs) {
 		setWillNotDraw(false);
 		if (attrs != null) {
-			TypedArray typedArray = context.obtainStyledAttributes(attrs,
-					R.styleable.TipView);
-			mSolidColor = typedArray.getColor(
-					R.styleable.TipView_android_solidColor, mSolidColor);
-			mStrokeColor = typedArray.getColor(R.styleable.TipView_strokeColor,
-					mStrokeColor);
-			mStrokeWidth = typedArray.getDimensionPixelSize(
-					R.styleable.TipView_strokeWidth, mStrokeWidth);
-			int radius = typedArray.getDimensionPixelSize(
-					R.styleable.TipView_android_radius, -1);
+			TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TipView);
+			mSolidColor = typedArray.getColor(R.styleable.TipView_android_solidColor, mSolidColor);
+			mStrokeColor = typedArray.getColor(R.styleable.TipView_strokeColor, mStrokeColor);
+			mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.TipView_strokeWidth, mStrokeWidth);
+			int radius = typedArray.getDimensionPixelSize(R.styleable.TipView_android_radius, -1);
 			if (radius != -1) {
 				mTopLeftRadius = mTopRightRadius = mBottomLeftRadius = mBottomRightRadius = radius;
 			}
-			mTopLeftRadius = typedArray.getDimensionPixelSize(
-					R.styleable.TipView_android_topLeftRadius, mTopLeftRadius);
-			mTopRightRadius = typedArray
-					.getDimensionPixelSize(
-							R.styleable.TipView_android_topRightRadius,
-							mTopRightRadius);
-			mBottomLeftRadius = typedArray.getDimensionPixelSize(
-					R.styleable.TipView_android_bottomLeftRadius,
+			mTopLeftRadius = typedArray.getDimensionPixelSize(R.styleable.TipView_android_topLeftRadius,
+					mTopLeftRadius);
+			mTopRightRadius = typedArray.getDimensionPixelSize(R.styleable.TipView_android_topRightRadius,
+					mTopRightRadius);
+			mBottomLeftRadius = typedArray.getDimensionPixelSize(R.styleable.TipView_android_bottomLeftRadius,
 					mBottomLeftRadius);
-			mBottomRightRadius = typedArray.getDimensionPixelSize(
-					R.styleable.TipView_android_bottomRightRadius,
+			mBottomRightRadius = typedArray.getDimensionPixelSize(R.styleable.TipView_android_bottomRightRadius,
 					mBottomRightRadius);
-			mTrianlgePadding = typedArray.getDimensionPixelSize(
-					R.styleable.TipView_trianglePadding, mTrianlgePadding);
-			mTriangleHeight = typedArray.getDimensionPixelSize(
-					R.styleable.TipView_triangleHeight, mTriangleHeight);
-			mTriangleAngle = typedArray.getFloat(
-					R.styleable.TipView_triangleAngle, mTriangleAngle);
+			mTrianlgePadding = typedArray.getDimensionPixelSize(R.styleable.TipView_trianglePadding, mTrianlgePadding);
+			mTriangleHeight = typedArray.getDimensionPixelSize(R.styleable.TipView_triangleHeight, mTriangleHeight);
+			mTriangleAngle = typedArray.getFloat(R.styleable.TipView_triangleAngle, mTriangleAngle);
 			try {
-				mTriangleAlign = typedArray.getInt(
-						R.styleable.TipView_triangleAlign, mTriangleAlign);
+				mTriangleAlign = typedArray.getInt(R.styleable.TipView_triangleAlign, mTriangleAlign);
 			} catch (Exception e) {
 
 			}
@@ -148,13 +137,11 @@ public class TipView extends RelativeLayout {
 	public void pointTo(View v) {
 		int[] vLocation = new int[2];
 		v.getLocationOnScreen(vLocation);
-		pointTo(vLocation[0] + v.getWidth() / 2, vLocation[1] + v.getHeight()
-				/ 2);
+		pointTo(vLocation[0] + v.getWidth() / 2, vLocation[1] + v.getHeight() / 2);
 	}
 
 	public void pointTo(Rect screenRect) {
-		pointTo(screenRect.left + screenRect.width() / 2, screenRect.top
-				+ screenRect.height() / 2);
+		pointTo(screenRect.left + screenRect.width() / 2, screenRect.top + screenRect.height() / 2);
 	}
 
 	public void pointTo(int screenX, int screenY) {
@@ -169,9 +156,7 @@ public class TipView extends RelativeLayout {
 		float t = l;// top
 		float r = getWidth() - l;// right
 		float b = getHeight() - t;// bottom
-		float triangleBottomRadius = (float) Math.tan(OUtil.TO_RADIAN
-				* mTriangleAngle / 2)
-				* mTriangleHeight;
+		float triangleBottomRadius = (float) Math.tan(OUtil.TO_RADIAN * mTriangleAngle / 2) * mTriangleHeight;
 		float triangleTopX = 0, triangleTopY = 0;
 		boolean canDrawTriangle = false;
 		boolean pointValid = mPointToScreenX != 0 || mPointToScreenY != 0;
@@ -180,39 +165,38 @@ public class TipView extends RelativeLayout {
 			this.getLocationOnScreen(mScreenLocation);
 		}
 		if (mTriangleAlign == TRIANGLE_ALIGN_TOP_LEFT) {
-			canDrawTriangle = mTopLeftRadius + mTopRightRadius
-					+ mTrianlgePadding * 2 + triangleBottomRadius * 2 < r - l;
+			canDrawTriangle = mTopLeftRadius + mTopRightRadius + mTrianlgePadding * 2 + triangleBottomRadius * 2 < r
+					- l;
 			canDrawTriangle = canDrawTriangle && mTriangleHeight < b - t;
 			if (canDrawTriangle) {
 				if (pointValid) {
 					pointX = mPointToScreenX - mScreenLocation[0];
 					pointY = mPointToScreenY - mScreenLocation[1];
 				}
-				pointValid = pointValid ? (pointX > (l + mTopLeftRadius
-						+ mTrianlgePadding + triangleBottomRadius) && pointX < (r
-						- mTopRightRadius - mTrianlgePadding - triangleBottomRadius))
+				pointValid = pointValid
+						? (pointX > (l + mTopLeftRadius + mTrianlgePadding + triangleBottomRadius)
+								&& pointX < (r - mTopRightRadius - mTrianlgePadding - triangleBottomRadius))
 						: pointValid;
 				if (pointValid) {
 					triangleTopX = pointX;
 					triangleTopY = t;
 				} else {
-					triangleTopX = l + mTopLeftRadius + mTrianlgePadding
-							+ triangleBottomRadius;
+					triangleTopX = l + mTopLeftRadius + mTrianlgePadding + triangleBottomRadius;
 					triangleTopY = t;
 				}
 			}
 		} else if (mTriangleAlign == TRIANGLE_ALIGN_TOP_CENTER) {
-			canDrawTriangle = mTopLeftRadius + mTopRightRadius
-					+ mTrianlgePadding * 2 + triangleBottomRadius * 2 < r - l;
+			canDrawTriangle = mTopLeftRadius + mTopRightRadius + mTrianlgePadding * 2 + triangleBottomRadius * 2 < r
+					- l;
 			canDrawTriangle = canDrawTriangle && mTriangleHeight < b - t;
 			if (canDrawTriangle) {
 				if (pointValid) {
 					pointX = mPointToScreenX - mScreenLocation[0];
 					pointY = mPointToScreenY - mScreenLocation[1];
 				}
-				pointValid = pointValid ? (pointX > (l + mTopLeftRadius
-						+ mTrianlgePadding + triangleBottomRadius) && pointX < (r
-						- mTopRightRadius - mTrianlgePadding - triangleBottomRadius))
+				pointValid = pointValid
+						? (pointX > (l + mTopLeftRadius + mTrianlgePadding + triangleBottomRadius)
+								&& pointX < (r - mTopRightRadius - mTrianlgePadding - triangleBottomRadius))
 						: pointValid;
 				if (pointValid) {
 					triangleTopX = pointX;
@@ -223,61 +207,59 @@ public class TipView extends RelativeLayout {
 				}
 			}
 		} else if (mTriangleAlign == TRIANGLE_ALIGN_TOP_RIGHT) {
-			canDrawTriangle = mTopLeftRadius + mTopRightRadius
-					+ mTrianlgePadding * 2 + triangleBottomRadius * 2 < r - l;
+			canDrawTriangle = mTopLeftRadius + mTopRightRadius + mTrianlgePadding * 2 + triangleBottomRadius * 2 < r
+					- l;
 			canDrawTriangle = canDrawTriangle && mTriangleHeight < b - t;
 			if (canDrawTriangle) {
 				if (pointValid) {
 					pointX = mPointToScreenX - mScreenLocation[0];
 					pointY = mPointToScreenY - mScreenLocation[1];
 				}
-				pointValid = pointValid ? (pointX > (l + mTopLeftRadius
-						+ mTrianlgePadding + triangleBottomRadius) && pointX < (r
-						- mTopRightRadius - mTrianlgePadding - triangleBottomRadius))
+				pointValid = pointValid
+						? (pointX > (l + mTopLeftRadius + mTrianlgePadding + triangleBottomRadius)
+								&& pointX < (r - mTopRightRadius - mTrianlgePadding - triangleBottomRadius))
 						: pointValid;
 				if (pointValid) {
 					triangleTopX = pointX;
 					triangleTopY = t;
 				} else {
-					triangleTopX = r - mTopRightRadius - mTrianlgePadding
-							- triangleBottomRadius;
+					triangleTopX = r - mTopRightRadius - mTrianlgePadding - triangleBottomRadius;
 					triangleTopY = t;
 				}
 			}
 		} else if (mTriangleAlign == TRIANGLE_ALIGN_BOTTOM_LEFT) {
-			canDrawTriangle = mBottomLeftRadius + mBottomRightRadius
-					+ mTrianlgePadding * 2 + triangleBottomRadius * 2 < r - l;
+			canDrawTriangle = mBottomLeftRadius + mBottomRightRadius + mTrianlgePadding * 2
+					+ triangleBottomRadius * 2 < r - l;
 			canDrawTriangle = canDrawTriangle && mTriangleHeight < b - t;
 			if (canDrawTriangle) {
 				if (pointValid) {
 					pointX = mPointToScreenX - mScreenLocation[0];
 					pointY = mPointToScreenY - mScreenLocation[1];
 				}
-				pointValid = pointValid ? (pointX > (l + mTopLeftRadius
-						+ mTrianlgePadding + triangleBottomRadius) && pointX < (r
-						- mTopRightRadius - mTrianlgePadding - triangleBottomRadius))
+				pointValid = pointValid
+						? (pointX > (l + mTopLeftRadius + mTrianlgePadding + triangleBottomRadius)
+								&& pointX < (r - mTopRightRadius - mTrianlgePadding - triangleBottomRadius))
 						: pointValid;
 				if (pointValid) {
 					triangleTopX = pointX;
 					triangleTopY = b;
 				} else {
-					triangleTopX = l + mTopLeftRadius + mTrianlgePadding
-							+ triangleBottomRadius;
+					triangleTopX = l + mTopLeftRadius + mTrianlgePadding + triangleBottomRadius;
 					triangleTopY = b;
 				}
 			}
 		} else if (mTriangleAlign == TRIANGLE_ALIGN_BOTTOM_CENTER) {
-			canDrawTriangle = mBottomLeftRadius + mBottomRightRadius
-					+ mTrianlgePadding * 2 + triangleBottomRadius * 2 < r - l;
+			canDrawTriangle = mBottomLeftRadius + mBottomRightRadius + mTrianlgePadding * 2
+					+ triangleBottomRadius * 2 < r - l;
 			canDrawTriangle = canDrawTriangle && mTriangleHeight < b - t;
 			if (canDrawTriangle) {
 				if (pointValid) {
 					pointX = mPointToScreenX - mScreenLocation[0];
 					pointY = mPointToScreenY - mScreenLocation[1];
 				}
-				pointValid = pointValid ? (pointX > (l + mTopLeftRadius
-						+ mTrianlgePadding + triangleBottomRadius) && pointX < (r
-						- mTopRightRadius - mTrianlgePadding - triangleBottomRadius))
+				pointValid = pointValid
+						? (pointX > (l + mTopLeftRadius + mTrianlgePadding + triangleBottomRadius)
+								&& pointX < (r - mTopRightRadius - mTrianlgePadding - triangleBottomRadius))
 						: pointValid;
 				if (pointValid) {
 					triangleTopX = pointX;
@@ -288,24 +270,23 @@ public class TipView extends RelativeLayout {
 				}
 			}
 		} else if (mTriangleAlign == TRIANGLE_ALIGN_BOTTOM_RIGHT) {
-			canDrawTriangle = mBottomLeftRadius + mBottomRightRadius
-					+ mTrianlgePadding * 2 + triangleBottomRadius * 2 < r - l;
+			canDrawTriangle = mBottomLeftRadius + mBottomRightRadius + mTrianlgePadding * 2
+					+ triangleBottomRadius * 2 < r - l;
 			canDrawTriangle = canDrawTriangle && mTriangleHeight < b - t;
 			if (canDrawTriangle) {
 				if (pointValid) {
 					pointX = mPointToScreenX - mScreenLocation[0];
 					pointY = mPointToScreenY - mScreenLocation[1];
 				}
-				pointValid = pointValid ? (pointX > (l + mTopLeftRadius
-						+ mTrianlgePadding + triangleBottomRadius) && pointX < (r
-						- mTopRightRadius - mTrianlgePadding - triangleBottomRadius))
+				pointValid = pointValid
+						? (pointX > (l + mTopLeftRadius + mTrianlgePadding + triangleBottomRadius)
+								&& pointX < (r - mTopRightRadius - mTrianlgePadding - triangleBottomRadius))
 						: pointValid;
 				if (pointValid) {
 					triangleTopX = pointX;
 					triangleTopY = b;
 				} else {
-					triangleTopX = r - mTopRightRadius - mTrianlgePadding
-							- triangleBottomRadius;
+					triangleTopX = r - mTopRightRadius - mTrianlgePadding - triangleBottomRadius;
 					triangleTopY = b;
 				}
 			}

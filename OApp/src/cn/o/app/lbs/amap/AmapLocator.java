@@ -1,5 +1,10 @@
 package cn.o.app.lbs.amap;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.location.LocationManagerProxy;
+import com.amap.api.location.LocationProviderProxy;
+
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
@@ -8,17 +13,11 @@ import cn.o.app.event.listener.OLocationListener;
 import cn.o.app.lbs.OLocation;
 import cn.o.app.task.IStopable;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationListener;
-import com.amap.api.location.LocationManagerProxy;
-import com.amap.api.location.LocationProviderProxy;
-
-// 高德地图定位
-// 需要在AndroidManifest.xml的Application中配置
-// <meta-data
-// 	android:name="com.amap.api.v2.apikey"
-// 	android:value="AK" />
+/**
+ * AMap Location
+ */
 public class AmapLocator implements IStopable {
+
 	protected boolean mStoped = true;
 
 	protected Context mContext;
@@ -51,8 +50,7 @@ public class AmapLocator implements IStopable {
 
 		@Override
 		public void onLocationChanged(AMapLocation location) {
-			OLocationListener listener = (OLocationListener) mDispatcher
-					.getListener();
+			OLocationListener listener = (OLocationListener) mDispatcher.getListener();
 			if (listener == null) {
 				return;
 			}
@@ -107,8 +105,7 @@ public class AmapLocator implements IStopable {
 		if (!mStoped) {
 			return false;
 		}
-		mProxy.requestLocationData(LocationProviderProxy.AMapNetwork, 2000, 10,
-				mAMapLocationListener);
+		mProxy.requestLocationData(LocationProviderProxy.AMapNetwork, 2000, 10, mAMapLocationListener);
 		mStoped = false;
 		return true;
 	}

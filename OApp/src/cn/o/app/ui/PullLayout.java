@@ -25,113 +25,102 @@ import android.widget.TextView;
 import cn.o.app.R;
 
 /**
- * 自定义的布局，用来管理三个子控件，其中一个是下拉头，一个是包含内容的PullView，还有一个上拉头
+ * PullLayout refer to
  * http://blog.csdn.net/zhongkejingwang/article/details/38868463
  */
 @SuppressLint({ "HandlerLeak", "InflateParams" })
 @SuppressWarnings("deprecation")
 public class PullLayout extends RelativeLayout {
 
-	/**
-	 * 刷新加载回调接口
-	 */
 	public interface OnRefreshListener {
-		/**
-		 * 刷新操作
-		 */
+
 		void onRefresh(PullLayout pullLayout);
 
-		/**
-		 * 加载操作
-		 */
 		void onLoadMore(PullLayout pullLayout);
+
 	}
 
-	// 初始状态
 	public static final int STATAE_INIT = 0;
-	// 释放刷新
 	public static final int STATE_RELEASE_TO_REFRESH = 1;
-	// 正在刷新
 	public static final int STATE_REFRESHING = 2;
-	// 释放加载
 	public static final int STATE_RELEASE_TO_LOAD = 3;
-	// 正在加载
 	public static final int STATE_LOADING = 4;
-	// 操作完毕
 	public static final int STATE_DONE = 5;
-	// 当前状态
+
 	private int state = STATAE_INIT;
-	// 刷新回调接口
+
 	private OnRefreshListener mListener;
-	// 按下Y坐标，上一个事件点Y坐标
+
 	private float downY, lastY;
 
-	// 下拉的距离。注意：pullDownY和pullUpY不可能同时不为0
+	/** Pull down distance.pullDownY and pullUpY can not be same as zero */
 	public float pullDownY = 0;
-	// 上拉的距离
+	/** Pull up distance */
 	private float pullUpY = 0;
 
-	// 释放刷新的距离
+	/** Refresh distance */
 	private float refreshDist = 200;
-	// 释放加载的距离
+	/** Load more distance */
 	private float loadMoreDist = 200;
 
 	private MyTimer timer;
-	// 回滚速度
+
 	public float MOVE_SPEED = 8;
-	// 第一次执行布局
+	/** First layout */
 	private boolean isLayout = false;
-	// 在刷新过程中滑动操作
+	/** Touch on refreshing */
 	private boolean isTouch = false;
-	// 手指滑动距离与下拉头的滑动距离比，中间会随正切函数变化
+	/** 手指滑动距离与下拉头的滑动距离比，中间会随正切函数变化 */
 	private float radio = 2;
 
-	// 下拉箭头的转180°动画
+	/** Arrow animation */
 	private RotateAnimation reverseAnimation;
 
-	// 下拉头
+	/** Pull down head view */
 	private View refreshHeadView;
-	// 下拉的箭头
+	/** Pull down arrow view */
 	private View pullDownView;
-	// 正在刷新的图标
+	/** Refreshing icon */
 	private View refreshingView;
-	// 刷新结果：成功或失败
+	/** Refresh state TextView */
 	private TextView refreshStateTextView;
 
-	// 上拉头
+	/** Pull up foot view */
 	private View loadmoreFootView;
-	// 上拉的箭头
+	/** Pull up arrow view */
 	private View pullUpView;
-	// 正在加载的图标
+	/** Loading icon */
 	private View loadingView;
-	// 加载结果：成功或失败
+	/** Load state TextView */
 	private TextView loadStateTextView;
 
-	// 实现了Pullable接口的View
+	/** Pull View who is real view for content */
 	private View pullView;
-	// 过滤多点触碰
+	/** Filter one more touch point */
 	private int mEvents;
-	// 这两个变量用来控制pull的方向，如果不加控制，当情况满足可上拉又可下拉时没法下拉
+
+	/** Whether it can pull down while touching */
 	private boolean canPullDown = true;
+
+	/** Whether it can pull up while touching */
 	private boolean canPullUp = true;
 
-	// 是否启用下拉刷新
+	/** Whether pull down enabled */
 	protected boolean mPullDownEnabled = true;
-	// 是否启用上拉加载
+	/** Whether pull up enabled */
 	protected boolean mPullUpEnabled = true;
-	// 上拉下拉策略
+
+	/** Policy for pull down and pull up */
 	protected PullPolicy mPolicy = new PullPolicy();
 
-	/**
-	 * 执行自动回滚的handler
-	 */
+	/** Hander for back-rolling */
 	Handler updateHandler = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
 			// 回弹速度随下拉距离moveDeltaY增大而增大
-			MOVE_SPEED = (float) (8 + 5 * Math.tan(Math.PI / 2
-					/ getMeasuredHeight() * (pullDownY + Math.abs(pullUpY))));
+			MOVE_SPEED = (float) (8
+					+ 5 * Math.tan(Math.PI / 2 / getMeasuredHeight() * (pullDownY + Math.abs(pullUpY))));
 			if (!isTouch) {
 				// 正在刷新，且没有往上推的话则悬停，显示"正在刷新..."
 				if (state == STATE_REFRESHING && pullDownY <= refreshDist) {
@@ -187,8 +176,7 @@ public class PullLayout extends RelativeLayout {
 
 	private void init(Context context, AttributeSet attrs) {
 		timer = new MyTimer(updateHandler);
-		reverseAnimation = (RotateAnimation) AnimationUtils.loadAnimation(
-				context, R.anim.pull_reverse);
+		reverseAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.pull_reverse);
 
 		LayoutInflater inflater = LayoutInflater.from(context);
 		refreshHeadView = inflater.inflate(R.layout.pull_refresh_head, null);
@@ -196,28 +184,21 @@ public class PullLayout extends RelativeLayout {
 
 		// 初始化下拉布局
 		pullDownView = refreshHeadView.findViewById(R.id.pull_icon);
-		refreshStateTextView = (TextView) refreshHeadView
-				.findViewById(R.id.state_tv);
+		refreshStateTextView = (TextView) refreshHeadView.findViewById(R.id.state_tv);
 		refreshingView = refreshHeadView.findViewById(R.id.refreshing_icon);
 		// 初始化上拉布局
 		pullUpView = loadmoreFootView.findViewById(R.id.pullup_icon);
-		loadStateTextView = (TextView) loadmoreFootView
-				.findViewById(R.id.loadstate_tv);
+		loadStateTextView = (TextView) loadmoreFootView.findViewById(R.id.loadstate_tv);
 		loadingView = loadmoreFootView.findViewById(R.id.loading_icon);
 
 		if (attrs != null) {
-			TypedArray typedArray = context
-					.obtainStyledAttributes(R.styleable.PullLayout);
-			int textSize = typedArray.getDimensionPixelSize(
-					R.styleable.PullLayout_android_textSize, 0);
+			TypedArray typedArray = context.obtainStyledAttributes(R.styleable.PullLayout);
+			int textSize = typedArray.getDimensionPixelSize(R.styleable.PullLayout_android_textSize, 0);
 			if (textSize != 0) {
-				refreshStateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-						textSize);
-				loadStateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-						textSize);
+				refreshStateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+				loadStateTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 			}
-			ColorStateList textColor = typedArray
-					.getColorStateList(R.styleable.PullLayout_android_textColor);
+			ColorStateList textColor = typedArray.getColorStateList(R.styleable.PullLayout_android_textColor);
 			if (textColor != null) {
 				refreshStateTextView.setTextColor(textColor);
 				loadStateTextView.setTextColor(textColor);
@@ -291,18 +272,15 @@ public class PullLayout extends RelativeLayout {
 			return;
 		}
 		if (this.getChildCount() != 1) {
-			throw new UnsupportedOperationException(
-					"PullLayout must has only one child view");
+			throw new UnsupportedOperationException("PullLayout must has only one child view");
 		}
 		View v = this.getChildAt(0);
 		if (v.getLayoutParams().height != LayoutParams.MATCH_PARENT) {
 			throw new UnsupportedOperationException();
 		}
 		pullView = v;
-		this.addView(refreshHeadView, 0, new LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		this.addView(loadmoreFootView, new LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		this.addView(refreshHeadView, 0, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		this.addView(loadmoreFootView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 	}
 
 	public void setOnRefreshListener(OnRefreshListener listener) {
@@ -398,9 +376,8 @@ public class PullLayout extends RelativeLayout {
 			break;
 		case MotionEvent.ACTION_MOVE:
 			if (mEvents == 0) {
-				if (mPullDownEnabled
-						&& (pullDownY > 0 || (mPolicy.canPullDown(pullView)
-								&& canPullDown && state != STATE_LOADING))) {
+				if (mPullDownEnabled && (pullDownY > 0
+						|| (mPolicy.canPullDown(pullView) && canPullDown && state != STATE_LOADING))) {
 					// 可以下拉，正在加载时不能下拉
 					// 对实际滑动距离做缩小，造成用力拉的感觉
 					pullDownY = pullDownY + (ev.getY() - lastY) / radio;
@@ -416,8 +393,7 @@ public class PullLayout extends RelativeLayout {
 						isTouch = true;
 					}
 				} else if (mPullUpEnabled
-						&& (pullUpY < 0 || (mPolicy.canPullUp(pullView)
-								&& canPullUp && state != STATE_REFRESHING))) {
+						&& (pullUpY < 0 || (mPolicy.canPullUp(pullView) && canPullUp && state != STATE_REFRESHING))) {
 					// 可以上拉，正在刷新时不能上拉
 					pullUpY = pullUpY + (ev.getY() - lastY) / radio;
 					if (pullUpY > 0) {
@@ -437,12 +413,10 @@ public class PullLayout extends RelativeLayout {
 				mEvents = 0;
 			lastY = ev.getY();
 			// 根据下拉距离改变比例
-			radio = (float) (2 + 2 * Math.tan(Math.PI / 2 / getMeasuredHeight()
-					* (pullDownY + Math.abs(pullUpY))));
+			radio = (float) (2 + 2 * Math.tan(Math.PI / 2 / getMeasuredHeight() * (pullDownY + Math.abs(pullUpY))));
 			requestLayout();
 			if (pullDownY > 0) {
-				if (pullDownY <= refreshDist
-						&& (state == STATE_RELEASE_TO_REFRESH || state == STATE_DONE)) {
+				if (pullDownY <= refreshDist && (state == STATE_RELEASE_TO_REFRESH || state == STATE_DONE)) {
 					// 如果下拉距离没达到刷新的距离且当前状态是释放刷新，改变状态为下拉刷新
 					changeState(STATAE_INIT);
 				}
@@ -452,8 +426,7 @@ public class PullLayout extends RelativeLayout {
 				}
 			} else if (pullUpY < 0) {
 				// 下面是判断上拉加载的，同上，注意pullUpY是负值
-				if (-pullUpY <= loadMoreDist
-						&& (state == STATE_RELEASE_TO_LOAD || state == STATE_DONE)) {
+				if (-pullUpY <= loadMoreDist && (state == STATE_RELEASE_TO_LOAD || state == STATE_DONE)) {
 					changeState(STATAE_INIT);
 				}
 				// 上拉操作
@@ -499,26 +472,17 @@ public class PullLayout extends RelativeLayout {
 			// 这里是第一次进来的时候做一些初始化
 			ensureHeadFoot();
 			isLayout = true;
-			refreshDist = ((ViewGroup) refreshHeadView).getChildAt(0)
-					.getMeasuredHeight();
-			loadMoreDist = ((ViewGroup) loadmoreFootView).getChildAt(0)
-					.getMeasuredHeight();
+			refreshDist = ((ViewGroup) refreshHeadView).getChildAt(0).getMeasuredHeight();
+			loadMoreDist = ((ViewGroup) loadmoreFootView).getChildAt(0).getMeasuredHeight();
 		}
 		// 改变子控件的布局，这里直接用(pullDownY + pullUpY)作为偏移量，这样就可以不对当前状态作区分
-		refreshHeadView
-				.layout(0,
-						(int) (pullDownY + pullUpY)
-								- refreshHeadView.getMeasuredHeight(),
-						refreshHeadView.getMeasuredWidth(),
-						(int) (pullDownY + pullUpY));
-		pullView.layout(0, (int) (pullDownY + pullUpY),
-				pullView.getMeasuredWidth(), (int) (pullDownY + pullUpY)
-						+ pullView.getMeasuredHeight());
-		loadmoreFootView.layout(0,
-				(int) (pullDownY + pullUpY) + pullView.getMeasuredHeight(),
+		refreshHeadView.layout(0, (int) (pullDownY + pullUpY) - refreshHeadView.getMeasuredHeight(),
+				refreshHeadView.getMeasuredWidth(), (int) (pullDownY + pullUpY));
+		pullView.layout(0, (int) (pullDownY + pullUpY), pullView.getMeasuredWidth(),
+				(int) (pullDownY + pullUpY) + pullView.getMeasuredHeight());
+		loadmoreFootView.layout(0, (int) (pullDownY + pullUpY) + pullView.getMeasuredHeight(),
 				loadmoreFootView.getMeasuredWidth(),
-				(int) (pullDownY + pullUpY) + pullView.getMeasuredHeight()
-						+ loadmoreFootView.getMeasuredHeight());
+				(int) (pullDownY + pullUpY) + pullView.getMeasuredHeight() + loadmoreFootView.getMeasuredHeight());
 	}
 
 	public static class PullPolicy {
@@ -553,8 +517,7 @@ public class PullLayout extends RelativeLayout {
 			if (v.getCount() == 0) {
 				// 没有item的时候也可以下拉刷新
 				return true;
-			} else if (v.getFirstVisiblePosition() == 0
-					&& v.getChildAt(0).getTop() >= 0) {
+			} else if (v.getFirstVisiblePosition() == 0 && v.getChildAt(0).getTop() >= 0) {
 				// 滑到顶部了
 				return true;
 			} else
@@ -567,12 +530,9 @@ public class PullLayout extends RelativeLayout {
 				return true;
 			} else if (v.getLastVisiblePosition() == (v.getCount() - 1)) {
 				// 滑到底部了
-				if (v.getChildAt(v.getLastVisiblePosition()
-						- v.getFirstVisiblePosition()) != null
-						&& v.getChildAt(
-								v.getLastVisiblePosition()
-										- v.getFirstVisiblePosition())
-								.getBottom() <= v.getMeasuredHeight())
+				if (v.getChildAt(v.getLastVisiblePosition() - v.getFirstVisiblePosition()) != null
+						&& v.getChildAt(v.getLastVisiblePosition() - v.getFirstVisiblePosition()).getBottom() <= v
+								.getMeasuredHeight())
 					return true;
 			}
 			return false;
@@ -586,8 +546,7 @@ public class PullLayout extends RelativeLayout {
 		}
 
 		protected boolean canPullUp(ScrollView v) {
-			if (v.getScrollY() >= (v.getChildAt(0).getHeight() - v
-					.getMeasuredHeight()))
+			if (v.getScrollY() >= (v.getChildAt(0).getHeight() - v.getMeasuredHeight()))
 				return true;
 			else
 				return false;
@@ -601,8 +560,7 @@ public class PullLayout extends RelativeLayout {
 		}
 
 		protected boolean canPullUp(WebView v) {
-			if (v.getScrollY() >= Math.floor(v.getContentHeight()
-					* v.getScale() - v.getMeasuredHeight()))
+			if (v.getScrollY() >= Math.floor(v.getContentHeight() * v.getScale() - v.getMeasuredHeight()))
 				return true;
 			else
 				return false;

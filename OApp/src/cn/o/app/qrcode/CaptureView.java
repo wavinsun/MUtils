@@ -1,5 +1,7 @@
 package cn.o.app.qrcode;
 
+import com.google.zxing.Result;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -18,10 +20,9 @@ import cn.o.app.qrcode.camera.CameraManager;
 import cn.o.app.qrcode.decode.CaptureHandler;
 import cn.o.app.ui.StateView;
 
-import com.google.zxing.Result;
-
 @SuppressWarnings("deprecation")
 public class CaptureView extends StateView implements Callback {
+
 	protected CaptureHandler mHandler;
 	protected SurfaceView mSurfaceView;
 	protected ViewfinderView mViewfinderView;
@@ -52,15 +53,11 @@ public class CaptureView extends StateView implements Callback {
 		if (attrs == null) {
 			return;
 		}
-		TypedArray typedArray = context.obtainStyledAttributes(attrs,
-				R.styleable.CaptureView);
+		TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CaptureView);
 		mLaserLine = typedArray.getDrawable(R.styleable.CaptureView_laserLine);
-		mLaserColor = typedArray
-				.getColorStateList(R.styleable.CaptureView_laserColor);
-		mFrameColor = typedArray
-				.getColorStateList(R.styleable.CaptureView_frameColor);
-		mMaskColor = typedArray
-				.getColorStateList(R.styleable.CaptureView_maskColor);
+		mLaserColor = typedArray.getColorStateList(R.styleable.CaptureView_laserColor);
+		mFrameColor = typedArray.getColorStateList(R.styleable.CaptureView_frameColor);
+		mMaskColor = typedArray.getColorStateList(R.styleable.CaptureView_maskColor);
 		typedArray.recycle();
 	}
 
@@ -69,8 +66,7 @@ public class CaptureView extends StateView implements Callback {
 		super.onCreate();
 		Context context = this.getContext();
 		mSurfaceView = new SurfaceView(context);
-		mSurfaceView.setLayoutParams(new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.MATCH_PARENT,
+		mSurfaceView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT));
 		this.addView(mSurfaceView);
 		mViewfinderView = new ViewfinderView(context);
@@ -78,8 +74,7 @@ public class CaptureView extends StateView implements Callback {
 		mViewfinderView.setLaserColor(mLaserColor);
 		mViewfinderView.setFrameColor(mFrameColor);
 		mViewfinderView.setMaskColor(mMaskColor);
-		mViewfinderView.setLayoutParams(new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.MATCH_PARENT,
+		mViewfinderView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT));
 		this.addView(mViewfinderView);
 		mHasSurface = false;
@@ -132,8 +127,7 @@ public class CaptureView extends StateView implements Callback {
 	}
 
 	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
 	}
 
@@ -176,8 +170,7 @@ public class CaptureView extends StateView implements Callback {
 		Parameters parameters = camera.getParameters();
 		parameters.setFlashMode(Parameters.FLASH_MODE_TORCH);
 		camera.setParameters(parameters);
-		mLightsOn = Parameters.FLASH_MODE_TORCH.equals(camera.getParameters()
-				.getFlashMode());
+		mLightsOn = Parameters.FLASH_MODE_TORCH.equals(camera.getParameters().getFlashMode());
 		return mLightsOn;
 	}
 
@@ -193,8 +186,7 @@ public class CaptureView extends StateView implements Callback {
 		Parameters parameters = camera.getParameters();
 		parameters.setFlashMode(Parameters.FLASH_MODE_OFF);
 		camera.setParameters(parameters);
-		mLightsOn = Parameters.FLASH_MODE_TORCH.equals(camera.getParameters()
-				.getFlashMode());
+		mLightsOn = Parameters.FLASH_MODE_TORCH.equals(camera.getParameters().getFlashMode());
 		return !mLightsOn;
 	}
 

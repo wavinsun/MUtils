@@ -4,6 +4,7 @@ import cn.o.app.context.IContextOwner;
 import cn.o.app.event.IDispatcher;
 
 public interface IQueue extends IContextOwner, IDispatcher {
+
 	public boolean isRunInBackground();
 
 	public int getMaxRunningCount();

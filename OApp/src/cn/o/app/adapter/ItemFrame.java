@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import cn.o.app.OWrapper;
 
-public abstract class ItemFrame<DATA_ITEM> extends FrameLayout implements
-		IItemView<DATA_ITEM> {
+public abstract class ItemFrame<DATA_ITEM> extends FrameLayout implements IItemView<DATA_ITEM> {
+
 	protected int mPosition = -1;
 
 	protected DATA_ITEM mDataProvider;

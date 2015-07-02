@@ -8,6 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @SuppressWarnings("unchecked")
 public class Dispatcher implements IDispatcher {
+
 	protected Map<String, List<Listener>> mListenersMap;
 
 	protected Map<String, List<Listener>> allocMap() {
@@ -193,8 +194,7 @@ public class Dispatcher implements IDispatcher {
 	}
 
 	@Override
-	public <T extends Listener> List<T> getListeners(String type,
-			Class<T> listenerClass) {
+	public <T extends Listener> List<T> getListeners(String type, Class<T> listenerClass) {
 		List<T> retListeners = new ArrayList<T>();
 		for (Listener listener : getListeners(type)) {
 			if (listenerClass.isInstance(listener)) {

@@ -21,8 +21,7 @@ import cn.o.app.ui.core.IViewFinder;
 
 @SuppressLint("RtlHardcoded")
 @SuppressWarnings("deprecation")
-public class ODialog extends Dialog implements IViewFinder, IContentViewOwner,
-		IContextProvider {
+public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, IContextProvider {
 
 	public ODialog(Context context) {
 		super(context);
@@ -34,8 +33,7 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner,
 		init();
 	}
 
-	public ODialog(Context context, boolean cancelable,
-			OnCancelListener cancelListener) {
+	public ODialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		init();
 	}
@@ -50,11 +48,12 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner,
 		OWrapper.injectContentView(this);
 	}
 
-	// 去除黑色模糊背景
+	/**
+	 * clear black blur background of Dialog
+	 */
 	public void clearBehind() {
-		getWindow().clearFlags(
-				WindowManager.LayoutParams.FLAG_BLUR_BEHIND
-						| WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+		getWindow()
+				.clearFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND | WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 	}
 
 	/**
@@ -107,7 +106,11 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner,
 		return OWrapper.getContentView(this);
 	}
 
-	// 模拟PopupWindow
+	/**
+	 * Simulate PopupWindow
+	 * 
+	 * @param anchor
+	 */
 	public void showAsDropDown(View anchor) {
 		clearBehind();
 		int[] location = new int[2];
@@ -115,14 +118,13 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner,
 		Rect dialogableRect = new Rect();
 		anchor.getWindowVisibleDisplayFrame(dialogableRect);
 		int screenHeight = anchor.getResources().getDisplayMetrics().heightPixels;
-		int maxStatusHeight = screenHeight / 10;// 假设最大状态栏高度
+		int maxStatusHeight = screenHeight / 10;// suppose max status bar height
 		boolean statusAtTop = dialogableRect.top > 1;
-		int statusHeight = statusAtTop ? dialogableRect.top
-				: (screenHeight - dialogableRect.bottom);
+		int statusHeight = statusAtTop ? dialogableRect.top : (screenHeight - dialogableRect.bottom);
 		statusHeight = statusHeight < maxStatusHeight ? statusHeight : 0;
-		if (statusHeight + dialogableRect.height() != screenHeight) {// 键盘弹出
-			dialogableRect.bottom = statusAtTop ? screenHeight
-					: (screenHeight - statusHeight);
+		// keyboard opening
+		if (statusHeight + dialogableRect.height() != screenHeight) {
+			dialogableRect.bottom = statusAtTop ? screenHeight : (screenHeight - statusHeight);
 		}
 		Window w = getWindow();
 		WindowManager.LayoutParams attrs = w.getAttributes();
@@ -138,9 +140,8 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner,
 			rootView.removeViewAt(0);
 			frame.addView(v);
 		}
-		frame.setLayoutParams(new ViewGroup.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT));
+		frame.setLayoutParams(
+				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		w.setContentView(frame);
 		show();
 	}
@@ -171,9 +172,9 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner,
 			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 			int measuredHeight = this.getMeasuredHeight();
 			if (mMaxHeight > 0 && mMaxHeight < measuredHeight) {
-				super.onMeasure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(),
-						MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(
-						mMaxHeight, MeasureSpec.EXACTLY));// 通知子View
+				// Notify sub views
+				super.onMeasure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
+						MeasureSpec.makeMeasureSpec(mMaxHeight, MeasureSpec.EXACTLY));//
 				this.setMeasuredDimension(getMeasuredWidth(), mMaxHeight);
 
 			}

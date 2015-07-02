@@ -10,4 +10,5 @@ public interface IFragment extends IStateView, ILockable {
 	public boolean isFragmentVisible();
 
 	public void setFragmentVisible(boolean visible);
+
 }

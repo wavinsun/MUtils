@@ -29,8 +29,8 @@ import cn.o.app.ui.core.IStateView;
 import cn.o.app.ui.core.IStateViewManager;
 
 @SuppressLint("ClickableViewAccessibility")
-public class FragmentFlipper extends ViewFlipper implements IStateView,
-		IStateViewManager, ICachedViewManager {
+public class FragmentFlipper extends ViewFlipper implements IStateView, IStateViewManager, ICachedViewManager {
+
 	protected Handler mAnimHandler;
 
 	protected boolean mCreateDispatched;
@@ -49,7 +49,7 @@ public class FragmentFlipper extends ViewFlipper implements IStateView,
 
 	protected boolean mAnimEnabled = true;
 
-	// 默认值为-1，切换时为-2
+	/** -1 for default,-2 for flipping */
 	protected int mSelectedIndex = -1;
 
 	protected int mTargetIndex = -1;
@@ -89,48 +89,36 @@ public class FragmentFlipper extends ViewFlipper implements IStateView,
 		}
 	}
 
-	public void setAnimation(int pushLeftIn, int pushLeftOut, int pushRightIn,
-			int pushRightOut) {
+	public void setAnimation(int pushLeftIn, int pushLeftOut, int pushRightIn, int pushRightOut) {
 		mAnimEnabled = true;
 		Context context = this.getContext();
 		if (pushLeftIn == 0) {
-			mAnimPushLeftIn = new TranslateAnimation(
-					Animation.RELATIVE_TO_SELF, 1, Animation.RELATIVE_TO_SELF,
-					0, Animation.RELATIVE_TO_SELF, 0,
-					Animation.RELATIVE_TO_SELF, 0);
+			mAnimPushLeftIn = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1, Animation.RELATIVE_TO_SELF, 0,
+					Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
 			mAnimPushLeftIn.setDuration(300);
 		} else {
 			mAnimPushLeftIn = AnimationUtils.loadAnimation(context, pushLeftIn);
 		}
 		if (pushLeftOut == 0) {
-			mAnimPushLeftOut = new TranslateAnimation(
-					Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF,
-					-1, Animation.RELATIVE_TO_SELF, 0,
-					Animation.RELATIVE_TO_SELF, 0);
+			mAnimPushLeftOut = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, -1,
+					Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
 			mAnimPushLeftOut.setDuration(300);
 		} else {
-			mAnimPushLeftOut = AnimationUtils.loadAnimation(context,
-					pushLeftOut);
+			mAnimPushLeftOut = AnimationUtils.loadAnimation(context, pushLeftOut);
 		}
 		if (pushRightIn == 0) {
-			mAnimPushRightIn = new TranslateAnimation(
-					Animation.RELATIVE_TO_SELF, -1, Animation.RELATIVE_TO_SELF,
-					0, Animation.RELATIVE_TO_SELF, 0,
-					Animation.RELATIVE_TO_SELF, 0);
+			mAnimPushRightIn = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1, Animation.RELATIVE_TO_SELF, 0,
+					Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
 			mAnimPushRightIn.setDuration(300);
 		} else {
-			mAnimPushRightIn = AnimationUtils.loadAnimation(context,
-					pushRightIn);
+			mAnimPushRightIn = AnimationUtils.loadAnimation(context, pushRightIn);
 		}
 		if (pushRightOut == 0) {
-			mAnimPushRightOut = new TranslateAnimation(
-					Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF,
-					1, Animation.RELATIVE_TO_SELF, 0,
-					Animation.RELATIVE_TO_SELF, 0);
+			mAnimPushRightOut = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 1,
+					Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
 			mAnimPushRightOut.setDuration(300);
 		} else {
-			mAnimPushRightOut = AnimationUtils.loadAnimation(context,
-					pushRightOut);
+			mAnimPushRightOut = AnimationUtils.loadAnimation(context, pushRightOut);
 		}
 
 		if (mAnimPushListener == null) {
@@ -330,10 +318,8 @@ public class FragmentFlipper extends ViewFlipper implements IStateView,
 		mGestureDetectorEnabled = v;
 		if (mGestureDetectorEnabled) {
 			Context context = this.getContext();
-			mMinDistance = (int) OUtil.getRawSize(context,
-					TypedValue.COMPLEX_UNIT_DIP, 64);
-			mMinVelocity = (int) OUtil.getRawSize(context,
-					TypedValue.COMPLEX_UNIT_DIP, 16);
+			mMinDistance = (int) OUtil.getRawSize(context, TypedValue.COMPLEX_UNIT_DIP, 64);
+			mMinVelocity = (int) OUtil.getRawSize(context, TypedValue.COMPLEX_UNIT_DIP, 16);
 		}
 	}
 
@@ -363,8 +349,7 @@ public class FragmentFlipper extends ViewFlipper implements IStateView,
 					}
 
 					@Override
-					public boolean onScroll(MotionEvent e1, MotionEvent e2,
-							float distanceX, float distanceY) {
+					public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 						return false;
 					}
 
@@ -374,16 +359,13 @@ public class FragmentFlipper extends ViewFlipper implements IStateView,
 					}
 
 					@Override
-					public boolean onFling(MotionEvent e1, MotionEvent e2,
-							float velocityX, float velocityY) {
+					public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 						if (Math.abs(e1.getY() - e2.getY()) > mMinDistance) {
 							return false;
 						}
-						if (e1.getX() - e2.getX() > mMinDistance
-								&& Math.abs(velocityX) > mMinVelocity) {
+						if (e1.getX() - e2.getX() > mMinDistance && Math.abs(velocityX) > mMinVelocity) {
 							setSelectedIndex(mSelectedIndex + 1);
-						} else if (e2.getX() - e1.getX() > mMinDistance
-								&& Math.abs(velocityX) > mMinVelocity) {
+						} else if (e2.getX() - e1.getX() > mMinDistance && Math.abs(velocityX) > mMinVelocity) {
 							setSelectedIndex(mSelectedIndex - 1);
 						} else {
 							return false;
@@ -397,8 +379,7 @@ public class FragmentFlipper extends ViewFlipper implements IStateView,
 					}
 				};
 			}
-			mGestureDetector = new GestureDetector(getContext(),
-					mGestureDetectorOnGestureListener);
+			mGestureDetector = new GestureDetector(getContext(), mGestureDetectorOnGestureListener);
 
 			if (mOnTouchListener == null) {
 				mOnTouchListener = new OnTouchListener() {
@@ -454,8 +435,7 @@ public class FragmentFlipper extends ViewFlipper implements IStateView,
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
 		if (mGestureDetectorEnabled && !onInterceptGesture()) {
-			return mGestureDetector.onTouchEvent(ev)
-					&& super.onInterceptTouchEvent(ev);
+			return mGestureDetector.onTouchEvent(ev) && super.onInterceptTouchEvent(ev);
 		}
 		return super.onInterceptTouchEvent(ev);
 	}
@@ -548,8 +528,7 @@ public class FragmentFlipper extends ViewFlipper implements IStateView,
 
 	@Override
 	public List<OnActivityResultListener> getOnActivityResultListeners() {
-		return mDispatcher.getListeners(OnActivityResultListener.EVENT_TYPE,
-				OnActivityResultListener.class);
+		return mDispatcher.getListeners(OnActivityResultListener.EVENT_TYPE, OnActivityResultListener.class);
 	}
 
 	@Override
@@ -559,8 +538,7 @@ public class FragmentFlipper extends ViewFlipper implements IStateView,
 
 	@Override
 	public void removeOnActivityResultListener(OnActivityResultListener listener) {
-		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE,
-				listener);
+		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE, listener);
 	}
 
 	@Override

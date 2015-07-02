@@ -6,8 +6,7 @@ import android.widget.EditText;
 
 public class TextWatcherUtil {
 
-	public static TextWatcher setEditTextDecimals(EditText editText,
-			int decimals) {
+	public static TextWatcher setEditTextDecimals(EditText editText, int decimals) {
 		EditTextDecimalsTextWatcher watcher = new EditTextDecimalsTextWatcher();
 		watcher.setEditText(editText);
 		watcher.setDecimals(decimals);
@@ -16,6 +15,7 @@ public class TextWatcherUtil {
 	}
 
 	public static class EditTextDecimalsTextWatcher implements TextWatcher {
+
 		protected EditText mEditText;
 
 		protected int mDecimals;
@@ -31,13 +31,11 @@ public class TextWatcherUtil {
 		}
 
 		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count,
-				int after) {
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 		}
 
 		@Override
-		public void onTextChanged(CharSequence s, int start, int before,
-				int count) {
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
 		}
 
 		@Override

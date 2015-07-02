@@ -10,7 +10,9 @@ import cn.o.app.event.Listener;
 
 public class FlowLayout extends ViewGroup {
 	public static interface OnLinesChangeListener extends Listener {
+
 		public void onChanged(FlowLayout v, int lines);
+
 	}
 
 	protected int mHorizontalGap;
@@ -38,14 +40,10 @@ public class FlowLayout extends ViewGroup {
 
 	protected void init(Context context, AttributeSet attrs) {
 		if (attrs != null) {
-			TypedArray typedArray = context.obtainStyledAttributes(attrs,
-					R.styleable.FlowLayout);
-			mHorizontalGap = typedArray.getDimensionPixelSize(
-					R.styleable.FlowLayout_android_horizontalGap, 10);
-			mVerticalGap = typedArray.getDimensionPixelSize(
-					R.styleable.FlowLayout_android_verticalGap, 10);
-			mMaxLines = typedArray.getInt(
-					R.styleable.FlowLayout_android_maxLines, -1);
+			TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FlowLayout);
+			mHorizontalGap = typedArray.getDimensionPixelSize(R.styleable.FlowLayout_android_horizontalGap, 10);
+			mVerticalGap = typedArray.getDimensionPixelSize(R.styleable.FlowLayout_android_verticalGap, 10);
+			mMaxLines = typedArray.getInt(R.styleable.FlowLayout_android_maxLines, -1);
 			typedArray.recycle();
 		}
 	}
@@ -77,17 +75,13 @@ public class FlowLayout extends ViewGroup {
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		int w = MeasureSpec.getSize(widthMeasureSpec) - getPaddingLeft()
-				- getPaddingRight();
-		int h = MeasureSpec.getSize(heightMeasureSpec) - getPaddingTop()
-				- getPaddingBottom();
+		int w = MeasureSpec.getSize(widthMeasureSpec) - getPaddingLeft() - getPaddingRight();
+		int h = MeasureSpec.getSize(heightMeasureSpec) - getPaddingTop() - getPaddingBottom();
 		int childHeightMeasureSpec;
 		if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST) {
-			childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(h,
-					MeasureSpec.AT_MOST);
+			childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(h, MeasureSpec.AT_MOST);
 		} else {
-			childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(0,
-					MeasureSpec.UNSPECIFIED);
+			childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 		}
 		int x = getPaddingLeft();
 		int y = getPaddingTop();
@@ -104,10 +98,8 @@ public class FlowLayout extends ViewGroup {
 				linesInvalidate = false;
 				rowHeight = 0;
 			}
-			child.measure(MeasureSpec.makeMeasureSpec(w, MeasureSpec.AT_MOST),
-					childHeightMeasureSpec);
-			rowHeight = Math.max(rowHeight, child.getMeasuredHeight()
-					+ mVerticalGap);
+			child.measure(MeasureSpec.makeMeasureSpec(w, MeasureSpec.AT_MOST), childHeightMeasureSpec);
+			rowHeight = Math.max(rowHeight, child.getMeasuredHeight() + mVerticalGap);
 			if (x + child.getMeasuredWidth() > w) {
 				if (x > getPaddingLeft()) {
 					x = getPaddingLeft();
@@ -135,8 +127,7 @@ public class FlowLayout extends ViewGroup {
 				}
 			}
 		}
-		setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), h
-				+ getPaddingBottom());
+		setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), h + getPaddingBottom());
 		if (mMeasuredLines != lines) {
 			mMeasuredLines = lines;
 			if (mOnLinesChangeListener != null) {
@@ -153,8 +144,7 @@ public class FlowLayout extends ViewGroup {
 				continue;
 			}
 			LayoutParams lp = (LayoutParams) child.getLayoutParams();
-			child.layout(lp.x, lp.y, lp.x + child.getMeasuredWidth(), lp.y
-					+ child.getMeasuredHeight());
+			child.layout(lp.x, lp.y, lp.x + child.getMeasuredWidth(), lp.y + child.getMeasuredHeight());
 		}
 	}
 
@@ -165,8 +155,7 @@ public class FlowLayout extends ViewGroup {
 
 	@Override
 	protected LayoutParams generateDefaultLayoutParams() {
-		return new LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT);
+		return new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 	}
 
 	@Override
@@ -175,8 +164,7 @@ public class FlowLayout extends ViewGroup {
 	}
 
 	@Override
-	protected LayoutParams generateLayoutParams(
-			android.view.ViewGroup.LayoutParams p) {
+	protected LayoutParams generateLayoutParams(android.view.ViewGroup.LayoutParams p) {
 		return new LayoutParams(p.width, p.height);
 	}
 

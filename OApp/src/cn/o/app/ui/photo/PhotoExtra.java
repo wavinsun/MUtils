@@ -6,6 +6,7 @@ import cn.o.app.io.Extra;
 
 @SuppressWarnings("serial")
 public class PhotoExtra extends Extra {
+
 	protected int displayedIndex;
 
 	protected ArrayList<String> photos;

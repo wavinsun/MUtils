@@ -8,7 +8,8 @@ import android.widget.LinearLayout;
 import cn.o.app.event.listener.OnSelectedChangeListener;
 
 public class TabBar extends LinearLayout implements View.OnClickListener {
-	// 避免卡顿
+
+	/** Handler for fluent experience */
 	protected Handler mSelectedDispatcher;
 
 	protected int mSelectedIndex = -1;
@@ -63,8 +64,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
 			return;
 		}
 		if (mOnSelectedChangeListener != null) {
-			if (mOnSelectedChangeListener
-					.onInterceptChange(this, selectedIndex)) {
+			if (mOnSelectedChangeListener.onInterceptChange(this, selectedIndex)) {
 				return;
 			}
 		}
@@ -84,8 +84,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
 				@Override
 				public void run() {
 					if (mOnSelectedChangeListener != null) {
-						mOnSelectedChangeListener.onChanged(TabBar.this,
-								mSelectedIndex);
+						mOnSelectedChangeListener.onChanged(TabBar.this, mSelectedIndex);
 					}
 				}
 			});

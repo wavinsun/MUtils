@@ -13,7 +13,9 @@ import cn.o.app.runtime.OField;
 import cn.o.app.xml.IXmlItem;
 import cn.o.app.xml.XmlUtil;
 
-//支持以下两种类型数据{"isOK":true} {"isOK":"true"}
+/**
+ * Support two data types: {"isOK":true} {"isOK":"true"}
+ */
 @SuppressWarnings("serial")
 public class OBoolean extends Serial<Boolean> {
 

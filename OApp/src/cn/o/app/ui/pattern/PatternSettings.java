@@ -11,16 +11,16 @@ public class PatternSettings implements IPatternSettings {
 
 	private static final String PATTERN_FILENAME = "PatternSettings";
 
-	// 用户
+	/** Identity */
 	public String id = "";
 
-	// 密码
+	/** Password */
 	public String mm = "";
 
-	// 是否启用
+	/** Enabled */
 	public boolean qy = false;
 
-	// 周期频率
+	/** Period */
 	public int zq = 0;
 
 	public PatternSettings() {
@@ -91,8 +91,7 @@ public class PatternSettings implements IPatternSettings {
 			return false;
 		}
 		try {
-			return OUtil.setPrefString(context, PATTERN_FILENAME, id,
-					JsonUtil.convert(this));
+			return OUtil.setPrefString(context, PATTERN_FILENAME, id, JsonUtil.convert(this));
 		} catch (Exception e) {
 			return false;
 		}

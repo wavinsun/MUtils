@@ -1,6 +1,5 @@
 package cn.o.app.ui.core;
 
-
 public interface IStateView extends IViewFinder, IActivityStarter {
 
 	public IStateViewManager getManager();
@@ -24,4 +23,5 @@ public interface IStateView extends IViewFinder, IActivityStarter {
 	public boolean isCreateDispatched();
 
 	public void setCreateDispatched(boolean dispatched);
+
 }

@@ -18,13 +18,13 @@ public class ODateFormat {
 			} catch (Exception e) {
 				try {
 					String s = df.format(d != null ? d : new Date());
-					if (s.length() <= text.length()) {// 尝试解析格式化字符串对应长度
+					if (s.length() <= text.length()) {// parse matching length
 						return df.parse(text.substring(0, s.length()));
 					}
 				} catch (Exception ex) {
 
 				}
-				pattern = getSuggestPattern(pattern);// 缩短格式化字符串
+				pattern = getSuggestPattern(pattern);// short pattern string
 			}
 		}
 		throw new Exception();
@@ -34,8 +34,13 @@ public class ODateFormat {
 		return new SimpleDateFormat(pattern).format(date);
 	}
 
-	// 获取兼容格式
-	// yyyy-MM-dd'T'HH:mm:ss.SSS'Z' --> yyyy-MM-dd'T'HH:mm:ss.SSS
+	/**
+	 * Compatible pattern: yyyy-MM-dd'T'HH:mm:ss.SSS'Z' ->
+	 * yyyy-MM-dd'T'HH:mm:ss.SSS
+	 * 
+	 * @param pattern
+	 * @return
+	 */
 	protected static String getSuggestPattern(String pattern) {
 		int suggestIndex = 0;
 		char lastChar = 0;

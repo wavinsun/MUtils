@@ -7,6 +7,7 @@ import cn.o.app.event.listener.OnSelectedChangeListener;
 import cn.o.app.ui.OActivity;
 
 public class PhotoActivity extends OActivity {
+
 	protected PhotoContainer mPhotoContainer;
 
 	protected PhotoExtra mExtra;
@@ -16,23 +17,20 @@ public class PhotoActivity extends OActivity {
 		super.onCreate(savedInstanceState);
 
 		mPhotoContainer = new PhotoContainer(this);
-		mPhotoContainer.setLayoutParams(new ViewGroup.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.MATCH_PARENT));
-		mPhotoContainer
-				.setOnSelectedChangeListener(new OnSelectedChangeListener() {
+		mPhotoContainer.setLayoutParams(
+				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+		mPhotoContainer.setOnSelectedChangeListener(new OnSelectedChangeListener() {
 
-					@Override
-					public void onChanged(View v, int index) {
-						finish();
-					}
-				});
+			@Override
+			public void onChanged(View v, int index) {
+				finish();
+			}
+		});
 		this.setContentView(mPhotoContainer);
 
 		mExtra = new PhotoExtra();
 		if (mExtra.getFrom(getIntent())) {
-			mPhotoContainer.setDataProvider(mExtra.getPhotos(),
-					mExtra.getDisplayedIndex());
+			mPhotoContainer.setDataProvider(mExtra.getPhotos(), mExtra.getDisplayedIndex());
 		}
 	}
 }

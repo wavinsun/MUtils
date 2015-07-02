@@ -8,6 +8,7 @@ import cn.o.app.runtime.ReflectUtil;
 
 @SuppressWarnings("unchecked")
 public class OBroadcast<EXTRA extends Extra> implements IBroadcast {
+
 	protected String mAction;
 
 	protected Context mContext;
@@ -114,8 +115,7 @@ public class OBroadcast<EXTRA extends Extra> implements IBroadcast {
 			if (mOnReceiveListener != null) {
 				try {
 					Class<EXTRA> extraClass = (Class<EXTRA>) ReflectUtil
-							.getParameterizedClass(OBroadcast.this.getClass(),
-									0);
+							.getParameterizedClass(OBroadcast.this.getClass(), 0);
 					EXTRA extra = extraClass.newInstance();
 					if (extra.getFrom(intent)) {
 						mOnReceiveListener.onReceive(OBroadcast.this, extra);

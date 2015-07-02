@@ -25,7 +25,13 @@ public class ObjectUtil {
 		}
 	}
 
-	// 深度克隆,需要实现java.io.Serializable接口
+	/**
+	 * Deep clone
+	 * 
+	 * @param object
+	 *            Need to implements java.io.Serializable
+	 * @return
+	 */
 	public static Object clone(Object object) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		ObjectOutputStream oos = null;

@@ -13,8 +13,9 @@ import cn.o.app.runtime.ReflectUtil;
 import cn.o.app.xml.IXmlItem;
 import cn.o.app.xml.XmlUtil;
 
-//支持字符串类型的JSON数据
-//JSON字符串{"k":"{"k":0}"}
+/**
+ * Support JSON string:{"k":"{"k":0}"}
+ */
 @SuppressWarnings({ "serial", "unchecked" })
 public class StringJson<T> extends Serial<T> {
 
@@ -37,14 +38,10 @@ public class StringJson<T> extends Serial<T> {
 
 	protected T valueOf(String json, OField itemField) {
 		try {
-			Class<?> itemClass = itemField == null ? this.getClass()
-					: itemField.getType();
-			Type genericType = itemField == null ? null : itemField
-					.getGenericType();
-			Class<T> targetClass = (Class<T>) ReflectUtil
-					.getParameterizedClass(itemClass, genericType, 0);
-			Type targetType = ReflectUtil.getParameterizedType(itemClass,
-					genericType, 0);
+			Class<?> itemClass = itemField == null ? this.getClass() : itemField.getType();
+			Type genericType = itemField == null ? null : itemField.getGenericType();
+			Class<T> targetClass = (Class<T>) ReflectUtil.getParameterizedClass(itemClass, genericType, 0);
+			Type targetType = ReflectUtil.getParameterizedType(itemClass, genericType, 0);
 			return JsonUtil.convert(json.toString(), targetClass, targetType);
 		} catch (Exception e) {
 			return null;

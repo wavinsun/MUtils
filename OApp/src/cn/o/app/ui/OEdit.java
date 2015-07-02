@@ -22,6 +22,7 @@ import cn.o.app.R;
 
 @SuppressWarnings("deprecation")
 public class OEdit extends LinearLayout {
+
 	protected Pattern mRegex;
 
 	protected EditText mEdit;
@@ -54,8 +55,7 @@ public class OEdit extends LinearLayout {
 
 	protected void init(Context context, AttributeSet attrs) {
 		if (attrs != null) {
-			TypedArray typedArray = context.obtainStyledAttributes(attrs,
-					R.styleable.OEdit);
+			TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.OEdit);
 			String text = typedArray.getString(R.styleable.OEdit_android_text);
 			if (text != null) {
 				this.setText(text);
@@ -64,23 +64,19 @@ public class OEdit extends LinearLayout {
 			if (hint != null) {
 				this.setHint(hint);
 			}
-			ColorStateList hintTextColor = typedArray
-					.getColorStateList(R.styleable.OEdit_android_textColorHint);
+			ColorStateList hintTextColor = typedArray.getColorStateList(R.styleable.OEdit_android_textColorHint);
 			if (hintTextColor != null) {
 				this.setHintTextColor(hintTextColor);
 			}
-			int textSize = typedArray.getDimensionPixelSize(
-					R.styleable.OEdit_android_textSize, 0);
+			int textSize = typedArray.getDimensionPixelSize(R.styleable.OEdit_android_textSize, 0);
 			if (textSize != 0) {
 				this.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 			}
-			ColorStateList textColor = typedArray
-					.getColorStateList(R.styleable.OEdit_android_textColor);
+			ColorStateList textColor = typedArray.getColorStateList(R.styleable.OEdit_android_textColor);
 			if (textColor != null) {
 				this.setTextColor(textColor);
 			}
-			ColorStateList tipTextColor = typedArray
-					.getColorStateList(R.styleable.OEdit_textColorTip);
+			ColorStateList tipTextColor = typedArray.getColorStateList(R.styleable.OEdit_textColorTip);
 			if (tipTextColor != null) {
 				this.setTipColor(tipTextColor);
 			}
@@ -88,38 +84,31 @@ public class OEdit extends LinearLayout {
 			if (textTip != null) {
 				this.setTipText(textTip);
 			}
-			Drawable iconTip = typedArray
-					.getDrawable(R.styleable.OEdit_iconTip);
+			Drawable iconTip = typedArray.getDrawable(R.styleable.OEdit_iconTip);
 			if (iconTip != null) {
 				this.setTipIcon(iconTip);
 			}
-			Drawable iconClear = typedArray
-					.getDrawable(R.styleable.OEdit_iconClear);
+			Drawable iconClear = typedArray.getDrawable(R.styleable.OEdit_iconClear);
 			if (iconClear != null) {
 				this.setClearIcon(iconClear);
 			}
-			Drawable warnBackground = typedArray
-					.getDrawable(R.styleable.OEdit_backgroundWarn);
+			Drawable warnBackground = typedArray.getDrawable(R.styleable.OEdit_backgroundWarn);
 			if (warnBackground != null) {
 				this.setWarnBackground(warnBackground);
 			}
-			int inputType = typedArray.getInt(
-					R.styleable.OEdit_android_inputType, EditorInfo.TYPE_NULL);
+			int inputType = typedArray.getInt(R.styleable.OEdit_android_inputType, EditorInfo.TYPE_NULL);
 			if (inputType != EditorInfo.TYPE_NULL) {
 				this.setInputType(inputType);
 			}
-			int contentPadding = typedArray.getDimensionPixelSize(
-					R.styleable.OEdit_iconPadding, 0);
+			int contentPadding = typedArray.getDimensionPixelSize(R.styleable.OEdit_iconPadding, 0);
 			if (contentPadding != 0) {
 				this.setIconPadding(contentPadding);
 			}
-			int tipTextWidth = typedArray.getDimensionPixelSize(
-					R.styleable.OEdit_textWidthTip, 0);
+			int tipTextWidth = typedArray.getDimensionPixelSize(R.styleable.OEdit_textWidthTip, 0);
 			if (tipTextWidth != 0) {
 				this.setTipTextWidth(tipTextWidth);
 			}
-			int maxLength = typedArray.getInt(
-					R.styleable.OEdit_android_maxLength, 0);
+			int maxLength = typedArray.getInt(R.styleable.OEdit_android_maxLength, 0);
 			if (maxLength != 0) {
 				this.setMaxLength(maxLength);
 			}
@@ -132,21 +121,18 @@ public class OEdit extends LinearLayout {
 		this.setOrientation(LinearLayout.HORIZONTAL);
 		this.setGravity(Gravity.CENTER_VERTICAL);
 		mTip = new TextView(context);
-		mTip.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.WRAP_CONTENT,
+		mTip.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT));
 		this.addView(mTip, 0);
 		mEdit = new EditText(context);
 		mEdit.setSingleLine();
 		mEdit.setBackgroundDrawable(null);
 		mEdit.setPadding(0, 0, 0, 0);
-		mEdit.setLayoutParams(new LinearLayout.LayoutParams(0,
-				LinearLayout.LayoutParams.MATCH_PARENT, 1));
+		mEdit.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1));
 		mEdit.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if (mRegex == null) {
 					return;
 				}
@@ -159,8 +145,7 @@ public class OEdit extends LinearLayout {
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
 			}
 
@@ -172,8 +157,7 @@ public class OEdit extends LinearLayout {
 				if (!mEdit.isFocused()) {
 					return;
 				}
-				int clearVisibility = s.toString().isEmpty() ? View.GONE
-						: View.VISIBLE;
+				int clearVisibility = s.toString().isEmpty() ? View.GONE : View.VISIBLE;
 				if (clearVisibility != mClear.getVisibility()) {
 					mClear.setVisibility(clearVisibility);
 				}
@@ -185,8 +169,7 @@ public class OEdit extends LinearLayout {
 			public void onFocusChange(View v, boolean hasFocus) {
 				int clearVisibility = View.GONE;
 				if (hasFocus) {
-					clearVisibility = mEdit.getText().toString().isEmpty() ? View.GONE
-							: View.VISIBLE;
+					clearVisibility = mEdit.getText().toString().isEmpty() ? View.GONE : View.VISIBLE;
 					setSelected(true);
 				} else {
 					setSelected(false);
@@ -203,8 +186,7 @@ public class OEdit extends LinearLayout {
 		this.addView(mEdit, 1);
 		mClear = new ImageView(context);
 		mClear.setVisibility(View.GONE);
-		mClear.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.WRAP_CONTENT,
+		mClear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT));
 		mClear.setOnClickListener(new View.OnClickListener() {
 
@@ -232,14 +214,12 @@ public class OEdit extends LinearLayout {
 
 	public void setMaxLength(int maxLength) {
 		if (maxLength > 0) {
-			mEdit.setFilters(new InputFilter[] { new InputFilter.LengthFilter(
-					maxLength) });
+			mEdit.setFilters(new InputFilter[] { new InputFilter.LengthFilter(maxLength) });
 		}
 	}
 
 	public void setTipTextWidth(int tipTextWidth) {
-		LinearLayout.LayoutParams tipLayoutParams = (LinearLayout.LayoutParams) mTip
-				.getLayoutParams();
+		LinearLayout.LayoutParams tipLayoutParams = (LinearLayout.LayoutParams) mTip.getLayoutParams();
 		tipLayoutParams.width = tipTextWidth;
 		mTip.setLayoutParams(tipLayoutParams);
 	}
@@ -299,14 +279,12 @@ public class OEdit extends LinearLayout {
 	}
 
 	public boolean isInputTypeOfPassword() {
-		int variation = mEdit.getInputType()
-				& (EditorInfo.TYPE_MASK_CLASS | EditorInfo.TYPE_MASK_VARIATION);
+		int variation = mEdit.getInputType() & (EditorInfo.TYPE_MASK_CLASS | EditorInfo.TYPE_MASK_VARIATION);
 		return variation == (EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
 	}
 
 	public void setInputTypeOfPassword() {
-		this.setInputType(EditorInfo.TYPE_CLASS_TEXT
-				| EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
+		this.setInputType(EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
 	}
 
 	public void setInputTypeOfText() {
@@ -414,8 +392,7 @@ public class OEdit extends LinearLayout {
 	}
 
 	public void setWarnBackground(int resId) {
-		mWarnBackgroundDrawable = this.getContext().getResources()
-				.getDrawable(resId);
+		mWarnBackgroundDrawable = this.getContext().getResources().getDrawable(resId);
 	}
 
 	public void setWarnBackground(Drawable background) {

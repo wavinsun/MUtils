@@ -17,16 +17,18 @@ import cn.o.app.text.ODateFormat;
 import cn.o.app.xml.IXmlItem;
 import cn.o.app.xml.XmlUtil;
 
-//支持以下两种类型数据{"t":"2015-05-21 13:39:40"} {"n":1432186780000}
+/**
+ * Support two data types:{"date":"2015-05-21 13:39:40"} {"date":1432186780000}
+ */
 @SuppressWarnings("serial")
 public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 
-	// 用于格式化输出，覆盖toString()
+	/** Used to give format of toString() output */
 	protected String mFormat = "yyyy-MM-dd HH:mm:ss";
 
 	protected PrimitiveType mSerialType = PrimitiveType.STRING;
 
-	// 用于序列化和反序列化
+	/** Used to give format of serialization and deserialization */
 	protected String mSerialFormat = "yyyy-MM-dd HH:mm:ss";
 
 	public ODate() {
@@ -43,8 +45,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 
 	public ODate(String format, String text) {
 		try {
-			this.setTime(new SimpleDateFormat(format, Locale.getDefault())
-					.parse(text).getTime());
+			this.setTime(new SimpleDateFormat(format, Locale.getDefault()).parse(text).getTime());
 			this.setFormat(format);
 		} catch (Exception e) {
 
@@ -102,8 +103,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 		init(itemField);
 		try {
 			if (mSerialType == PrimitiveType.STRING) {
-				this.setTime(ODateFormat.parse(json.toString(), mSerialFormat)
-						.getTime());
+				this.setTime(ODateFormat.parse(json.toString(), mSerialFormat).getTime());
 			} else {
 				this.setTime(Long.parseLong(json.toString()));
 			}
@@ -128,8 +128,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 		init(itemField);
 		try {
 			if (mSerialType == PrimitiveType.STRING) {
-				this.setTime(ODateFormat.parse(xml.getTextContent(),
-						mSerialFormat).getTime());
+				this.setTime(ODateFormat.parse(xml.getTextContent(), mSerialFormat).getTime());
 			} else {
 				this.setTime(Long.parseLong(xml.getTextContent()));
 			}

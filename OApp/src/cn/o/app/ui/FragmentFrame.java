@@ -17,14 +17,13 @@ import cn.o.app.ui.core.IFragment;
 import cn.o.app.ui.core.IStateView;
 import cn.o.app.ui.core.IStateViewManager;
 
-public class FragmentFrame extends FrameLayout implements IStateView,
-		IStateViewManager, ICachedViewManager {
+public class FragmentFrame extends FrameLayout implements IStateView, IStateViewManager, ICachedViewManager {
 
 	protected boolean mCreateDispatched;
 
 	protected List<View> mCachedViews = new ArrayList<View>();
 
-	// 默认值为-1
+	/** -1 for default */
 	protected int mSelectedIndex = -1;
 
 	protected OnSelectedChangeListener mOnSelectedChangeListener;
@@ -140,7 +139,7 @@ public class FragmentFrame extends FrameLayout implements IStateView,
 		}
 		setDisplayedChild(this.indexOfChild(view));
 
-		// postSelecting
+		// post selecting
 		if (view instanceof IStateView) {
 			if (view instanceof IFragment) {
 				((IFragment) view).setLocked(false);
@@ -304,8 +303,7 @@ public class FragmentFrame extends FrameLayout implements IStateView,
 
 	@Override
 	public List<OnActivityResultListener> getOnActivityResultListeners() {
-		return mDispatcher.getListeners(OnActivityResultListener.EVENT_TYPE,
-				OnActivityResultListener.class);
+		return mDispatcher.getListeners(OnActivityResultListener.EVENT_TYPE, OnActivityResultListener.class);
 	}
 
 	@Override
@@ -315,8 +313,7 @@ public class FragmentFrame extends FrameLayout implements IStateView,
 
 	@Override
 	public void removeOnActivityResultListener(OnActivityResultListener listener) {
-		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE,
-				listener);
+		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE, listener);
 	}
 
 	@Override

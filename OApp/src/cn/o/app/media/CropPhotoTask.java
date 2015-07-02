@@ -16,10 +16,15 @@ import cn.o.app.task.ILockable;
 import cn.o.app.ui.core.IActivityResultCatcher;
 import cn.o.app.ui.core.IActivityStarter;
 
-// 剪裁图片
+/**
+ * Crop photo by system call
+ */
 public class CropPhotoTask implements ILockable {
+
 	public static interface CropPhotoListener extends Listener {
+
 		public void onComplete(Uri uri);
+
 	}
 
 	protected IActivityResultCatcher mCatcher;
@@ -35,8 +40,7 @@ public class CropPhotoTask implements ILockable {
 	protected OnActivityResultListener mOnActivityResultListener = new OnActivityResultListener() {
 
 		@Override
-		public void onActivityResult(Context context, int requestCode,
-				int resultCode, Intent data) {
+		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
 			if (mRequestCode != requestCode) {
 				return;
 			}
@@ -46,8 +50,7 @@ public class CropPhotoTask implements ILockable {
 				return;
 			}
 			if (OUtil.compress(mExtraOutput.getPath())) {
-				CropPhotoListener listener = (CropPhotoListener) mDispatcher
-						.getListener();
+				CropPhotoListener listener = (CropPhotoListener) mDispatcher.getListener();
 				if (listener != null) {
 					listener.onComplete(mExtraOutput);
 				}
@@ -80,8 +83,7 @@ public class CropPhotoTask implements ILockable {
 		intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 		if (mCatcher instanceof IActivityStarter) {
 			mCatcher.addOnActivityResultListener(mOnActivityResultListener);
-			((IActivityStarter) mCatcher).startActivityForResult(intent,
-					mRequestCode);
+			((IActivityStarter) mCatcher).startActivityForResult(intent, mRequestCode);
 			mLocked = true;
 			return true;
 		} else if (mCatcher instanceof Activity) {
@@ -99,8 +101,7 @@ public class CropPhotoTask implements ILockable {
 
 	protected Uri generateExtraOutput(Uri uri, int width, int height) {
 		try {
-			String mediaStorageDir = OUtil.getDiskCacheDir(
-					mCatcher.getContext(), "OApp");
+			String mediaStorageDir = OUtil.getDiskCacheDir(mCatcher.getContext(), "OApp");
 			if (mediaStorageDir == null) {
 				return null;
 			}

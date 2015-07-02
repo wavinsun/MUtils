@@ -4,10 +4,20 @@ import cn.o.app.event.Listener;
 
 public interface OPayListener extends Listener {
 
-	// 支付成功
+	/**
+	 * Pay success
+	 * 
+	 * @param task
+	 */
 	public void onComplete(OPayTask task);
 
-	// 如果触发异常e不为空
+	/**
+	 * Pay error
+	 * 
+	 * @param task
+	 * @param e
+	 *            It is not null when exception happens
+	 */
 	public void onError(OPayTask task, Exception e);
 
 }

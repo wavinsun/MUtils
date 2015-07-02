@@ -7,7 +7,9 @@ import java.util.Map;
 
 public class BeanCache {
 
-	// 属性节点哈希缓存
+	/**
+	 * Hash cache for object property
+	 */
 	public static class PropertyHash {
 
 		protected long mHash;
@@ -30,7 +32,11 @@ public class BeanCache {
 			mPorperty = value;
 		}
 
-		// 判断哈希是否有效 属性被改写则导致失效
+		/**
+		 * Whether hash is valid.
+		 * 
+		 * @return Return false if object property changed by itself
+		 */
 		public boolean isValid() {
 			return mHash == HashCode.hashCode(mPorperty);
 		}
@@ -58,7 +64,11 @@ public class BeanCache {
 		}
 	}
 
-	// 将缓存写入对象，返回改变的属性
+	/**
+	 * Bring object to cache
+	 * 
+	 * @return Properties changed
+	 */
 	public List<String> fromTarget() {
 		if (mTarget == null) {
 			return null;
@@ -99,7 +109,11 @@ public class BeanCache {
 		return changed.size() != 0 ? changed : null;
 	}
 
-	// 将对象写入缓存，返回改变的属性
+	/**
+	 * Bring cache to target object
+	 * 
+	 * @return Properties changed
+	 */
 	public List<String> toTarget() {
 		if (mTarget == null) {
 			return null;

@@ -10,8 +10,13 @@ public interface IStateViewManager extends IViewFinder {
 
 	public List<IStateView> getBindStateViews();
 
-	// 是否生命周期信息直接转发给选中的子View
+	/**
+	 * Whether only forward life cycle message to selected view
+	 * 
+	 * @return
+	 */
 	public boolean redirectToSelectedView();
 
 	public IStateView getSelectedView();
+
 }

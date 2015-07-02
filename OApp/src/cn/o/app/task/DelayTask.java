@@ -3,6 +3,7 @@ package cn.o.app.task;
 import android.os.Handler;
 
 public class DelayTask implements IStopable {
+
 	protected boolean mStoped;
 
 	protected Handler mHandler;

@@ -48,9 +48,13 @@ import cn.o.app.ui.core.IViewFinder;
 @SuppressWarnings({ "deprecation", "unchecked" })
 public class OWrapper {
 
-	// 自动隐藏键盘
-	public static void dispatchTouchEvent(MotionEvent ev,
-			IContextProvider dispatcher) {
+	/**
+	 * Hide keyboard when touch view who is not EditText and not focused
+	 * 
+	 * @param ev
+	 * @param dispatcher
+	 */
+	public static void dispatchTouchEvent(MotionEvent ev, IContextProvider dispatcher) {
 		if (ev.getAction() != MotionEvent.ACTION_DOWN) {
 			return;
 		}
@@ -69,16 +73,14 @@ public class OWrapper {
 		EditText edit = (EditText) focus;
 		int[] l = new int[2];
 		edit.getLocationInWindow(l);
-		boolean touchEdit = (ev.getX() >= l[0])
-				&& (ev.getX() <= l[0] + edit.getWidth()) && (ev.getY() >= l[1])
+		boolean touchEdit = (ev.getX() >= l[0]) && (ev.getX() <= l[0] + edit.getWidth()) && (ev.getY() >= l[1])
 				&& (ev.getY() <= l[1] + edit.getHeight());
 		if (touchEdit) {
 			return;
 		}
 		InputMethodManager imm = (InputMethodManager) dispatcher.getContext()
 				.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(edit.getWindowToken(),
-				InputMethodManager.HIDE_NOT_ALWAYS);
+		imm.hideSoftInputFromWindow(edit.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 	}
 
 	public static View getContentView(IViewFinder finder) {
@@ -147,16 +149,14 @@ public class OWrapper {
 	}
 
 	public static void injectResources(IViewFinder finder) {
-		Context context = (finder instanceof IContextProvider) ? ((IContextProvider) finder)
-				.getContext() : null;
+		Context context = (finder instanceof IContextProvider) ? ((IContextProvider) finder).getContext() : null;
 		Resources res = context == null ? null : context.getResources();
 		Class<?> c = finder.getClass();
 		while (IViewFinder.class.isAssignableFrom(c)) {
 			for (Field f : c.getDeclaredFields()) {
 				FindViewById fvbi = f.getAnnotation(FindViewById.class);
 				if (fvbi != null) {
-					View v = findViewById(finder, fvbi.value(),
-							(Class<View>) f.getType());
+					View v = findViewById(finder, fvbi.value(), (Class<View>) f.getType());
 					if (v != null) {
 						ReflectUtil.set(finder, f, v);
 					}
@@ -166,8 +166,7 @@ public class OWrapper {
 				}
 				LoadAnimation la = f.getAnnotation(LoadAnimation.class);
 				if (la != null) {
-					ReflectUtil.set(finder, f,
-							AnimationUtils.loadAnimation(context, la.value()));
+					ReflectUtil.set(finder, f, AnimationUtils.loadAnimation(context, la.value()));
 				}
 				if (res == null) {
 					continue;
@@ -176,21 +175,17 @@ public class OWrapper {
 				if (gc != null) {
 					ReflectUtil.set(finder, f, res.getColor(gc.value()));
 				}
-				GetColorStateList gcsl = f
-						.getAnnotation(GetColorStateList.class);
+				GetColorStateList gcsl = f.getAnnotation(GetColorStateList.class);
 				if (gcsl != null) {
-					ReflectUtil.set(finder, f,
-							res.getColorStateList(gcsl.value()));
+					ReflectUtil.set(finder, f, res.getColorStateList(gcsl.value()));
 				}
 				GetDimension gd = f.getAnnotation(GetDimension.class);
 				if (gd != null) {
 					ReflectUtil.set(finder, f, res.getDimension(gd.value()));
 				}
-				GetDimensionPixelSize gdps = f
-						.getAnnotation(GetDimensionPixelSize.class);
+				GetDimensionPixelSize gdps = f.getAnnotation(GetDimensionPixelSize.class);
 				if (gdps != null) {
-					ReflectUtil.set(finder, f,
-							res.getDimensionPixelSize(gdps.value()));
+					ReflectUtil.set(finder, f, res.getDimensionPixelSize(gdps.value()));
 				}
 				GetDrawable d = f.getAnnotation(GetDrawable.class);
 				if (d != null) {
@@ -209,8 +204,7 @@ public class OWrapper {
 		}
 	}
 
-	public static <T extends View> T findViewById(Object root, int id,
-			Class<T> viewClass) {
+	public static <T extends View> T findViewById(Object root, int id, Class<T> viewClass) {
 		if (root == null) {
 			return null;
 		}
@@ -290,8 +284,7 @@ public class OWrapper {
 		bindStateViews(manager, v, 0, Integer.MAX_VALUE);
 	}
 
-	public static void bindStateViews(IStateViewManager manager, View v,
-			int depth, int maxDepth) {
+	public static void bindStateViews(IStateViewManager manager, View v, int depth, int maxDepth) {
 		if (depth >= maxDepth) {
 			return;
 		}
@@ -484,8 +477,7 @@ public class OWrapper {
 
 	public static boolean interceptBackPressed(IStateViewManager manager) {
 		if (manager instanceof IStopableManager) {
-			List<IStopable> stopables = ((IStopableManager) manager)
-					.getBindStopables();
+			List<IStopable> stopables = ((IStopableManager) manager).getBindStopables();
 			boolean catchStopableed = false;
 			List<IStopable> stopedList = null;
 			for (IStopable stopable : stopables) {
@@ -534,28 +526,23 @@ public class OWrapper {
 		return false;
 	}
 
-	public static void startActivity(IContextProvider contextProvider,
-			Intent intent) {
+	public static void startActivity(IContextProvider contextProvider, Intent intent) {
 		contextProvider.getContext().startActivity(intent);
 	}
 
-	public static void startActivityForResult(IActivityStarter activityStarter,
-			Intent intent, int requestCode) {
+	public static void startActivityForResult(IActivityStarter activityStarter, Intent intent, int requestCode) {
 		Context context = activityStarter.getContext();
 		if (context instanceof Activity) {
 			((Activity) context).startActivityForResult(intent, requestCode);
 		}
 	}
 
-	public static void onActivityResult(
-			IActivityResultCatcher activityResultCatcher, int requestCode,
-			int resultCode, Intent data) {
-		List<OnActivityResultListener> listeners = activityResultCatcher
-				.getOnActivityResultListeners();
+	public static void onActivityResult(IActivityResultCatcher activityResultCatcher, int requestCode, int resultCode,
+			Intent data) {
+		List<OnActivityResultListener> listeners = activityResultCatcher.getOnActivityResultListeners();
 		if (listeners != null) {
 			for (OnActivityResultListener listener : listeners) {
-				listener.onActivityResult(activityResultCatcher.getContext(),
-						requestCode, resultCode, data);
+				listener.onActivityResult(activityResultCatcher.getContext(), requestCode, resultCode, data);
 			}
 		}
 		if (!(activityResultCatcher instanceof IStateViewManager)) {
