@@ -13,6 +13,9 @@ import cn.jpush.android.api.JPushInterface;
 import cn.o.app.conf.OLocale;
 import cn.o.app.context.IContextProvider;
 
+/**
+ * Application of framework
+ */
 public class App extends Application implements IContextProvider {
 
 	public static final String UMENG_APPKEY = "UMENG_APPKEY";

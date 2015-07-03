@@ -5,6 +5,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import android.content.res.Resources;
+
+/**
+ * IOC for {@link Resources#getDrawable(int)}
+ * 
+ * @see Resources#getDrawable(int)
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface GetDrawable {

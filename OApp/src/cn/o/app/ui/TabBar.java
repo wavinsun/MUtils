@@ -79,15 +79,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
 			} else {
 				mSelectedDispatcher.removeCallbacksAndMessages(null);
 			}
-			mSelectedDispatcher.post(new Runnable() {
-
-				@Override
-				public void run() {
-					if (mOnSelectedChangeListener != null) {
-						mOnSelectedChangeListener.onChanged(TabBar.this, mSelectedIndex);
-					}
-				}
-			});
+			mSelectedDispatcher.post(new SelectedRunnable());
 		}
 	}
 
@@ -107,6 +99,17 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
 			index = this.indexOfChild(v);
 		}
 		this.setSelectedIndex(index);
+	}
+
+	class SelectedRunnable implements Runnable {
+
+		@Override
+		public void run() {
+			if (mOnSelectedChangeListener != null) {
+				mOnSelectedChangeListener.onChanged(TabBar.this, mSelectedIndex);
+			}
+		}
+
 	}
 
 }

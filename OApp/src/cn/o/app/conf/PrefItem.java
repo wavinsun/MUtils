@@ -14,16 +14,23 @@ import cn.o.app.json.JsonUtil;
 import cn.o.app.runtime.BeanCache;
 import cn.o.app.runtime.OField;
 
+/**
+ * JOSN or XML serializer for shared preferences
+ */
 @SuppressWarnings("serial")
 public class PrefItem implements IPrefItem {
 
+	/** shared preferences type of MAP */
 	public static final int TYPE_PREF_MAP = 0;
+	/** shared preferences type of XML */
 	public static final int TYPE_PREF_JSON = 1;
 
+	/** shared preferences type */
 	protected int mPrefType = TYPE_PREF_MAP;
 
 	protected String mPrefFileName;
 
+	/** Bean cache of shared preferences */
 	protected BeanCache mPrefCache;
 
 	@Ignore
@@ -65,8 +72,7 @@ public class PrefItem implements IPrefItem {
 				if (!changed.contains(name)) {
 					continue;
 				}
-				String str = OUtil.getPrefString(context, mPrefFileName, name,
-						null);
+				String str = OUtil.getPrefString(context, mPrefFileName, name, null);
 				if (str == null) {
 					continue;
 				}
@@ -106,8 +112,7 @@ public class PrefItem implements IPrefItem {
 
 		} else if (mPrefType == TYPE_PREF_JSON) {
 			try {
-				JsonUtil.convert(OUtil.getPrefString(context, mPrefFileName,
-						OUtil.KEY, null), this);
+				JsonUtil.convert(OUtil.getPrefString(context, mPrefFileName, OUtil.KEY, null), this);
 				mPrefCache.fromTarget();
 				return true;
 			} catch (Exception e) {
@@ -131,8 +136,7 @@ public class PrefItem implements IPrefItem {
 		}
 		if (mPrefType == TYPE_PREF_MAP) {
 			try {
-				JSONObject jsonObject = (JSONObject) JsonUtil
-						.convertToJson(this);
+				JSONObject jsonObject = (JSONObject) JsonUtil.convertToJson(this);
 				Editor editor = OUtil.getPref(context, mPrefFileName).edit();
 				for (OField f : OField.getFields(this.getClass())) {
 					String name = f.getName();
@@ -154,8 +158,7 @@ public class PrefItem implements IPrefItem {
 			}
 		} else if (mPrefType == TYPE_PREF_JSON) {
 			try {
-				OUtil.setPrefString(context, mPrefFileName, OUtil.KEY,
-						JsonUtil.convert(this));
+				OUtil.setPrefString(context, mPrefFileName, OUtil.KEY, JsonUtil.convert(this));
 				return true;
 			} catch (Exception e) {
 				mPrefCache.clear(changed);

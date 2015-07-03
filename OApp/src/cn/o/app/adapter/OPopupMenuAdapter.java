@@ -2,8 +2,12 @@ package cn.o.app.adapter;
 
 import cn.o.app.ui.OPopupMenu;
 
-public abstract class OPopupMenuAdapter<DATA_ITEM> extends
-		OVLinearAdapter<DATA_ITEM> {
+/**
+ * Adapter for {@link OPopupMenu}
+ * 
+ * @see OAdapter
+ */
+public abstract class OPopupMenuAdapter<DATA_ITEM> extends OVLinearAdapter<DATA_ITEM> {
 
 	protected OPopupMenu<DATA_ITEM> mPopMenu;
 

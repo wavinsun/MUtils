@@ -36,7 +36,32 @@ public class PickPhotoTask {
 
 	protected Dispatcher mDispatcher = new Dispatcher();
 
-	protected OnActivityResultListener mOnActivityResultListener = new OnActivityResultListener() {
+	protected OnActivityResultListener mOnActivityResultListener = new PickPhotoResultListener();
+
+	public PickPhotoTask(IActivityResultCatcher catcher, int requestCode) {
+		mRequestCode = requestCode;
+		mCatcher = catcher;
+	}
+
+	public boolean pickPhoto() {
+		Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		if (mCatcher instanceof IActivityStarter) {
+			mCatcher.addOnActivityResultListener(mOnActivityResultListener);
+			((IActivityStarter) mCatcher).startActivityForResult(intent, mRequestCode);
+			return true;
+		} else if (mCatcher instanceof Activity) {
+			mCatcher.addOnActivityResultListener(mOnActivityResultListener);
+			((Activity) mCatcher).startActivityForResult(intent, mRequestCode);
+			return true;
+		}
+		return false;
+	}
+
+	public void setListener(PickPhotoListener listener) {
+		mDispatcher.setListener(listener);
+	}
+
+	class PickPhotoResultListener implements OnActivityResultListener {
 
 		@Override
 		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
@@ -79,29 +104,7 @@ public class PickPhotoTask {
 				}
 			}
 		}
-	};
 
-	public PickPhotoTask(IActivityResultCatcher catcher, int requestCode) {
-		mRequestCode = requestCode;
-		mCatcher = catcher;
-	}
-
-	public boolean pickPhoto() {
-		Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-		if (mCatcher instanceof IActivityStarter) {
-			mCatcher.addOnActivityResultListener(mOnActivityResultListener);
-			((IActivityStarter) mCatcher).startActivityForResult(intent, mRequestCode);
-			return true;
-		} else if (mCatcher instanceof Activity) {
-			mCatcher.addOnActivityResultListener(mOnActivityResultListener);
-			((Activity) mCatcher).startActivityForResult(intent, mRequestCode);
-			return true;
-		}
-		return false;
-	}
-
-	public void setListener(PickPhotoListener listener) {
-		mDispatcher.setListener(listener);
 	}
 
 }

@@ -4,6 +4,9 @@ import android.util.Log;
 import cn.o.app.runtime.StackTraceUtil;
 import cn.o.app.text.StringUtil;
 
+/**
+ * Log cat of framework
+ */
 public class LogCat {
 
 	public static int v(String tag, String msg) {
@@ -127,8 +130,7 @@ public class LogCat {
 			return 0;
 		}
 		msg = msg != null ? msg : "";
-		return Log.v(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg,
-				tr);
+		return Log.v(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg, tr);
 	}
 
 	public static int d(String msg) {
@@ -144,8 +146,7 @@ public class LogCat {
 			return 0;
 		}
 		msg = msg != null ? msg : "";
-		return Log.d(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg,
-				tr);
+		return Log.d(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg, tr);
 	}
 
 	public static int i(String msg) {
@@ -161,8 +162,7 @@ public class LogCat {
 			return 0;
 		}
 		msg = msg != null ? msg : "";
-		return Log.i(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg,
-				tr);
+		return Log.i(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg, tr);
 	}
 
 	public static int w(String msg) {
@@ -178,8 +178,7 @@ public class LogCat {
 			return 0;
 		}
 		msg = msg != null ? msg : "";
-		return Log.w(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg,
-				tr);
+		return Log.w(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg, tr);
 	}
 
 	public static int e(String msg) {
@@ -195,8 +194,7 @@ public class LogCat {
 			return 0;
 		}
 		msg = msg != null ? msg : "";
-		return Log.e(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg,
-				tr);
+		return Log.e(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg, tr);
 	}
 
 	public static int wtf(String msg) {
@@ -204,8 +202,7 @@ public class LogCat {
 			return 0;
 		}
 		msg = msg != null ? msg : "";
-		return Log.wtf(StringUtil.getTag(StackTraceUtil.getCallerElement()),
-				msg);
+		return Log.wtf(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg);
 	}
 
 	public static int wtf(String msg, Throwable tr) {
@@ -213,8 +210,7 @@ public class LogCat {
 			return 0;
 		}
 		msg = msg != null ? msg : "";
-		return Log.wtf(StringUtil.getTag(StackTraceUtil.getCallerElement()),
-				msg, tr);
+		return Log.wtf(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg, tr);
 	}
 
 }

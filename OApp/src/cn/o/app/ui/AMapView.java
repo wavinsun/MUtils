@@ -1,12 +1,5 @@
 package cn.o.app.ui;
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
-import cn.o.app.R;
-
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.AMap.InfoWindowAdapter;
 import com.amap.api.maps2d.AMapOptions;
@@ -19,6 +12,15 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+import cn.o.app.R;
+
+@SuppressLint("InflateParams")
 public class AMapView extends MapView {
 
 	public AMapView(Context context) {
@@ -49,32 +51,7 @@ public class AMapView extends MapView {
 		settings.setScaleControlsEnabled(true);// 比例尺
 		settings.setZoomControlsEnabled(true);// 缩放
 		settings.setCompassEnabled(true);// 指南针
-		map.setInfoWindowAdapter(new InfoWindowAdapter() {
-
-			@Override
-			public View getInfoWindow(Marker marker) {
-				View v = LayoutInflater.from(getContext()).inflate(
-						R.layout.amap_infowindow, null);
-				TextView title = (TextView) v.findViewById(R.id.title);
-				if (marker.getTitle() == null) {
-					title.setText("");
-				} else {
-					title.setText(marker.getTitle());
-				}
-				TextView snippet = (TextView) v.findViewById(R.id.snippet);
-				if (marker.getSnippet() == null) {
-					snippet.setVisibility(View.GONE);
-				} else {
-					snippet.setText(marker.getSnippet());
-				}
-				return v;
-			}
-
-			@Override
-			public View getInfoContents(Marker marker) {
-				return null;
-			}
-		});
+		map.setInfoWindowAdapter(new InfoAdapter());
 	}
 
 	public void lookAt(double latitude, double longitude) {
@@ -85,22 +62,43 @@ public class AMapView extends MapView {
 		lookAt(latitude, longitude, title, null);
 	}
 
-	public void lookAt(double latitude, double longitude, String title,
-			String snippet) {
+	public void lookAt(double latitude, double longitude, String title, String snippet) {
 		LatLng latLng = new LatLng(latitude, longitude);
 		AMap map = this.getMap();
 		map.clear();
-		MarkerOptions markerOptions = new MarkerOptions()
-				.position(latLng)
-				.title(title)
-				.snippet(snippet)
-				.icon(BitmapDescriptorFactory
-						.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+		MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(title).snippet(snippet)
+				.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 		Marker marker = map.addMarker(markerOptions);
 		if (title != null) {
 			marker.showInfoWindow();
 		}
-		map.moveCamera(CameraUpdateFactory
-				.newCameraPosition(new CameraPosition(latLng, 15, 0, 0)));
+		map.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(latLng, 15, 0, 0)));
+	}
+
+	class InfoAdapter implements InfoWindowAdapter {
+
+		@Override
+		public View getInfoWindow(Marker marker) {
+			View v = LayoutInflater.from(getContext()).inflate(R.layout.amap_infowindow, null);
+			TextView title = (TextView) v.findViewById(R.id.title);
+			if (marker.getTitle() == null) {
+				title.setText("");
+			} else {
+				title.setText(marker.getTitle());
+			}
+			TextView snippet = (TextView) v.findViewById(R.id.snippet);
+			if (marker.getSnippet() == null) {
+				snippet.setVisibility(View.GONE);
+			} else {
+				snippet.setText(marker.getSnippet());
+			}
+			return v;
+		}
+
+		@Override
+		public View getInfoContents(Marker marker) {
+			return null;
+		}
+
 	}
 }

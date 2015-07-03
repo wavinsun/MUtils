@@ -5,6 +5,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import android.view.View;
+
+/**
+ * IOC for {@link View#setOnClickListener(View.OnClickListener)}
+ * 
+ * @see View#setOnClickListener(View.OnClickListener)
+ * @see View.OnClickListener
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface OnClick {

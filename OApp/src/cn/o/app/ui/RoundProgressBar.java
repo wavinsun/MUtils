@@ -42,27 +42,16 @@ public class RoundProgressBar extends View {
 
 	protected void init(Context context, AttributeSet attrs) {
 		if (attrs != null) {
-			TypedArray typedArray = context.obtainStyledAttributes(attrs,
-					R.styleable.RoundProgressBar);
-			mRoundColor = typedArray.getColor(
-					R.styleable.RoundProgressBar_roundColor, Color.GRAY);
-			mRoundProgressColor = typedArray.getColor(
-					R.styleable.RoundProgressBar_roundProgressColor,
-					Color.GREEN);
-			mRoundWidth = typedArray.getDimensionPixelSize(
-					R.styleable.RoundProgressBar_roundWidth, 8);
-			mMax = typedArray.getInt(R.styleable.RoundProgressBar_android_max,
-					100);
-			mProgress = typedArray.getInt(
-					R.styleable.RoundProgressBar_android_progress, 0);
-			mStartAngle = typedArray.getFloat(
-					R.styleable.RoundProgressBar_android_angle, -90);
-			mSolidColor = typedArray.getColor(
-					R.styleable.RoundProgressBar_android_solidColor,
-					Color.WHITE);
+			TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RoundProgressBar);
+			mRoundColor = typedArray.getColor(R.styleable.RoundProgressBar_roundColor, Color.GRAY);
+			mRoundProgressColor = typedArray.getColor(R.styleable.RoundProgressBar_roundProgressColor, Color.GREEN);
+			mRoundWidth = typedArray.getDimensionPixelSize(R.styleable.RoundProgressBar_roundWidth, 8);
+			mMax = typedArray.getInt(R.styleable.RoundProgressBar_android_max, 100);
+			mProgress = typedArray.getInt(R.styleable.RoundProgressBar_android_progress, 0);
+			mStartAngle = typedArray.getFloat(R.styleable.RoundProgressBar_android_angle, -90);
+			mSolidColor = typedArray.getColor(R.styleable.RoundProgressBar_android_solidColor, Color.WHITE);
 			try {
-				int cap = typedArray.getInt(
-						R.styleable.RoundProgressBar_strokeCap, 1);
+				int cap = typedArray.getInt(R.styleable.RoundProgressBar_strokeCap, 1);
 				switch (cap) {
 				case 0:
 					mCap = Cap.BUTT;
@@ -97,8 +86,7 @@ public class RoundProgressBar extends View {
 		mPaint.setColor(mSolidColor);
 		mPaint.setStyle(Paint.Style.FILL);
 		canvas.drawCircle(centerX, centerY, radius, mPaint);
-		mRectF.set(centerX - radius, centerY - radius, centerX + radius,
-				centerY + radius);
+		mRectF.set(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
 		mPaint.setColor(mRoundColor);
 		mPaint.setStyle(Paint.Style.STROKE);
 		canvas.drawArc(mRectF, mStartAngle, 360 * (mRatio - 1), false, mPaint);

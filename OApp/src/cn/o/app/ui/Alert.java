@@ -127,8 +127,7 @@ public class Alert implements IViewFinder {
 		if (mDialog != null) {
 			return;
 		}
-		mTitleBar = titleBarLayoutId == 0 ? null : getLayoutInflater().inflate(
-				titleBarLayoutId, null);
+		mTitleBar = titleBarLayoutId == 0 ? null : getLayoutInflater().inflate(titleBarLayoutId, null);
 	}
 
 	public void setTitleBar(View titleBar) {
@@ -142,8 +141,7 @@ public class Alert implements IViewFinder {
 		if (mDialog != null) {
 			return;
 		}
-		mActionBar = actionBarLayoutId == 0 ? null : getLayoutInflater()
-				.inflate(actionBarLayoutId, null);
+		mActionBar = actionBarLayoutId == 0 ? null : getLayoutInflater().inflate(actionBarLayoutId, null);
 	}
 
 	public void setActionBar(View actionBar) {
@@ -303,8 +301,7 @@ public class Alert implements IViewFinder {
 		if (contentViewLayoutId == 0) {
 			mContentView = null;
 		} else {
-			mContentView = getLayoutInflater().inflate(contentViewLayoutId,
-					null);
+			mContentView = getLayoutInflater().inflate(contentViewLayoutId, null);
 		}
 	}
 
@@ -382,13 +379,11 @@ public class Alert implements IViewFinder {
 		}
 		preShow();
 		DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
-		int padding = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 8, metrics);
-		int buttonPadding = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 12, metrics);
+		int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, metrics);
+		int buttonPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, metrics);
 		FrameLayout realContentView = new FrameLayout(mContext);
-		realContentView.setPadding(padding + mLeftMargin, padding + mTopMargin,
-				padding + mRightMargin, padding + mBottomMargin);
+		realContentView.setPadding(padding + mLeftMargin, padding + mTopMargin, padding + mRightMargin,
+				padding + mBottomMargin);
 		LinearLayout alertView = new LinearLayout(mContext);
 		GradientDrawable alertViewDrawable = new GradientDrawable();
 		alertViewDrawable.setColor(mBackgroundColor);
@@ -404,8 +399,7 @@ public class Alert implements IViewFinder {
 				titleTextView.setTextColor(0xFF000000);
 				titleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 				titleTextView.setText(mTitle);
-				alertView.addView(titleTextView, new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.MATCH_PARENT,
+				alertView.addView(titleTextView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 						LinearLayout.LayoutParams.WRAP_CONTENT));
 			}
 		} else {
@@ -421,18 +415,11 @@ public class Alert implements IViewFinder {
 			if (mCloseId != View.NO_ID) {
 				View closeView = mTitleBar.findViewById(mCloseId);
 				if (closeView != null) {
-					closeView.setOnClickListener(new View.OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							close();
-						}
-					});
+					closeView.setOnClickListener(new CloseClickListener());
 				}
 			}
 			if (mTitleBar.getLayoutParams() == null) {
-				mTitleBar.setLayoutParams(new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.MATCH_PARENT,
+				mTitleBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 						LinearLayout.LayoutParams.WRAP_CONTENT));
 			}
 			alertView.addView(mTitleBar);
@@ -443,40 +430,33 @@ public class Alert implements IViewFinder {
 		scrollContent.setOrientation(LinearLayout.VERTICAL);
 		if (mContentView == null) {
 			if (mMessage != null) {
-				scrollContent.setPadding(padding,
-						(mTitle != null || mTitleBar != null) ? 0 : padding,
-						padding, padding);
+				scrollContent.setPadding(padding, (mTitle != null || mTitleBar != null) ? 0 : padding, padding,
+						padding);
 				TextView messageTextView = new TextView(mContext);
 				messageTextView.setGravity(mMessageGravity);
 				messageTextView.setTextColor(0xFF000000);
 				messageTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 				messageTextView.setText(mMessage);
-				scrollContent.addView(messageTextView,
-						new LinearLayout.LayoutParams(
-								LinearLayout.LayoutParams.MATCH_PARENT,
-								LinearLayout.LayoutParams.WRAP_CONTENT));
+				scrollContent.addView(messageTextView, new LinearLayout.LayoutParams(
+						LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 			} else {
 				scrollContent.setPadding(0, 0, 0, padding);
 			}
 		} else {
 			if (mContentView.getLayoutParams() == null) {
-				mContentView.setLayoutParams(new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.MATCH_PARENT,
+				mContentView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 						LinearLayout.LayoutParams.WRAP_CONTENT));
 			}
 			scrollContent.addView(mContentView);
 		}
-		scrollView.addView(scrollContent, new FrameLayout.LayoutParams(
-				FrameLayout.LayoutParams.MATCH_PARENT,
+		scrollView.addView(scrollContent, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.WRAP_CONTENT));
-		alertView.addView(scrollView, new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT, 0, 1));
+		alertView.addView(scrollView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1));
 		if (mActionBarVisible) {
 			if (mActionBar == null) {
 				View hLine = new View(mContext);
 				hLine.setBackgroundDrawable(new ColorDrawable(0xFFB3B3B3));
-				alertView.addView(hLine, new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.MATCH_PARENT, 1));
+				alertView.addView(hLine, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1));
 				LinearLayout buttonArea = new LinearLayout(mContext);
 				buttonArea.setOrientation(LinearLayout.HORIZONTAL);
 				if (mCancel != null) {
@@ -484,59 +464,42 @@ public class Alert implements IViewFinder {
 					StateListDrawable cancelButtonDrawable = new StateListDrawable();
 					GradientDrawable cancelButtonPressedDrawable = new GradientDrawable();
 					cancelButtonPressedDrawable.setColor(0xFFD9D9D9);
-					cancelButtonPressedDrawable.setCornerRadii(new float[] { 0,
-							0, 0, 0, 0, 0, 15, 15 });
-					cancelButtonDrawable.addState(new int[] {
-							android.R.attr.state_pressed,
-							android.R.attr.state_enabled },
+					cancelButtonPressedDrawable.setCornerRadii(new float[] { 0, 0, 0, 0, 0, 0, 15, 15 });
+					cancelButtonDrawable.addState(
+							new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled },
 							cancelButtonPressedDrawable);
 					cancelButton.setBackgroundDrawable(cancelButtonDrawable);
 					cancelButton.setGravity(Gravity.CENTER);
-					cancelButton.setPadding(buttonPadding, buttonPadding,
-							buttonPadding, buttonPadding);
-					cancelButton.setTextColor(new ColorStateList(new int[][] {
-							new int[] { android.R.attr.state_enabled },
-							new int[] {} },
-							new int[] { 0xFF2F82C7, 0xFF999999 }));
+					cancelButton.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
+					cancelButton.setTextColor(
+							new ColorStateList(new int[][] { new int[] { android.R.attr.state_enabled }, new int[] {} },
+									new int[] { 0xFF2F82C7, 0xFF999999 }));
 					cancelButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 					cancelButton.setText(mCancel);
-					cancelButton.setOnClickListener(new View.OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							cancel();
-						}
-					});
+					cancelButton.setOnClickListener(new CancelClickListener());
 					buttonArea.addView(cancelButton,
-							new LinearLayout.LayoutParams(0,
-									LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+							new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 					View vLine = new View(mContext);
 					vLine.setBackgroundDrawable(new ColorDrawable(0xFFB3B3B3));
-					buttonArea.addView(vLine, new LinearLayout.LayoutParams(1,
-							LinearLayout.LayoutParams.MATCH_PARENT));
+					buttonArea.addView(vLine, new LinearLayout.LayoutParams(1, LinearLayout.LayoutParams.MATCH_PARENT));
 				}
 				TextView okButton = new TextView(mContext);
 				StateListDrawable okButtonDrawable = new StateListDrawable();
 				GradientDrawable okButtonPressedDrawable = new GradientDrawable();
 				okButtonPressedDrawable.setColor(0xFFD9D9D9);
-				okButtonPressedDrawable.setCornerRadii(new float[] { 0, 0, 0,
-						0, 15, 15, mCancel != null ? 0 : 15,
-						mCancel != null ? 0 : 15 });
-				okButtonDrawable
-						.addState(new int[] { android.R.attr.state_pressed,
-								android.R.attr.state_enabled },
-								okButtonPressedDrawable);
+				okButtonPressedDrawable.setCornerRadii(
+						new float[] { 0, 0, 0, 0, 15, 15, mCancel != null ? 0 : 15, mCancel != null ? 0 : 15 });
+				okButtonDrawable.addState(new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled },
+						okButtonPressedDrawable);
 				okButton.setBackgroundDrawable(okButtonDrawable);
 				okButton.setGravity(Gravity.CENTER);
-				okButton.setPadding(buttonPadding, buttonPadding,
-						buttonPadding, buttonPadding);
-				okButton.setTextColor(new ColorStateList(new int[][] {
-						new int[] { android.R.attr.state_enabled },
-						new int[] {} }, new int[] { 0xFF2F82C7, 0xFF999999 }));
+				okButton.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
+				okButton.setTextColor(
+						new ColorStateList(new int[][] { new int[] { android.R.attr.state_enabled }, new int[] {} },
+								new int[] { 0xFF2F82C7, 0xFF999999 }));
 				okButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 				if (mOK == null) {
-					String country = mContext.getResources().getConfiguration().locale
-							.getCountry();
+					String country = mContext.getResources().getConfiguration().locale.getCountry();
 					if (country.equals("CN")) {
 						mOK = "确认";
 					} else if (country.equals("TW")) {
@@ -546,20 +509,13 @@ public class Alert implements IViewFinder {
 					}
 				}
 				okButton.setText(mOK);
-				okButton.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						ok();
-					}
-				});
+				okButton.setOnClickListener(new OKClickListener());
 				okButton.getPaint().setFakeBoldText(true);
 				mOKView = okButton;
 				mOKView.setEnabled(mOKEnabled);
-				buttonArea.addView(okButton, new LinearLayout.LayoutParams(0,
-						LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-				alertView.addView(buttonArea, new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.MATCH_PARENT,
+				buttonArea.addView(okButton,
+						new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+				alertView.addView(buttonArea, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 						LinearLayout.LayoutParams.WRAP_CONTENT));
 			} else {
 				if (mCancelId != View.NO_ID) {
@@ -570,14 +526,7 @@ public class Alert implements IViewFinder {
 								TextView cancelButton = (TextView) cancelView;
 								cancelButton.setText(mCancel);
 							}
-							cancelView
-									.setOnClickListener(new View.OnClickListener() {
-
-										@Override
-										public void onClick(View v) {
-											cancel();
-										}
-									});
+							cancelView.setOnClickListener(new CancelClickListener());
 						} else {
 							cancelView.setVisibility(View.GONE);
 						}
@@ -590,71 +539,114 @@ public class Alert implements IViewFinder {
 							TextView okButton = (TextView) okView;
 							okButton.setText(mOK);
 						}
-						okView.setOnClickListener(new View.OnClickListener() {
-
-							@Override
-							public void onClick(View v) {
-								ok();
-							}
-						});
+						okView.setOnClickListener(new OKClickListener());
 					}
 					mOKView = okView;
 					mOKView.setEnabled(mOKEnabled);
 				}
 				if (mActionBar.getLayoutParams() == null) {
-					mActionBar.setLayoutParams(new LinearLayout.LayoutParams(
-							LinearLayout.LayoutParams.MATCH_PARENT,
+					mActionBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 							LinearLayout.LayoutParams.WRAP_CONTENT));
 				}
 				alertView.addView(mActionBar);
 			}
 		} else {
 			alertView.addView(new View(mContext),
-					new LinearLayout.LayoutParams(
-							LinearLayout.LayoutParams.MATCH_PARENT, 0));
+					new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0));
 		}
-		realContentView.addView(alertView, new FrameLayout.LayoutParams(
-				FrameLayout.LayoutParams.MATCH_PARENT,
+		realContentView.addView(alertView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.WRAP_CONTENT));
 		mDialog = new ODialog(mContext);
 		mDialog.setCancelable(mCancelable);
 		mDialog.setCanceledOnTouchOutside(mCancelable);
-		mDialog.setContentView(realContentView, new ViewGroup.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT));
-		mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-
-			@Override
-			public void onCancel(DialogInterface dialog) {
-				cancel();
-			}
-		});
-		mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-			@Override
-			public void onDismiss(DialogInterface dialog) {
-				if (mListener != null) {
-					mListener.onDismiss(Alert.this);
-				}
-			}
-		});
+		mDialog.setContentView(realContentView,
+				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+		mDialog.setOnCancelListener(new DialogCancelListener());
+		mDialog.setOnDismissListener(new DialogDismissListener());
 		mDialog.show();
+	}
+
+	class OKClickListener implements View.OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			ok();
+		}
+
+	}
+
+	class CancelClickListener implements View.OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			cancel();
+		}
+
+	}
+
+	class CloseClickListener implements View.OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			close();
+		}
+
+	}
+
+	class DialogCancelListener implements DialogInterface.OnCancelListener {
+
+		@Override
+		public void onCancel(DialogInterface dialog) {
+			cancel();
+		}
+
+	}
+
+	class DialogDismissListener implements DialogInterface.OnDismissListener {
+
+		@Override
+		public void onDismiss(DialogInterface dialog) {
+			if (mListener != null) {
+				mListener.onDismiss(Alert.this);
+			}
+		}
+
 	}
 
 	public static abstract class AlertListener {
 
-		// return true to intercept
+		/**
+		 * Return true to intercept
+		 * 
+		 * @param alert
+		 * @return
+		 */
 		public abstract boolean onOK(Alert alert);
 
-		// return true to intercept
+		/**
+		 * Return true to intercept
+		 * 
+		 * @param alert
+		 * @return
+		 */
 		public abstract boolean onCancel(Alert alert);
 
-		// return true to intercept
+		/**
+		 * Return true to intercept
+		 * 
+		 * @param alert
+		 * @return
+		 */
 		public boolean onDismiss(Alert alert) {
 			return false;
 		}
 
-		// return true to intercept
+		/**
+		 * Return true to intercept
+		 * 
+		 * @param alert
+		 * @return
+		 */
 		public boolean onClose(Alert alert) {
 			return false;
 		}

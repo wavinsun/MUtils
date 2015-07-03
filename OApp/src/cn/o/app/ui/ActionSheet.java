@@ -20,6 +20,7 @@ import cn.o.app.R;
 import cn.o.app.adapter.IItemView;
 import cn.o.app.adapter.ItemFrame;
 import cn.o.app.adapter.OVLinearAdapter;
+import cn.o.app.annotation.event.OnClick;
 import cn.o.app.ui.ActionSheet.ActionItem;
 
 @SuppressWarnings("deprecation")
@@ -169,13 +170,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 		RelativeLayout realContentView = new RelativeLayout(mContext);
 		realContentView.setPadding(margin + mLeftMargin, margin + mTopMargin, margin + mRightMargin,
 				margin + mBottomMargin);
-		realContentView.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				cancel();
-			}
-		});
+		realContentView.setOnClickListener(new CancelClickListener());
 		int cancelButtonId = 1;
 		TextView cancelButton = new TextView(mContext);
 		cancelButton.setId(cancelButtonId);
@@ -196,13 +191,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 		normalDrawable.setCornerRadius(10);
 		stateListDrawable.addState(new int[] {}, normalDrawable);
 		cancelButton.setBackgroundDrawable(stateListDrawable);
-		cancelButton.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				cancel();
-			}
-		});
+		cancelButton.setOnClickListener(new CancelClickListener());
 		RelativeLayout.LayoutParams cancelParams = new RelativeLayout.LayoutParams(
 				RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 		cancelParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -229,6 +218,15 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		mDialog.requestHFill();
 		mDialog.show();
+	}
+
+	class CancelClickListener implements View.OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			cancel();
+		}
+
 	}
 
 	protected static class OActionSheetAdapter<DATA_ITEM extends ActionItem> extends OVLinearAdapter<DATA_ITEM> {
@@ -291,6 +289,17 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 					actionSheet.dismiss();
 				}
 			});
+		}
+
+		@OnClick
+		protected void onClick(View v) {
+			OActionSheetAdapter<DATA_ITEM> adapter = (OActionSheetAdapter<DATA_ITEM>) getAdapter();
+			ActionSheet<DATA_ITEM> actionSheet = adapter.getActionSheet();
+			OnActionItemClickListener<DATA_ITEM> listener = actionSheet.getOnActionItemClickListener();
+			if (listener != null) {
+				listener.onItemClick(actionSheet, v, getPosition(), getDataProvider());
+			}
+			actionSheet.dismiss();
 		}
 
 		@Override

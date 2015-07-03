@@ -28,7 +28,36 @@ public class PickContactTask {
 	protected int mRequestCode;
 	protected Dispatcher mDispatcher = new Dispatcher();
 
-	protected OnActivityResultListener mOnActivityResultListener = new OnActivityResultListener() {
+	protected OnActivityResultListener mOnActivityResultListener = new PickContactResultListener();
+
+	public PickContactTask(IActivityResultCatcher catcher, int requestCode) {
+		mCatcher = catcher;
+		mRequestCode = requestCode;
+	}
+
+	public boolean pickContact() {
+		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+		try {
+			if (mCatcher instanceof IActivityStarter) {
+				((IActivityStarter) mCatcher).startActivityForResult(intent, mRequestCode);
+				mCatcher.addOnActivityResultListener(mOnActivityResultListener);
+				return true;
+			} else if (mCatcher instanceof Activity) {
+				((Activity) mCatcher).startActivityForResult(intent, mRequestCode);
+				mCatcher.addOnActivityResultListener(mOnActivityResultListener);
+				return true;
+			}
+		} catch (Exception e) {
+			return false;
+		}
+		return false;
+	}
+
+	public void setListener(PickContactListener listener) {
+		mDispatcher.setListener(listener);
+	}
+
+	class PickContactResultListener implements OnActivityResultListener {
 
 		@Override
 		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
@@ -80,33 +109,7 @@ public class PickContactTask {
 				listener.onComplete(name, phones);
 			}
 		}
-	};
 
-	public PickContactTask(IActivityResultCatcher catcher, int requestCode) {
-		mCatcher = catcher;
-		mRequestCode = requestCode;
-	}
-
-	public boolean pickContact() {
-		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-		try {
-			if (mCatcher instanceof IActivityStarter) {
-				((IActivityStarter) mCatcher).startActivityForResult(intent, mRequestCode);
-				mCatcher.addOnActivityResultListener(mOnActivityResultListener);
-				return true;
-			} else if (mCatcher instanceof Activity) {
-				((Activity) mCatcher).startActivityForResult(intent, mRequestCode);
-				mCatcher.addOnActivityResultListener(mOnActivityResultListener);
-				return true;
-			}
-		} catch (Exception e) {
-			return false;
-		}
-		return false;
-	}
-
-	public void setListener(PickContactListener listener) {
-		mDispatcher.setListener(listener);
 	}
 
 }

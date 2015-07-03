@@ -10,19 +10,37 @@ import android.widget.BaseAdapter;
 import cn.o.app.context.IContextProvider;
 import cn.o.app.runtime.ReflectUtil;
 
+/**
+ * Provide object-oriented item view
+ */
 @SuppressWarnings("unchecked")
 public class OAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvider {
 
+	/** Container who hold item views */
 	protected ViewGroup mContainer;
 
+	/** Data provider for item views */
 	protected List<DATA_ITEM> mDataProvider;
 
+	/** Constructor for item views */
 	protected Constructor<? extends IItemView<DATA_ITEM>> mItemViewConstructor;
 
+	/**
+	 * Set type for item views to create by reflection
+	 * 
+	 * @see #getItemView()
+	 * 
+	 * @param itemViewClass
+	 */
 	public void setItemViewClass(Class<? extends IItemView<DATA_ITEM>> itemViewClass) {
 		mItemViewConstructor = ReflectUtil.getConstructor(itemViewClass, Context.class);
 	}
 
+	/**
+	 * Get context
+	 * 
+	 * @return Return null if container is null
+	 */
 	public Context getContext() {
 		if (this.mContainer == null) {
 			return null;
@@ -30,23 +48,48 @@ public class OAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvider
 		return this.mContainer.getContext();
 	}
 
+	/**
+	 * Get container
+	 * 
+	 * @see #mContainer
+	 * 
+	 * @return
+	 */
 	public View getContainer() {
 		return this.mContainer;
 	}
 
+	/**
+	 * Call back for container change
+	 */
 	protected void onContainerChanged() {
 
 	}
 
+	/**
+	 * Get data provider for item views
+	 * 
+	 * @return
+	 */
 	public List<DATA_ITEM> getDataProvider() {
 		return mDataProvider;
 	}
 
+	/**
+	 * Set data provider for item views
+	 * 
+	 * @param dataProvider
+	 */
 	public void setDataProvider(List<DATA_ITEM> dataProvider) {
 		this.mDataProvider = dataProvider;
 		this.notifyDataSetChanged();
 	}
 
+	/**
+	 * Get count of item views
+	 * 
+	 * @return count of item views
+	 */
 	@Override
 	public int getCount() {
 		if (this.mDataProvider == null) {
@@ -55,6 +98,13 @@ public class OAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvider
 		return this.mDataProvider.size();
 	}
 
+	/**
+	 * Get item view data provider for index
+	 * 
+	 * @see IItemView#getDataProvider()
+	 * 
+	 * @return item view data provider
+	 */
 	@Override
 	public DATA_ITEM getItem(int position) {
 		if (this.mDataProvider == null) {
@@ -63,6 +113,9 @@ public class OAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvider
 		return this.mDataProvider.get(position);
 	}
 
+	/**
+	 * Get item id
+	 */
 	@Override
 	public long getItemId(int position) {
 		return position;
@@ -70,6 +123,8 @@ public class OAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvider
 
 	/**
 	 * Subclass need to override this method
+	 * 
+	 * @see IItemView
 	 * 
 	 * @return
 	 */
@@ -80,6 +135,16 @@ public class OAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvider
 		return ReflectUtil.newInstance(mItemViewConstructor, getContext());
 	}
 
+	/**
+	 * Object-orient item view creation and reuse
+	 * 
+	 * @see BaseAdapter#getView(int, View, ViewGroup)
+	 * 
+	 * @param position
+	 * @param convertView
+	 * @param parent
+	 * @return {@link IItemView}
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (this.mContainer == null) {

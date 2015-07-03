@@ -19,6 +19,9 @@ import cn.o.app.context.IContextProvider;
 import cn.o.app.ui.core.IContentViewOwner;
 import cn.o.app.ui.core.IViewFinder;
 
+/**
+ * Dialog of framework
+ */
 @SuppressLint("RtlHardcoded")
 @SuppressWarnings("deprecation")
 public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, IContextProvider {
@@ -146,6 +149,10 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, I
 		show();
 	}
 
+	/**
+	 * Drop down frame for {@link ODialog#showAsDropDown(View)} who has max
+	 * height.
+	 */
 	protected static class DropDownFrame extends FrameLayout {
 
 		protected int mMaxHeight;

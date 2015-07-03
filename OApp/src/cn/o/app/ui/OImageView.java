@@ -20,6 +20,11 @@ import android.widget.ImageView;
 import cn.o.app.R;
 import cn.o.app.ui.core.IDefaultDrawableView;
 
+/**
+ * ImageView of framework.
+ * 
+ * Provide circle shape and round rectangle for content image.
+ */
 @SuppressWarnings("deprecation")
 public class OImageView extends ImageView implements IDefaultDrawableView {
 
@@ -71,15 +76,15 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 			try {
 				int shape = typedArray.getInt(R.styleable.OImageView_shape, 0);
 				switch (shape) {
-				case 0:// 矩形
+				case 0:// Rectangle
 					mIsCircle = false;
 					mIsRoundRect = false;
 					break;
-				case 1:// 圆矩形
+				case 1:// Round rectangle
 					mIsCircle = false;
 					mIsRoundRect = true;
 					break;
-				case 2:// 圆形
+				case 2:// Circle
 					mIsCircle = true;
 					mIsRoundRect = false;
 					break;

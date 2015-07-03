@@ -7,16 +7,26 @@ import cn.o.app.json.JsonUtil;
 import cn.o.app.runtime.BeanCache;
 import cn.o.app.xml.XmlUtil;
 
+/**
+ * JSON or XML serializer for assets file
+ * 
+ * @see JsonUtil
+ * @see XmlUtil
+ */
 @SuppressWarnings("serial")
 public class AssetItem implements IAssetItem {
 
+	/** Assets file type of XML */
 	public static final int TYPE_ASSET_XML = 0;
+	/** Assets file type of JSON */
 	public static final int TYPE_ASSET_JSON = 1;
 
+	/** Assets file type */
 	protected int mAssetType = TYPE_ASSET_XML;
 
 	protected String mAssetFileName;
 
+	/** Bean cache of assets file */
 	protected BeanCache mAssetCache;
 
 	@Ignore
@@ -24,7 +34,7 @@ public class AssetItem implements IAssetItem {
 		return mAssetType;
 	}
 
-	public void setPrefType(int assetType) {
+	public void setAssetType(int assetType) {
 		mAssetType = assetType;
 	}
 
@@ -50,8 +60,7 @@ public class AssetItem implements IAssetItem {
 		}
 		if (mAssetType == TYPE_ASSET_XML) {
 			try {
-				XmlUtil.convert(OUtil.getAssetString(context, mAssetFileName),
-						this);
+				XmlUtil.convert(OUtil.getAssetString(context, mAssetFileName), this);
 				mAssetCache.fromTarget();
 				return true;
 			} catch (Exception e) {
@@ -59,8 +68,7 @@ public class AssetItem implements IAssetItem {
 			}
 		} else if (mAssetType == TYPE_ASSET_JSON) {
 			try {
-				JsonUtil.convert(OUtil.getAssetString(context, mAssetFileName),
-						this);
+				JsonUtil.convert(OUtil.getAssetString(context, mAssetFileName), this);
 				mAssetCache.fromTarget();
 				return true;
 			} catch (Exception e) {

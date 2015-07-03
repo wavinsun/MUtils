@@ -45,6 +45,9 @@ import cn.o.app.ui.core.IToastOwner;
 import cn.o.app.ui.core.IView;
 import cn.o.app.ui.core.IViewFinder;
 
+/**
+ * UI wrapper of framework
+ */
 @SuppressWarnings({ "deprecation", "unchecked" })
 public class OWrapper {
 
@@ -83,6 +86,12 @@ public class OWrapper {
 		imm.hideSoftInputFromWindow(edit.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 	}
 
+	/**
+	 * Get content view
+	 * 
+	 * @param finder
+	 * @return
+	 */
 	public static View getContentView(IViewFinder finder) {
 		View v = null;
 		if (finder instanceof Activity) {
@@ -106,6 +115,11 @@ public class OWrapper {
 		return v;
 	}
 
+	/**
+	 * IOC for content view
+	 * 
+	 * @param owner
+	 */
 	public static void injectContentView(IContentViewOwner owner) {
 		Class<?> c = owner.getClass();
 		while (IContentViewOwner.class.isAssignableFrom(c)) {
@@ -118,6 +132,11 @@ public class OWrapper {
 		}
 	}
 
+	/**
+	 * IOC for events
+	 * 
+	 * @param finder
+	 */
 	public static void injectEvents(IViewFinder finder) {
 		Class<?> c = finder.getClass();
 		while (IViewFinder.class.isAssignableFrom(c)) {
@@ -148,6 +167,11 @@ public class OWrapper {
 		}
 	}
 
+	/**
+	 * IOC for resources
+	 * 
+	 * @param finder
+	 */
 	public static void injectResources(IViewFinder finder) {
 		Context context = (finder instanceof IContextProvider) ? ((IContextProvider) finder).getContext() : null;
 		Resources res = context == null ? null : context.getResources();

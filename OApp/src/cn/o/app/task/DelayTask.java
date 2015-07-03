@@ -17,14 +17,7 @@ public class DelayTask implements IStopable {
 	public DelayTask(Runnable runnable, long delay) {
 		mHandler = new Handler();
 		mRunnable = runnable;
-		mRunnableWrapper = new Runnable() {
-
-			@Override
-			public void run() {
-				mStoped = true;
-				mRunnable.run();
-			}
-		};
+		mRunnableWrapper = new DelayRunnable();
 		mDelay = delay;
 		mStoped = true;
 	}
@@ -65,6 +58,16 @@ public class DelayTask implements IStopable {
 	public DelayTask start(long delay) {
 		mDelay = delay;
 		return start();
+	}
+
+	class DelayRunnable implements Runnable {
+
+		@Override
+		public void run() {
+			mStoped = true;
+			mRunnable.run();
+		}
+
 	}
 
 }
