@@ -4,14 +4,23 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
-public abstract class OCacheAdapter<DATA_ITEM, CACHE_ITEM> extends
-		OAdapter<DATA_ITEM> {
+/**
+ * Cache Adapter who provide ability of {@link AdapterView} to general view
+ * 
+ * @see AdapterView
+ * 
+ * @see OAdapter
+ */
+public abstract class OCacheAdapter<DATA_ITEM, CACHE_ITEM> extends OAdapter<DATA_ITEM> {
 
+	/** Cache views */
 	protected List<CACHE_ITEM> mCacheViews;
 
 	protected boolean mCacheInvalidate;
 
+	/** Auto allocate more views */
 	protected boolean mAutoAllocMore;
 
 	public OCacheAdapter() {
@@ -37,7 +46,11 @@ public abstract class OCacheAdapter<DATA_ITEM, CACHE_ITEM> extends
 		onDataSetChanged();
 	}
 
-	// get required cache size for data provider
+	/**
+	 * Get required cache size for data provider
+	 * 
+	 * @return
+	 */
 	protected int getCacheSizeRequired() {
 		if (mDataProvider == null) {
 			return 0;
@@ -45,32 +58,59 @@ public abstract class OCacheAdapter<DATA_ITEM, CACHE_ITEM> extends
 		return mDataProvider.size();
 	}
 
-	// get allocate more size for cache
+	/**
+	 * Get allocate more size for cache
+	 * 
+	 * @return
+	 */
 	protected int getCacheSizeMore() {
 		return 1;
 	}
 
-	// use to know is need to free no use cache
+	/**
+	 * Used to know is need to free no use cache
+	 * 
+	 * @return
+	 */
 	protected boolean freeCacheNoUse() {
 		return true;
 	}
 
-	// use to know is need to allocate more cache
+	/**
+	 * Used to know is need to allocate more cache
+	 * 
+	 * @return
+	 */
 	protected boolean allocCacheMore() {
 		return Math.random() > 0.7;
 	}
 
-	// free cache at index of mCacheViews
+	/**
+	 * Free cache at index of mCacheViews
+	 * 
+	 * @param index
+	 */
 	protected abstract void freeCacheAt(int index);
 
-	// allocate cache at index of mCacheViews
+	/**
+	 * Allocate cache at index of mCacheViews
+	 * 
+	 * @param index
+	 */
 	protected abstract void allocCacheAt(int index);
 
-	// fix container child views when data provider changed or other things
-	// happen
+	/**
+	 * Fix container child views when data provider changed or other things
+	 * happen
+	 */
 	protected abstract void fixContainerSize();
 
-	// user to get cached IItemView to hold index of data provider
+	/**
+	 * Used to get cached IItemView to hold index of data provider
+	 * 
+	 * @param index
+	 * @return
+	 */
 	protected abstract IItemView<DATA_ITEM> getItemViewAt(int index);
 
 	@Override
@@ -100,8 +140,8 @@ public abstract class OCacheAdapter<DATA_ITEM, CACHE_ITEM> extends
 				if (requiredViews < mCacheViews.size()) {
 					fixContainerSize();
 					if (freeCacheNoUse()) {
-						for (int i = mCacheViews.size() - 1, startIndex = mCacheViews
-								.size() - requiredViews; i >= startIndex; i--) {
+						for (int i = mCacheViews.size() - 1, startIndex = mCacheViews.size()
+								- requiredViews; i >= startIndex; i--) {
 							freeCacheAt(i);
 						}
 					}
@@ -111,8 +151,8 @@ public abstract class OCacheAdapter<DATA_ITEM, CACHE_ITEM> extends
 					}
 					if (mAutoAllocMore) {
 						if (allocCacheMore()) {
-							for (int i = mCacheViews.size(), size = mCacheViews
-									.size() + getCacheSizeMore(); i < size; i++) {
+							for (int i = mCacheViews.size(), size = mCacheViews.size()
+									+ getCacheSizeMore(); i < size; i++) {
 								allocCacheAt(i);
 							}
 						}

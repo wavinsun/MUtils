@@ -33,27 +33,7 @@ public class AnimTask extends Task implements ILockable {
 		mSteps = 40;
 		mStepMillis = 30;
 		mHandler = new Handler();
-		mRunnable = new Runnable() {
-
-			@Override
-			public void run() {
-				double progress = getProgress();
-				for (AnimTaskListener listener : getListeners(AnimTaskListener.class)) {
-					if (mStep < mSteps) {
-						listener.onUpdate(AnimTask.this, progress);
-					} else if (mStep == mSteps) {
-						listener.onUpdate(AnimTask.this, progress);
-						listener.onComplete(AnimTask.this);
-					}
-				}
-				if (mStep < mSteps) {
-					mStep++;
-					mHandler.postDelayed(mRunnable, mStepMillis);
-				} else {
-					stop();
-				}
-			}
-		};
+		mRunnable = new AnimRunnable();
 	}
 
 	@Override
@@ -136,6 +116,29 @@ public class AnimTask extends Task implements ILockable {
 		mStoped = false;
 		onStart();
 		return true;
+	}
+
+	class AnimRunnable implements Runnable {
+
+		@Override
+		public void run() {
+			double progress = getProgress();
+			for (AnimTaskListener listener : getListeners(AnimTaskListener.class)) {
+				if (mStep < mSteps) {
+					listener.onUpdate(AnimTask.this, progress);
+				} else if (mStep == mSteps) {
+					listener.onUpdate(AnimTask.this, progress);
+					listener.onComplete(AnimTask.this);
+				}
+			}
+			if (mStep < mSteps) {
+				mStep++;
+				mHandler.postDelayed(mRunnable, mStepMillis);
+			} else {
+				stop();
+			}
+		}
+
 	}
 
 }

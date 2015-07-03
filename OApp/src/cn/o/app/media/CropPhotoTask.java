@@ -37,26 +37,7 @@ public class CropPhotoTask implements ILockable {
 
 	protected Dispatcher mDispatcher = new Dispatcher();
 
-	protected OnActivityResultListener mOnActivityResultListener = new OnActivityResultListener() {
-
-		@Override
-		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
-			if (mRequestCode != requestCode) {
-				return;
-			}
-			mCatcher.removeOnActivityResultListener(mOnActivityResultListener);
-			mLocked = false;
-			if (resultCode != Activity.RESULT_OK) {
-				return;
-			}
-			if (OUtil.compress(mExtraOutput.getPath())) {
-				CropPhotoListener listener = (CropPhotoListener) mDispatcher.getListener();
-				if (listener != null) {
-					listener.onComplete(mExtraOutput);
-				}
-			}
-		}
-	};
+	protected OnActivityResultListener mOnActivityResultListener = new CropPhotoResultListener();
 
 	public CropPhotoTask(IActivityResultCatcher catcher, int requestCode) {
 		mRequestCode = requestCode;
@@ -133,6 +114,28 @@ public class CropPhotoTask implements ILockable {
 	@Override
 	public void setLocked(boolean locked) {
 		mLocked = locked;
+	}
+
+	class CropPhotoResultListener implements OnActivityResultListener {
+
+		@Override
+		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
+			if (mRequestCode != requestCode) {
+				return;
+			}
+			mCatcher.removeOnActivityResultListener(mOnActivityResultListener);
+			mLocked = false;
+			if (resultCode != Activity.RESULT_OK) {
+				return;
+			}
+			if (OUtil.compress(mExtraOutput.getPath())) {
+				CropPhotoListener listener = (CropPhotoListener) mDispatcher.getListener();
+				if (listener != null) {
+					listener.onComplete(mExtraOutput);
+				}
+			}
+		}
+
 	}
 
 }

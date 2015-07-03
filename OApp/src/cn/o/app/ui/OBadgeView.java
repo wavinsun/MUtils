@@ -1,12 +1,15 @@
 package cn.o.app.ui;
 
+import com.readystatesoftware.viewbadger.BadgeView;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TabWidget;
 
-import com.readystatesoftware.viewbadger.BadgeView;
-
+/**
+ * Badge view: red point
+ */
 public class OBadgeView extends BadgeView {
 
 	public OBadgeView(Context context) {
@@ -29,8 +32,7 @@ public class OBadgeView extends BadgeView {
 		super(context, attrs, defStyle);
 	}
 
-	public OBadgeView(Context context, AttributeSet attrs, int defStyle,
-			View target, int tabIndex) {
+	public OBadgeView(Context context, AttributeSet attrs, int defStyle, View target, int tabIndex) {
 		super(context, attrs, defStyle, target, tabIndex);
 	}
 

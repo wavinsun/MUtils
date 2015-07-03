@@ -27,16 +27,27 @@ import org.w3c.dom.NodeList;
 import cn.o.app.runtime.OField;
 import cn.o.app.runtime.ReflectUtil;
 
+/**
+ * XML serializer of framework
+ */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class XmlUtil {
 
+	/** XML node attribute tag for entity property name */
 	public static final String TAG_NAME = "name";
+	/** XML node attribute tag for entity property of string */
 	public static final String TAG_STRING = "string";
+	/** XML node attribute tag for entity property of integer */
 	public static final String TAG_INT = "int";
+	/** XML node attribute tag for entity property of long */
 	public static final String TAG_LONG = "long";
+	/** XML node attribute tag for entity property of double */
 	public static final String TAG_DOUBLE = "double";
+	/** XML node attribute tag for entity property of boolean */
 	public static final String TAG_BOOL = "bool";
+	/** XML node attribute tag for entity property of enumeration */
 	public static final String TAG_ENUM = "enum";
+	/** XML node tag for entity property null */
 	public static final String TAG_NULL = "null";
 
 	public static Document parse(String file) throws Exception {
@@ -44,18 +55,15 @@ public class XmlUtil {
 	}
 
 	public static Document parse(File file) throws Exception {
-		return DocumentBuilderFactory.newInstance().newDocumentBuilder()
-				.parse(file);
+		return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
 	}
 
 	public static Document parse(InputStream is) throws Exception {
-		return DocumentBuilderFactory.newInstance().newDocumentBuilder()
-				.parse(is);
+		return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
 	}
 
 	public static void save(Document doc, OutputStream os) throws Exception {
-		TransformerFactory.newInstance().newTransformer()
-				.transform(new DOMSource(doc), new StreamResult(os));
+		TransformerFactory.newInstance().newTransformer().transform(new DOMSource(doc), new StreamResult(os));
 	}
 
 	public static void save(Document doc, String file) throws Exception {
@@ -63,8 +71,7 @@ public class XmlUtil {
 	}
 
 	public static void save(Document doc, File file) throws Exception {
-		TransformerFactory.newInstance().newTransformer()
-				.transform(new DOMSource(doc), new StreamResult(file));
+		TransformerFactory.newInstance().newTransformer().transform(new DOMSource(doc), new StreamResult(file));
 	}
 
 	protected static Node getChildNode(Node node, String childAttrName) {
@@ -104,10 +111,8 @@ public class XmlUtil {
 		attr.setNodeValue(value);
 	}
 
-	public static NodeList selectNodes(Node node, String xPath)
-			throws Exception {
-		return (NodeList) XPathFactory.newInstance().newXPath().compile(xPath)
-				.evaluate(node, XPathConstants.NODESET);
+	public static NodeList selectNodes(Node node, String xPath) throws Exception {
+		return (NodeList) XPathFactory.newInstance().newXPath().compile(xPath).evaluate(node, XPathConstants.NODESET);
 	}
 
 	public static Node newNode(Document doc, OField field) {
@@ -117,13 +122,11 @@ public class XmlUtil {
 	}
 
 	public static Document newDoc() throws Exception {
-		return DocumentBuilderFactory.newInstance().newDocumentBuilder()
-				.newDocument();
+		return DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
 	}
 
 	public static Document newDoc(String xml) throws Exception {
-		ByteArrayInputStream bis = new ByteArrayInputStream(
-				xml.getBytes("UTF-8"));
+		ByteArrayInputStream bis = new ByteArrayInputStream(xml.getBytes("UTF-8"));
 		try {
 			return parse(bis);
 		} catch (Exception e) {
@@ -143,8 +146,7 @@ public class XmlUtil {
 			Transformer t = TransformerFactory.newInstance().newTransformer();
 			if (indent) {
 				t.setOutputProperty(OutputKeys.INDENT, "yes");
-				t.setOutputProperty(
-						"{http://xml.apache.org/xslt}indent-amount", "2");
+				t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 			}
 			t.transform(new DOMSource(node), new StreamResult(bos));
 			return bos.toString("UTF-8");
@@ -155,13 +157,11 @@ public class XmlUtil {
 		}
 	}
 
-	public static <T> T convertFromNode(Node node, Class<T> targetClass)
-			throws Exception {
+	public static <T> T convertFromNode(Node node, Class<T> targetClass) throws Exception {
 		return convertFromNode(node, targetClass, null);
 	}
 
-	protected static <T> T convertFromNode(Node node, Class<T> targetClass,
-			Type genericType) throws Exception {
+	protected static <T> T convertFromNode(Node node, Class<T> targetClass, Type genericType) throws Exception {
 		if (TAG_NULL.equals(node.getNodeName())) {
 			return null;
 		}
@@ -176,14 +176,12 @@ public class XmlUtil {
 		} else if (targetClass == Boolean.TYPE || targetClass == Boolean.class) {
 			return (T) Boolean.valueOf(node.getTextContent());
 		} else if (Enum.class.isAssignableFrom(targetClass)) {
-			return (T) ReflectUtil.valueOfEnum(targetClass,
-					node.getTextContent());
+			return (T) ReflectUtil.valueOfEnum(targetClass, node.getTextContent());
 		}
 		return convertFromNode(node, targetClass.newInstance(), genericType);
 	}
 
-	protected static <T> T convertFromNode(Node node, T target, Type genericType)
-			throws Exception {
+	protected static <T> T convertFromNode(Node node, T target, Type genericType) throws Exception {
 		if (TAG_NULL.equals(node.getNodeName())) {
 			return null;
 		}
@@ -198,8 +196,7 @@ public class XmlUtil {
 		} else if (target instanceof Boolean) {
 			return (T) Boolean.valueOf(node.getTextContent());
 		} else if (target instanceof Enum) {
-			return (T) ReflectUtil.valueOfEnum(target.getClass(),
-					node.getTextContent());
+			return (T) ReflectUtil.valueOfEnum(target.getClass(), node.getTextContent());
 		} else if (target instanceof List) {
 			return (T) convertArrayFromNode(node, (List<?>) target, genericType);
 		} else if (target instanceof Map) {
@@ -213,19 +210,15 @@ public class XmlUtil {
 				continue;
 			}
 			Class<?> fClass = f.getType();
-			f.set(target,
-					IXmlItem.class.isAssignableFrom(fClass) ? (((IXmlItem) fClass
-							.newInstance()).fromXml(sub, f)) : convertFromNode(
-							sub, fClass, f.getGenericType()));
+			f.set(target, IXmlItem.class.isAssignableFrom(fClass) ? (((IXmlItem) fClass.newInstance()).fromXml(sub, f))
+					: convertFromNode(sub, fClass, f.getGenericType()));
 		}
 		return target;
 	}
 
-	protected static <T extends List> T convertArrayFromNode(Node node,
-			T target, Type genericType) throws Exception {
+	protected static <T extends List> T convertArrayFromNode(Node node, T target, Type genericType) throws Exception {
 		Class<?> targetClass = target.getClass();
-		Class<?> eClass = ReflectUtil.getListElementClass(targetClass,
-				genericType);
+		Class<?> eClass = ReflectUtil.getListElementClass(targetClass, genericType);
 		Type eType = ReflectUtil.getListElementType(targetClass, genericType);
 		NodeList childNodes = node.getChildNodes();
 		for (int i = 0, size = childNodes.getLength(); i < size; i++) {
@@ -238,16 +231,13 @@ public class XmlUtil {
 		return target;
 	}
 
-	protected static <T extends Map> T convertMapFromNode(Node node, T target,
-			Type genericType) throws Exception {
+	protected static <T extends Map> T convertMapFromNode(Node node, T target, Type genericType) throws Exception {
 		Class<?> targetClass = target.getClass();
-		Class<?> keyClass = ReflectUtil
-				.getMapKeyClass(targetClass, genericType);
+		Class<?> keyClass = ReflectUtil.getMapKeyClass(targetClass, genericType);
 		if (!String.class.isAssignableFrom(keyClass)) {
 			throw new Exception();
 		}
-		Class<?> vClass = ReflectUtil
-				.getMapValueClass(targetClass, genericType);
+		Class<?> vClass = ReflectUtil.getMapValueClass(targetClass, genericType);
 		Type vType = ReflectUtil.getMapValueType(targetClass, genericType);
 		NodeList childNodes = node.getChildNodes();
 		for (int i = childNodes.getLength() - 1; i >= 0; i--) {
@@ -255,24 +245,20 @@ public class XmlUtil {
 			if (sub.getNodeType() != Node.ELEMENT_NODE) {
 				continue;
 			}
-			target.put(getAttr(sub, TAG_NAME),
-					convertFromNode(sub, vClass, vType));
+			target.put(getAttr(sub, TAG_NAME), convertFromNode(sub, vClass, vType));
 		}
 		return target;
 	}
 
-	public static <T> T convertFromDoc(Document doc, Class<T> targetClass)
-			throws Exception {
+	public static <T> T convertFromDoc(Document doc, Class<T> targetClass) throws Exception {
 		return convertFromNode(doc.getDocumentElement(), targetClass, null);
 	}
 
-	public static <T> T convert(String str, Class<T> targetClass)
-			throws Exception {
+	public static <T> T convert(String str, Class<T> targetClass) throws Exception {
 		if (str == null) {
 			return null;
 		}
-		return convertFromNode(newDoc(str).getDocumentElement(), targetClass,
-				null);
+		return convertFromNode(newDoc(str).getDocumentElement(), targetClass, null);
 	}
 
 	public static <T> T convert(String str, T target) throws Exception {
@@ -289,8 +275,7 @@ public class XmlUtil {
 		return doc;
 	}
 
-	protected static <T> Node convertToNode(T target, Document doc)
-			throws Exception {
+	protected static <T> Node convertToNode(T target, Document doc) throws Exception {
 		if (target == null) {
 			return doc.createElement(TAG_NULL);
 		} else if (target instanceof String) {
@@ -331,16 +316,14 @@ public class XmlUtil {
 			if (v == null) {
 				continue;
 			}
-			Node subNode = (v instanceof IXmlItem) ? (((IXmlItem) v).toXml(doc,
-					f)) : convertToNode(v, doc);
+			Node subNode = (v instanceof IXmlItem) ? (((IXmlItem) v).toXml(doc, f)) : convertToNode(v, doc);
 			setAttr(subNode, TAG_NAME, f.getName());
 			node.appendChild(subNode);
 		}
 		return node;
 	}
 
-	protected static <T> Node convertArrayToNode(T target, Document doc)
-			throws Exception {
+	protected static <T> Node convertArrayToNode(T target, Document doc) throws Exception {
 		Node node = doc.createElement(target.getClass().getSimpleName());
 		for (Object element : (List<?>) target) {
 			node.appendChild(convertToNode(element, doc));
@@ -348,8 +331,7 @@ public class XmlUtil {
 		return node;
 	}
 
-	protected static <T> Node convertMapToNode(T target, Document doc)
-			throws Exception {
+	protected static <T> Node convertMapToNode(T target, Document doc) throws Exception {
 		Node node = doc.createElement(target.getClass().getSimpleName());
 		for (Entry<?, ?> entry : ((Map<?, ?>) target).entrySet()) {
 			Object k = entry.getKey();

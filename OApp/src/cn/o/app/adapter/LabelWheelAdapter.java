@@ -2,9 +2,12 @@ package cn.o.app.adapter;
 
 import java.util.List;
 
-import kankan.wheel.widget.WheelAdapter;
 import cn.o.app.io.ILabelItem;
+import kankan.wheel.widget.WheelAdapter;
 
+/**
+ * {@link WheelAdapter} Whose data item is {@link ILabelItem}
+ */
 public class LabelWheelAdapter implements WheelAdapter {
 
 	protected List<? extends ILabelItem> mDataProvider;

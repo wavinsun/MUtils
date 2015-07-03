@@ -14,6 +14,8 @@ import cn.o.app.runtime.OField;
 import cn.o.app.runtime.ReflectUtil;
 
 /**
+ * JSON serializer of framework
+ * 
  * Reflection:int->Integer.TYPE Integer->Integer.class
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })

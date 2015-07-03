@@ -13,8 +13,18 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 
 import cn.o.app.io.IOUtil;
 
+/**
+ * Fix bug for Archive file by Apache Commons Compress
+ */
 public class ZipUtil {
 
+	/**
+	 * Get byte array from stream by entry path
+	 * 
+	 * @param is
+	 * @param entry
+	 * @return
+	 */
 	public static byte[] getBytes(InputStream is, String entry) {
 		ZipArchiveInputStream zais = null;
 		ByteArrayOutputStream bos = null;
@@ -41,6 +51,13 @@ public class ZipUtil {
 		return null;
 	}
 
+	/**
+	 * Get byte array from file by entry path
+	 * 
+	 * @param file
+	 * @param entry
+	 * @return
+	 */
 	public static byte[] getBytes(String file, String entry) {
 		File f = new File(file);
 		if (!f.isFile()) {
@@ -68,6 +85,12 @@ public class ZipUtil {
 		}
 	}
 
+	/**
+	 * Compress file or directory
+	 * 
+	 * @param file
+	 * @return
+	 */
 	public static boolean zip(String file) {
 		File f = new File(file);
 		if (!f.exists()) {
@@ -95,6 +118,14 @@ public class ZipUtil {
 		}
 	}
 
+	/**
+	 * Put file into stream by parent entry path
+	 * 
+	 * @param zaos
+	 * @param file
+	 * @param parentEntry
+	 * @return
+	 */
 	protected static boolean zip(ZipArchiveOutputStream zaos, File file, String parentEntry) {
 		StringBuilder sb = new StringBuilder();
 		if (parentEntry != null && !parentEntry.isEmpty()) {

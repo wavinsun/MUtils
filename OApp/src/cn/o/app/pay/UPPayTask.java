@@ -71,41 +71,44 @@ public class UPPayTask extends OPayTask {
 			return;
 		}
 		if (mOnActivityResultListener == null) {
-			mOnActivityResultListener = new OnActivityResultListener() {
-
-				@Override
-				public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
-					if (data == null) {
-						return;
-					}
-					Bundle extras = data.getExtras();
-					if (extras == null) {
-						return;
-					}
-					String payResult = extras.getString("pay_result");
-					if (payResult == null) {
-						return;
-					}
-					if (payResult.equalsIgnoreCase("success")) {
-						mStatus = STATUS_UP_SUCCESS;
-						for (OPayListener listener : getListeners(OPayListener.class)) {
-							listener.onComplete(UPPayTask.this);
-						}
-					} else {
-						if (payResult.equalsIgnoreCase("fail")) {
-							mStatus = STATUS_UP_FAIL;
-						} else if (payResult.equalsIgnoreCase("cancel")) {
-							mStatus = STATUS_UP_CANCEL;
-						}
-						for (OPayListener listener : getListeners(OPayListener.class)) {
-							listener.onError(UPPayTask.this, null);
-						}
-					}
-					((IActivityResultCatcher) context).removeOnActivityResultListener(mOnActivityResultListener);
-				}
-			};
+			mOnActivityResultListener = new UPPayResultListener();
 		}
 		IActivityResultCatcher catcher = (IActivityResultCatcher) mContext;
 		catcher.addOnActivityResultListener(mOnActivityResultListener);
+	}
+
+	class UPPayResultListener implements OnActivityResultListener {
+
+		@Override
+		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
+			if (data == null) {
+				return;
+			}
+			Bundle extras = data.getExtras();
+			if (extras == null) {
+				return;
+			}
+			String payResult = extras.getString("pay_result");
+			if (payResult == null) {
+				return;
+			}
+			if (payResult.equalsIgnoreCase("success")) {
+				mStatus = STATUS_UP_SUCCESS;
+				for (OPayListener listener : getListeners(OPayListener.class)) {
+					listener.onComplete(UPPayTask.this);
+				}
+			} else {
+				if (payResult.equalsIgnoreCase("fail")) {
+					mStatus = STATUS_UP_FAIL;
+				} else if (payResult.equalsIgnoreCase("cancel")) {
+					mStatus = STATUS_UP_CANCEL;
+				}
+				for (OPayListener listener : getListeners(OPayListener.class)) {
+					listener.onError(UPPayTask.this, null);
+				}
+			}
+			((IActivityResultCatcher) context).removeOnActivityResultListener(mOnActivityResultListener);
+		}
+
 	}
 }

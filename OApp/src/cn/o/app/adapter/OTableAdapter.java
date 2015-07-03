@@ -9,8 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-public abstract class OTableAdapter<DATA_ITEM> extends
-		OCacheAdapter<DATA_ITEM, List<IItemView<DATA_ITEM>>> {
+/**
+ * Adapter for {@link TableLayout}
+ * 
+ * @see OAdapter
+ */
+public abstract class OTableAdapter<DATA_ITEM> extends OCacheAdapter<DATA_ITEM, List<IItemView<DATA_ITEM>>> {
 
 	protected int mColumnCount;
 
@@ -20,8 +24,7 @@ public abstract class OTableAdapter<DATA_ITEM> extends
 	public void setContainer(ViewGroup container) {
 		if (container != null) {
 			if (!(container instanceof TableLayout)) {
-				throw new IllegalArgumentException(
-						"container is not TableLayout");
+				throw new IllegalArgumentException("container is not TableLayout");
 			}
 		}
 		super.setContainer(container);
@@ -60,8 +63,7 @@ public abstract class OTableAdapter<DATA_ITEM> extends
 
 	@Override
 	protected boolean freeCacheNoUse() {
-		return Math.random() > 0.3
-				&& mCacheViews.size() / getCacheSizeRequired() > 2;
+		return Math.random() > 0.3 && mCacheViews.size() / getCacheSizeRequired() > 2;
 	}
 
 	@Override
@@ -160,8 +162,7 @@ public abstract class OTableAdapter<DATA_ITEM> extends
 		}
 	}
 
-	protected void addCacheRow(List<IItemView<DATA_ITEM>> rowViews,
-			int columnCount) {
+	protected void addCacheRow(List<IItemView<DATA_ITEM>> rowViews, int columnCount) {
 		OTableRow newRow = new OTableRow(getContext());
 		newRow.setColumn(columnCount);
 		LinkedList<IItemView<DATA_ITEM>> newRowViews = new LinkedList<IItemView<DATA_ITEM>>();
@@ -190,17 +191,14 @@ public abstract class OTableAdapter<DATA_ITEM> extends
 			return;
 		}
 		int requiredViews4Bottom = mDataProvider.size() % mColumnCount;
-		requiredViews4Bottom = requiredViews4Bottom != 0 ? requiredViews4Bottom
-				: mColumnCount;
+		requiredViews4Bottom = requiredViews4Bottom != 0 ? requiredViews4Bottom : mColumnCount;
 		for (int i = 0; i < requiredRows; i++) {// fix items of row in container
 			List<IItemView<DATA_ITEM>> rowViews = mCacheViews.get(i);
 			OTableRow row = mCacheRows.get(i);
 			int containerRowItems = row.getChildCount();
-			int requiredRowItems = (i == requiredRows - 1) ? requiredViews4Bottom
-					: mColumnCount;
+			int requiredRowItems = (i == requiredRows - 1) ? requiredViews4Bottom : mColumnCount;
 			if (requiredRowItems < containerRowItems) {
-				row.removeViews(requiredRowItems, containerRowItems
-						- requiredViews4Bottom);
+				row.removeViews(requiredRowItems, containerRowItems - requiredViews4Bottom);
 			} else if (requiredRowItems > containerRowItems) {
 				for (int j = containerRowItems; j < requiredRowItems; j++) {
 					IItemView<DATA_ITEM> itemView = rowViews.get(j);
@@ -211,8 +209,7 @@ public abstract class OTableAdapter<DATA_ITEM> extends
 		int containerRows = mContainer.getChildCount();
 		if (requiredRows != containerRows) {// fix row in container
 			if (requiredRows < containerRows) {
-				mContainer.removeViews(requiredRows, containerRows
-						- requiredRows);
+				mContainer.removeViews(requiredRows, containerRows - requiredRows);
 			} else if (requiredRows > containerRows) {
 				for (int i = containerRows; i < requiredRows; i++) {
 					mContainer.addView(mCacheRows.get(i));
@@ -239,9 +236,7 @@ public abstract class OTableAdapter<DATA_ITEM> extends
 			renewParams = true;
 		}
 		if (renewParams) {
-			itemView.toView().setLayoutParams(
-					new TableRow.LayoutParams(0,
-							TableRow.LayoutParams.WRAP_CONTENT, 1));
+			itemView.toView().setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1));
 		}
 	}
 

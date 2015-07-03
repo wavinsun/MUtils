@@ -40,27 +40,7 @@ public class TakePhotoTask implements ILockable {
 
 	protected Dispatcher mDispatcher = new Dispatcher();
 
-	protected OnActivityResultListener mOnActivityResultListener = new OnActivityResultListener() {
-
-		@Override
-		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
-			if (mRequestCode != requestCode) {
-				return;
-			}
-			mCatcher.removeOnActivityResultListener(mOnActivityResultListener);
-			mLocked = false;
-			if (resultCode != Activity.RESULT_OK) {
-				return;
-			}
-			Uri uri = data != null ? data.getData() : mExtraOutput;
-			if (OUtil.compress(uri.getPath(), EXPECT_WIDTH, EXPECT_HEIGHT)) {
-				TakePhotoListener listener = (TakePhotoListener) mDispatcher.getListener();
-				if (listener != null) {
-					listener.onComplete(uri);
-				}
-			}
-		}
-	};
+	protected OnActivityResultListener mOnActivityResultListener = new TakePhotoResultListener();
 
 	public TakePhotoTask(IActivityResultCatcher catcher, int requestCode) {
 		mRequestCode = requestCode;
@@ -123,6 +103,29 @@ public class TakePhotoTask implements ILockable {
 	@Override
 	public void setLocked(boolean locked) {
 		mLocked = locked;
+	}
+
+	class TakePhotoResultListener implements OnActivityResultListener {
+
+		@Override
+		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
+			if (mRequestCode != requestCode) {
+				return;
+			}
+			mCatcher.removeOnActivityResultListener(mOnActivityResultListener);
+			mLocked = false;
+			if (resultCode != Activity.RESULT_OK) {
+				return;
+			}
+			Uri uri = data != null ? data.getData() : mExtraOutput;
+			if (OUtil.compress(uri.getPath(), EXPECT_WIDTH, EXPECT_HEIGHT)) {
+				TakePhotoListener listener = (TakePhotoListener) mDispatcher.getListener();
+				if (listener != null) {
+					listener.onComplete(uri);
+				}
+			}
+		}
+
 	}
 
 }

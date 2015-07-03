@@ -42,6 +42,9 @@ import cn.o.app.runtime.OField;
 import cn.o.app.runtime.ReflectUtil;
 import cn.o.app.text.StringUtil;
 
+/**
+ * Utility of framework
+ */
 @SuppressWarnings("deprecation")
 public class OUtil {
 
@@ -682,15 +685,7 @@ public class OUtil {
 	public static void fixAsyncTask() {
 		Looper looper = Looper.getMainLooper();
 		Handler handler = new Handler(looper);
-		handler.post(new Runnable() {
-			public void run() {
-				try {
-					Class.forName("android.os.AsyncTask");
-				} catch (Exception e) {
-
-				}
-			}
-		});
+		handler.post(new AsyncTaskLoaderRunnable());
 	}
 
 	public static Locale getLocale(Context context) {
@@ -725,5 +720,17 @@ public class OUtil {
 	 */
 	public static String fromAES(String hex, String pwd) {
 		return AESUtil.decrypt(hex, pwd);
+	}
+
+	protected static class AsyncTaskLoaderRunnable implements Runnable {
+
+		public void run() {
+			try {
+				Class.forName("android.os.AsyncTask");
+			} catch (Exception e) {
+
+			}
+		}
+
 	}
 }

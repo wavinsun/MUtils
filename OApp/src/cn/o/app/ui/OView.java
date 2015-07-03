@@ -10,8 +10,10 @@ import cn.o.app.ui.core.IContentViewOwner;
 import cn.o.app.ui.core.IView;
 import cn.o.app.ui.core.IViewFinder;
 
-public class OView extends RelativeLayout implements IView, IViewFinder,
-		IContentViewOwner {
+/**
+ * View of framework
+ */
+public class OView extends RelativeLayout implements IView, IViewFinder, IContentViewOwner {
 
 	public OView(Context context) {
 		super(context);

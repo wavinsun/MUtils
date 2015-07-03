@@ -105,8 +105,7 @@ public class SocketQueue extends Queue implements ISocketQueue {
 			this.mConnOptions.setReconnectInterval(2000);
 			this.mConn = new WebSocketConnection();
 			try {
-				this.mConn.connect(new URI(url), this.mHandler,
-						this.mConnOptions);
+				this.mConn.connect(new URI(url), this.mHandler, this.mConnOptions);
 			} catch (Exception e) {
 
 			}
@@ -118,14 +117,12 @@ public class SocketQueue extends Queue implements ISocketQueue {
 				Object v = jsonTokener.nextValue();
 				if (v instanceof JSONObject) {
 					JSONObject jsonObject = (JSONObject) v;
-					onMessage(jsonObject.getString(SOCKET_CHANNEL),
-							jsonObject.getString(SOCKET_CHANNEL_MESSAGE));
+					onMessage(jsonObject.getString(SOCKET_CHANNEL), jsonObject.getString(SOCKET_CHANNEL_MESSAGE));
 				} else if (v instanceof JSONArray) {
 					JSONArray jsonArray = (JSONArray) v;
 					for (int i = 0; i < jsonArray.length(); i++) {
 						JSONObject jsonObject = jsonArray.getJSONObject(i);
-						onMessage(jsonObject.getString(SOCKET_CHANNEL),
-								jsonObject.getString(SOCKET_CHANNEL_MESSAGE));
+						onMessage(jsonObject.getString(SOCKET_CHANNEL), jsonObject.getString(SOCKET_CHANNEL_MESSAGE));
 					}
 				}
 			} catch (Exception e) {
@@ -140,8 +137,7 @@ public class SocketQueue extends Queue implements ISocketQueue {
 				return;
 			}
 			for (ISocketTask task : channelsItem) {
-				Class<?> responseClass = ReflectUtil.getParameterizedClass(
-						task.getClass(), 1);
+				Class<?> responseClass = ReflectUtil.getParameterizedClass(task.getClass(), 1);
 				try {
 					task.setResponse(JsonUtil.convert(message, responseClass));
 				} catch (Exception e) {
@@ -221,14 +217,12 @@ public class SocketQueue extends Queue implements ISocketQueue {
 		protected String getAddAllChannelMessage() {
 			try {
 				JSONArray jsonArray = new JSONArray();
-				for (Entry<String, List<ISocketTask<?, ?>>> entry : mChannelsMap
-						.entrySet()) {
+				for (Entry<String, List<ISocketTask<?, ?>>> entry : mChannelsMap.entrySet()) {
 					List<ISocketTask<?, ?>> value = entry.getValue();
 					if (value.size() == 0) {
 						continue;
 					}
-					jsonArray.put(jsonArray.length(),
-							getAddChannelMessage(value.get(0)));
+					jsonArray.put(jsonArray.length(), getAddChannelMessage(value.get(0)));
 				}
 				if (jsonArray.length() == 0) {
 					return null;

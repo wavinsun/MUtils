@@ -7,6 +7,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 import cn.o.app.text.StringUtil;
 
+/**
+ * AES encrypt and decrypt
+ */
 public class AESUtil {
 
 	public static final String ALGORITHM = "AES";
@@ -37,7 +40,6 @@ public class AESUtil {
 	}
 
 	protected static Key generateKey(String pwd) throws Exception {
-		return new SecretKeySpec(StringUtil.md5(pwd.getBytes("UTF-8")),
-				ALGORITHM);
+		return new SecretKeySpec(StringUtil.md5(pwd.getBytes("UTF-8")), ALGORITHM);
 	}
 }

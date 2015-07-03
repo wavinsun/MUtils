@@ -4,15 +4,21 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
-public abstract class OVLinearAdapter<DATA_ITEM> extends
-		OCacheAdapter<DATA_ITEM, IItemView<DATA_ITEM>> {
+/**
+ * Adapter for {@link LinearLayout} whose orientation is
+ * {@link LinearLayout#VERTICAL}
+ * 
+ * @see LinearLayout#VERTICAL
+ * @see OAdapter
+ * 
+ */
+public abstract class OVLinearAdapter<DATA_ITEM> extends OCacheAdapter<DATA_ITEM, IItemView<DATA_ITEM>> {
 
 	@Override
 	public void setContainer(ViewGroup container) {
 		if (container != null) {
 			if (!(container instanceof LinearLayout)) {
-				throw new IllegalArgumentException(
-						"container is not LinearLayout");
+				throw new IllegalArgumentException("container is not LinearLayout");
 			}
 			LinearLayout linearLayout = (LinearLayout) container;
 			if (linearLayout.getOrientation() != LinearLayout.VERTICAL) {
@@ -24,8 +30,7 @@ public abstract class OVLinearAdapter<DATA_ITEM> extends
 
 	@Override
 	protected boolean freeCacheNoUse() {
-		return Math.random() > 0.3
-				&& mCacheViews.size() / getCacheSizeRequired() > 3;
+		return Math.random() > 0.3 && mCacheViews.size() / getCacheSizeRequired() > 3;
 	}
 
 	@Override
@@ -63,8 +68,7 @@ public abstract class OVLinearAdapter<DATA_ITEM> extends
 		}
 		int containerViews = mContainer.getChildCount();
 		if (requiredViews < containerViews) {
-			mContainer.removeViews(requiredViews, containerViews
-					- requiredViews);
+			mContainer.removeViews(requiredViews, containerViews - requiredViews);
 		} else {
 			for (int i = containerViews; i < requiredViews; i++) {
 				mContainer.addView(mCacheViews.get(i).toView());
@@ -75,15 +79,12 @@ public abstract class OVLinearAdapter<DATA_ITEM> extends
 	protected void fixItemViewParams(IItemView<DATA_ITEM> itemView) {
 		ViewGroup.LayoutParams itemParams = itemView.toView().getLayoutParams();
 		if (itemParams != null) {
-			if (itemParams.width <= 0
-					&& itemParams.width != LayoutParams.MATCH_PARENT) {
+			if (itemParams.width <= 0 && itemParams.width != LayoutParams.MATCH_PARENT) {
 				itemParams.width = LayoutParams.MATCH_PARENT;
 			}
 		} else {
-			itemView.toView().setLayoutParams(
-					new LinearLayout.LayoutParams(
-							LinearLayout.LayoutParams.MATCH_PARENT,
-							LinearLayout.LayoutParams.WRAP_CONTENT));
+			itemView.toView().setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT));
 		}
 	}
 }

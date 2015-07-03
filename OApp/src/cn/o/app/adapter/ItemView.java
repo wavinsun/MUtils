@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import cn.o.app.OWrapper;
 
+/**
+ * RelativeLayout implements {@link IItemView}
+ */
 public abstract class ItemView<DATA_ITEM> extends RelativeLayout implements IItemView<DATA_ITEM> {
 
 	protected int mPosition = -1;

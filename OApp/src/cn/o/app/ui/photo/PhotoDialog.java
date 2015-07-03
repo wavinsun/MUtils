@@ -17,17 +17,15 @@ public class PhotoDialog {
 
 	public PhotoDialog(Context context) {
 		mPhotoContainer = new PhotoContainer(context);
-		mPhotoContainer.setLayoutParams(new ViewGroup.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.MATCH_PARENT));
-		mPhotoContainer
-				.setOnSelectedChangeListener(new OnSelectedChangeListener() {
+		mPhotoContainer.setLayoutParams(
+				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+		mPhotoContainer.setOnSelectedChangeListener(new OnSelectedChangeListener() {
 
-					@Override
-					public void onChanged(View v, int index) {
-						dismiss();
-					}
-				});
+			@Override
+			public void onChanged(View v, int index) {
+				dismiss();
+			}
+		});
 		mDialog = new ODialog(context);
 		mDialog.setCancelable(true);
 		mDialog.setContentView(mPhotoContainer);
