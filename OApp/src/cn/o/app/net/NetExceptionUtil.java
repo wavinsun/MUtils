@@ -12,12 +12,15 @@ import javax.net.ssl.SSLException;
 import org.apache.http.conn.ConnectTimeoutException;
 
 import cn.o.app.R;
-import cn.o.app.net.NetTask.ConnectNotFoundException;
-import cn.o.app.net.NetTask.CookieExpiredException;
-import cn.o.app.net.NetTask.ErrorCodeException;
-import cn.o.app.net.NetTask.HttpStatusException;
+import cn.o.app.net.NetClient.ConnectNotFoundException;
+import cn.o.app.net.NetClient.CookieExpiredException;
+import cn.o.app.net.NetClient.ErrorCodeException;
+import cn.o.app.net.NetClient.HttpStatusException;
 import cn.o.app.ui.core.IToastOwner;
 
+/**
+ * Net exception handler
+ */
 @SuppressWarnings("deprecation")
 public class NetExceptionUtil {
 

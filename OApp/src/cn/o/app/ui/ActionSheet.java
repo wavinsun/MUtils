@@ -229,7 +229,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 
 	}
 
-	protected static class OActionSheetAdapter<DATA_ITEM extends ActionItem> extends OVLinearAdapter<DATA_ITEM> {
+	static class OActionSheetAdapter<DATA_ITEM extends ActionItem> extends OVLinearAdapter<DATA_ITEM> {
 
 		protected ActionSheet<DATA_ITEM> mActionSheet;
 
@@ -247,7 +247,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 		}
 	}
 
-	protected static class OActionItemView<DATA_ITEM extends ActionItem> extends ItemFrame<DATA_ITEM> {
+	static class OActionItemView<DATA_ITEM extends ActionItem> extends ItemFrame<DATA_ITEM> {
 
 		protected LinearLayout mRoot;
 

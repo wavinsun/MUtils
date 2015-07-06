@@ -9,6 +9,12 @@ import cn.o.app.runtime.ReflectUtil;
 @SuppressWarnings("unchecked")
 public class OBroadcast<EXTRA extends Extra> implements IBroadcast {
 
+	public static interface OnReceiveListener<EXTRA extends Extra> {
+
+		public void onReceive(OBroadcast<EXTRA> broadcast, EXTRA extra);
+
+	}
+
 	protected String mAction;
 
 	protected Context mContext;
@@ -102,10 +108,6 @@ public class OBroadcast<EXTRA extends Extra> implements IBroadcast {
 
 	public void setOnReceiveListener(OnReceiveListener<EXTRA> listener) {
 		mOnReceiveListener = listener;
-	}
-
-	public static interface OnReceiveListener<EXTRA extends Extra> {
-		public void onReceive(OBroadcast<EXTRA> broadcast, EXTRA extra);
 	}
 
 	class OBroadcastReceiver extends BroadcastReceiver {

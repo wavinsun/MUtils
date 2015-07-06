@@ -2,6 +2,7 @@ package cn.o.app.ui.pattern;
 
 import android.content.Context;
 import cn.o.app.OUtil;
+import cn.o.app.annotation.Ignore;
 import cn.o.app.json.JsonUtil;
 
 @SuppressWarnings("serial")
@@ -27,6 +28,7 @@ public class PatternSettings implements IPatternSettings {
 
 	}
 
+	@Ignore
 	@Override
 	public String getUserId() {
 		return id;
@@ -37,6 +39,7 @@ public class PatternSettings implements IPatternSettings {
 		id = userId;
 	}
 
+	@Ignore
 	@Override
 	public String getPassword() {
 		return mm;
@@ -47,6 +50,7 @@ public class PatternSettings implements IPatternSettings {
 		mm = password;
 	}
 
+	@Ignore
 	@Override
 	public boolean isEnabled() {
 		return qy;
@@ -57,6 +61,7 @@ public class PatternSettings implements IPatternSettings {
 		qy = enabled;
 	}
 
+	@Ignore
 	@Override
 	public int getPeriod() {
 		return zq;

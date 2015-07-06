@@ -5,6 +5,12 @@ import android.os.Bundle;
 import cn.o.app.OUtil;
 import cn.o.app.json.JsonUtil;
 
+/**
+ * Extra of framework
+ * 
+ * JSON content
+ * 
+ */
 @SuppressWarnings("serial")
 public class Extra implements INoProguard {
 

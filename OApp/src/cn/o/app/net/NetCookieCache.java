@@ -7,6 +7,9 @@ import java.util.Map;
 import android.content.Context;
 import cn.o.app.OUtil;
 
+/**
+ * Cookie cache
+ */
 public class NetCookieCache {
 
 	private static final String COOKIE_FILENAME = "CookieCache";

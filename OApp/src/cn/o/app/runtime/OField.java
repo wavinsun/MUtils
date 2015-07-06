@@ -26,10 +26,6 @@ public class OField {
 	protected String mName;
 	protected Type mGenericType;
 
-	protected OField() {
-
-	}
-
 	public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
 		if (mField != null) {
 			return mField.getAnnotation(annotationType);
@@ -154,8 +150,7 @@ public class OField {
 				getList.add(m);
 			}
 			if (name.startsWith("is")) {
-				if (paramTypes.length != 0
-						|| (returnType != Boolean.TYPE && returnType != Boolean.class)) {
+				if (paramTypes.length != 0 || (returnType != Boolean.TYPE && returnType != Boolean.class)) {
 					continue;
 				}
 				getList.add(m);

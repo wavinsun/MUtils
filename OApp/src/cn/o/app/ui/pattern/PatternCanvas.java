@@ -2,6 +2,7 @@ package cn.o.app.ui.pattern;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,7 +15,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import cn.o.app.OUtil;
 
+@SuppressLint("ClickableViewAccessibility")
 public class PatternCanvas extends View {
+
+	public interface OnPasswordDrawnListener {
+
+		public void onPasswordDrawn(PatternCanvas canvas, String password);
+
+	}
 
 	private Paint mCircleStonePaint;
 	private Paint mCircleEarthPaint;
@@ -24,7 +32,7 @@ public class PatternCanvas extends View {
 	private Paint mDotGlowPaint;
 	private Paint mLinePaint;
 
-	private class Circle {
+	private static class Circle {
 		public boolean mUsed;
 		public Point mCenter;
 		public Rect mOuterBound;
@@ -44,10 +52,6 @@ public class PatternCanvas extends View {
 	private final int mEarthColor = 0xffffff;
 
 	private ArrayList<Integer> mPassword = new ArrayList<Integer>();
-
-	public interface OnPasswordDrawnListener {
-		public void onPasswordDrawn(PatternCanvas canvas, String password);
-	}
 
 	private OnPasswordDrawnListener mOnPasswordDrawnListener;
 
@@ -72,8 +76,7 @@ public class PatternCanvas extends View {
 		mCircleStonePaint = new Paint(paint);
 		mCircleStonePaint.setColor(0xff000000 | mStoneColor);
 		mCircleStonePaint.setStyle(Paint.Style.STROKE);
-		mCircleStonePaint.setStrokeWidth(OUtil.getRawSize(getContext(),
-				TypedValue.COMPLEX_UNIT_DIP, 1));
+		mCircleStonePaint.setStrokeWidth(OUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 1));
 
 		mCircleEarthPaint = new Paint(paint);
 		mCircleEarthPaint.setColor(0x10000000 | mEarthColor);
@@ -84,8 +87,7 @@ public class PatternCanvas extends View {
 
 		mCircleGlowPaint = new Paint(mCircleStonePaint);
 		mCircleGlowPaint.setColor(0x40000000 | mFireColor);
-		mCircleGlowPaint.setStrokeWidth(OUtil.getRawSize(getContext(),
-				TypedValue.COMPLEX_UNIT_DIP, 6));
+		mCircleGlowPaint.setStrokeWidth(OUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 6));
 
 		mDotFiredPaint = new Paint(paint);
 		mDotFiredPaint.setColor(0xff000000 | mFireColor);
@@ -97,23 +99,17 @@ public class PatternCanvas extends View {
 		mLinePaint = new Paint(paint);
 		mLinePaint.setColor(0x80000000 | mFireColor);
 		mLinePaint.setStyle(Paint.Style.STROKE);
-		mLinePaint.setStrokeWidth(OUtil.getRawSize(getContext(),
-				TypedValue.COMPLEX_UNIT_DIP, 8));
+		mLinePaint.setStrokeWidth(OUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 8));
 	}
 
 	private void initCircles(double w, double h) {
-		int cw = (int) Math.floor(Math.min(Math.floor(w / 3.0),
-				Math.floor(h / 3.0)));
+		int cw = (int) Math.floor(Math.min(Math.floor(w / 3.0), Math.floor(h / 3.0)));
 
 		mCircleOuterRadius = (int) Math.floor((double) cw * 0.3);
-		mCircleInnerRadius = mCircleOuterRadius
-				- (int) OUtil.getRawSize(getContext(),
-						TypedValue.COMPLEX_UNIT_DIP, 4);
+		mCircleInnerRadius = mCircleOuterRadius - (int) OUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 4);
 
 		mDotOuterRadius = (int) Math.floor((double) cw * 0.15);
-		mDotInnerRadius = mDotOuterRadius
-				- (int) OUtil.getRawSize(getContext(),
-						TypedValue.COMPLEX_UNIT_DIP, 4);
+		mDotInnerRadius = mDotOuterRadius - (int) OUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 4);
 
 		int x0, y0, x3, y3;
 		if (h > w) {
@@ -150,13 +146,11 @@ public class PatternCanvas extends View {
 		mCircles[8].mOuterBound = new Rect(x2, y2, x3, y3);
 
 		for (int i = 0; i < mCircles.length; i++)
-			mCircles[i].mCenter = new Point(mCircles[i].mOuterBound.centerX(),
-					mCircles[i].mOuterBound.centerY());
+			mCircles[i].mCenter = new Point(mCircles[i].mOuterBound.centerX(), mCircles[i].mOuterBound.centerY());
 	}
 
 	@Override
-	protected void onLayout(boolean changed, int left, int top, int right,
-			int bottom) {
+	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
 		super.onLayout(changed, left, top, right, bottom);
 
 		initCircles(right - left, bottom - top);
@@ -282,8 +276,8 @@ public class PatternCanvas extends View {
 			return -1;
 		if (mCircles[i].mUsed)
 			return -1;
-		if (Math.sqrt(Math.pow(x - mCircles[i].mCenter.x, 2)
-				+ Math.pow(y - mCircles[i].mCenter.y, 2)) > mCircleOuterRadius)
+		if (Math.sqrt(
+				Math.pow(x - mCircles[i].mCenter.x, 2) + Math.pow(y - mCircles[i].mCenter.y, 2)) > mCircleOuterRadius)
 			return -1;
 
 		mCircles[i].mUsed = true;

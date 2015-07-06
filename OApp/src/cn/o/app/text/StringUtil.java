@@ -14,6 +14,9 @@ import java.util.UUID;
 
 import cn.o.app.io.IOUtil;
 
+/**
+ * String utility of framework
+ */
 public class StringUtil {
 
 	protected static final char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',

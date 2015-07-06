@@ -83,21 +83,17 @@ public class OPopupMenu<DATA_ITEM> {
 		Resources resources = context.getResources();
 		DisplayMetrics metrics = resources.getDisplayMetrics();
 		int screenHeight = metrics.heightPixels;
-		int padding = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 4, metrics);
+		int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, metrics);
 		Rect popupArea = new Rect();
-		((Activity) context).getWindow().getDecorView()
-				.getWindowVisibleDisplayFrame(popupArea);
+		((Activity) context).getWindow().getDecorView().getWindowVisibleDisplayFrame(popupArea);
 		boolean statusBarAtTop = popupArea.top > 1;
 		int popupAreaHeight = popupArea.height();
 		int statusBarHeight = screenHeight - popupAreaHeight;
 		int anchorHeight = mAnchor.getHeight();
 		int halfPopupAreaHeight = popupAreaHeight >> 1;
 		boolean underAnchor = (mPopupY - popupArea.top + (anchorHeight >> 1)) < halfPopupAreaHeight;
-		mPopupY = underAnchor ? (mPopupY + anchorHeight + padding)
-				: (mPopupY - padding);
-		int contentMaxHeight = underAnchor ? (screenHeight - mPopupY - padding - (statusBarAtTop ? 0
-				: statusBarHeight))
+		mPopupY = underAnchor ? (mPopupY + anchorHeight + padding) : (mPopupY - padding);
+		int contentMaxHeight = underAnchor ? (screenHeight - mPopupY - padding - (statusBarAtTop ? 0 : statusBarHeight))
 				: (mPopupY - padding - (statusBarAtTop ? statusBarHeight : 0));
 		FrameLayout realContentView = new FrameLayout(context);
 		realContentView.setPadding(padding, 0, padding, 0);
@@ -119,8 +115,7 @@ public class OPopupMenu<DATA_ITEM> {
 				public void onMeasured(View v, int width, int height) {
 					((OPopupMenuScroller) v).setOnMeasuredListener(null);
 					mPopupY = mPopupY - height;
-					mPopupWindow.update(mPopupX, mPopupY,
-							WindowManager.LayoutParams.WRAP_CONTENT,
+					mPopupWindow.update(mPopupX, mPopupY, WindowManager.LayoutParams.WRAP_CONTENT,
 							WindowManager.LayoutParams.WRAP_CONTENT);
 				}
 			});
@@ -130,21 +125,17 @@ public class OPopupMenu<DATA_ITEM> {
 		if (mAdapter != null) {
 			mAdapter.setContainer(scrollContent);
 		}
-		scroller.addView(scrollContent, new FrameLayout.LayoutParams(
-				FrameLayout.LayoutParams.WRAP_CONTENT,
+		scroller.addView(scrollContent, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
 				FrameLayout.LayoutParams.WRAP_CONTENT));
-		realContentView.addView(scroller, new FrameLayout.LayoutParams(
-				FrameLayout.LayoutParams.WRAP_CONTENT,
+		realContentView.addView(scroller, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
 				FrameLayout.LayoutParams.WRAP_CONTENT));
 
-		mPopupWindow = new PopupWindow(realContentView,
-				WindowManager.LayoutParams.WRAP_CONTENT,
+		mPopupWindow = new PopupWindow(realContentView, WindowManager.LayoutParams.WRAP_CONTENT,
 				WindowManager.LayoutParams.WRAP_CONTENT);
 		mPopupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
 		mPopupWindow.setOutsideTouchable(true);
 		mPopupWindow.setFocusable(true);
-		mPopupWindow.showAtLocation(mAnchor, Gravity.NO_GRAVITY, mPopupX,
-				mPopupY);
+		mPopupWindow.showAtLocation(mAnchor, Gravity.NO_GRAVITY, mPopupX, mPopupY);
 		mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
 
 			@Override
@@ -158,14 +149,19 @@ public class OPopupMenu<DATA_ITEM> {
 	}
 
 	public static interface OPopupMenuListener {
+
 		public void onDismiss();
+
 	}
 
 	protected static interface OnMeasuredListener {
+
 		public void onMeasured(View v, int width, int height);
+
 	}
 
 	protected static class OPopupMenuScroller extends ScrollView {
+
 		protected int mMaxHeight;
 
 		protected int mMaxWidth;
@@ -180,8 +176,7 @@ public class OPopupMenu<DATA_ITEM> {
 			super(context, attrs);
 		}
 
-		public OPopupMenuScroller(Context context, AttributeSet attrs,
-				int defStyle) {
+		public OPopupMenuScroller(Context context, AttributeSet attrs, int defStyle) {
 			super(context, attrs, defStyle);
 		}
 
@@ -203,8 +198,7 @@ public class OPopupMenu<DATA_ITEM> {
 				this.setMeasuredDimension(measuredWidth, measuredHeight);
 			}
 			if (mOnMeasuredListener != null) {
-				mOnMeasuredListener.onMeasured(this, measuredWidth,
-						measuredHeight);
+				mOnMeasuredListener.onMeasured(this, measuredWidth, measuredHeight);
 			}
 		}
 
@@ -227,6 +221,7 @@ public class OPopupMenu<DATA_ITEM> {
 		public void setOnMeasuredListener(OnMeasuredListener listener) {
 			mOnMeasuredListener = listener;
 		}
+
 	}
 
 }

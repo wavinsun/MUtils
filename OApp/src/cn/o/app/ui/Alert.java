@@ -23,6 +23,45 @@ import cn.o.app.ui.core.IViewFinder;
 @SuppressWarnings("deprecation")
 public class Alert implements IViewFinder {
 
+	public static abstract class AlertListener {
+
+		/**
+		 * Return true to intercept
+		 * 
+		 * @param alert
+		 * @return
+		 */
+		public abstract boolean onOK(Alert alert);
+
+		/**
+		 * Return true to intercept
+		 * 
+		 * @param alert
+		 * @return
+		 */
+		public abstract boolean onCancel(Alert alert);
+
+		/**
+		 * Return true to intercept
+		 * 
+		 * @param alert
+		 * @return
+		 */
+		public boolean onDismiss(Alert alert) {
+			return false;
+		}
+
+		/**
+		 * Return true to intercept
+		 * 
+		 * @param alert
+		 * @return
+		 */
+		public boolean onClose(Alert alert) {
+			return false;
+		}
+	}
+
 	protected CharSequence mOK;
 
 	protected CharSequence mCancel;
@@ -611,45 +650,6 @@ public class Alert implements IViewFinder {
 			}
 		}
 
-	}
-
-	public static abstract class AlertListener {
-
-		/**
-		 * Return true to intercept
-		 * 
-		 * @param alert
-		 * @return
-		 */
-		public abstract boolean onOK(Alert alert);
-
-		/**
-		 * Return true to intercept
-		 * 
-		 * @param alert
-		 * @return
-		 */
-		public abstract boolean onCancel(Alert alert);
-
-		/**
-		 * Return true to intercept
-		 * 
-		 * @param alert
-		 * @return
-		 */
-		public boolean onDismiss(Alert alert) {
-			return false;
-		}
-
-		/**
-		 * Return true to intercept
-		 * 
-		 * @param alert
-		 * @return
-		 */
-		public boolean onClose(Alert alert) {
-			return false;
-		}
 	}
 
 }

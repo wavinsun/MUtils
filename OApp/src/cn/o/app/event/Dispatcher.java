@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Event dispatcher
+ */
 @SuppressWarnings("unchecked")
 public class Dispatcher implements IDispatcher {
 

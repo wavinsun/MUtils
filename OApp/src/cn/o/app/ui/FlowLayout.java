@@ -9,6 +9,7 @@ import cn.o.app.R;
 import cn.o.app.event.Listener;
 
 public class FlowLayout extends ViewGroup {
+
 	public static interface OnLinesChangeListener extends Listener {
 
 		public void onChanged(FlowLayout v, int lines);
@@ -112,8 +113,8 @@ public class FlowLayout extends ViewGroup {
 				}
 			}
 			LayoutParams lp = (LayoutParams) child.getLayoutParams();
-			lp.x = x;
-			lp.y = y;
+			lp.mX = x;
+			lp.mY = y;
 			x += child.getMeasuredWidth() + mHorizontalGap;
 		}
 		if (maxHeight != 0) {// 固定高度
@@ -144,7 +145,7 @@ public class FlowLayout extends ViewGroup {
 				continue;
 			}
 			LayoutParams lp = (LayoutParams) child.getLayoutParams();
-			child.layout(lp.x, lp.y, lp.x + child.getMeasuredWidth(), lp.y + child.getMeasuredHeight());
+			child.layout(lp.mX, lp.mY, lp.mX + child.getMeasuredWidth(), lp.mY + child.getMeasuredHeight());
 		}
 	}
 
@@ -170,8 +171,8 @@ public class FlowLayout extends ViewGroup {
 
 	public static class LayoutParams extends ViewGroup.LayoutParams {
 
-		int x;
-		int y;
+		protected int mX;
+		protected int mY;
 
 		public LayoutParams(Context c, AttributeSet attrs) {
 			super(c, attrs);

@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import cn.o.app.io.IOUtil;
 
@@ -29,7 +30,8 @@ public class ObjectUtil {
 	 * Deep clone
 	 * 
 	 * @param object
-	 *            Need to implements java.io.Serializable
+	 * @see Serializable
+	 * 
 	 * @return
 	 */
 	public static Object clone(Object object) {

@@ -3,8 +3,15 @@ package cn.o.app.fir;
 import cn.o.app.fir.FIRUpdateTask.FIRUpdateReq;
 import cn.o.app.fir.FIRUpdateTask.FIRUpdateRes;
 import cn.o.app.io.INoProguard;
+import cn.o.app.net.NetClient.ErrorCodeException;
 import cn.o.app.net.NetTask;
 
+/**
+ * Fly It Remotely version API
+ * 
+ * http://fir.im/dev/api
+ * 
+ */
 @SuppressWarnings("serial")
 public class FIRUpdateTask extends NetTask<FIRUpdateReq, FIRUpdateRes> {
 
@@ -26,10 +33,8 @@ public class FIRUpdateTask extends NetTask<FIRUpdateReq, FIRUpdateRes> {
 
 	public FIRUpdateTask() {
 		super();
-		mRestUrl = true;
-		mUrl = "http://fir.im/api/v2/app/version/{idOrAppid}";
-		mCookieCacheable = false;
-		mCookieCached = false;
+		setRestUrl(true);
+		setUrl("http://fir.im/api/v2/app/version/{idOrAppid}");
 	}
 
 	@Override

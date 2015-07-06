@@ -2,6 +2,8 @@ package cn.o.app.ui;
 
 import java.util.List;
 
+import com.lidroid.xutils.BitmapUtils;
+
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -10,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-
-import com.lidroid.xutils.BitmapUtils;
 
 public class ImageViewPager extends ViewPager {
 
@@ -51,7 +51,7 @@ public class ImageViewPager extends ViewPager {
 		}
 	}
 
-	protected class ImageViewPagerAdapter extends PagerAdapter {
+	class ImageViewPagerAdapter extends PagerAdapter {
 
 		protected List<String> mDataProvider;
 
@@ -72,8 +72,7 @@ public class ImageViewPager extends ViewPager {
 		public View instantiateItem(ViewGroup container, int position) {
 			ImageView imageView = new ImageView(getContext());
 			imageView.setScaleType(ScaleType.CENTER_CROP);
-			imageView.setLayoutParams(new ViewGroup.LayoutParams(
-					ViewGroup.LayoutParams.MATCH_PARENT,
+			imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.MATCH_PARENT));
 			mBitmapUtils.display(imageView, mDataProvider.get(position));
 			container.addView(imageView);
