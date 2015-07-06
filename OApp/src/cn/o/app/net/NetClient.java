@@ -29,7 +29,6 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
-import android.text.Html;
 import cn.o.app.event.Listener;
 import cn.o.app.json.JsonUtil;
 import cn.o.app.runtime.OField;
@@ -639,9 +638,9 @@ public class NetClient<REQUEST, RESPONSE> {
 					return stackTrace;
 				}
 			}
-			return Html.fromHtml(html500).toString();
+			return StringUtil.htmlText(html500);
 		} catch (Exception e) {
-			return Html.fromHtml(html500).toString();
+			return StringUtil.htmlText(html500);
 		}
 	}
 

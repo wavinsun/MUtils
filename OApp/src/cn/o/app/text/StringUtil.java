@@ -12,6 +12,7 @@ import java.security.MessageDigest;
 import java.util.Locale;
 import java.util.UUID;
 
+import android.text.Html;
 import cn.o.app.io.IOUtil;
 
 /**
@@ -255,6 +256,15 @@ public class StringUtil {
 		sb.append(e.getLineNumber());
 		sb.append(")");
 		return sb.toString();
+	}
+
+	public static String htmlText(String html) {
+		try {
+			return Html.fromHtml(html).toString();
+		} catch (Throwable e) {
+			// android.text.Html not found in Java standard environment
+			return html;
+		}
 	}
 
 }
