@@ -1,5 +1,8 @@
 package cn.o.app.event.listener;
 
+/**
+ * Version update listener
+ */
 public interface VersionUpdateListener {
 
 	/**

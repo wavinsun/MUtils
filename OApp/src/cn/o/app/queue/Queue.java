@@ -9,20 +9,13 @@ import cn.o.app.event.ContextOwnerDispathcer;
 @SuppressWarnings("rawtypes")
 public class Queue extends ContextOwnerDispathcer implements IQueue, IQueueItemListener {
 
-	protected boolean mRunInBackground;
+	protected boolean mRunInBackground = true;
 
-	protected int mMaxRunningCount;
+	protected int mMaxRunningCount = 1;
 
-	protected List<IQueueItem<?>> mQueue;
+	protected List<IQueueItem<?>> mQueue = new LinkedList<IQueueItem<?>>();
 
-	protected List<IQueueItem<?>> mQueueToBe;
-
-	public Queue() {
-		mRunInBackground = true;
-		mMaxRunningCount = 1;
-		mQueue = new LinkedList<IQueueItem<?>>();
-		mQueueToBe = new LinkedList<IQueueItem<?>>();
-	}
+	protected List<IQueueItem<?>> mQueueToBe = new LinkedList<IQueueItem<?>>();
 
 	protected void updateRunState() {
 		boolean runningBackground = isRunningBackground();

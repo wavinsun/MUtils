@@ -13,15 +13,23 @@ import android.view.View;
 
 public class OSwitch extends View {
 
+	public static interface OnCheckedChangeListener {
+
+		public boolean onCheckedChanging(OSwitch v, boolean checked);
+
+		public void onCheckedChanged(OSwitch v, boolean checked);
+
+	}
+
 	protected int mChromeColor = 0xFF4DD963;
 
 	protected int mBorderColor = 0xFFDADADA;
 
-	protected Paint mPaint;
+	protected Paint mPaint = new Paint();
 
-	protected Path mPath;
+	protected Path mPath = new Path();
 
-	protected RectF mRect;
+	protected RectF mRect = new RectF();
 
 	protected boolean mChecked;
 
@@ -51,17 +59,12 @@ public class OSwitch extends View {
 	protected void init(Context context) {
 		Resources resources = context.getResources();
 		DisplayMetrics metrics = resources.getDisplayMetrics();
-		mWrapContentWidth = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 46, metrics);
-		mWrapContentHeight = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 26, metrics);
-		mPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-				2, metrics);
-		int minWidth = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 48, metrics);
+		mWrapContentWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 46, metrics);
+		mWrapContentHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 26, metrics);
+		mPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, metrics);
+		int minWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, metrics);
 		this.setMinimumWidth(minWidth);
-		int minHeight = (int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 24, metrics);
+		int minHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, metrics);
 		this.setMinimumHeight(minHeight);
 		super.setOnClickListener(new OnClickListener() {
 
@@ -76,9 +79,6 @@ public class OSwitch extends View {
 				}
 			}
 		});
-		mPaint = new Paint();
-		mPath = new Path();
-		mRect = new RectF();
 	}
 
 	@Override
@@ -135,12 +135,10 @@ public class OSwitch extends View {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		if (MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.AT_MOST) {
-			widthMeasureSpec = MeasureSpec.makeMeasureSpec(mWrapContentWidth,
-					MeasureSpec.EXACTLY);
+			widthMeasureSpec = MeasureSpec.makeMeasureSpec(mWrapContentWidth, MeasureSpec.EXACTLY);
 		}
 		if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.AT_MOST) {
-			heightMeasureSpec = MeasureSpec.makeMeasureSpec(mWrapContentHeight,
-					MeasureSpec.EXACTLY);
+			heightMeasureSpec = MeasureSpec.makeMeasureSpec(mWrapContentHeight, MeasureSpec.EXACTLY);
 		}
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
@@ -182,12 +180,6 @@ public class OSwitch extends View {
 
 	public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
 		mListener = listener;
-	}
-
-	public static interface OnCheckedChangeListener {
-		public boolean onCheckedChanging(OSwitch v, boolean checked);
-
-		public void onCheckedChanged(OSwitch v, boolean checked);
 	}
 
 }

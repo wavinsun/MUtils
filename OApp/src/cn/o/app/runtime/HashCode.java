@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * Hash code of framework
+ * 
+ * It will change after property change
+ */
 public class HashCode {
 
 	protected static final long HASH_CODE_NULL = 1L;
@@ -17,10 +22,8 @@ public class HashCode {
 			return hash + HASH_CODE_NULL;
 		}
 		hash += obj.hashCode();
-		if (obj instanceof String || obj instanceof Integer
-				|| obj instanceof Long || obj instanceof Double
-				|| obj instanceof Boolean || obj instanceof Float
-				|| obj instanceof Character || obj instanceof Byte
+		if (obj instanceof String || obj instanceof Integer || obj instanceof Long || obj instanceof Double
+				|| obj instanceof Boolean || obj instanceof Float || obj instanceof Character || obj instanceof Byte
 				|| obj instanceof Short) {
 			return hash;
 		}

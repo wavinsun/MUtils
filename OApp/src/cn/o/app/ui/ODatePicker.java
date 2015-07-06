@@ -41,7 +41,7 @@ public class ODatePicker {
 		 */
 		public void onPicking(ODatePicker picker, Date date) {
 
-		};
+		}
 
 		/**
 		 * Cancel pick
@@ -51,6 +51,7 @@ public class ODatePicker {
 		public void onCancel(ODatePicker picker) {
 
 		}
+
 	}
 
 	/** Listener */
@@ -277,6 +278,7 @@ public class ODatePicker {
 					mOnPickDateListener.onPicking(ODatePicker.this, mPickedDate);
 				}
 			}
+
 		};
 		mYearView.addChangingListener(onWheelChangedListener);
 		mMonthView.addChangingListener(onWheelChangedListener);
@@ -294,6 +296,7 @@ public class ODatePicker {
 			public void onCancel(DialogInterface dialog) {
 				cancel();
 			}
+
 		});
 		mDialog.requestHFill();
 		mDialog.show();

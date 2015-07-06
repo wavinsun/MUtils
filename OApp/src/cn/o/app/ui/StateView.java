@@ -19,7 +19,7 @@ import cn.o.app.event.Dispatcher;
 import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.net.INetQueueOwner;
 import cn.o.app.net.INetTask;
-import cn.o.app.net.NetTask.CookieExpiredException;
+import cn.o.app.net.NetClient.CookieExpiredException;
 import cn.o.app.socket.ISocketQueueOwner;
 import cn.o.app.socket.ISocketTask;
 import cn.o.app.task.DelayTask;
@@ -31,8 +31,8 @@ import cn.o.app.ui.core.IStateView;
 import cn.o.app.ui.core.IStateViewManager;
 import cn.o.app.ui.core.IToastOwner;
 
-public class StateView extends RelativeLayout implements IStateView,
-		IStateViewManager, IStopableManager, IToastOwner, IContentViewOwner {
+public class StateView extends RelativeLayout
+		implements IStateView, IStateViewManager, IStopableManager, IToastOwner, IContentViewOwner {
 
 	protected List<IStateView> mBindViews;
 	protected List<IStopable> mBindStopables;
@@ -139,8 +139,7 @@ public class StateView extends RelativeLayout implements IStateView,
 		ViewParent parent = getParent();
 		if (parent != null) {
 			if (parent instanceof StateViewFlipper) {
-				return ((StateViewFlipper) parent).getGestureListener()
-						.onTouch(v, event);
+				return ((StateViewFlipper) parent).getGestureListener().onTouch(v, event);
 			}
 		}
 		return false;
@@ -290,8 +289,7 @@ public class StateView extends RelativeLayout implements IStateView,
 
 	@Override
 	public List<OnActivityResultListener> getOnActivityResultListeners() {
-		return mDispatcher.getListeners(OnActivityResultListener.EVENT_TYPE,
-				OnActivityResultListener.class);
+		return mDispatcher.getListeners(OnActivityResultListener.EVENT_TYPE, OnActivityResultListener.class);
 	}
 
 	@Override
@@ -301,8 +299,7 @@ public class StateView extends RelativeLayout implements IStateView,
 
 	@Override
 	public void removeOnActivityResultListener(OnActivityResultListener listener) {
-		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE,
-				listener);
+		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE, listener);
 	}
 
 	@Override

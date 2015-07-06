@@ -2,6 +2,9 @@ package cn.o.app.event;
 
 import java.util.List;
 
+/**
+ * Event dispatcher of framework
+ */
 public interface IDispatcher {
 
 	/**

@@ -10,31 +10,25 @@ public class AnimTask extends Task implements ILockable {
 		public abstract void onUpdate(AnimTask task, double progress);
 
 		public void onComplete(AnimTask task) {
+
 		}
 
 		public void onStart(AnimTask task) {
+
 		}
 
 		public void onStop(AnimTask task) {
+
 		}
 
 	}
 
-	protected long mStep;
-	protected long mSteps;
-	protected long mStepMillis;
+	protected long mStep = 0;
+	protected long mSteps = 40;
+	protected long mStepMillis = 30;
 
-	protected Handler mHandler;
-	protected Runnable mRunnable;
-
-	public AnimTask() {
-		mRestartable = true;
-		mStep = 0;
-		mSteps = 40;
-		mStepMillis = 30;
-		mHandler = new Handler();
-		mRunnable = new AnimRunnable();
-	}
+	protected Handler mHandler = new Handler();
+	protected Runnable mRunnable = new AnimRunnable();
 
 	@Override
 	public boolean isLocked() {

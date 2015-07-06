@@ -5,6 +5,9 @@ import java.io.Closeable;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * IO of framework
+ */
 public class IOUtil {
 
 	public static void copy(InputStream in, OutputStream out) throws Exception {

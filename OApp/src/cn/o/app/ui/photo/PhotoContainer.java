@@ -140,7 +140,8 @@ public class PhotoContainer extends RelativeLayout {
 		}
 	}
 
-	protected class PhotoPagerAdapter extends PagerAdapter {
+	class PhotoPagerAdapter extends PagerAdapter {
+
 		protected List<String> mDataProvider;
 
 		@Override
@@ -231,5 +232,6 @@ public class PhotoContainer extends RelativeLayout {
 		public boolean isViewFromObject(View view, Object object) {
 			return view == object;
 		}
+
 	}
 }

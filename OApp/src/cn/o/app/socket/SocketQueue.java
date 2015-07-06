@@ -75,7 +75,7 @@ public class SocketQueue extends Queue implements ISocketQueue {
 		mapItem.onStop(task);
 	}
 
-	protected class SocketMapItem {
+	class SocketMapItem {
 
 		protected String mUrl;
 		protected WebSocketConnection mConn;
