@@ -37,7 +37,13 @@ public class MillisFormat {
 		}
 	}
 
-	public static String format(long value) {
+	/**
+	 * Format to second
+	 * 
+	 * @param value
+	 * @return
+	 */
+	protected static StringBuilder formatInternal(long value) {
 		StringBuilder sb = new StringBuilder();
 		if (value >= 86400000L) {
 			long day = value / 86400000L;
@@ -79,6 +85,36 @@ public class MillisFormat {
 		} else {
 			sb.append("00");
 		}
+		return sb;
+	}
+
+	/**
+	 * Format to second
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public static String format(long value) {
+		return formatInternal(value).toString();
+	}
+
+	/**
+	 * Format to millisecond
+	 * 
+	 * @param time
+	 * @return
+	 */
+	public static String formatAll(long value) {
+		StringBuilder sb = formatInternal(value);
+		sb.append(".");
+		value = value % 1000L;
+		if (value < 100L) {
+			sb.append("0");
+		}
+		if (value < 10L) {
+			sb.append("0");
+		}
+		sb.append(value);
 		return sb.toString();
 	}
 }
