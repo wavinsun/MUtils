@@ -33,6 +33,7 @@ import cn.o.app.event.Listener;
 import cn.o.app.json.JsonUtil;
 import cn.o.app.runtime.OField;
 import cn.o.app.runtime.ReflectUtil;
+import cn.o.app.text.MillisFormat;
 import cn.o.app.text.StringUtil;
 
 /**
@@ -132,6 +133,7 @@ public class NetClient<REQUEST, RESPONSE> {
 	protected static final String EVENT_RESPONSE = "event.response";
 	protected static final String EVENT_REQUEST_COOKIE = "event.request.cookie";
 	protected static final String EVENT_RESPONSE_COOKIE = "event.response.cookie";
+	protected static final String EVENT_ELASE_TIME = "event.elapse.time";
 
 	protected REQUEST mRequest;
 
@@ -320,6 +322,12 @@ public class NetClient<REQUEST, RESPONSE> {
 	 * @return RESPONSE or exception
 	 */
 	public Object execute() {
+		long time = System.currentTimeMillis();
+		DefaultHttpClient client = new DefaultHttpClient();
+		client.setRedirectHandler(new NetRedirectHandler());
+		HttpParams clientParams = client.getParams();
+		clientParams.setParameter(CoreConnectionPNames.SO_TIMEOUT, 60000);
+		clientParams.setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10000);
 		try {
 			if (mRequestConvertible && mListener != null) {
 				mRequest = mListener.convertToRequest();
@@ -330,10 +338,13 @@ public class NetClient<REQUEST, RESPONSE> {
 			if (REQUEST_METHOD_POST.equals(mRequestMethod)) {
 				httpRequest = new HttpPost(url.toURI());
 				params = mPostParams ? convertToParameters(mRequest, mSplitArrayParams) : null;
-				params = mPostJson
-						? JsonUtil.convert(
-								(mPostJsonSigned && mListener != null) ? mListener.signPostJson(mRequest) : mRequest)
-						: null;
+				if (mPostJson) {
+					if (mPostJsonSigned && mListener != null) {
+						params = JsonUtil.convert(mListener.signPostJson(mRequest));
+					} else {
+						params = JsonUtil.convert(mRequest);
+					}
+				}
 				HttpEntity entity = convertToEntity(params != null ? params : mRequest);
 				if (mPostJson && entity != null) {
 					((StringEntity) entity).setContentType("application/json");
@@ -364,18 +375,13 @@ public class NetClient<REQUEST, RESPONSE> {
 			requestParams.setParameter(HTTP.CONTENT_ENCODING, "UTF-8");
 			requestParams.setParameter(HTTP.CHARSET_PARAM, "UTF-8");
 			requestParams.setParameter(HTTP.DEFAULT_PROTOCOL_CHARSET, "UTF-8");
-			DefaultHttpClient client = new DefaultHttpClient();
-			client.setRedirectHandler(new NetRedirectHandler());
-			HttpParams clientParams = client.getParams();
-			clientParams.setParameter(CoreConnectionPNames.SO_TIMEOUT, 60000);
-			clientParams.setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10000);
 			HttpResponse httpResponse = client.execute(httpRequest);
 			int statusCode = httpResponse.getStatusLine().getStatusCode();
 			if (statusCode != 200 && statusCode != 500) {
 				throw new HttpStatusException(statusCode);
 			}
-			mResponseTime = System.currentTimeMillis();
 			String response = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
+			mResponseTime = System.currentTimeMillis();
 			if (statusCode == 500) {
 				throw new HttpStatusException(statusCode,
 						getStackTrace(response, mHttp500HtmlRegex, mHttp500HtmlRegexGroup));
@@ -398,6 +404,7 @@ public class NetClient<REQUEST, RESPONSE> {
 			}
 			if (mListener != null) {
 				mListener.debugging(EVENT_RESPONSE, response);
+				mListener.debugging(EVENT_ELASE_TIME, MillisFormat.formatAll(mResponseTime - time));
 			}
 			Class<RESPONSE> resJsonClass = mListener != null ? mListener.responseClass()
 					: ((Class<RESPONSE>) ReflectUtil.getParameterizedClass(getClass(), 1));
@@ -415,6 +422,8 @@ public class NetClient<REQUEST, RESPONSE> {
 				mListener.debugging(EVENT_EXCEPTION, StringUtil.printStackTrace(e));
 			}
 			return e;
+		} finally {
+			client.getConnectionManager().shutdown();
 		}
 	}
 
@@ -618,7 +627,7 @@ public class NetClient<REQUEST, RESPONSE> {
 	}
 
 	/**
-	 * Parse response of HTTP 550 to get server stack trace
+	 * Parse response of HTTP 500 to get server stack trace
 	 * 
 	 * @param html500
 	 * @param regex
