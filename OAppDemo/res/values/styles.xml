@@ -1,0 +1,9 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="GoBtn" parent="MainBtn">
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:text">go</item>
+        <item name="android:id">@id/go</item>
+    </style>
+    
+</resources>

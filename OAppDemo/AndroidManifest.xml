@@ -35,7 +35,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity 
-            android:name=".AlertActivity"
+            android:name=".AlertDemoActivity"
             android:screenOrientation="portrait">
         </activity>
         
