@@ -10,17 +10,17 @@ import cn.o.app.ui.Alert.AlertListener;
 import cn.o.app.ui.StateView;
 
 @SetContentView(R.layout.view_alert)
-public class AlertView extends StateView {
+public class AlertDemoView extends StateView {
 
-	public AlertView(Context context) {
+	public AlertDemoView(Context context) {
 		super(context);
 	}
 
-	public AlertView(Context context, AttributeSet attrs) {
+	public AlertDemoView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public AlertView(Context context, AttributeSet attrs, int defStyle) {
+	public AlertDemoView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 

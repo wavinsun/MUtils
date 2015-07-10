@@ -9,9 +9,9 @@
             android:text="Alert"/>
     </RelativeLayout>
     
-    <cn.o.app.demo.ui.AlertView
+    <cn.o.app.demo.ui.AlertDemoView
         style="@style/Fill">
         
-    </cn.o.app.demo.ui.AlertView>
+    </cn.o.app.demo.ui.AlertDemoView>
 
 </LinearLayout>

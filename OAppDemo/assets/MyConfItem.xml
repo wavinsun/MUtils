@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MyConfItem>
+    <int name="id">123</int>
+    <string name="name">lounien</string>
+    <string name="createAt">2015-07-10 10:30:00</string>
+</MyConfItem>
