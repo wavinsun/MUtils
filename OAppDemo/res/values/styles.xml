@@ -1,9 +1,23 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="GoBtn" parent="MainBtn">
-        <item name="android:layout_centerInParent">true</item>
-        <item name="android:text">go</item>
+    <style name="DemoFeatureList" parent="VLinearFill">
+        <item name="android:gravity">center</item>
+    </style>
+    
+    <style name="DemoFeatureItem" parent="MainBtn">
+        <item name="android:layout_margin">@dimen/margin</item>
+    </style>
+    
+    <style name="GoBtn" parent="DemoFeatureItem">
         <item name="android:id">@id/go</item>
+        <item name="android:text">go</item>
+    </style>
+    
+    <style name="LogText" parent="HFill">
+        <item name="android:id">@id/log</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">@dimen/padding</item>
     </style>
     
 </resources>

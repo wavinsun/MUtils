@@ -722,6 +722,25 @@ public class OUtil {
 		return AESUtil.decrypt(hex, pwd);
 	}
 
+	/**
+	 * toStirng of JSON
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public static String toStringJSON(Object obj) {
+		return StringUtil.toJSON(obj);
+	}
+
+	/**
+	 * toString of XML
+	 * 
+	 * @return
+	 */
+	public static String toStringXML(Object obj) {
+		return StringUtil.toXML(obj);
+	}
+
 	protected static class AsyncTaskLoaderRunnable implements Runnable {
 
 		public void run() {

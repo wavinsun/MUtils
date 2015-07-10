@@ -14,6 +14,8 @@ import java.util.UUID;
 
 import android.text.Html;
 import cn.o.app.io.IOUtil;
+import cn.o.app.json.JsonUtil;
+import cn.o.app.xml.XmlUtil;
 
 /**
  * String utility of framework
@@ -264,6 +266,34 @@ public class StringUtil {
 		} catch (Throwable e) {
 			// android.text.Html not found in Java standard environment
 			return html;
+		}
+	}
+
+	/**
+	 * Convert object to JSON
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public static String toJSON(Object obj) {
+		try {
+			return JsonUtil.convert(obj);
+		} catch (Exception e) {
+			return obj.toString();
+		}
+	}
+
+	/**
+	 * Convert object to XML
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public static String toXML(Object obj) {
+		try {
+			return XmlUtil.toString(XmlUtil.convertToDoc(obj), true);
+		} catch (Exception e) {
+			return obj.toString();
 		}
 	}
 

@@ -6,8 +6,11 @@ import android.widget.TextView;
 import cn.o.app.annotation.event.OnClick;
 import cn.o.app.annotation.res.SetContentView;
 import cn.o.app.demo.ShellActivity.ShellExtra;
+import cn.o.app.demo.ui.AESDemoView;
 import cn.o.app.demo.ui.AlertDemoView;
 import cn.o.app.demo.ui.BasicActivity;
+import cn.o.app.demo.ui.ConfItemDemoView;
+import cn.o.app.demo.ui.FirUpdateDemoView;
 import cn.o.app.demo.ui.OAdapterDemoView;
 import cn.o.app.demo.ui.ZipDemoView;
 
@@ -31,7 +34,7 @@ public class MainActivity extends BasicActivity {
 		startActivity(intent);
 	}
 
-	@OnClick({ R.id.oadapter, R.id.zip })
+	@OnClick({ R.id.oadapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir })
 	protected void onClick(View v) {
 		Intent intent = new Intent(this, ShellActivity.class);
 		ShellExtra extra = new ShellExtra();
@@ -44,7 +47,16 @@ public class MainActivity extends BasicActivity {
 			break;
 		case R.id.zip:
 			extra.setViewName(ZipDemoView.class.getName());
-
+			break;
+		case R.id.conf_item:
+			extra.setViewName(ConfItemDemoView.class.getName());
+			break;
+		case R.id.aes:
+			extra.setViewName(AESDemoView.class.getName());
+			break;
+		case R.id.fir:
+			extra.setViewName(FirUpdateDemoView.class.getName());
+			break;
 		default:
 			break;
 		}

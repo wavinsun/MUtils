@@ -33,6 +33,21 @@
                 style="@style/MainBtn"
                 android:text="Zip"/>
             
+            <TextView
+                android:id="@+id/conf_item"
+                style="@style/MainBtn"
+                android:text="ConfItem"/>
+            
+            <TextView
+                android:id="@+id/aes"
+                style="@style/MainBtn"
+                android:text="AES"/>
+            
+            <TextView
+                android:id="@+id/fir"
+                style="@style/MainBtn"
+                android:text="FIR"/>
+            
         </cn.o.app.ui.FlowLayout>
     </ScrollView>
 
