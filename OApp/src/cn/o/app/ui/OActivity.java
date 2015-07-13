@@ -39,8 +39,6 @@ import cn.o.app.net.INetTask;
 import cn.o.app.net.NetClient.CookieExpiredException;
 import cn.o.app.net.NetQueue;
 import cn.o.app.queue.IQueue;
-import cn.o.app.socket.ISocketQueueOwner;
-import cn.o.app.socket.ISocketTask;
 import cn.o.app.task.IStopable;
 import cn.o.app.task.IStopableManager;
 import cn.o.app.ui.core.IActivityResultCatcher;
@@ -451,14 +449,6 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 	public void add(IAsyncDataTask<?> task) {
 		this.bind(task);
 		getAsyncDataQueue().add(task);
-	}
-
-	public void add(ISocketTask<?, ?> task) {
-		this.bind(task);
-		Context appContext = this.getApplicationContext();
-		if (appContext instanceof ISocketQueueOwner) {
-			((ISocketQueueOwner) appContext).getSocketQueue().add(task);
-		}
 	}
 
 	@Override

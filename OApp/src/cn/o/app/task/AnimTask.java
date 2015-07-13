@@ -30,6 +30,10 @@ public class AnimTask extends Task implements ILockable {
 	protected Handler mHandler = new Handler();
 	protected Runnable mRunnable = new AnimRunnable();
 
+	public AnimTask() {
+		mRestartable = true;
+	}
+
 	@Override
 	public boolean isLocked() {
 		return true;

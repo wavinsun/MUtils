@@ -20,8 +20,6 @@ import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.net.INetQueueOwner;
 import cn.o.app.net.INetTask;
 import cn.o.app.net.NetClient.CookieExpiredException;
-import cn.o.app.socket.ISocketQueueOwner;
-import cn.o.app.socket.ISocketTask;
 import cn.o.app.task.DelayTask;
 import cn.o.app.task.IStopable;
 import cn.o.app.task.IStopableManager;
@@ -180,14 +178,6 @@ public class StateView extends RelativeLayout
 		if (context instanceof IAsyncDataQueueOwner) {
 			this.bind(task);
 			((IAsyncDataQueueOwner) context).getAsyncDataQueue().add(task);
-		}
-	}
-
-	public void add(ISocketTask<?, ?> task) {
-		this.bind(task);
-		Context appContext = this.getApplicationContext();
-		if (appContext instanceof ISocketQueueOwner) {
-			((ISocketQueueOwner) appContext).getSocketQueue().add(task);
 		}
 	}
 
