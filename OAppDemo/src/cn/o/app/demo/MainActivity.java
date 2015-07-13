@@ -8,6 +8,7 @@ import cn.o.app.annotation.res.SetContentView;
 import cn.o.app.demo.ShellActivity.ShellExtra;
 import cn.o.app.demo.ui.AESDemoView;
 import cn.o.app.demo.ui.AlertDemoView;
+import cn.o.app.demo.ui.AnimTaskDemoView;
 import cn.o.app.demo.ui.BasicActivity;
 import cn.o.app.demo.ui.ConfItemDemoView;
 import cn.o.app.demo.ui.FirUpdateDemoView;
@@ -34,7 +35,7 @@ public class MainActivity extends BasicActivity {
 		startActivity(intent);
 	}
 
-	@OnClick({ R.id.oadapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir })
+	@OnClick({ R.id.oadapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir, R.id.anim_task })
 	protected void onClick(View v) {
 		Intent intent = new Intent(this, ShellActivity.class);
 		ShellExtra extra = new ShellExtra();
@@ -56,6 +57,9 @@ public class MainActivity extends BasicActivity {
 			break;
 		case R.id.fir:
 			extra.setViewName(FirUpdateDemoView.class.getName());
+			break;
+		case R.id.anim_task:
+			extra.setViewName(AnimTaskDemoView.class.getName());
 			break;
 		default:
 			break;
