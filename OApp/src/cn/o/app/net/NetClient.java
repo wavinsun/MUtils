@@ -29,6 +29,7 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
+import cn.o.app.annotation.net.Head;
 import cn.o.app.event.Listener;
 import cn.o.app.json.JsonUtil;
 import cn.o.app.runtime.OField;
@@ -134,6 +135,7 @@ public class NetClient<REQUEST, RESPONSE> {
 	protected static final String EVENT_REQUEST_COOKIE = "event.request.cookie";
 	protected static final String EVENT_RESPONSE_COOKIE = "event.response.cookie";
 	protected static final String EVENT_ELASE_TIME = "event.elapse.time";
+	protected static final String EVENT_REQUEST_HEADERS = "event.request.headers";
 
 	protected REQUEST mRequest;
 
@@ -354,10 +356,14 @@ public class NetClient<REQUEST, RESPONSE> {
 				params = convertToParameters(mRequest, mSplitArrayParams);
 				httpRequest = new HttpGet(spec + (spec.contains("?") ? "&" : "?") + params);
 			}
+			String headers = convertToHeaders(mRequest, httpRequest);
 			if (mListener != null) {
 				mListener.debugging(EVENT_URL, spec);
 				mListener.debugging(EVENT_REQUEST_METHOD, mRequestMethod);
 				mListener.debugging(EVENT_PARAMS, params);
+				if (!headers.isEmpty()) {
+					mListener.debugging(EVENT_REQUEST_HEADERS, headers);
+				}
 			}
 			if (mCookieWithRequest) {
 				String cookie = (mCookieWithRequest && mListener != null) ? mListener.requestCookie(url)
@@ -425,6 +431,46 @@ public class NetClient<REQUEST, RESPONSE> {
 		} finally {
 			client.getConnectionManager().shutdown();
 		}
+	}
+
+	/**
+	 * Convert object whose properties have {@link Head} to headers
+	 * 
+	 * @param object
+	 * @return log message
+	 */
+	public static String convertToHeaders(Object object, HttpUriRequest httpRequest) {
+		StringBuilder sb = new StringBuilder();
+		if (object == null) {
+			return sb.toString();
+		}
+		if (object instanceof Map || object instanceof List) {
+			return sb.toString();
+		} else {
+			for (OField field : OField.getFields(object.getClass())) {
+				try {
+					Object value = field.get(object);
+					if (value == null) {
+						continue;
+					}
+					if (field.getAnnotation(Head.class) == null) {
+						continue;
+					}
+					String name = field.getName();
+					String hValue = JsonUtil.convert(value);
+					httpRequest.setHeader(name, hValue);
+					if (sb.length() != 0) {
+						sb.append("\n");
+					}
+					sb.append(name);
+					sb.append(":");
+					sb.append(hValue);
+				} catch (Exception e) {
+
+				}
+			}
+		}
+		return sb.toString();
 	}
 
 	/**

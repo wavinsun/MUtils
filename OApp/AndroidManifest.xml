@@ -53,6 +53,11 @@
     </supports-screens>
 
     <application android:theme="@style/AppTheme" >
+        
+        <activity 
+            android:name="cn.o.app.ui.photo.PhotoActivity"
+            android:screenOrientation="portrait">
+        </activity>
 
         <!-- 友盟 BEGIN -->
         <meta-data

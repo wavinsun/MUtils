@@ -12,6 +12,8 @@ import cn.o.app.demo.ui.AnimTaskDemoView;
 import cn.o.app.demo.ui.BasicActivity;
 import cn.o.app.demo.ui.ConfItemDemoView;
 import cn.o.app.demo.ui.FirUpdateDemoView;
+import cn.o.app.demo.ui.MediaDemoView;
+import cn.o.app.demo.ui.NetTaskDemoView;
 import cn.o.app.demo.ui.OAdapterDemoView;
 import cn.o.app.demo.ui.ZipDemoView;
 
@@ -35,7 +37,7 @@ public class MainActivity extends BasicActivity {
 		startActivity(intent);
 	}
 
-	@OnClick({ R.id.oadapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir, R.id.anim_task })
+	@OnClick({ R.id.oadapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir, R.id.anim_task, R.id.media, R.id.net_task })
 	protected void onClick(View v) {
 		Intent intent = new Intent(this, ShellActivity.class);
 		ShellExtra extra = new ShellExtra();
@@ -61,6 +63,13 @@ public class MainActivity extends BasicActivity {
 		case R.id.anim_task:
 			extra.setViewName(AnimTaskDemoView.class.getName());
 			break;
+		case R.id.media:
+			extra.setViewName(MediaDemoView.class.getName());
+			break;
+		case R.id.net_task:
+			extra.setViewName(NetTaskDemoView.class.getName());
+			break;
+
 		default:
 			break;
 		}
