@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DemoFeatureList" >
+    
+    <TextView style="@style/DemoFeatureItem"
+        android:id="@+id/pick_contact"
+        android:text="Pick contact"/>
+    
+    <TextView style="@style/DemoFeatureItem"
+        android:id="@+id/take_photo"
+        android:text="Take photo"/>
+    
+    <TextView style="@style/DemoFeatureItem"
+        android:id="@+id/pick_photo"
+        android:text="Pick photo"/>
+    
+    <TextView style="@style/DemoFeatureItem"
+        android:id="@+id/crop_photo"
+        android:text="Crop photo"/>
+    
+</LinearLayout>

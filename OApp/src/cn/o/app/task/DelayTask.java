@@ -47,7 +47,11 @@ public class DelayTask implements IStopable {
 		return true;
 	}
 
-	// 可以重复执行start
+	/**
+	 * You can call start more than once
+	 * 
+	 * @return
+	 */
 	public DelayTask start() {
 		stop();
 		mHandler.postDelayed(mRunnableWrapper, mDelay);

@@ -5,6 +5,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import cn.o.app.OUtil;
 import cn.o.app.annotation.Ignore;
@@ -67,15 +68,13 @@ public class PrefItem implements IPrefItem {
 			StringBuilder sb = new StringBuilder();
 			sb.append("{");
 			int itemCount = 0;
+			SharedPreferences pref = OUtil.getPref(context, mPrefFileName);
 			for (OField f : OField.getFields(this.getClass())) {
 				String name = f.getName();
-				if (!changed.contains(name)) {
+				if (!changed.contains(name) || !pref.contains(name)) {
 					continue;
 				}
-				String str = OUtil.getPrefString(context, mPrefFileName, name, null);
-				if (str == null) {
-					continue;
-				}
+				String str = pref.getString(name, null);
 				if (itemCount != 0) {
 					sb.append(",");
 				}
@@ -86,7 +85,10 @@ public class PrefItem implements IPrefItem {
 				if (!isString) {
 					Primitive t = f.getAnnotation(Primitive.class);
 					if (t != null) {
-						isString = PrimitiveType.STRING == t.value();
+						PrimitiveType type = t.value();
+						isString = PrimitiveType.STRING == type || PrimitiveType.STRING_BOOL == type
+								|| PrimitiveType.STRING_DOUBLE == type || PrimitiveType.STRING_INT == type
+								|| PrimitiveType.STRING_LONG == type;
 					}
 				}
 				if (isString && str != null) {
@@ -109,7 +111,6 @@ public class PrefItem implements IPrefItem {
 			} catch (Exception e) {
 				return false;
 			}
-
 		} else if (mPrefType == TYPE_PREF_JSON) {
 			try {
 				JsonUtil.convert(OUtil.getPrefString(context, mPrefFileName, OUtil.KEY, null), this);
