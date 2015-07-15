@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DemoFeatureList">
+    
+    <cn.o.app.ui.AMapView 
+        android:id="@+id/map"
+        style="@style/Fill">
+        
+    </cn.o.app.ui.AMapView>
+
+</LinearLayout>

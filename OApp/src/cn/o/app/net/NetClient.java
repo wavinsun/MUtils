@@ -360,8 +360,10 @@ public class NetClient<REQUEST, RESPONSE> {
 			if (mListener != null) {
 				mListener.debugging(EVENT_URL, spec);
 				mListener.debugging(EVENT_REQUEST_METHOD, mRequestMethod);
-				mListener.debugging(EVENT_PARAMS, params);
-				if (!headers.isEmpty()) {
+				if (params != null && !params.isEmpty()) {
+					mListener.debugging(EVENT_PARAMS, params);
+				}
+				if (headers != null && !headers.isEmpty()) {
 					mListener.debugging(EVENT_REQUEST_HEADERS, headers);
 				}
 			}

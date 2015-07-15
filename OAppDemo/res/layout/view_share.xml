@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DemoFeatureList">
+    
+    <TextView 
+        android:id="@+id/qq"
+        style="@style/DemoFeatureItem"
+        android:text="QQ"/>
+    
+    <TextView 
+        android:id="@+id/qzone"
+        style="@style/DemoFeatureItem"
+        android:text="Qzone"/>
+    
+    <TextView
+        android:id="@+id/wechat"
+        style="@style/DemoFeatureItem"
+        android:text="Wechat"/>
+    
+    <TextView
+        android:id="@+id/momoents"
+        style="@style/DemoFeatureItem"
+        android:text="Moments"/>
+    
+    <TextView 
+        android:id="@+id/weibo"
+        style="@style/DemoFeatureItem"
+        android:text="Weibo"/>
+
+</LinearLayout>

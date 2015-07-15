@@ -28,6 +28,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
+import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.view.ViewHelper;
+
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
@@ -40,11 +45,6 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
-
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
-import com.nineoldandroids.animation.ValueAnimator;
-import com.nineoldandroids.view.ViewHelper;
 
 /**
  * Touch listener impl for the SwipeListView
@@ -114,12 +114,10 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 	 * @param swipeBackView
 	 *            back view Identifier
 	 */
-	public SwipeListViewTouchListener(SwipeListView swipeListView,
-			int swipeFrontView, int swipeBackView) {
+	public SwipeListViewTouchListener(SwipeListView swipeListView, int swipeFrontView, int swipeBackView) {
 		this.swipeFrontView = swipeFrontView;
 		this.swipeBackView = swipeBackView;
-		ViewConfiguration vc = ViewConfiguration
-				.get(swipeListView.getContext());
+		ViewConfiguration vc = ViewConfiguration.get(swipeListView.getContext());
 		slop = vc.getScaledTouchSlop();
 		minFlingVelocity = vc.getScaledMinimumFlingVelocity();
 		maxFlingVelocity = vc.getScaledMaximumFlingVelocity();
@@ -231,8 +229,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 	 *
 	 * @param swipeClosesAllItemsWhenListMoves
 	 */
-	public void setSwipeClosesAllItemsWhenListMoves(
-			boolean swipeClosesAllItemsWhenListMoves) {
+	public void setSwipeClosesAllItemsWhenListMoves(boolean swipeClosesAllItemsWhenListMoves) {
 		this.swipeClosesAllItemsWhenListMoves = swipeClosesAllItemsWhenListMoves;
 	}
 
@@ -342,8 +339,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 	 *            Position of list
 	 */
 	protected void openAnimate(int position) {
-		final View child = swipeListView.getChildAt(
-				position - swipeListView.getFirstVisiblePosition())
+		final View child = swipeListView.getChildAt(position - swipeListView.getFirstVisiblePosition())
 				.findViewById(swipeFrontView);
 
 		if (child != null) {
@@ -359,10 +355,8 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 	 */
 	protected void closeAnimate(int position) {
 		if (swipeListView != null) {
-			int firstVisibleChildPosition = swipeListView
-					.getFirstVisiblePosition();
-			final View childContainer = swipeListView.getChildAt(position
-					- firstVisibleChildPosition);
+			int firstVisibleChildPosition = swipeListView.getFirstVisiblePosition();
+			final View childContainer = swipeListView.getChildAt(position - firstVisibleChildPosition);
 			if (childContainer != null) {
 				final View child = childContainer.findViewById(swipeFrontView);
 
@@ -408,8 +402,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 		int end = swipeListView.getLastVisiblePosition();
 		for (int i = 0; i < checked.size(); i++) {
 			if (checked.get(i) && i >= start && i <= end) {
-				reloadChoiceStateInView(swipeListView.getChildAt(i - start)
-						.findViewById(swipeFrontView), i);
+				reloadChoiceStateInView(swipeListView.getChildAt(i - start).findViewById(swipeFrontView), i);
 			}
 			checked.set(i, false);
 		}
@@ -582,11 +575,9 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 	 * @param position
 	 *            Position of list
 	 */
-	private void generateAnimate(final View view, final boolean swap,
-			final boolean swapRight, final int position) {
+	private void generateAnimate(final View view, final boolean swap, final boolean swapRight, final int position) {
 		if (SwipeListView.DEBUG) {
-			Log.d(SwipeListView.TAG, "swap: " + swap + " - swapRight: "
-					+ swapRight + " - position: " + position);
+			Log.d(SwipeListView.TAG, "swap: " + swap + " - swapRight: " + swapRight + " - position: " + position);
 		}
 		if (swipeCurrentAction == SwipeListView.SWIPE_ACTION_REVEAL) {
 			generateRevealAnimate(view, swap, swapRight, position);
@@ -608,14 +599,13 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 	 *            list position
 	 */
 	private void generateChoiceAnimate(final View view, final int position) {
-		animate(view).translationX(0).setDuration(animationTime)
-				.setListener(new AnimatorListenerAdapter() {
-					@Override
-					public void onAnimationEnd(Animator animation) {
-						swipeListView.resetScrolling();
-						resetCell();
-					}
-				});
+		animate(view).translationX(0).setDuration(animationTime).setListener(new AnimatorListenerAdapter() {
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				swipeListView.resetScrolling();
+				resetCell();
+			}
+		});
 	}
 
 	/**
@@ -632,18 +622,16 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 	 * @param position
 	 *            Position of list
 	 */
-	private void generateDismissAnimate(final View view, final boolean swap,
-			final boolean swapRight, final int position) {
+	private void generateDismissAnimate(final View view, final boolean swap, final boolean swapRight,
+			final int position) {
 		int moveTo = 0;
 		if (opened.get(position)) {
 			if (!swap) {
-				moveTo = openedRight.get(position) ? (int) (viewWidth - rightOffset)
-						: (int) (-viewWidth + leftOffset);
+				moveTo = openedRight.get(position) ? (int) (viewWidth - rightOffset) : (int) (-viewWidth + leftOffset);
 			}
 		} else {
 			if (swap) {
-				moveTo = swapRight ? (int) (viewWidth - rightOffset)
-						: (int) (-viewWidth + leftOffset);
+				moveTo = swapRight ? (int) (viewWidth - rightOffset) : (int) (-viewWidth + leftOffset);
 			}
 		}
 
@@ -653,8 +641,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 			alpha = 0;
 		}
 
-		animate(view).translationX(moveTo).alpha(alpha)
-				.setDuration(animationTime)
+		animate(view).translationX(moveTo).alpha(alpha).setDuration(animationTime)
 				.setListener(new AnimatorListenerAdapter() {
 					@Override
 					public void onAnimationEnd(Animator animation) {
@@ -682,40 +669,38 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 	 * @param position
 	 *            list position
 	 */
-	private void generateRevealAnimate(final View view, final boolean swap,
-			final boolean swapRight, final int position) {
+	private void generateRevealAnimate(final View view, final boolean swap, final boolean swapRight,
+			final int position) {
 		int moveTo = 0;
 		if (opened.get(position)) {
 			if (!swap) {
-				moveTo = openedRight.get(position) ? (int) (viewWidth - rightOffset)
-						: (int) (-viewWidth + leftOffset);
+				moveTo = openedRight.get(position) ? (int) (leftOffset) : (int) (-rightOffset);
 			}
 		} else {
 			if (swap) {
-				moveTo = swapRight ? (int) (viewWidth - rightOffset)
-						: (int) (-viewWidth + leftOffset);
+				// moveTo = swapRight ? (int) (viewWidth - rightOffset) : (int)
+				// (-viewWidth + leftOffset);
+				moveTo = swapRight ? (int) (leftOffset) : (int) (-rightOffset);
 			}
 		}
 
-		animate(view).translationX(moveTo).setDuration(animationTime)
-				.setListener(new AnimatorListenerAdapter() {
-					@Override
-					public void onAnimationEnd(Animator animation) {
-						swipeListView.resetScrolling();
-						if (swap) {
-							boolean aux = !opened.get(position);
-							opened.set(position, aux);
-							if (aux) {
-								swipeListView.onOpened(position, swapRight);
-								openedRight.set(position, swapRight);
-							} else {
-								swipeListView.onClosed(position,
-										openedRight.get(position));
-							}
-						}
-						resetCell();
+		animate(view).translationX(moveTo).setDuration(animationTime).setListener(new AnimatorListenerAdapter() {
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				swipeListView.resetScrolling();
+				if (swap) {
+					boolean aux = !opened.get(position);
+					opened.set(position, aux);
+					if (aux) {
+						swipeListView.onOpened(position, swapRight);
+						openedRight.set(position, swapRight);
+					} else {
+						swipeListView.onClosed(position, openedRight.get(position));
 					}
-				});
+				}
+				resetCell();
+			}
+		});
 	}
 
 	private void resetCell() {
@@ -752,11 +737,9 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 			private boolean isLastItem = false;
 
 			@Override
-			public void onScrollStateChanged(AbsListView absListView,
-					int scrollState) {
+			public void onScrollStateChanged(AbsListView absListView, int scrollState) {
 				setEnabled(scrollState != AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL);
-				if (swipeClosesAllItemsWhenListMoves
-						&& scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+				if (swipeClosesAllItemsWhenListMoves && scrollState == SCROLL_STATE_TOUCH_SCROLL) {
 					closeOpenedItems();
 				}
 				if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
@@ -777,8 +760,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 			}
 
 			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 				if (isFirstItem) {
 					boolean onSecondItemList = firstVisibleItem == 1;
 					if (onSecondItemList) {
@@ -792,14 +774,12 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 					}
 				}
 				if (isLastItem) {
-					boolean onBeforeLastItemList = firstVisibleItem
-							+ visibleItemCount == totalItemCount - 1;
+					boolean onBeforeLastItemList = firstVisibleItem + visibleItemCount == totalItemCount - 1;
 					if (onBeforeLastItemList) {
 						isLastItem = false;
 					}
 				} else {
-					boolean onLastItemList = firstVisibleItem
-							+ visibleItemCount >= totalItemCount;
+					boolean onLastItemList = firstVisibleItem + visibleItemCount >= totalItemCount;
 					if (onLastItemList) {
 						isLastItem = true;
 						swipeListView.onLastListItem();
@@ -818,8 +798,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 			int end = swipeListView.getLastVisiblePosition();
 			for (int i = start; i <= end; i++) {
 				if (opened.get(i)) {
-					closeAnimate(swipeListView.getChildAt(i - start)
-							.findViewById(swipeFrontView), i);
+					closeAnimate(swipeListView.getChildAt(i - start).findViewById(swipeFrontView), i);
 				}
 			}
 		}
@@ -861,15 +840,12 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 
 				// dont allow swiping if this is on the header or footer or
 				// IGNORE_ITEM_VIEW_TYPE or enabled is false on the adapter
-				boolean allowSwipe = swipeListView.getAdapter().isEnabled(
-						childPosition)
-						&& swipeListView.getAdapter().getItemViewType(
-								childPosition) >= 0;
+				boolean allowSwipe = swipeListView.getAdapter().isEnabled(childPosition)
+						&& swipeListView.getAdapter().getItemViewType(childPosition) >= 0;
 
 				if (allowSwipe && rect.contains(x, y)) {
 					setParentView(child);
-					setFrontView(child.findViewById(swipeFrontView),
-							childPosition);
+					setFrontView(child.findViewById(swipeFrontView), childPosition);
 
 					downX = motionEvent.getRawX();
 					downPosition = childPosition;
@@ -890,8 +866,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 		}
 
 		case MotionEvent.ACTION_UP: {
-			if (velocityTracker == null || !swiping
-					|| downPosition == ListView.INVALID_POSITION) {
+			if (velocityTracker == null || !swiping || downPosition == ListView.INVALID_POSITION) {
 				break;
 			}
 
@@ -900,33 +875,26 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 			velocityTracker.computeCurrentVelocity(1000);
 			float velocityX = Math.abs(velocityTracker.getXVelocity());
 			if (!opened.get(downPosition)) {
-				if (swipeMode == SwipeListView.SWIPE_MODE_LEFT
-						&& velocityTracker.getXVelocity() > 0) {
+				if (swipeMode == SwipeListView.SWIPE_MODE_LEFT && velocityTracker.getXVelocity() > 0) {
 					velocityX = 0;
 				}
-				if (swipeMode == SwipeListView.SWIPE_MODE_RIGHT
-						&& velocityTracker.getXVelocity() < 0) {
+				if (swipeMode == SwipeListView.SWIPE_MODE_RIGHT && velocityTracker.getXVelocity() < 0) {
 					velocityX = 0;
 				}
 			}
 			float velocityY = Math.abs(velocityTracker.getYVelocity());
 			boolean swap = false;
 			boolean swapRight = false;
-			if (minFlingVelocity <= velocityX && velocityX <= maxFlingVelocity
-					&& velocityY * 2 < velocityX) {
+			if (minFlingVelocity <= velocityX && velocityX <= maxFlingVelocity && velocityY * 2 < velocityX) {
 				swapRight = velocityTracker.getXVelocity() > 0;
 				if (SwipeListView.DEBUG) {
-					Log.d(SwipeListView.TAG, "swapRight: " + swapRight
-							+ " - swipingRight: " + swipingRight);
+					Log.d(SwipeListView.TAG, "swapRight: " + swapRight + " - swipingRight: " + swipingRight);
 				}
-				if (swapRight != swipingRight
-						&& swipeActionLeft != swipeActionRight) {
+				if (swapRight != swipingRight && swipeActionLeft != swipeActionRight) {
 					swap = false;
-				} else if (opened.get(downPosition)
-						&& openedRight.get(downPosition) && swapRight) {
+				} else if (opened.get(downPosition) && openedRight.get(downPosition) && swapRight) {
 					swap = false;
-				} else if (opened.get(downPosition)
-						&& !openedRight.get(downPosition) && !swapRight) {
+				} else if (opened.get(downPosition) && !openedRight.get(downPosition) && !swapRight) {
 					swap = false;
 				} else {
 					swap = true;
@@ -935,7 +903,6 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 				swap = true;
 				swapRight = deltaX > 0;
 			}
-
 			generateAnimate(frontView, swap, swapRight, downPosition);
 			if (swipeCurrentAction == SwipeListView.SWIPE_ACTION_CHOICE) {
 				swapChoiceState(downPosition);
@@ -954,8 +921,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 		}
 
 		case MotionEvent.ACTION_MOVE: {
-			if (velocityTracker == null || paused
-					|| downPosition == ListView.INVALID_POSITION) {
+			if (velocityTracker == null || paused || downPosition == ListView.INVALID_POSITION) {
 				break;
 			}
 
@@ -977,70 +943,55 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 				deltaMode = 0;
 			} else if (swipeMode != SwipeListView.SWIPE_MODE_BOTH) {
 				if (opened.get(downPosition)) {
-					if (swipeMode == SwipeListView.SWIPE_MODE_LEFT
-							&& deltaX < 0) {
+					if (swipeMode == SwipeListView.SWIPE_MODE_LEFT && deltaX < 0) {
 						deltaMode = 0;
-					} else if (swipeMode == SwipeListView.SWIPE_MODE_RIGHT
-							&& deltaX > 0) {
+					} else if (swipeMode == SwipeListView.SWIPE_MODE_RIGHT && deltaX > 0) {
 						deltaMode = 0;
 					}
 				} else {
-					if (swipeMode == SwipeListView.SWIPE_MODE_LEFT
-							&& deltaX > 0) {
+					if (swipeMode == SwipeListView.SWIPE_MODE_LEFT && deltaX > 0) {
 						deltaMode = 0;
-					} else if (swipeMode == SwipeListView.SWIPE_MODE_RIGHT
-							&& deltaX < 0) {
+					} else if (swipeMode == SwipeListView.SWIPE_MODE_RIGHT && deltaX < 0) {
 						deltaMode = 0;
 					}
 				}
 			}
-			if (deltaMode > slop
-					&& swipeCurrentAction == SwipeListView.SWIPE_ACTION_NONE
-					&& velocityY < velocityX) {
+			if (deltaMode > slop && swipeCurrentAction == SwipeListView.SWIPE_ACTION_NONE && velocityY < velocityX) {
 				swiping = true;
 				swipingRight = (deltaX > 0);
 				if (SwipeListView.DEBUG) {
-					Log.d(SwipeListView.TAG, "deltaX: " + deltaX
-							+ " - swipingRight: " + swipingRight);
+					Log.d(SwipeListView.TAG, "deltaX: " + deltaX + " - swipingRight: " + swipingRight);
 				}
 				if (opened.get(downPosition)) {
 					swipeListView.onStartClose(downPosition, swipingRight);
 					swipeCurrentAction = SwipeListView.SWIPE_ACTION_REVEAL;
 				} else {
-					if (swipingRight
-							&& swipeActionRight == SwipeListView.SWIPE_ACTION_DISMISS) {
+					if (swipingRight && swipeActionRight == SwipeListView.SWIPE_ACTION_DISMISS) {
 						swipeCurrentAction = SwipeListView.SWIPE_ACTION_DISMISS;
-					} else if (!swipingRight
-							&& swipeActionLeft == SwipeListView.SWIPE_ACTION_DISMISS) {
+					} else if (!swipingRight && swipeActionLeft == SwipeListView.SWIPE_ACTION_DISMISS) {
 						swipeCurrentAction = SwipeListView.SWIPE_ACTION_DISMISS;
-					} else if (swipingRight
-							&& swipeActionRight == SwipeListView.SWIPE_ACTION_CHOICE) {
+					} else if (swipingRight && swipeActionRight == SwipeListView.SWIPE_ACTION_CHOICE) {
 						swipeCurrentAction = SwipeListView.SWIPE_ACTION_CHOICE;
-					} else if (!swipingRight
-							&& swipeActionLeft == SwipeListView.SWIPE_ACTION_CHOICE) {
+					} else if (!swipingRight && swipeActionLeft == SwipeListView.SWIPE_ACTION_CHOICE) {
 						swipeCurrentAction = SwipeListView.SWIPE_ACTION_CHOICE;
 					} else {
 						swipeCurrentAction = SwipeListView.SWIPE_ACTION_REVEAL;
 					}
-					swipeListView.onStartOpen(downPosition, swipeCurrentAction,
-							swipingRight);
+					swipeListView.onStartOpen(downPosition, swipeCurrentAction, swipingRight);
 				}
 				swipeListView.requestDisallowInterceptTouchEvent(true);
 				MotionEvent cancelEvent = MotionEvent.obtain(motionEvent);
-				cancelEvent
-						.setAction(MotionEvent.ACTION_CANCEL
-								| (MotionEventCompat
-										.getActionIndex(motionEvent) << MotionEventCompat.ACTION_POINTER_INDEX_SHIFT));
+				cancelEvent.setAction(MotionEvent.ACTION_CANCEL | (MotionEventCompat
+						.getActionIndex(motionEvent) << MotionEventCompat.ACTION_POINTER_INDEX_SHIFT));
 				swipeListView.onTouchEvent(cancelEvent);
 				if (swipeCurrentAction == SwipeListView.SWIPE_ACTION_CHOICE) {
 					backView.setVisibility(View.GONE);
 				}
 			}
-
 			if (swiping && downPosition != ListView.INVALID_POSITION) {
 				if (opened.get(downPosition)) {
-					deltaX += openedRight.get(downPosition) ? viewWidth
-							- rightOffset : -viewWidth + leftOffset;
+					deltaX += openedRight.get(downPosition) ? viewWidth - rightOffset
+							: -viewWidth + (viewWidth - rightOffset);
 				}
 				move(deltaX);
 				return true;
@@ -1073,8 +1024,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 		swipeListView.onMove(downPosition, deltaX);
 		float posX = ViewHelper.getX(frontView);
 		if (opened.get(downPosition)) {
-			posX += openedRight.get(downPosition) ? -viewWidth + rightOffset
-					: viewWidth - leftOffset;
+			posX += openedRight.get(downPosition) ? -leftOffset : -rightOffset;
 		}
 		if (posX > 0 && !swipingRight) {
 			if (SwipeListView.DEBUG) {
@@ -1102,15 +1052,11 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 		}
 		if (swipeCurrentAction == SwipeListView.SWIPE_ACTION_DISMISS) {
 			setTranslationX(parentView, deltaX);
-			setAlpha(
-					parentView,
-					Math.max(0f, Math.min(1f, 1f - 2f * Math.abs(deltaX)
-							/ viewWidth)));
+			setAlpha(parentView, Math.max(0f, Math.min(1f, 1f - 2f * Math.abs(deltaX) / viewWidth)));
 		} else if (swipeCurrentAction == SwipeListView.SWIPE_ACTION_CHOICE) {
 			if ((swipingRight && deltaX > 0 && posX < DISPLACE_CHOICE)
 					|| (!swipingRight && deltaX < 0 && posX > -DISPLACE_CHOICE)
-					|| (swipingRight && deltaX < DISPLACE_CHOICE)
-					|| (!swipingRight && deltaX > -DISPLACE_CHOICE)) {
+					|| (swipingRight && deltaX < DISPLACE_CHOICE) || (!swipingRight && deltaX > -DISPLACE_CHOICE)) {
 				setTranslationX(frontView, deltaX);
 			}
 		} else {
@@ -1145,14 +1091,12 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 	 * @param dismissPosition
 	 *            Position of list
 	 */
-	protected void performDismiss(final View dismissView,
-			final int dismissPosition, boolean doPendingDismiss) {
+	protected void performDismiss(final View dismissView, final int dismissPosition, boolean doPendingDismiss) {
 		enableDisableViewGroup((ViewGroup) dismissView, false);
 		final ViewGroup.LayoutParams lp = dismissView.getLayoutParams();
 		final int originalHeight = dismissView.getHeight();
 
-		ValueAnimator animator = ValueAnimator.ofInt(originalHeight, 1)
-				.setDuration(animationTime);
+		ValueAnimator animator = ValueAnimator.ofInt(originalHeight, 1).setDuration(animationTime);
 
 		if (doPendingDismiss) {
 			animator.addListener(new AnimatorListenerAdapter() {
@@ -1181,8 +1125,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 			}
 		});
 
-		pendingDismisses.add(new PendingDismissData(dismissPosition,
-				dismissView));
+		pendingDismisses.add(new PendingDismissData(dismissPosition, dismissView));
 		animator.start();
 	}
 
@@ -1243,8 +1186,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
 
 	}
 
-	public static void enableDisableViewGroup(ViewGroup viewGroup,
-			boolean enabled) {
+	public static void enableDisableViewGroup(ViewGroup viewGroup, boolean enabled) {
 		int childCount = viewGroup.getChildCount();
 		for (int i = 0; i < childCount; i++) {
 			View view = viewGroup.getChildAt(i);
