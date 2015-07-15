@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DemoFeatureList">
+    
+    <TextView style="@style/DemoFeatureItem"
+        android:id="@+id/union_pay"
+        android:text="Union Pay"/>
+    
+    <TextView style="@style/DemoFeatureItem"
+        android:id="@+id/ali_pay"
+        android:text="Ali Pay"/>
+    
+    <TextView style="@style/LogText"/>
+
+</LinearLayout>

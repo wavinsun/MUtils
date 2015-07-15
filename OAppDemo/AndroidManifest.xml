@@ -7,6 +7,12 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="22" />
     
+    <!-- QRCode BEGIN -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <!-- QRCode END-->
+    
      <!-- 友盟 BEGIN -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -36,6 +42,10 @@
         </activity>
         <activity 
             android:name=".AlertDemoActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity 
+            android:name=".CaptureActivity"
             android:screenOrientation="portrait">
         </activity>
         
@@ -69,6 +79,62 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
         <!-- 友盟 END -->
+        
+        <!-- 腾讯开放平台 BEGIN -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1104746550" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 腾讯开放平台 END -->
+
+
+        <!-- 微信API回调 BEGIN -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 微信API回调 END -->
+        
+        <!-- UnionPay BEGIN -->
+        <activity
+            android:name="com.unionpay.uppay.PayActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:label="银联支付"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <!-- UnionPay END -->
+        
+        <!-- AliPay BEGIN-->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <!-- AliPay END-->
+        
+        <!-- AMap BEGIN -->
+        <meta-data 
+            android:name="com.amap.api.v2.apikey"
+            android:value="52b35e84223cae39035be97edd0c60b5"/>
+        <!-- AMap END -->
         
     </application>
 

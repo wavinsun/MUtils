@@ -11,6 +11,12 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
     <uses-permission android:name="android.permission.GET_TOP_ACTIVITY_INFO" />
+    
+    <!-- QRCode BEGIN -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <!-- QRCode END-->
 
     <!-- 友盟 BEGIN -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
