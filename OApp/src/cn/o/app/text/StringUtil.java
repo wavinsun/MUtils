@@ -1,6 +1,5 @@
 package cn.o.app.text;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,6 +10,8 @@ import java.io.StringWriter;
 import java.security.MessageDigest;
 import java.util.Locale;
 import java.util.UUID;
+
+import org.mozilla.universalchardet.UniversalDetector;
 
 import android.text.Html;
 import cn.o.app.io.IOUtil;
@@ -59,6 +60,12 @@ public class StringUtil {
 		return md5(text).toUpperCase(Locale.getDefault());
 	}
 
+	/**
+	 * MD5 of file
+	 * 
+	 * @param file
+	 * @return Small letter of MD5
+	 */
 	public static String md5(File file) {
 		FileInputStream fis = null;
 		try {
@@ -77,6 +84,12 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * MD5 of file
+	 * 
+	 * @param text
+	 * @return Capital letter of MD5
+	 */
 	public static String MD5(File file) {
 		return md5(file).toUpperCase(Locale.getDefault());
 	}
@@ -112,6 +125,26 @@ public class StringUtil {
 		return bytes;
 	}
 
+	/**
+	 * Convert byte array to string
+	 * 
+	 * @param bytes
+	 * @return
+	 */
+	public static String get(byte[] bytes) {
+		try {
+			return new String(bytes, StringUtil.getCharset(bytes));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Convert text file to string
+	 * 
+	 * @param file
+	 * @return
+	 */
 	public static String get(File file) {
 		FileInputStream fis = null;
 		try {
@@ -124,6 +157,13 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Put string to text file
+	 * 
+	 * @param file
+	 * @param str
+	 * @return
+	 */
 	public static boolean put(File file, String str) {
 		FileOutputStream fos = null;
 		try {
@@ -138,23 +178,23 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Convert text stream to string
+	 * 
+	 * @param is
+	 * @return
+	 */
 	public static String get(InputStream is) {
-		ByteArrayOutputStream bos = null;
-		try {
-			bos = new ByteArrayOutputStream();
-			byte[] buffer = new byte[1024];
-			int bufferIndex = -1;
-			while ((bufferIndex = is.read(buffer)) != -1) {
-				bos.write(buffer, 0, bufferIndex);
-			}
-			return bos.toString("UTF-8");
-		} catch (Exception e) {
-			return null;
-		} finally {
-			IOUtil.close(bos);
-		}
+		return get(IOUtil.getBytes(is));
 	}
 
+	/**
+	 * Put string to text stream
+	 * 
+	 * @param os
+	 * @param str
+	 * @return
+	 */
 	public static boolean put(OutputStream os, String str) {
 		try {
 			os.write(str.getBytes("UTF-8"));
@@ -162,6 +202,29 @@ public class StringUtil {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	/**
+	 * Detect character set of byte array
+	 * 
+	 * @param bytes
+	 * @return
+	 */
+	public static String getCharset(byte[] bytes) {
+		if (bytes == null) {
+			return "UTF-8";
+		}
+		UniversalDetector detector = new UniversalDetector(null);
+		detector.handleData(bytes, 0, bytes.length);
+		detector.dataEnd();
+		String dc = detector.getDetectedCharset();
+		String[] charsets = new String[] { "UTF-8", "UTF-16LE", "UTF-16BE", "Unicode", "GBK", "GB2312" };
+		for (String c : charsets) {
+			if (c.equals(dc)) {
+				return dc;
+			}
+		}
+		return "GBK";
 	}
 
 	/**
@@ -216,6 +279,12 @@ public class StringUtil {
 		return diff != 0 ? diff : (vs1.length - vs2.length);
 	}
 
+	/**
+	 * Print stack trace
+	 * 
+	 * @param e
+	 * @return
+	 */
 	public static String printStackTrace(Exception e) {
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
@@ -225,10 +294,21 @@ public class StringUtil {
 		return sw.toString();
 	}
 
+	/**
+	 * UUID
+	 * 
+	 * @return Small letter of UUID
+	 */
 	public static String uuid() {
 		return UUID.randomUUID().toString().replace("-", "");
 	}
 
+	/**
+	 * Get Locale
+	 * 
+	 * @param locale
+	 * @return
+	 */
 	public static Locale getLocale(String locale) {
 		if (locale == null) {
 			return null;
@@ -243,10 +323,22 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Object toString
+	 * 
+	 * @param object
+	 * @return
+	 */
 	public static String toString(Object object) {
 		return object == null ? null : object.toString();
 	}
 
+	/**
+	 * Get tag of stack trace for logging
+	 * 
+	 * @param e
+	 * @return
+	 */
 	public static String getTag(StackTraceElement e) {
 		StringBuilder sb = new StringBuilder();
 		String name = e.getClassName();
@@ -260,6 +352,12 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * Get text content of HTML
+	 * 
+	 * @param html
+	 * @return
+	 */
 	public static String htmlText(String html) {
 		try {
 			return Html.fromHtml(html).toString();
