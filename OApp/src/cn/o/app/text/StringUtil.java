@@ -218,7 +218,7 @@ public class StringUtil {
 		detector.handleData(bytes, 0, bytes.length);
 		detector.dataEnd();
 		String dc = detector.getDetectedCharset();
-		String[] charsets = new String[] { "UTF-8", "UTF-16LE", "UTF-16BE", "Unicode", "GBK", "GB2312" };
+		String[] charsets = new String[] { "UTF-8", "UTF-16LE", "UTF-16BE", "UTF-32LE", "UTF-32BE", "GBK" };
 		for (String c : charsets) {
 			if (c.equals(dc)) {
 				return dc;
