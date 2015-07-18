@@ -304,6 +304,16 @@ public class StringUtil {
 	}
 
 	/**
+	 * UUID
+	 * 
+	 * @param text
+	 * @return Capital letter of UUID
+	 */
+	public static String UUID() {
+		return uuid().toUpperCase(Locale.getDefault());
+	}
+
+	/**
 	 * Get Locale
 	 * 
 	 * @param locale
