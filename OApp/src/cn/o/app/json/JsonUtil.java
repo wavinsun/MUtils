@@ -126,14 +126,14 @@ public class JsonUtil {
 		if (targetClass == String.class) {
 			return (T) str;
 		}
-		return convertFromJson(new JSONTokener(str).nextValue(), targetClass, genericType);
+		return convertFromJson(toJSON(str), targetClass, genericType);
 	}
 
 	public static <T> T convert(String str, T target) throws Exception {
 		if (target instanceof String) {
 			return (T) str;
 		}
-		return convertFromJson(new JSONTokener(str).nextValue(), target, null);
+		return convertFromJson(toJSON(str), target, null);
 	}
 
 	public static <T> String convert(T target) throws Exception {
@@ -202,6 +202,10 @@ public class JsonUtil {
 			json.put((String) k, convertToJson(v));
 		}
 		return json;
+	}
+
+	public static Object toJSON(String json) throws Exception {
+		return new JSONTokener(json).nextValue();
 	}
 
 }
