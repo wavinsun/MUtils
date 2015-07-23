@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/VLinearFill" >
+
+    <RelativeLayout style="@style/NavigationBar" >
+
+        <ImageView style="@style/NavigationBackButton" />
+
+        <TextView
+            style="@style/NavigationTitle"
+            android:text="Push Notify" />
+    </RelativeLayout>
+    
+    <ScrollView style="@style/Fill">
+        <TextView style="@style/LogText"/>
+    </ScrollView>
+
+</LinearLayout>
