@@ -12,9 +12,11 @@ import com.umeng.update.UpdateResponse;
 import com.umeng.update.UpdateStatus;
 
 import android.annotation.SuppressLint;
-import android.view.LayoutInflater;
+import android.content.Context;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import cn.jpush.android.api.JPushInterface;
 import cn.o.app.App;
 import cn.o.app.R;
@@ -169,10 +171,7 @@ public class ActivityX extends OActivity {
 
 	@Override
 	protected View getWaitingViewLayout() {
-		View v = LayoutInflater.from(this).inflate(R.layout.view_waiting, null);
-		View waitingProgress = v.findViewById(R.id.waiting_progress);
-		waitingProgress.startAnimation(AnimationUtils.loadAnimation(this, R.anim.waiting_progress));
-		return v;
+		return new WaitingView(this);
 	}
 
 	public void feedback() {
@@ -184,6 +183,33 @@ public class ActivityX extends OActivity {
 			mFeedbackAgent.sync();
 		}
 		mFeedbackAgent.startFeedbackActivity();
+	}
+
+	static class WaitingView extends OView {
+
+		protected ImageView mWaitingProgressView;
+
+		protected Animation mWaitingProgressAnim;
+
+		public WaitingView(Context context) {
+			super(context);
+		}
+
+		@Override
+		protected void init() {
+			super.init();
+			this.setContentView(R.layout.view_waiting);
+
+			mWaitingProgressView = findViewById(R.id.waiting_progress, ImageView.class);
+			mWaitingProgressAnim = AnimationUtils.loadAnimation(getContext(), R.anim.waiting_progress);
+		}
+
+		@Override
+		protected void onAttachedToWindow() {
+			super.onAttachedToWindow();
+			mWaitingProgressView.startAnimation(mWaitingProgressAnim);
+		}
+
 	}
 
 }

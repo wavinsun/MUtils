@@ -13,6 +13,7 @@ import cn.o.app.demo.ui.ActionSheetDemoView;
 import cn.o.app.demo.ui.AlertDemoView;
 import cn.o.app.demo.ui.AnimTaskDemoView;
 import cn.o.app.demo.ui.BasicActivity;
+import cn.o.app.demo.ui.BusyDemoView;
 import cn.o.app.demo.ui.ConfItemDemoView;
 import cn.o.app.demo.ui.DatePickerDemoView;
 import cn.o.app.demo.ui.FirUpdateDemoView;
@@ -48,7 +49,7 @@ public class MainActivity extends BasicActivity {
 
 	@OnClick({ R.id.oadapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir, R.id.anim_task, R.id.media, R.id.net_task,
 			R.id.pay, R.id.qrcode, R.id.share, R.id.action_sheet, R.id.amap, R.id.date_picker, R.id.prompt,
-			R.id.round_progress_bar, R.id.tip_view })
+			R.id.round_progress_bar, R.id.tip_view, R.id.busy })
 	protected void onClick(View v) {
 		Intent intent = new Intent(this, ShellActivity.class);
 		ShellExtra extra = new ShellExtra();
@@ -107,7 +108,9 @@ public class MainActivity extends BasicActivity {
 		case R.id.tip_view:
 			extra.setViewName(TipViewDemoView.class.getName());
 			break;
-
+		case R.id.busy:
+			extra.setViewName(BusyDemoView.class.getName());
+			break;
 		default:
 			break;
 		}
