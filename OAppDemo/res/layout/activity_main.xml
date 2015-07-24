@@ -108,6 +108,11 @@
                 style="@style/MainBtn"
                 android:text="TipView"/>
             
+            <TextView 
+                android:id="@+id/busy"
+                style="@style/MainBtn"
+                android:text="Busy"/>
+            
         </cn.o.app.ui.FlowLayout>
     </ScrollView>
 
