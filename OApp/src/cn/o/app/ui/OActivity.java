@@ -76,6 +76,8 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 
 	protected Dispatcher mDispatcher;
 
+	protected boolean mFinished;
+
 	public static void finishAll() {
 		ActivityMgr.finishAll();
 	}
@@ -300,6 +302,25 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 
 	@Override
 	protected void onDestroy() {
+		doFinish();
+		super.onDestroy();
+	}
+
+	@Override
+	public void finish() {
+		doFinish();
+		super.finish();
+	}
+
+	public boolean isFinished() {
+		return mFinished;
+	}
+
+	protected void doFinish() {
+		if (mFinished) {
+			return;
+		}
+		mFinished = true;
 		if (mNetQueue != null) {
 			mNetQueue.clear();
 		}
@@ -314,7 +335,6 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 		}
 		OWrapper.dispatchDestroy(this);
 		ActivityMgr.detach(this);
-		super.onDestroy();
 	}
 
 	@Override
@@ -461,13 +481,6 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 				((IPrivateActivity) this).refresh();
 			}
 		}
-	}
-
-	@Override
-	public void finish() {
-		hidePatternNow();
-		hideWaitingNow();
-		super.finish();
 	}
 
 	@Override

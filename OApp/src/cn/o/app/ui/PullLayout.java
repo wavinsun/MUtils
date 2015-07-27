@@ -488,6 +488,9 @@ public class PullLayout extends RelativeLayout {
 	public static class PullPolicy {
 
 		public boolean canPullDown(View v) {
+			if (v == null) {
+				return false;
+			}
 			if (v instanceof AdapterView<?>) {
 				return canPullDown((AdapterView<?>) v);
 			}
@@ -501,6 +504,9 @@ public class PullLayout extends RelativeLayout {
 		}
 
 		public boolean canPullUp(View v) {
+			if (v == null) {
+				return false;
+			}
 			if (v instanceof AdapterView<?>) {
 				return canPullUp((AdapterView<?>) v);
 			}

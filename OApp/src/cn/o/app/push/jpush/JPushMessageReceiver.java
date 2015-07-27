@@ -18,6 +18,9 @@ public class JPushMessageReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Bundle bundle = intent.getExtras();
+		if (bundle == null) {
+			return;// Fix bug for java.lang.NullPointerException
+		}
 		String action = intent.getAction();
 		if (JPushInterface.ACTION_REGISTRATION_ID.equals(action)) {
 			onRegistrationId(context, bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID));

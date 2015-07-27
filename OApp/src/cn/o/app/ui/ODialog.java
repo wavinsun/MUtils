@@ -109,6 +109,15 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, I
 		return OWrapper.getContentView(this);
 	}
 
+	@Override
+	public void show() {
+		try {
+			super.show();
+		} catch (Exception e) {
+			// android.view.WindowManager.BadTokenException
+		}
+	}
+
 	/**
 	 * Simulate PopupWindow
 	 * 
