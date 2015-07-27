@@ -35,8 +35,6 @@ public class ActivityX extends OActivity {
 
 	protected List<VersionUpdateListener> mVersionUpdateListeners;
 
-	protected boolean mDestoryed = false;
-
 	protected static Object sSync = new Object();
 
 	protected static int sNewVersionState = NEW_VERSION_STATE_UNKNOWN;
@@ -73,16 +71,16 @@ public class ActivityX extends OActivity {
 
 	@Override
 	protected void onDestroy() {
-		mDestoryed = true;
-		if (mVersionUpdateListeners != null) {
-			mVersionUpdateListeners.clear();
+		if (!mFinished) {
+			if (mVersionUpdateListeners != null) {
+				mVersionUpdateListeners.clear();
+			}
 		}
 		super.onDestroy();
 	}
 
 	@Override
 	public void finish() {
-		mDestoryed = true;
 		if (mVersionUpdateListeners != null) {
 			mVersionUpdateListeners.clear();
 		}
@@ -120,7 +118,7 @@ public class ActivityX extends OActivity {
 							sNewVersionState = NEW_VERSION_STATE_NO;
 						}
 					}
-					if (mDestoryed) {
+					if (mFinished) {
 						return;
 					}
 					if (mVersionUpdateListeners != null) {
