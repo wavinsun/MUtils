@@ -8,18 +8,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
 import cn.o.app.OUtil;
-import cn.o.app.event.Dispatcher;
 import cn.o.app.event.Listener;
-import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.io.ODate;
-import cn.o.app.task.ILockable;
-import cn.o.app.ui.core.IActivityResultCatcher;
-import cn.o.app.ui.core.IActivityStarter;
+import cn.o.app.ui.core.IActivityExecutor;
 
 /**
  * Take photo by system call
  */
-public class TakePhotoTask implements ILockable {
+public class TakePhotoTask extends MediaTask {
 
 	public static interface TakePhotoListener extends Listener {
 
@@ -30,21 +26,10 @@ public class TakePhotoTask implements ILockable {
 	public static final int EXPECT_WIDTH = 768;
 	public static final int EXPECT_HEIGHT = 1024;
 
-	protected IActivityResultCatcher mCatcher;
-
-	protected int mRequestCode;
-
-	protected boolean mLocked = false;
-
 	protected Uri mExtraOutput;
 
-	protected Dispatcher mDispatcher = new Dispatcher();
-
-	protected OnActivityResultListener mOnActivityResultListener = new TakePhotoResultListener();
-
-	public TakePhotoTask(IActivityResultCatcher catcher, int requestCode) {
-		mRequestCode = requestCode;
-		mCatcher = catcher;
+	public TakePhotoTask(IActivityExecutor executor, int requestCode) {
+		super(executor, requestCode);
 	}
 
 	public boolean takePhoto() {
@@ -57,27 +42,19 @@ public class TakePhotoTask implements ILockable {
 		}
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, mExtraOutput);
-		if (mCatcher instanceof IActivityStarter) {
-			mCatcher.addOnActivityResultListener(mOnActivityResultListener);
-			((IActivityStarter) mCatcher).startActivityForResult(intent, mRequestCode);
-			mLocked = true;
-			return true;
-		} else if (mCatcher instanceof Activity) {
-			mCatcher.addOnActivityResultListener(mOnActivityResultListener);
-			((Activity) mCatcher).startActivityForResult(intent, mRequestCode);
-			mLocked = true;
-			return true;
-		}
-		return false;
+		mExecutor.startActivityForResult(intent, mRequestCode);
+		mExecutor.addOnActivityResultListener(mOnActivityResultListener);
+		mLocked = true;
+		return true;
 	}
 
 	public void setListener(TakePhotoListener listener) {
-		mDispatcher.setListener(listener);
+		super.setListener(listener);
 	}
 
 	protected Uri generateExtraOutput() {
 		try {
-			String mediaStorageDir = OUtil.getDiskCacheDir(mCatcher.getContext(), "OApp");
+			String mediaStorageDir = OUtil.getDiskCacheDir(mExecutor.getContext(), "OApp");
 			if (mediaStorageDir == null) {
 				return null;
 			}
@@ -96,36 +73,17 @@ public class TakePhotoTask implements ILockable {
 	}
 
 	@Override
-	public boolean isLocked() {
-		return mLocked;
-	}
-
-	@Override
-	public void setLocked(boolean locked) {
-		mLocked = locked;
-	}
-
-	class TakePhotoResultListener implements OnActivityResultListener {
-
-		@Override
-		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
-			if (mRequestCode != requestCode) {
-				return;
-			}
-			mCatcher.removeOnActivityResultListener(mOnActivityResultListener);
-			mLocked = false;
-			if (resultCode != Activity.RESULT_OK) {
-				return;
-			}
-			Uri uri = data != null ? data.getData() : mExtraOutput;
-			if (OUtil.compress(uri.getPath(), EXPECT_WIDTH, EXPECT_HEIGHT)) {
-				TakePhotoListener listener = (TakePhotoListener) mDispatcher.getListener();
-				if (listener != null) {
-					listener.onComplete(uri);
-				}
+	protected void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
+		if (resultCode != Activity.RESULT_OK) {
+			return;
+		}
+		Uri uri = data != null ? data.getData() : mExtraOutput;
+		if (OUtil.compress(uri.getPath(), EXPECT_WIDTH, EXPECT_HEIGHT)) {
+			TakePhotoListener listener = getListener(TakePhotoListener.class);
+			if (listener != null) {
+				listener.onComplete(uri);
 			}
 		}
-
 	}
 
 }

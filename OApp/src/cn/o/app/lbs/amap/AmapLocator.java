@@ -111,7 +111,7 @@ public class AmapLocator implements IStopable {
 	}
 
 	public OLocationListener getListener() {
-		return (OLocationListener) mDispatcher.getListener();
+		return mDispatcher.getListener(OLocationListener.class);
 	}
 
 	public void setListener(OLocationListener listener) {

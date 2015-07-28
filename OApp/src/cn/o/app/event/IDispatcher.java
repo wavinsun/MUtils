@@ -127,4 +127,22 @@ public interface IDispatcher {
 	 * @param listener
 	 */
 	public void setListener(String type, Listener listener);
+
+	/**
+	 * Get first listener for default event type
+	 * 
+	 * @param listenerClass
+	 * @return
+	 */
+	public <T extends Listener> T getListener(Class<T> listenerClass);
+
+	/**
+	 * Get first listener for specify event type
+	 * 
+	 * @param type
+	 * @param listenerClass
+	 * @return
+	 */
+	public <T extends Listener> T getListener(String type, Class<T> listenerClass);
+
 }

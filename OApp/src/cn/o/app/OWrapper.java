@@ -35,8 +35,7 @@ import cn.o.app.task.ILockable;
 import cn.o.app.task.IStopable;
 import cn.o.app.task.IStopableManager;
 import cn.o.app.ui.OToast;
-import cn.o.app.ui.core.IActivityResultCatcher;
-import cn.o.app.ui.core.IActivityStarter;
+import cn.o.app.ui.core.IActivityExecutor;
 import cn.o.app.ui.core.ICachedViewManager;
 import cn.o.app.ui.core.IContentViewOwner;
 import cn.o.app.ui.core.IStateView;
@@ -550,42 +549,42 @@ public class OWrapper {
 		return false;
 	}
 
-	public static void startActivity(IContextProvider contextProvider, Intent intent) {
-		contextProvider.getContext().startActivity(intent);
+	public static void startActivity(IContextProvider provider, Intent intent) {
+		provider.getContext().startActivity(intent);
 	}
 
-	public static void startActivityForResult(IActivityStarter activityStarter, Intent intent, int requestCode) {
-		Context context = activityStarter.getContext();
+	public static void startActivityForResult(IActivityExecutor executor, Intent intent, int requestCode) {
+		Context context = executor.getContext();
 		if (context instanceof Activity) {
 			((Activity) context).startActivityForResult(intent, requestCode);
 		}
 	}
 
-	public static void onActivityResult(IActivityResultCatcher activityResultCatcher, int requestCode, int resultCode,
-			Intent data) {
-		List<OnActivityResultListener> listeners = activityResultCatcher.getOnActivityResultListeners();
+	public static void onActivityResult(IActivityExecutor executor, int requestCode, int resultCode, Intent data) {
+		Context context = executor.getContext();
+		List<OnActivityResultListener> listeners = executor.getOnActivityResultListeners();
 		if (listeners != null) {
 			for (OnActivityResultListener listener : listeners) {
-				listener.onActivityResult(activityResultCatcher.getContext(), requestCode, resultCode, data);
+				listener.onActivityResult(context, requestCode, resultCode, data);
 			}
 		}
-		if (!(activityResultCatcher instanceof IStateViewManager)) {
+		if (!(executor instanceof IStateViewManager)) {
 			return;
 		}
-		IStateViewManager manager = (IStateViewManager) activityResultCatcher;
+		IStateViewManager manager = (IStateViewManager) executor;
 		if (manager.redirectToSelectedView()) {
 			IStateView selectedView = manager.getSelectedView();
 			if (selectedView == null) {
 				return;
 			}
-			selectedView.onActivityResult(requestCode, resultCode, data);
+			selectedView.onActivityResult(context, requestCode, resultCode, data);
 		} else {
 			List<IStateView> bindViews = manager.getBindStateViews();
 			if (bindViews == null) {
 				return;
 			}
 			for (IStateView stateView : bindViews) {
-				stateView.onActivityResult(requestCode, resultCode, data);
+				stateView.onActivityResult(context, requestCode, resultCode, data);
 			}
 		}
 	}

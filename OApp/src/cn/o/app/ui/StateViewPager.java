@@ -174,7 +174,7 @@ public class StateViewPager extends ViewPager implements IStateView, IStateViewM
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
 		OWrapper.onActivityResult(this, requestCode, resultCode, data);
 	}
 

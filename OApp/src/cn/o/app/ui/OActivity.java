@@ -41,7 +41,7 @@ import cn.o.app.net.NetQueue;
 import cn.o.app.queue.IQueue;
 import cn.o.app.task.IStopable;
 import cn.o.app.task.IStopableManager;
-import cn.o.app.ui.core.IActivityResultCatcher;
+import cn.o.app.ui.core.IActivityExecutor;
 import cn.o.app.ui.core.IContentViewOwner;
 import cn.o.app.ui.core.IFragmentManager;
 import cn.o.app.ui.core.IPrivateActivity;
@@ -52,7 +52,7 @@ import cn.o.app.ui.pattern.IPatternOwner;
 import cn.o.app.ui.pattern.IPatternView;
 
 public class OActivity extends FragmentActivity implements IFragmentManager, INetQueueOwner, IPatternOwner,
-		IAsyncDataQueueOwner, IToastOwner, IStopableManager, IActivityResultCatcher, IContentViewOwner {
+		IAsyncDataQueueOwner, IToastOwner, IStopableManager, IActivityExecutor, IContentViewOwner {
 
 	protected AsyncDataQueue mAsyncDataQueue;
 
@@ -209,13 +209,6 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 			return;
 		}
 		mPatternViewHelper.hide();
-	}
-
-	protected void hidePatternNow() {
-		if (mPatternViewHelper == null) {
-			return;
-		}
-		mPatternViewHelper.hideNow();
 	}
 
 	@Override
@@ -438,20 +431,17 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 		mWaitingViewHelper.hide();
 	}
 
-	protected void hideWaitingNow() {
-		if (mWaitingViewHelper == null) {
-			return;
-		}
-		mWaitingViewHelper.hideNow();
-	}
-
 	protected View getWaitingViewLayout() {
 		return null;
 	}
 
+	public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
+		OWrapper.onActivityResult(this, requestCode, resultCode, data);
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		OWrapper.onActivityResult(this, requestCode, resultCode, data);
+		onActivityResult(this, requestCode, resultCode, data);
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 

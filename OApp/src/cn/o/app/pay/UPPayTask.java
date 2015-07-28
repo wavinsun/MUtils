@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import cn.o.app.event.Listener;
 import cn.o.app.event.listener.OnActivityResultListener;
-import cn.o.app.ui.core.IActivityResultCatcher;
+import cn.o.app.ui.core.IActivityExecutor;
 
 /**
  * UnionPay
@@ -67,14 +67,14 @@ public class UPPayTask extends OPayTask {
 		if (mContext == null) {
 			return;
 		}
-		if (!(mContext instanceof IActivityResultCatcher)) {
+		if (!(mContext instanceof IActivityExecutor)) {
 			return;
 		}
 		if (mOnActivityResultListener == null) {
 			mOnActivityResultListener = new UPPayResultListener();
 		}
-		IActivityResultCatcher catcher = (IActivityResultCatcher) mContext;
-		catcher.addOnActivityResultListener(mOnActivityResultListener);
+		IActivityExecutor executor = (IActivityExecutor) mContext;
+		executor.addOnActivityResultListener(mOnActivityResultListener);
 	}
 
 	class UPPayResultListener implements OnActivityResultListener {
@@ -107,7 +107,7 @@ public class UPPayTask extends OPayTask {
 					listener.onError(UPPayTask.this, null);
 				}
 			}
-			((IActivityResultCatcher) context).removeOnActivityResultListener(mOnActivityResultListener);
+			((IActivityExecutor) context).removeOnActivityResultListener(mOnActivityResultListener);
 		}
 
 	}

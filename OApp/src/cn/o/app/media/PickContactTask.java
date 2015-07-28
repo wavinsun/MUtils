@@ -10,13 +10,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
-import cn.o.app.event.Dispatcher;
 import cn.o.app.event.Listener;
-import cn.o.app.event.listener.OnActivityResultListener;
-import cn.o.app.ui.core.IActivityResultCatcher;
-import cn.o.app.ui.core.IActivityStarter;
+import cn.o.app.ui.core.IActivityExecutor;
 
-public class PickContactTask {
+public class PickContactTask extends MediaTask {
 
 	public static interface PickContactListener extends Listener {
 
@@ -24,92 +21,74 @@ public class PickContactTask {
 
 	}
 
-	protected IActivityResultCatcher mCatcher;
-	protected int mRequestCode;
-	protected Dispatcher mDispatcher = new Dispatcher();
-
-	protected OnActivityResultListener mOnActivityResultListener = new PickContactResultListener();
-
-	public PickContactTask(IActivityResultCatcher catcher, int requestCode) {
-		mCatcher = catcher;
-		mRequestCode = requestCode;
+	public PickContactTask(IActivityExecutor executor, int requestCode) {
+		super(executor, requestCode);
 	}
 
 	public boolean pickContact() {
+		if (mLocked) {
+			return false;
+		}
 		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
 		try {
-			if (mCatcher instanceof IActivityStarter) {
-				((IActivityStarter) mCatcher).startActivityForResult(intent, mRequestCode);
-				mCatcher.addOnActivityResultListener(mOnActivityResultListener);
-				return true;
-			} else if (mCatcher instanceof Activity) {
-				((Activity) mCatcher).startActivityForResult(intent, mRequestCode);
-				mCatcher.addOnActivityResultListener(mOnActivityResultListener);
-				return true;
-			}
+			mExecutor.startActivityForResult(intent, mRequestCode);
 		} catch (Exception e) {
 			return false;
 		}
-		return false;
+		mExecutor.addOnActivityResultListener(mOnActivityResultListener);
+		mLocked = true;
+		return true;
 	}
 
 	public void setListener(PickContactListener listener) {
-		mDispatcher.setListener(listener);
+		super.setListener(listener);
 	}
 
-	class PickContactResultListener implements OnActivityResultListener {
-
-		@Override
-		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
-			if (mRequestCode != requestCode) {
-				return;
-			}
-			mCatcher.removeOnActivityResultListener(mOnActivityResultListener);
-			if (resultCode != Activity.RESULT_OK) {
-				return;
-			}
-			ContentResolver resolver = mCatcher.getContext().getContentResolver();
-			Cursor c = resolver.query(data.getData(), null, null, null, null);
-			if (!c.moveToFirst()) {
-				if (!c.isClosed()) {
-					c.close();
-				}
-				return;
-			}
-			String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-			String hasPhone = c.getString(c.getColumnIndex(Contacts.HAS_PHONE_NUMBER));
-			if (!hasPhone.equals("1")) {
-				if (!c.isClosed()) {
-					c.close();
-				}
-				return;
-			}
-			String contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
-			Cursor pc = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-					ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
-			ArrayList<String> phones = new ArrayList<String>();
-			if (pc.moveToNext()) {
-				for (; !pc.isAfterLast(); pc.moveToNext()) {
-					int index = pc.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-					String phone = pc.getString(index);
-					phones.add(phone);
-				}
-			}
-			if (!pc.isClosed()) {
-				pc.close();
-			}
+	@Override
+	protected void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
+		if (resultCode != Activity.RESULT_OK) {
+			return;
+		}
+		ContentResolver resolver = mExecutor.getContext().getContentResolver();
+		Cursor c = resolver.query(data.getData(), null, null, null, null);
+		if (!c.moveToFirst()) {
 			if (!c.isClosed()) {
 				c.close();
 			}
-			if (phones.size() == 0) {
-				return;
+			return;
+		}
+		String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+		String hasPhone = c.getString(c.getColumnIndex(Contacts.HAS_PHONE_NUMBER));
+		if (!hasPhone.equals("1")) {
+			if (!c.isClosed()) {
+				c.close();
 			}
-			PickContactListener listener = (PickContactListener) mDispatcher.getListener();
-			if (listener != null) {
-				listener.onComplete(name, phones);
+			return;
+		}
+		String contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
+		Cursor pc = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+				ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
+		ArrayList<String> phones = new ArrayList<String>();
+		if (pc.moveToNext()) {
+			for (; !pc.isAfterLast(); pc.moveToNext()) {
+				int index = pc.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+				String phone = pc.getString(index);
+				phones.add(phone);
 			}
 		}
-
+		if (!pc.isClosed()) {
+			pc.close();
+		}
+		if (!c.isClosed()) {
+			c.close();
+		}
+		if (phones.size() == 0) {
+			return;
+		}
+		PickContactListener listener = getListener(PickContactListener.class);
+		if (listener != null) {
+			listener.onComplete(name, phones);
+		}
 	}
 
 }
