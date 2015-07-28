@@ -176,19 +176,9 @@ public class Dispatcher implements IDispatcher {
 		return false;
 	}
 
+	@Override
 	public <T extends Listener> T getListener(Class<T> listenerClass) {
-		if (mListenersMap == null) {
-			return null;
-		}
-		List<Listener> listeners = mListenersMap.get("");
-		if (listeners == null) {
-			return null;
-		}
-		if (listeners.size() == 0) {
-			return null;
-		}
-		Listener listener = listeners.get(0);
-		return listenerClass.isInstance(listener) ? ((T) listener) : null;
+		return getListener("", listenerClass);
 	}
 
 	@Override
@@ -205,6 +195,22 @@ public class Dispatcher implements IDispatcher {
 			}
 		}
 		return retListeners;
+	}
+
+	@Override
+	public <T extends Listener> T getListener(String type, Class<T> listenerClass) {
+		if (mListenersMap == null) {
+			return null;
+		}
+		List<Listener> listeners = mListenersMap.get(type);
+		if (listeners == null) {
+			return null;
+		}
+		if (listeners.size() == 0) {
+			return null;
+		}
+		Listener listener = listeners.get(0);
+		return listenerClass.isInstance(listener) ? ((T) listener) : null;
 	}
 
 }

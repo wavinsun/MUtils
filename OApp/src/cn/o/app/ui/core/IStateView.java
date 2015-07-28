@@ -8,7 +8,7 @@ import cn.o.app.ui.StateViewFrame;
 /**
  * State view of framework who has life cycle as {@link Activity}
  */
-public interface IStateView extends IViewFinder, IActivityStarter {
+public interface IStateView extends IViewFinder, IActivityExecutor {
 
 	public IStateViewManager getManager();
 

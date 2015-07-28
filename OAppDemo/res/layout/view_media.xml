@@ -18,4 +18,8 @@
         android:id="@+id/crop_photo"
         android:text="Crop photo"/>
     
+    <TextView style="@style/DemoFeatureItem"
+        android:id="@+id/make_video"
+        android:text="Make video"/>
+    
 </LinearLayout>

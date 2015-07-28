@@ -250,7 +250,7 @@ public class FragmentFrame extends FrameLayout implements IStateView, IStateView
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
 		OWrapper.onActivityResult(this, requestCode, resultCode, data);
 	}
 

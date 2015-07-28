@@ -12,6 +12,8 @@ import cn.o.app.annotation.res.SetContentView;
 import cn.o.app.demo.R;
 import cn.o.app.media.CropPhotoTask;
 import cn.o.app.media.CropPhotoTask.CropPhotoListener;
+import cn.o.app.media.MakeVideoTask;
+import cn.o.app.media.MakeVideoTask.MakeVideoListener;
 import cn.o.app.media.PickContactTask;
 import cn.o.app.media.PickContactTask.PickContactListener;
 import cn.o.app.media.PickPhotoTask;
@@ -22,6 +24,8 @@ import cn.o.app.ui.Alert;
 import cn.o.app.ui.StateView;
 import cn.o.app.ui.photo.PhotoActivity;
 import cn.o.app.ui.photo.PhotoExtra;
+import cn.o.app.ui.video.VideoActivity;
+import cn.o.app.ui.video.VideoActivity.VideoExtra;
 
 @SetContentView(R.layout.view_media)
 public class MediaDemoView extends StateView {
@@ -30,6 +34,7 @@ public class MediaDemoView extends StateView {
 	public static final int REQUEST_CODE_TAKE_PHOTO = 1001;
 	public static final int REQUEST_CODE_PICK_PHOTO = 1002;
 	public static final int REQUEST_CODE_CROP_PHOTO = 1003;
+	public static final int REQUEST_CODE_MAKE_VIDEO = 1004;
 
 	protected Uri mCropPhotoUri;
 
@@ -123,6 +128,23 @@ public class MediaDemoView extends StateView {
 			}
 		});
 		task.cropPhoto(mCropPhotoUri, 150, 150);
+	}
+
+	@OnClick(R.id.make_video)
+	protected void onClickMakeVideo() {
+		MakeVideoTask task = new MakeVideoTask(this, REQUEST_CODE_MAKE_VIDEO);
+		task.setListener(new MakeVideoListener() {
+
+			@Override
+			public void onComplete(Uri uri) {
+				Intent intent = new Intent(getContext(), VideoActivity.class);
+				VideoExtra extra = new VideoExtra();
+				extra.setUrl(uri.getPath());
+				extra.putTo(intent);
+				startActivity(intent);
+			}
+		});
+		task.makeVideo();
 	}
 
 }

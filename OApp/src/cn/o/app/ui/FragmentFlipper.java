@@ -475,7 +475,7 @@ public class FragmentFlipper extends ViewFlipper implements IStateView, IStateVi
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
 		OWrapper.onActivityResult(this, requestCode, resultCode, data);
 	}
 

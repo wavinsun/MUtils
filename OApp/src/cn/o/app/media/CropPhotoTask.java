@@ -9,17 +9,13 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import cn.o.app.OUtil;
-import cn.o.app.event.Dispatcher;
 import cn.o.app.event.Listener;
-import cn.o.app.event.listener.OnActivityResultListener;
-import cn.o.app.task.ILockable;
-import cn.o.app.ui.core.IActivityResultCatcher;
-import cn.o.app.ui.core.IActivityStarter;
+import cn.o.app.ui.core.IActivityExecutor;
 
 /**
  * Crop photo by system call
  */
-public class CropPhotoTask implements ILockable {
+public class CropPhotoTask extends MediaTask {
 
 	public static interface CropPhotoListener extends Listener {
 
@@ -27,21 +23,10 @@ public class CropPhotoTask implements ILockable {
 
 	}
 
-	protected IActivityResultCatcher mCatcher;
-
-	protected int mRequestCode;
-
-	protected boolean mLocked = false;
-
 	protected Uri mExtraOutput;
 
-	protected Dispatcher mDispatcher = new Dispatcher();
-
-	protected OnActivityResultListener mOnActivityResultListener = new CropPhotoResultListener();
-
-	public CropPhotoTask(IActivityResultCatcher catcher, int requestCode) {
-		mRequestCode = requestCode;
-		mCatcher = catcher;
+	public CropPhotoTask(IActivityExecutor executor, int requestCode) {
+		super(executor, requestCode);
 	}
 
 	public boolean cropPhoto(Uri uri, int width, int height) {
@@ -62,27 +47,19 @@ public class CropPhotoTask implements ILockable {
 		intent.putExtra("return-data", false);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, mExtraOutput);
 		intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-		if (mCatcher instanceof IActivityStarter) {
-			mCatcher.addOnActivityResultListener(mOnActivityResultListener);
-			((IActivityStarter) mCatcher).startActivityForResult(intent, mRequestCode);
-			mLocked = true;
-			return true;
-		} else if (mCatcher instanceof Activity) {
-			mCatcher.addOnActivityResultListener(mOnActivityResultListener);
-			((Activity) mCatcher).startActivityForResult(intent, mRequestCode);
-			mLocked = true;
-			return true;
-		}
+		mExecutor.startActivityForResult(intent, mRequestCode);
+		mExecutor.addOnActivityResultListener(mOnActivityResultListener);
+		mLocked = true;
 		return false;
 	}
 
 	public void setListener(CropPhotoListener listener) {
-		mDispatcher.setListener(listener);
+		super.setListener(listener);
 	}
 
 	protected Uri generateExtraOutput(Uri uri, int width, int height) {
 		try {
-			String mediaStorageDir = OUtil.getDiskCacheDir(mCatcher.getContext(), "OApp");
+			String mediaStorageDir = OUtil.getDiskCacheDir(mExecutor.getContext(), "OApp");
 			if (mediaStorageDir == null) {
 				return null;
 			}
@@ -107,35 +84,16 @@ public class CropPhotoTask implements ILockable {
 	}
 
 	@Override
-	public boolean isLocked() {
-		return mLocked;
-	}
-
-	@Override
-	public void setLocked(boolean locked) {
-		mLocked = locked;
-	}
-
-	class CropPhotoResultListener implements OnActivityResultListener {
-
-		@Override
-		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
-			if (mRequestCode != requestCode) {
-				return;
-			}
-			mCatcher.removeOnActivityResultListener(mOnActivityResultListener);
-			mLocked = false;
-			if (resultCode != Activity.RESULT_OK) {
-				return;
-			}
-			if (OUtil.compress(mExtraOutput.getPath())) {
-				CropPhotoListener listener = (CropPhotoListener) mDispatcher.getListener();
-				if (listener != null) {
-					listener.onComplete(mExtraOutput);
-				}
+	protected void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
+		if (resultCode != Activity.RESULT_OK) {
+			return;
+		}
+		if (OUtil.compress(mExtraOutput.getPath())) {
+			CropPhotoListener listener = getListener(CropPhotoListener.class);
+			if (listener != null) {
+				listener.onComplete(mExtraOutput);
 			}
 		}
-
 	}
 
 }
