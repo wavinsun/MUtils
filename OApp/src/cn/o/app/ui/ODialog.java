@@ -6,7 +6,6 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,11 +15,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-import cn.o.app.OWrapper;
 import cn.o.app.context.IContextProvider;
 import cn.o.app.ui.core.IContentViewOwner;
 import cn.o.app.ui.core.IToastOwner;
 import cn.o.app.ui.core.IViewFinder;
+import cn.o.app.ui.core.UICore;
 
 /**
  * Dialog of framework
@@ -55,7 +54,7 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, I
 		w.requestFeature(Window.FEATURE_NO_TITLE);
 		w.setBackgroundDrawable(new ColorDrawable(0x00000000));
 
-		OWrapper.injectContentView(this);
+		UICore.injectContentView(this);
 	}
 
 	/**
@@ -82,38 +81,38 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, I
 	}
 
 	public <T extends View> T findViewById(int id, Class<T> viewClass) {
-		return OWrapper.findViewById(this, id, viewClass);
+		return UICore.findViewById(this, id, viewClass);
 	}
 
 	@Override
 	public void setContentView(int layoutResID) {
 		super.setContentView(layoutResID);
-		OWrapper.injectResources(this);
-		OWrapper.injectEvents(this);
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
 	}
 
 	@Override
 	public void setContentView(View view) {
 		super.setContentView(view);
-		OWrapper.injectResources(this);
-		OWrapper.injectEvents(this);
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
 	}
 
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		super.setContentView(view, params);
-		OWrapper.injectResources(this);
-		OWrapper.injectEvents(this);
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
 	}
 
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
-		OWrapper.dispatchTouchEvent(ev, this);
+		UICore.dispatchTouchEvent(ev, this);
 		return super.dispatchTouchEvent(ev);
 	}
 
 	public View getContentView() {
-		return OWrapper.getContentView(this);
+		return UICore.getContentView(this);
 	}
 
 	@Override
@@ -126,11 +125,6 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, I
 		Context context = this.getContext();
 		if (context instanceof IToastOwner) {
 			return ((IToastOwner) context).getToast();
-		} else if (context instanceof ContextThemeWrapper) {
-			context = ((ContextThemeWrapper) context).getBaseContext();
-			if (context instanceof IToastOwner) {
-				return ((IToastOwner) context).getToast();
-			}
 		}
 		if (mToast == null) {
 			mToast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
@@ -145,12 +139,12 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, I
 
 	@Override
 	public void toast(CharSequence s) {
-		OWrapper.toast(this, s);
+		UICore.toast(this, s);
 	}
 
 	@Override
 	public void toast(int resId, Object... args) {
-		OWrapper.toast(this, resId, args);
+		UICore.toast(this, resId, args);
 	}
 
 	@Override

@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
-import cn.o.app.OWrapper;
+import cn.o.app.ui.core.UICore;
 
 /**
  * RelativeLayout implements {@link IItemView}
@@ -64,19 +64,19 @@ public abstract class ItemView<DATA_ITEM> extends RelativeLayout implements IIte
 	public void setContentView(View view) {
 		this.removeAllViews();
 		this.addView(view);
-		OWrapper.injectResources(this);
-		OWrapper.injectEvents(this);
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
 	}
 
 	public void setContentView(int layoutResID) {
 		this.removeAllViews();
 		LayoutInflater.from(this.getContext()).inflate(layoutResID, this);
-		OWrapper.injectResources(this);
-		OWrapper.injectEvents(this);
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
 	}
 
 	public <T extends View> T findViewById(int id, Class<T> viewClass) {
-		return OWrapper.findViewById(this, id, viewClass);
+		return UICore.findViewById(this, id, viewClass);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public abstract class ItemView<DATA_ITEM> extends RelativeLayout implements IIte
 
 	@Override
 	public void onCreate() {
-		OWrapper.injectContentView(this);
+		UICore.injectContentView(this);
 	}
 
 }

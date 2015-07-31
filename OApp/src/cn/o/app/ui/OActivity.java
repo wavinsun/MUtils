@@ -25,36 +25,29 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import cn.o.app.OWrapper;
 import cn.o.app.data.AsyncDataQueue;
 import cn.o.app.data.IAsyncDataQueue;
 import cn.o.app.data.IAsyncDataQueueListener;
-import cn.o.app.data.IAsyncDataQueueOwner;
 import cn.o.app.data.IAsyncDataTask;
 import cn.o.app.event.Dispatcher;
 import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.net.INetQueue;
 import cn.o.app.net.INetQueueListener;
-import cn.o.app.net.INetQueueOwner;
 import cn.o.app.net.INetTask;
 import cn.o.app.net.NetClient.CookieExpiredException;
 import cn.o.app.net.NetQueue;
 import cn.o.app.queue.IQueue;
 import cn.o.app.task.IStopable;
-import cn.o.app.task.IStopableManager;
-import cn.o.app.ui.core.IActivityExecutor;
-import cn.o.app.ui.core.IContentViewOwner;
-import cn.o.app.ui.core.IFragmentManager;
+import cn.o.app.ui.core.IActivity;
 import cn.o.app.ui.core.IPrivateActivity;
 import cn.o.app.ui.core.IStateView;
 import cn.o.app.ui.core.IToastOwner;
+import cn.o.app.ui.core.UICore;
 import cn.o.app.ui.pattern.IPatternDataProvider;
-import cn.o.app.ui.pattern.IPatternOwner;
 import cn.o.app.ui.pattern.IPatternView;
 
 @SuppressLint("ShowToast")
-public class OActivity extends FragmentActivity implements IFragmentManager, INetQueueOwner, IPatternOwner,
-		IAsyncDataQueueOwner, IToastOwner, IStopableManager, IActivityExecutor, IContentViewOwner {
+public class OActivity extends FragmentActivity implements IActivity {
 
 	protected AsyncDataQueue mAsyncDataQueue;
 
@@ -101,17 +94,11 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 	}
 
 	public void toast(CharSequence s) {
-		if (!mRunning) {
-			return;
-		}
-		OWrapper.toast(this, s);
+		UICore.toast(this, s);
 	}
 
 	public void toast(int resId, Object... args) {
-		if (!mRunning) {
-			return;
-		}
-		OWrapper.toast(this, resId, args);
+		UICore.toast(this, resId, args);
 	}
 
 	@Override
@@ -133,7 +120,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 
 	@Override
 	public void bind(IStopable stopable) {
-		OWrapper.bind(this, stopable);
+		UICore.bind(this, stopable);
 	}
 
 	@Override
@@ -203,39 +190,39 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 
 	@Override
 	public void bind(IStateView stateView) {
-		OWrapper.bind(this, stateView);
+		UICore.bind(this, stateView);
 	}
 
 	public View getContentView() {
-		return OWrapper.getContentView(this);
+		return UICore.getContentView(this);
 	}
 
 	@Override
 	public void setContentView(int layoutResID) {
 		super.setContentView(layoutResID);
 		this.bindStateViews();
-		OWrapper.injectResources(this);
-		OWrapper.injectEvents(this);
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
 	}
 
 	@Override
 	public void setContentView(View view) {
 		super.setContentView(view);
 		this.bindStateViews();
-		OWrapper.injectResources(this);
-		OWrapper.injectEvents(this);
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
 	}
 
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		super.setContentView(view, params);
 		bindStateViews();
-		OWrapper.injectResources(this);
-		OWrapper.injectEvents(this);
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
 	}
 
 	protected void bindStateViews() {
-		OWrapper.bindStateViews(this, this.getWindow().getDecorView());
+		UICore.bindStateViews(this, this.getWindow().getDecorView());
 	}
 
 	@Override
@@ -245,13 +232,15 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 
 		ActivityMgr.attach(this);
 
-		OWrapper.injectContentView(this);
+		UICore.injectContentView(this);
+
+		mRunning = true;
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		OWrapper.dispatchStart(this);
+		UICore.dispatchStart(this);
 		if (mPatternViewHelper != null) {
 			mPatternViewHelper.onStart();
 		}
@@ -260,7 +249,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 	@Override
 	protected void onResume() {
 		super.onResume();
-		OWrapper.dispatchResume(this);
+		UICore.dispatchResume(this);
 		if (mPatternViewHelper != null) {
 			mPatternViewHelper.onResume();
 		}
@@ -270,13 +259,13 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 	@Override
 	protected void onPause() {
 		mRunning = false;
-		OWrapper.dispatchPause(this);
+		UICore.dispatchPause(this);
 		super.onPause();
 	}
 
 	@Override
 	protected void onStop() {
-		OWrapper.dispatchStop(this);
+		UICore.dispatchStop(this);
 		if (mPatternViewHelper != null) {
 			mPatternViewHelper.onStop();
 		}
@@ -316,7 +305,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 		if (mPatternViewHelper != null) {
 			mPatternViewHelper.onDestroy();
 		}
-		OWrapper.dispatchDestroy(this);
+		UICore.dispatchDestroy(this);
 		ActivityMgr.detach(this);
 	}
 
@@ -329,7 +318,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 	}
 
 	public boolean onInterceptBackPressed() {
-		if (OWrapper.interceptBackPressed(this)) {
+		if (UICore.interceptBackPressed(this)) {
 			return true;
 		}
 		if (mBusy) {
@@ -426,7 +415,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 	}
 
 	public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
-		OWrapper.onActivityResult(this, requestCode, resultCode, data);
+		UICore.onActivityResult(this, requestCode, resultCode, data);
 	}
 
 	@Override
@@ -437,7 +426,7 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
-		OWrapper.dispatchTouchEvent(ev, this);
+		UICore.dispatchTouchEvent(ev, this);
 		return super.dispatchTouchEvent(ev);
 	}
 
@@ -465,17 +454,17 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 
 	@Override
 	public void stopAll() {
-		OWrapper.stopAll(this);
+		UICore.stopAll(this);
 	}
 
 	@Override
 	public void stopAll(boolean includeLockable) {
-		OWrapper.stopAll(this, includeLockable);
+		UICore.stopAll(this, includeLockable);
 	}
 
 	@Override
 	public <T extends View> T findViewById(int id, Class<T> viewClass) {
-		return OWrapper.findViewById(this, id, viewClass);
+		return UICore.findViewById(this, id, viewClass);
 	}
 
 	@Override

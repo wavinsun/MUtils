@@ -6,13 +6,13 @@ import java.util.List;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import cn.o.app.OWrapper;
 import cn.o.app.net.INetQueue;
 import cn.o.app.net.INetQueueOwner;
 import cn.o.app.net.INetTask;
 import cn.o.app.net.NetQueue;
 import cn.o.app.task.IStopable;
 import cn.o.app.task.IStopableManager;
+import cn.o.app.ui.core.UICore;
 
 @SuppressWarnings("deprecation")
 public class OService extends Service implements INetQueueOwner,
@@ -23,7 +23,7 @@ public class OService extends Service implements INetQueueOwner,
 	protected List<IStopable> mBindStopables;
 
 	public void bind(IStopable stopable) {
-		OWrapper.bind(this, stopable);
+		UICore.bind(this, stopable);
 	}
 
 	@Override
@@ -63,11 +63,11 @@ public class OService extends Service implements INetQueueOwner,
 
 	@Override
 	public void stopAll() {
-		OWrapper.stopAll(this);
+		UICore.stopAll(this);
 	}
 
 	public void stopAll(boolean includeLockable) {
-		OWrapper.stopAll(this, includeLockable);
+		UICore.stopAll(this, includeLockable);
 	}
 
 	@Override

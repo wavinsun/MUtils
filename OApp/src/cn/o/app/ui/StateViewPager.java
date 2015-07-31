@@ -10,13 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import cn.o.app.OWrapper;
 import cn.o.app.event.Dispatcher;
 import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.event.listener.OnSelectedChangeListener;
 import cn.o.app.ui.core.ICachedViewManager;
 import cn.o.app.ui.core.IStateView;
 import cn.o.app.ui.core.IStateViewManager;
+import cn.o.app.ui.core.UICore;
 
 public class StateViewPager extends ViewPager implements IStateView, IStateViewManager, ICachedViewManager {
 
@@ -119,7 +119,7 @@ public class StateViewPager extends ViewPager implements IStateView, IStateViewM
 		this.mCreateDispatched = true;
 		for (View v : mCachedViews) {
 			if (v instanceof IStateView) {
-				OWrapper.dispatchCreate((IStateView) v);
+				UICore.dispatchCreate((IStateView) v);
 			}
 		}
 		this.removeAllViews();
@@ -128,22 +128,22 @@ public class StateViewPager extends ViewPager implements IStateView, IStateViewM
 
 	@Override
 	public void onStart() {
-		OWrapper.dispatchStart(this);
+		UICore.dispatchStart(this);
 	}
 
 	@Override
 	public void onResume() {
-		OWrapper.dispatchResume(this);
+		UICore.dispatchResume(this);
 	}
 
 	@Override
 	public void onPause() {
-		OWrapper.dispatchPause(this);
+		UICore.dispatchPause(this);
 	}
 
 	@Override
 	public void onStop() {
-		OWrapper.dispatchStop(this);
+		UICore.dispatchStop(this);
 	}
 
 	@Override
@@ -157,7 +157,7 @@ public class StateViewPager extends ViewPager implements IStateView, IStateViewM
 
 	@Override
 	public boolean onInterceptBackPressed() {
-		if (OWrapper.interceptBackPressed(this)) {
+		if (UICore.interceptBackPressed(this)) {
 			return true;
 		}
 		return false;
@@ -165,17 +165,17 @@ public class StateViewPager extends ViewPager implements IStateView, IStateViewM
 
 	@Override
 	public void startActivity(Intent intent) {
-		OWrapper.startActivity(this, intent);
+		UICore.startActivity(this, intent);
 	}
 
 	@Override
 	public void startActivityForResult(Intent intent, int requestCode) {
-		OWrapper.startActivityForResult(this, intent, requestCode);
+		UICore.startActivityForResult(this, intent, requestCode);
 	}
 
 	@Override
 	public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
-		OWrapper.onActivityResult(this, requestCode, resultCode, data);
+		UICore.onActivityResult(this, requestCode, resultCode, data);
 	}
 
 	@Override
@@ -202,7 +202,7 @@ public class StateViewPager extends ViewPager implements IStateView, IStateViewM
 
 	@Override
 	public <T extends View> T findViewById(int id, Class<T> viewClass) {
-		return OWrapper.findViewById(this, id, viewClass);
+		return UICore.findViewById(this, id, viewClass);
 	}
 
 	@Override

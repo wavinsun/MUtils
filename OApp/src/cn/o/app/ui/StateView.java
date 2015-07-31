@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewParent;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import cn.o.app.OWrapper;
 import cn.o.app.data.IAsyncDataQueueOwner;
 import cn.o.app.data.IAsyncDataTask;
 import cn.o.app.event.Dispatcher;
@@ -30,6 +29,7 @@ import cn.o.app.ui.core.IPrivateView;
 import cn.o.app.ui.core.IStateView;
 import cn.o.app.ui.core.IStateViewManager;
 import cn.o.app.ui.core.IToastOwner;
+import cn.o.app.ui.core.UICore;
 
 @SuppressLint("ShowToast")
 public class StateView extends RelativeLayout
@@ -77,51 +77,51 @@ public class StateView extends RelativeLayout
 	}
 
 	protected void bindStateViews() {
-		OWrapper.bindStateViews(this, this);
+		UICore.bindStateViews(this, this);
 	}
 
 	@Override
 	public void bind(IStateView stateView) {
-		OWrapper.bind(this, stateView);
+		UICore.bind(this, stateView);
 	}
 
 	public void bind(IStopable stopable) {
-		OWrapper.bind(this, stopable);
+		UICore.bind(this, stopable);
 	}
 
 	@Override
 	public void onCreate() {
-		OWrapper.injectContentView(this);
+		UICore.injectContentView(this);
 	}
 
 	@Override
 	public void onStart() {
-		OWrapper.dispatchStart(this);
+		UICore.dispatchStart(this);
 	}
 
 	@Override
 	public void onResume() {
-		OWrapper.dispatchResume(this);
+		UICore.dispatchResume(this);
 	}
 
 	@Override
 	public void onPause() {
-		OWrapper.dispatchPause(this);
+		UICore.dispatchPause(this);
 	}
 
 	@Override
 	public void onStop() {
-		OWrapper.dispatchStop(this);
+		UICore.dispatchStop(this);
 	}
 
 	@Override
 	public void onDestroy() {
-		OWrapper.dispatchDestroy(this);
+		UICore.dispatchDestroy(this);
 	}
 
 	@Override
 	public boolean onInterceptBackPressed() {
-		if (OWrapper.interceptBackPressed(this)) {
+		if (UICore.interceptBackPressed(this)) {
 			return true;
 		}
 		return false;
@@ -145,17 +145,17 @@ public class StateView extends RelativeLayout
 	}
 
 	public void startActivity(Intent intent) {
-		OWrapper.startActivity(this, intent);
+		UICore.startActivity(this, intent);
 	}
 
 	@Override
 	public void startActivityForResult(Intent intent, int requestCode) {
-		OWrapper.startActivityForResult(this, intent, requestCode);
+		UICore.startActivityForResult(this, intent, requestCode);
 	}
 
 	@Override
 	public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
-		OWrapper.onActivityResult(this, requestCode, resultCode, data);
+		UICore.onActivityResult(this, requestCode, resultCode, data);
 	}
 
 	public Context getApplicationContext() {
@@ -185,15 +185,15 @@ public class StateView extends RelativeLayout
 	public void setContentView(int layoutRes) {
 		LayoutInflater.from(getContext()).inflate(layoutRes, this);
 		bindStateViews();
-		OWrapper.injectResources(this);
-		OWrapper.injectEvents(this);
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
 	}
 
 	public void setContentView(View view) {
 		this.addView(view);
 		bindStateViews();
-		OWrapper.injectResources(this);
-		OWrapper.injectEvents(this);
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
 	}
 
 	@Override
@@ -213,17 +213,17 @@ public class StateView extends RelativeLayout
 
 	@Override
 	public void stopAll() {
-		OWrapper.stopAll(this);
+		UICore.stopAll(this);
 	}
 
 	@Override
 	public void stopAll(boolean includeLockable) {
-		OWrapper.stopAll(this, includeLockable);
+		UICore.stopAll(this, includeLockable);
 	}
 
 	@Override
 	public <T extends View> T findViewById(int id, Class<T> viewClass) {
-		return OWrapper.findViewById(this, id, viewClass);
+		return UICore.findViewById(this, id, viewClass);
 	}
 
 	@Override
@@ -279,12 +279,12 @@ public class StateView extends RelativeLayout
 
 	@Override
 	public void toast(CharSequence s) {
-		OWrapper.toast(this, s);
+		UICore.toast(this, s);
 	}
 
 	@Override
 	public void toast(int resId, Object... args) {
-		OWrapper.toast(this, resId, args);
+		UICore.toast(this, resId, args);
 	}
 
 	@Override

@@ -17,8 +17,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import cn.o.app.OWrapper;
 import cn.o.app.ui.core.IViewFinder;
+import cn.o.app.ui.core.UICore;
 
 @SuppressWarnings("deprecation")
 public class Alert implements IViewFinder {
@@ -312,7 +312,7 @@ public class Alert implements IViewFinder {
 		if (mContentView == null) {
 			return null;
 		}
-		return OWrapper.findViewById(mContentView, id, viewClass);
+		return UICore.findViewById(mContentView, id, viewClass);
 	}
 
 	public View findViewById(int id) {
