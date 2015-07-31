@@ -10,10 +10,10 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import cn.o.app.OWrapper;
 import cn.o.app.ui.core.IFragment;
 import cn.o.app.ui.core.IFragmentManager;
 import cn.o.app.ui.core.IStateView;
+import cn.o.app.ui.core.UICore;
 
 @SuppressWarnings("unchecked")
 public class OFragment extends StateView implements IFragment, IFragmentManager {
@@ -127,8 +127,8 @@ public class OFragment extends StateView implements IFragment, IFragmentManager 
 		ft.hide(mFragment);
 		ft.commitAllowingStateLoss();
 
-		OWrapper.injectResources(this);
-		OWrapper.injectEvents(this);
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
 	}
 
 	@Override
@@ -142,7 +142,7 @@ public class OFragment extends StateView implements IFragment, IFragmentManager 
 		if (mContentView == null) {
 			return;
 		}
-		OWrapper.bindStateViews(this, mContentView);
+		UICore.bindStateViews(this, mContentView);
 	}
 
 	@Override
@@ -157,7 +157,7 @@ public class OFragment extends StateView implements IFragment, IFragmentManager 
 			}
 			return (T) this;
 		}
-		return OWrapper.findViewById(mContentView, id, viewClass);
+		return UICore.findViewById(mContentView, id, viewClass);
 	}
 
 	@Override

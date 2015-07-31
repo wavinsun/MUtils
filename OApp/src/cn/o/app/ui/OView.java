@@ -5,10 +5,10 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
-import cn.o.app.OWrapper;
 import cn.o.app.ui.core.IContentViewOwner;
 import cn.o.app.ui.core.IView;
 import cn.o.app.ui.core.IViewFinder;
+import cn.o.app.ui.core.UICore;
 
 /**
  * View of framework
@@ -31,26 +31,26 @@ public class OView extends RelativeLayout implements IView, IViewFinder, IConten
 	}
 
 	protected void init() {
-		OWrapper.injectContentView(this);
+		UICore.injectContentView(this);
 	}
 
 	public void setContentView(View view) {
 		this.removeAllViews();
 		this.addView(view);
-		OWrapper.injectResources(this);
-		OWrapper.injectEvents(this);
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
 	}
 
 	public void setContentView(int layoutResID) {
 		this.removeAllViews();
 		LayoutInflater.from(getContext()).inflate(layoutResID, this);
-		OWrapper.injectResources(this);
-		OWrapper.injectEvents(this);
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
 	}
 
 	@Override
 	public <T extends View> T findViewById(int id, Class<T> viewClass) {
-		return OWrapper.findViewById(this, id, viewClass);
+		return UICore.findViewById(this, id, viewClass);
 	}
 
 	@Override

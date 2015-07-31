@@ -1,4 +1,4 @@
-package cn.o.app;
+package cn.o.app.ui.core;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -36,20 +36,12 @@ import cn.o.app.task.ILockable;
 import cn.o.app.task.IStopable;
 import cn.o.app.task.IStopableManager;
 import cn.o.app.ui.InfoToast;
-import cn.o.app.ui.core.IActivityExecutor;
-import cn.o.app.ui.core.ICachedViewManager;
-import cn.o.app.ui.core.IContentViewOwner;
-import cn.o.app.ui.core.IStateView;
-import cn.o.app.ui.core.IStateViewManager;
-import cn.o.app.ui.core.IToastOwner;
-import cn.o.app.ui.core.IView;
-import cn.o.app.ui.core.IViewFinder;
 
 /**
- * UI wrapper of framework
+ * UI core implementation of framework
  */
 @SuppressWarnings({ "deprecation", "unchecked" })
-public class OWrapper {
+public class UICore {
 
 	/**
 	 * Hide keyboard when touch view who is not EditText and not focused
@@ -590,7 +582,24 @@ public class OWrapper {
 		}
 	}
 
+	protected static boolean isEnabled(IToastOwner owner) {
+		if (owner instanceof IActivity) {
+			return ((IActivity) owner).isRunning();
+		}
+		Context context = owner.getContext();
+		if (context instanceof IActivity) {
+			return ((IActivity) context).isRunning();
+		}
+		if (context instanceof Activity) {
+			return !((Activity) context).isFinishing();
+		}
+		return true;
+	}
+
 	public static void toast(IToastOwner owner, CharSequence s) {
+		if (!isEnabled(owner)) {
+			return;
+		}
 		Toast t = owner.getToast();
 		if (s == null) {
 			t.cancel();
@@ -605,6 +614,9 @@ public class OWrapper {
 	}
 
 	public static void toast(IToastOwner owner, int resId, Object... args) {
+		if (!isEnabled(owner)) {
+			return;
+		}
 		Toast t = owner.getToast();
 		if (resId == 0) {
 			t.cancel();
