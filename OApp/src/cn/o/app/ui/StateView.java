@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
@@ -12,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import cn.o.app.OWrapper;
 import cn.o.app.data.IAsyncDataQueueOwner;
 import cn.o.app.data.IAsyncDataTask;
@@ -29,19 +31,22 @@ import cn.o.app.ui.core.IStateView;
 import cn.o.app.ui.core.IStateViewManager;
 import cn.o.app.ui.core.IToastOwner;
 
+@SuppressLint("ShowToast")
 public class StateView extends RelativeLayout
 		implements IStateView, IStateViewManager, IStopableManager, IToastOwner, IContentViewOwner {
 
 	protected List<IStateView> mBindViews;
 	protected List<IStopable> mBindStopables;
 
-	protected OToast mToast;
+	protected InfoToast mInfoToast;
+
+	protected Toast mToast;
 
 	protected boolean mCreateDispatched;
 
 	protected IStateViewManager mManager;
 
-	protected Dispatcher mDispatcher = new Dispatcher();
+	protected Dispatcher mDispatcher;
 
 	public StateView(Context context) {
 		super(context);
@@ -53,10 +58,6 @@ public class StateView extends RelativeLayout
 
 	public StateView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-	}
-
-	public OToast getToast() {
-		return mToast;
 	}
 
 	@Override
@@ -261,40 +262,58 @@ public class StateView extends RelativeLayout
 		mCreateDispatched = dispatched;
 	}
 
-	@Override
-	public void toast(CharSequence s) {
+	public InfoToast getInfoToast() {
+		return mInfoToast;
+	}
+
+	public Toast getToast() {
 		Context context = this.getContext();
 		if (context instanceof IToastOwner) {
-			((IToastOwner) context).toast(s);
+			return ((IToastOwner) context).getToast();
 		}
+		if (mToast == null) {
+			mToast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
+		}
+		return mToast;
+	}
+
+	@Override
+	public void toast(CharSequence s) {
+		OWrapper.toast(this, s);
 	}
 
 	@Override
 	public void toast(int resId, Object... args) {
-		Context context = this.getContext();
-		if (context instanceof IToastOwner) {
-			((IToastOwner) context).toast(resId, args);
-		}
-	}
-
-	@Override
-	public List<OnActivityResultListener> getOnActivityResultListeners() {
-		return mDispatcher.getListeners(OnActivityResultListener.EVENT_TYPE, OnActivityResultListener.class);
-	}
-
-	@Override
-	public void addOnActivityResultListener(OnActivityResultListener listener) {
-		mDispatcher.addListener(OnActivityResultListener.EVENT_TYPE, listener);
-	}
-
-	@Override
-	public void removeOnActivityResultListener(OnActivityResultListener listener) {
-		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE, listener);
+		OWrapper.toast(this, resId, args);
 	}
 
 	@Override
 	public IToastOwner getToastOwner() {
 		return this;
+	}
+
+	@Override
+	public List<OnActivityResultListener> getOnActivityResultListeners() {
+		if (mDispatcher == null) {
+			mDispatcher = new Dispatcher();
+		}
+		return mDispatcher.getListeners(OnActivityResultListener.EVENT_TYPE, OnActivityResultListener.class);
+	}
+
+	@Override
+	public void addOnActivityResultListener(OnActivityResultListener listener) {
+		if (mDispatcher == null) {
+			mDispatcher = new Dispatcher();
+		}
+		mDispatcher.addListener(OnActivityResultListener.EVENT_TYPE, listener);
+	}
+
+	@Override
+	public void removeOnActivityResultListener(OnActivityResultListener listener) {
+		if (mDispatcher == null) {
+			return;
+		}
+		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE, listener);
 	}
 
 }

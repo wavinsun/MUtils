@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -51,6 +52,7 @@ import cn.o.app.ui.pattern.IPatternDataProvider;
 import cn.o.app.ui.pattern.IPatternOwner;
 import cn.o.app.ui.pattern.IPatternView;
 
+@SuppressLint("ShowToast")
 public class OActivity extends FragmentActivity implements IFragmentManager, INetQueueOwner, IPatternOwner,
 		IAsyncDataQueueOwner, IToastOwner, IStopableManager, IActivityExecutor, IContentViewOwner {
 
@@ -68,15 +70,15 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 
 	protected List<IStopable> mBindStopables;
 
-	protected OToast mToast;
+	protected InfoToast mInfoToast;
+
+	protected Toast mToast;
 
 	protected boolean mRunning;
 
-	protected Toast mSysToast;
+	protected boolean mFinished;
 
 	protected Dispatcher mDispatcher;
-
-	protected boolean mFinished;
 
 	public static void finishAll() {
 		ActivityMgr.finishAll();
@@ -86,42 +88,35 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 		return this;
 	}
 
+	@Override
+	public InfoToast getInfoToast() {
+		return mInfoToast;
+	}
+
+	public Toast getToast() {
+		if (mToast == null) {
+			mToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+		}
+		return mToast;
+	}
+
 	public void toast(CharSequence s) {
 		if (!mRunning) {
 			return;
 		}
-		if (mSysToast == null) {
-			mSysToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
-		}
-		if (s == null) {
-			mSysToast.cancel();
-		} else {
-			if (s.equals("")) {
-				mSysToast.cancel();
-			} else {
-				mSysToast.setText(s);
-				mSysToast.show();
-			}
-		}
+		OWrapper.toast(this, s);
 	}
 
 	public void toast(int resId, Object... args) {
 		if (!mRunning) {
 			return;
 		}
-		if (mSysToast == null) {
-			mSysToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
-		}
-		if (resId == 0) {
-			mSysToast.cancel();
-		} else {
-			if (args != null & args.length != 0) {
-				mSysToast.setText(getString(resId, args));
-			} else {
-				mSysToast.setText(resId);
-			}
-			mSysToast.show();
-		}
+		OWrapper.toast(this, resId, args);
+	}
+
+	@Override
+	public IToastOwner getToastOwner() {
+		return this;
 	}
 
 	public boolean isBusy() {
@@ -134,11 +129,6 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 			mWaitingViewHelper = new WaitingViewHelper(this);
 		}
 		mWaitingViewHelper.postUpdateWaitingViewState();
-	}
-
-	@Override
-	public OToast getToast() {
-		return mToast;
 	}
 
 	@Override
@@ -536,11 +526,6 @@ public class OActivity extends FragmentActivity implements IFragmentManager, INe
 			return;
 		}
 		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE, listener);
-	}
-
-	@Override
-	public IToastOwner getToastOwner() {
-		return this;
 	}
 
 	/**

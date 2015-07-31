@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 import cn.o.app.annotation.event.OnClick;
 import cn.o.app.annotation.res.FindViewById;
 import cn.o.app.annotation.res.GetColor;
@@ -34,7 +35,7 @@ import cn.o.app.runtime.ReflectUtil;
 import cn.o.app.task.ILockable;
 import cn.o.app.task.IStopable;
 import cn.o.app.task.IStopableManager;
-import cn.o.app.ui.OToast;
+import cn.o.app.ui.InfoToast;
 import cn.o.app.ui.core.IActivityExecutor;
 import cn.o.app.ui.core.ICachedViewManager;
 import cn.o.app.ui.core.IContentViewOwner;
@@ -429,7 +430,7 @@ public class OWrapper {
 			}
 		}
 		if (manager instanceof IToastOwner) {
-			OToast toast = ((IToastOwner) manager).getToast();
+			InfoToast toast = ((IToastOwner) manager).getInfoToast();
 			if (toast != null) {
 				toast.hideNow();
 			}
@@ -586,6 +587,35 @@ public class OWrapper {
 			for (IStateView stateView : bindViews) {
 				stateView.onActivityResult(context, requestCode, resultCode, data);
 			}
+		}
+	}
+
+	public static void toast(IToastOwner owner, CharSequence s) {
+		Toast t = owner.getToast();
+		if (s == null) {
+			t.cancel();
+		} else {
+			if (s.equals("")) {
+				t.cancel();
+			} else {
+				t.setText(s);
+				t.show();
+			}
+		}
+	}
+
+	public static void toast(IToastOwner owner, int resId, Object... args) {
+		Toast t = owner.getToast();
+		if (resId == 0) {
+			t.cancel();
+		} else {
+			if (args != null & args.length != 0) {
+				Context context = owner.getContext();
+				t.setText(context.getString(resId, args));
+			} else {
+				t.setText(resId);
+			}
+			t.show();
 		}
 	}
 }
