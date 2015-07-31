@@ -9,7 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.TextView;
 
-public class OToast extends TextView {
+public class InfoToast extends TextView {
 
 	protected Animation mFadeInAnim;
 	protected Animation mFadeOutAnim;
@@ -26,17 +26,17 @@ public class OToast extends TextView {
 
 	protected boolean mVisibleInvalidate;
 
-	public OToast(Context context) {
+	public InfoToast(Context context) {
 		super(context);
 		this.onCreate();
 	}
 
-	public OToast(Context context, AttributeSet attrs) {
+	public InfoToast(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.onCreate();
 	}
 
-	public OToast(Context context, AttributeSet attrs, int defStyle) {
+	public InfoToast(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		this.onCreate();
 	}

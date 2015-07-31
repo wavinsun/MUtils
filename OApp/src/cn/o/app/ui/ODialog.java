@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,17 +15,23 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 import cn.o.app.OWrapper;
 import cn.o.app.context.IContextProvider;
 import cn.o.app.ui.core.IContentViewOwner;
+import cn.o.app.ui.core.IToastOwner;
 import cn.o.app.ui.core.IViewFinder;
 
 /**
  * Dialog of framework
  */
-@SuppressLint("RtlHardcoded")
+@SuppressLint({ "RtlHardcoded", "ShowToast" })
 @SuppressWarnings("deprecation")
-public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, IContextProvider {
+public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, IContextProvider, IToastOwner {
+
+	protected InfoToast mInfoToast;
+
+	protected Toast mToast;
 
 	public ODialog(Context context) {
 		super(context);
@@ -110,6 +117,43 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, I
 	}
 
 	@Override
+	public InfoToast getInfoToast() {
+		return mInfoToast;
+	}
+
+	@Override
+	public Toast getToast() {
+		Context context = this.getContext();
+		if (context instanceof IToastOwner) {
+			return ((IToastOwner) context).getToast();
+		} else if (context instanceof ContextThemeWrapper) {
+			context = ((ContextThemeWrapper) context).getBaseContext();
+			if (context instanceof IToastOwner) {
+				return ((IToastOwner) context).getToast();
+			}
+		}
+		if (mToast == null) {
+			mToast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
+		}
+		return mToast;
+	}
+
+	@Override
+	public IToastOwner getToastOwner() {
+		return this;
+	}
+
+	@Override
+	public void toast(CharSequence s) {
+		OWrapper.toast(this, s);
+	}
+
+	@Override
+	public void toast(int resId, Object... args) {
+		OWrapper.toast(this, resId, args);
+	}
+
+	@Override
 	public void show() {
 		try {
 			super.show();
@@ -190,11 +234,11 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, I
 			if (mMaxHeight > 0 && mMaxHeight < measuredHeight) {
 				// Notify sub views
 				super.onMeasure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
-						MeasureSpec.makeMeasureSpec(mMaxHeight, MeasureSpec.EXACTLY));//
+						MeasureSpec.makeMeasureSpec(mMaxHeight, MeasureSpec.EXACTLY));
 				this.setMeasuredDimension(getMeasuredWidth(), mMaxHeight);
-
 			}
 		}
 
 	}
+
 }

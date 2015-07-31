@@ -1,11 +1,17 @@
 package cn.o.app.ui.core;
 
+import android.widget.Toast;
 import cn.o.app.context.IContextProvider;
-import cn.o.app.ui.OToast;
+import cn.o.app.ui.InfoToast;
 
+/**
+ * Toast of framework
+ */
 public interface IToastOwner extends IContextProvider {
 
-	public OToast getToast();
+	public InfoToast getInfoToast();
+
+	public Toast getToast();
 
 	public IToastOwner getToastOwner();
 
