@@ -29,7 +29,7 @@
 
     <cn.o.app.ui.TipView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:id="@+id/tip"
         android:radius="8dp"
         app:strokeColor="#CCC"
@@ -55,5 +55,16 @@
             style="@style/DemoFeatureItem"
             android:text="down_3" />
     </LinearLayout>
+    
+    <cn.o.app.ui.TipView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:radius="0dp"
+        app:strokeColor="#CCC"
+        app:strokeWidth="0dp"
+        app:triangleAlign="top_left"
+        app:triangleHeight="8dp" 
+        app:trianglePadding="20dp"
+        android:solidColor="#AAA"/>
 
 </LinearLayout>

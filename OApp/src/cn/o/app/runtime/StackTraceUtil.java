@@ -1,28 +1,20 @@
 package cn.o.app.runtime;
 
 /**
- * Stack trace utility of framework
- * 
+ * Stack trace utility of framework.<br>
  * Using Throwable.getStackTrace() to replace
- * Thread.currentThread().getStackTrace() because of the following bug
+ * Thread.currentThread().getStackTrace() because of the following bug<br>
  * 
- * Android environment stack trace:
- * 
- * dalvik.system.VMStack.getThreadStackTrace
- * 
- * java.lang.Thread.getStackTrace
- * 
- * cn.o.app.runtime.StackTraceUtil.getCallerElement
- * 
- * ... ....
+ * Android environment stack trace:<br>
+ * dalvik.system.VMStack.getThreadStackTrace<br>
+ * java.lang.Thread.getStackTrace<br>
+ * cn.o.app.runtime.StackTraceUtil.getCallerElement<br>
+ * ... ....<br>
  * 
  * 
- * Java standard environment stack trace:
- * 
- * java.lang.Thread.getStackTrace
- * 
- * cn.o.app.runtime.StackTraceUtil.getCallerElement
- * 
+ * Java standard environment stack trace:<br>
+ * java.lang.Thread.getStackTrace<br>
+ * cn.o.app.runtime.StackTraceUtil.getCallerElement<br>
  * ... ...
  * 
  */

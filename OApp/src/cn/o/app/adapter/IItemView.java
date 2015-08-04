@@ -43,8 +43,7 @@ public interface IItemView<DATA_ITEM> extends IView, IViewFinder, IContentViewOw
 	public int getPosition();
 
 	/**
-	 * Set position for IItemView
-	 * 
+	 * Set position for IItemView.<br>
 	 * It called by framework.
 	 * 
 	 * @see OAdapter#getView(int, View, android.view.ViewGroup)
