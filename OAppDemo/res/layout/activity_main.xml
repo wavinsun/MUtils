@@ -113,6 +113,11 @@
                 style="@style/MainBtn"
                 android:text="Busy"/>
             
+            <TextView 
+                android:id="@+id/path_button"
+                style="@style/MainBtn"
+                android:text="PathButton"/>
+            
         </cn.o.app.ui.FlowLayout>
     </ScrollView>
 

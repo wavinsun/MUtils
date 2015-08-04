@@ -27,6 +27,9 @@ public class OnClickListener implements View.OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		if (v.getVisibility() != View.VISIBLE) {
+			return;
+		}
 		if (!mCallBack.isAccessible()) {
 			mCallBack.setAccessible(true);
 		}

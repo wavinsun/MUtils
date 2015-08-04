@@ -34,6 +34,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.telephony.TelephonyManager;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import cn.o.app.archive.ZipUtil;
 import cn.o.app.conf.OLocale;
 import cn.o.app.crypto.AESUtil;
@@ -739,6 +742,33 @@ public class OUtil {
 	 */
 	public static String toStringXML(Object obj) {
 		return StringUtil.toXML(obj);
+	}
+
+	/**
+	 * Get translate animation of PathButton.<br>
+	 * The visibility of path button and anchor view must be
+	 * {@link View#VISIBLE} or {@link View#INVISIBLE}.
+	 * 
+	 * @param isOpen
+	 *            Is open for button
+	 * @param button
+	 *            Path button
+	 * @param anchor
+	 *            Control button
+	 * @return
+	 */
+	public static Animation animOfPathButton(boolean isOpen, View button, View anchor) {
+		int[] anchorL = new int[2];
+		anchor.getLocationOnScreen(anchorL);
+		int[] buttonL = new int[2];
+		button.getLocationOnScreen(buttonL);
+		int x = anchorL[0] - buttonL[0] + (anchor.getWidth() - button.getWidth()) / 2;
+		int y = anchorL[1] - buttonL[1] + (anchor.getHeight() - button.getHeight()) / 2;
+		TranslateAnimation anim = new TranslateAnimation(Animation.ABSOLUTE, isOpen ? x : 0, Animation.ABSOLUTE,
+				isOpen ? 0 : x, Animation.ABSOLUTE, isOpen ? y : 0, Animation.ABSOLUTE, isOpen ? 0 : y);
+		anim.setDuration(300);
+		anim.setFillAfter(true);
+		return anim;
 	}
 
 	protected static class AsyncTaskLoaderRunnable implements Runnable {

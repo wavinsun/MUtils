@@ -6,10 +6,8 @@ import cn.o.app.OUtil;
 import cn.o.app.json.JsonUtil;
 
 /**
- * Extra of framework
- * 
- * JSON content
- * 
+ * Extra of framework.<br>
+ * JSON content for {@link Intent} and {@link Bundle}.
  */
 @SuppressWarnings("serial")
 public class Extra implements INoProguard {

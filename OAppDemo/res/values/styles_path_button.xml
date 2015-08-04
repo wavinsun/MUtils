@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <style name="PathButtonItem">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="shape">circle</item>
+        <item name="android:src">@drawable/ic_launcher</item>
+        <item name="borderWidth">1dp</item>
+    </style>
+    
+</resources>
