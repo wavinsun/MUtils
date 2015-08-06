@@ -52,6 +52,7 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, I
 		this.setCanceledOnTouchOutside(true);
 		Window w = getWindow();
 		w.requestFeature(Window.FEATURE_NO_TITLE);
+		w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		w.setBackgroundDrawable(new ColorDrawable(0x00000000));
 
 		UICore.injectContentView(this);
