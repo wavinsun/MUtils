@@ -227,7 +227,9 @@ public class OActivity extends FragmentActivity implements IActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		Window w = this.getWindow();
+		w.requestFeature(Window.FEATURE_NO_TITLE);
+		w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		super.onCreate(savedInstanceState);
 
 		ActivityMgr.attach(this);
