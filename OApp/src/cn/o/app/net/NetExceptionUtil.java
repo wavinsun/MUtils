@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 
 import javax.net.ssl.SSLException;
 
+import org.apache.http.NoHttpResponseException;
 import org.apache.http.conn.ConnectTimeoutException;
 
 import cn.o.app.R;
@@ -54,9 +55,9 @@ public class NetExceptionUtil {
 				|| e instanceof SocketTimeoutException) {
 			return R.string.exception_timeout;
 		}
-		if (e instanceof FileNotFoundException || e instanceof EOFException || e instanceof UnknownHostException
-				|| e instanceof SSLException) {
-			return R.string.exception_file_not_found;
+		if (e instanceof NoHttpResponseException || e instanceof FileNotFoundException || e instanceof EOFException
+				|| e instanceof UnknownHostException || e instanceof SSLException) {
+			return R.string.exception_no_response;
 		}
 		if (e instanceof HttpStatusException) {
 			return R.string.exception_http_status;

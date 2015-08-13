@@ -112,8 +112,22 @@ public class Alert implements IViewFinder {
 
 	protected int mMessageGravity = Gravity.CENTER;
 
+	/** Fixed with for alert */
+	protected int mFixedWidth;
+
 	public Alert(Context context) {
 		mContext = context;
+	}
+
+	public int getFixedWidth() {
+		return mFixedWidth;
+	}
+
+	public void setFixedWidth(int fixedWidth) {
+		if (mDialog != null) {
+			return;
+		}
+		mFixedWidth = fixedWidth;
 	}
 
 	public boolean isOKEnabled() {
@@ -593,8 +607,9 @@ public class Alert implements IViewFinder {
 			alertView.addView(new View(mContext),
 					new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0));
 		}
-		realContentView.addView(alertView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-				FrameLayout.LayoutParams.WRAP_CONTENT));
+		realContentView.addView(alertView,
+				new FrameLayout.LayoutParams(mFixedWidth != 0 ? mFixedWidth : FrameLayout.LayoutParams.MATCH_PARENT,
+						FrameLayout.LayoutParams.WRAP_CONTENT));
 		mDialog = new ODialog(mContext);
 		mDialog.setCancelable(mCancelable);
 		mDialog.setCanceledOnTouchOutside(mCancelable);

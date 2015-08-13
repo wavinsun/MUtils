@@ -205,7 +205,6 @@ public class PullLayout extends RelativeLayout {
 			}
 			typedArray.recycle();
 		}
-
 		refreshHeadView.setBackgroundDrawable(this.getBackground());
 		loadmoreFootView.setBackgroundDrawable(this.getBackground());
 	}
