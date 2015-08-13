@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+import cn.o.app.R;
 import cn.o.app.context.IContextProvider;
 import cn.o.app.ui.core.IContentViewOwner;
 import cn.o.app.ui.core.IToastOwner;
@@ -56,6 +57,13 @@ public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, I
 		w.setBackgroundDrawable(new ColorDrawable(0x00000000));
 
 		UICore.injectContentView(this);
+	}
+
+	/**
+	 * clear window animations
+	 */
+	public void clearAnimation() {
+		setWindowAnimations(R.style.ODialogNoAnim);
 	}
 
 	/**
