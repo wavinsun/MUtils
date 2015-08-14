@@ -10,6 +10,10 @@
     <dimen name="paddingRight">12dp</dimen>
     <dimen name="paddingTop">8dp</dimen>
     <dimen name="paddingBottom">8dp</dimen>
+    <dimen name="paddingLeftOfButton">24dp</dimen>
+    <dimen name="paddingRightOfButton">24dp</dimen>
+    <dimen name="paddingTopOfButton">8dp</dimen>
+    <dimen name="paddingBottomOfButton">8dp</dimen>
     <dimen name="marginLeft">16dp</dimen>
     <dimen name="marginRight">16dp</dimen>
     <dimen name="marginTop">8dp</dimen>
