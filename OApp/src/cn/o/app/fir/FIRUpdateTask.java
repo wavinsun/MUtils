@@ -16,7 +16,9 @@ import cn.o.app.net.NetTask;
 public class FIRUpdateTask extends NetTask<FIRUpdateReq, FIRUpdateRes> {
 
 	public static class FIRUpdateReq implements INoProguard {
-		public String idOrAppid;
+		public String bundle_id;
+		public String api_token;
+		public String type = "android";
 	}
 
 	public static class FIRUpdateRes implements INoProguard {
@@ -28,13 +30,19 @@ public class FIRUpdateTask extends NetTask<FIRUpdateReq, FIRUpdateRes> {
 		public String changelog;
 		public String versionShort;
 		public String installUrl;
+		public String install_url;
 		public String update_url;
+		public FirUpdateBinary binary;
+	}
+
+	public static class FirUpdateBinary {
+		public long fsize;
 	}
 
 	public FIRUpdateTask() {
 		super();
 		setRestUrl(true);
-		setUrl("http://fir.im/api/v2/app/version/{idOrAppid}");
+		setUrl("http://api.fir.im/apps/latest/{bundle_id}");
 	}
 
 	@Override

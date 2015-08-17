@@ -10,6 +10,8 @@ import android.annotation.SuppressLint;
 @SuppressLint("DefaultLocale")
 public class MBFormat {
 
+	public static final double MILLION_SIZE = 1048576;// 1024*1024
+
 	public static double parse(String str) {
 		double value = 0;
 		if (str == null) {
@@ -39,7 +41,7 @@ public class MBFormat {
 		} else if ("G".equals(unit)) {
 			return value * 1024;
 		} else if ("T".equals(unit)) {
-			return value * 1048576;// 1024*1024=1048576
+			return value * MILLION_SIZE;
 		} else {
 			return value;
 		}
@@ -52,8 +54,8 @@ public class MBFormat {
 	public static String format(double value, String format) {
 		String unit = "M";
 		double valueAbs = value > 0 ? value : (value * -1);
-		if (valueAbs >= 1048576) {
-			value = value / 1048576;// 1024*1024=1048576
+		if (valueAbs >= MILLION_SIZE) {
+			value = value / MILLION_SIZE;
 			unit = "T";
 		} else if (valueAbs >= 1024) {
 			value = value / 1024;

@@ -14,6 +14,7 @@ import cn.o.app.annotation.res.SetContentView;
 import cn.o.app.demo.R;
 import cn.o.app.event.listener.VersionUpdateListener;
 import cn.o.app.fir.FIRUpdateAgent;
+import cn.o.app.text.MBFormat;
 import cn.o.app.ui.StateView;
 
 @SetContentView(R.layout.view_fir_update)
@@ -35,7 +36,8 @@ public class FirUpdateDemoView extends StateView {
 	protected void onClickGo() {
 		FIRUpdateAgent agent = new FIRUpdateAgent();
 		agent.setContext(getContext());
-		agent.setIdOrAppid("5592504febc7b8f777002c98");
+		agent.setBundleId("cn.o.app.demo");
+		agent.setApiToken("75d00450e48d4beee3d4a37fe663bc6e");
 		agent.setDownloadCallBack(new RequestCallBack<File>() {
 
 			@Override
@@ -47,6 +49,21 @@ public class FirUpdateDemoView extends StateView {
 			public void onFailure(HttpException e, String message) {
 				toast("Download failure");
 			}
+
+			@Override
+			public void onLoading(long total, long current, boolean isUploading) {
+				double totalMB = total;
+				totalMB = totalMB / MBFormat.MILLION_SIZE;
+				double currentMB = current;
+				currentMB = currentMB / MBFormat.MILLION_SIZE;
+				StringBuilder sb = new StringBuilder();
+				sb.append("Updating:");
+				sb.append(MBFormat.format(currentMB, "0.00"));
+				sb.append("/");
+				sb.append(MBFormat.format(totalMB, "0.00"));
+				toast(sb.toString());
+			}
+
 		});
 		agent.setListener(new VersionUpdateListener() {
 
