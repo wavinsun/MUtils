@@ -13,6 +13,7 @@ import cn.o.app.fir.FIRUpdateTask.FIRUpdateRes;
 import cn.o.app.net.INetTask;
 import cn.o.app.net.NetTaskListener;
 import cn.o.app.task.ContextOwnerTask;
+import cn.o.app.text.MBFormat;
 import cn.o.app.text.StringUtil;
 import cn.o.app.ui.Alert;
 import cn.o.app.ui.Alert.AlertListener;
@@ -54,11 +55,18 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 		mDownloadCallBack = downloadCallBack;
 	}
 
-	public void setIdOrAppid(String idOrAppid) {
+	public void setBundleId(String bundleId) {
 		if (mStarted || mStoped) {
 			return;
 		}
-		mUpdateTask.getRequest().idOrAppid = idOrAppid;
+		mUpdateTask.getRequest().bundle_id = bundleId;
+	}
+
+	public void setApiToken(String apiToken) {
+		if (mStarted || mStoped) {
+			return;
+		}
+		mUpdateTask.getRequest().api_token = apiToken;
 	}
 
 	class FirUpdateTaskListener extends NetTaskListener<FIRUpdateTask.FIRUpdateReq, FIRUpdateTask.FIRUpdateRes> {
@@ -89,6 +97,10 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 			StringBuilder sb = new StringBuilder();
 			sb.append("最新版本:");
 			sb.append(versionShort);
+			if (response.binary != null) {
+				sb.append("\n更新大小:");
+				sb.append(MBFormat.format(response.binary.fsize / MBFormat.MILLION_SIZE));
+			}
 			sb.append("\n更新内容:\n");
 			sb.append(response.changelog);
 			FirUpdateAlertListener listener = new FirUpdateAlertListener();
