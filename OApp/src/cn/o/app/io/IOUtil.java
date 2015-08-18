@@ -2,8 +2,10 @@ package cn.o.app.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.RandomAccessFile;
 
 /**
  * IO of framework
@@ -27,6 +29,20 @@ public class IOUtil {
 			return null;
 		} finally {
 			close(bos);
+		}
+	}
+
+	public static boolean putBytes(File f, byte[] bytes) {
+		RandomAccessFile raf = null;
+		try {
+			raf = new RandomAccessFile(f, "rw");
+			raf.setLength(bytes.length);
+			raf.write(bytes);
+			return true;
+		} catch (Exception e) {
+			return false;
+		} finally {
+			IOUtil.close(raf);
 		}
 	}
 
