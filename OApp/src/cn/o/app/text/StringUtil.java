@@ -2,7 +2,6 @@ package cn.o.app.text;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -165,16 +164,11 @@ public class StringUtil {
 	 * @return
 	 */
 	public static boolean put(File file, String str) {
-		FileOutputStream fos = null;
 		try {
-			fos = new FileOutputStream(file);
-			fos.write(str.getBytes("UTF-8"));
-			fos.flush();
-			return true;
+			byte[] bytes = str.getBytes("UTF-8");
+			return IOUtil.putBytes(file, bytes);
 		} catch (Exception e) {
 			return false;
-		} finally {
-			IOUtil.close(fos);
 		}
 	}
 
