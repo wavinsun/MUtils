@@ -1,4 +1,4 @@
-package cn.o.app.desktop;
+package cn.o.app.ext;
 
 import java.awt.Desktop;
 import java.io.File;
