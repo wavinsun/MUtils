@@ -2,8 +2,8 @@ package cn.o.app.demo.ui;
 
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.o.app.annotation.event.OnClick;
-import cn.o.app.annotation.res.FindViewById;
+import cn.o.app.core.annotation.event.OnClick;
+import cn.o.app.core.annotation.res.FindViewById;
 import cn.o.app.demo.R;
 import cn.o.app.ui.ActivityX;
 

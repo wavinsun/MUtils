@@ -13,10 +13,10 @@ import org.apache.http.NoHttpResponseException;
 import org.apache.http.conn.ConnectTimeoutException;
 
 import cn.o.app.R;
-import cn.o.app.net.NetClient.ConnectNotFoundException;
-import cn.o.app.net.NetClient.CookieExpiredException;
-import cn.o.app.net.NetClient.ErrorCodeException;
-import cn.o.app.net.NetClient.HttpStatusException;
+import cn.o.app.core.net.NetClient.ConnectNotFoundException;
+import cn.o.app.core.net.NetClient.CookieExpiredException;
+import cn.o.app.core.net.NetClient.ErrorCodeException;
+import cn.o.app.core.net.NetClient.HttpStatusException;
 import cn.o.app.ui.core.IToastOwner;
 
 /**

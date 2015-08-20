@@ -1,9 +1,9 @@
 package cn.o.app.fir;
 
+import cn.o.app.core.io.INoProguard;
+import cn.o.app.core.net.NetClient.ErrorCodeException;
 import cn.o.app.fir.FIRUpdateTask.FIRUpdateReq;
 import cn.o.app.fir.FIRUpdateTask.FIRUpdateRes;
-import cn.o.app.io.INoProguard;
-import cn.o.app.net.NetClient.ErrorCodeException;
 import cn.o.app.net.NetTask;
 
 /**

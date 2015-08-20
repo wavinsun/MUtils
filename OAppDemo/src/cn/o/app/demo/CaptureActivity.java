@@ -2,8 +2,8 @@ package cn.o.app.demo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import cn.o.app.annotation.res.FindViewById;
-import cn.o.app.annotation.res.SetContentView;
+import cn.o.app.core.annotation.res.FindViewById;
+import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.demo.ui.BasicActivity;
 import cn.o.app.io.Extra;
 import cn.o.app.qrcode.CaptureView;

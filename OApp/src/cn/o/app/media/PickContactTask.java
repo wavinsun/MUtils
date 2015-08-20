@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
-import cn.o.app.event.Listener;
+import cn.o.app.core.event.Listener;
 import cn.o.app.ui.core.IActivityExecutor;
 
 public class PickContactTask extends MediaTask {

@@ -1,6 +1,7 @@
 package cn.o.app.task;
 
 import android.os.Handler;
+import cn.o.app.core.task.IStopable;
 
 public class DelayTask implements IStopable {
 

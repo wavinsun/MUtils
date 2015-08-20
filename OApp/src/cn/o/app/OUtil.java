@@ -33,17 +33,20 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.telephony.TelephonyManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import cn.o.app.archive.ZipUtil;
+import android.widget.EditText;
 import cn.o.app.conf.OLocale;
-import cn.o.app.crypto.AESUtil;
-import cn.o.app.io.IOUtil;
-import cn.o.app.runtime.OField;
-import cn.o.app.runtime.ReflectUtil;
-import cn.o.app.text.StringUtil;
+import cn.o.app.core.archive.ZipUtil;
+import cn.o.app.core.crypto.AESUtil;
+import cn.o.app.core.io.IOUtil;
+import cn.o.app.core.runtime.OField;
+import cn.o.app.core.runtime.ReflectUtil;
+import cn.o.app.core.text.StringUtil;
 
 /**
  * Utility of framework
@@ -771,7 +774,59 @@ public class OUtil {
 		return anim;
 	}
 
-	protected static class AsyncTaskLoaderRunnable implements Runnable {
+	public static TextWatcher setEditTextDecimals(EditText editText, int decimals) {
+		EditTextDecimalsTextWatcher watcher = new EditTextDecimalsTextWatcher();
+		watcher.setEditText(editText);
+		watcher.setDecimals(decimals);
+		editText.addTextChangedListener(watcher);
+		return watcher;
+	}
+
+	public static class EditTextDecimalsTextWatcher implements TextWatcher {
+
+		protected EditText mEditText;
+
+		protected int mDecimals;
+
+		protected boolean catchChanged;
+
+		public void setEditText(EditText editText) {
+			mEditText = editText;
+		}
+
+		public void setDecimals(int decimals) {
+			mDecimals = decimals;
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			if (catchChanged) {
+				return;
+			}
+			catchChanged = true;
+			String str = s.toString();
+			int dotIndex = str.indexOf(".");
+			if (dotIndex >= 0) {
+				String strDecmals = str.substring(dotIndex + 1);
+				if (strDecmals.length() > mDecimals) {
+					str = str.substring(0, dotIndex + 1 + mDecimals);
+					mEditText.setText(str);
+					mEditText.setSelection(str.length());
+				}
+			}
+			catchChanged = false;
+		}
+	}
+
+	public static class AsyncTaskLoaderRunnable implements Runnable {
 
 		public void run() {
 			try {

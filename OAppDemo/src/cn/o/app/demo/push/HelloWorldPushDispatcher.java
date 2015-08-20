@@ -8,12 +8,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import cn.o.app.core.io.INoProguard;
+import cn.o.app.core.json.JsonUtil;
 import cn.o.app.demo.PushNotifyActivity;
 import cn.o.app.demo.PushNotifyActivity.DemoPushNotifyExtra;
 import cn.o.app.demo.R;
 import cn.o.app.demo.push.HelloWorldPushDispatcher.HelloWorldMessage;
-import cn.o.app.io.INoProguard;
-import cn.o.app.json.JsonUtil;
 import cn.o.app.push.PushDispathcer;
 
 @SuppressWarnings("serial")

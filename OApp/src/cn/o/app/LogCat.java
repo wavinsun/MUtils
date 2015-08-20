@@ -1,8 +1,8 @@
 package cn.o.app;
 
 import android.util.Log;
-import cn.o.app.runtime.StackTraceUtil;
-import cn.o.app.text.StringUtil;
+import cn.o.app.core.runtime.StackTraceUtil;
+import cn.o.app.core.text.StringUtil;
 
 /**
  * Log cat of framework

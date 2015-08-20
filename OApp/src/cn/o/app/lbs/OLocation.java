@@ -1,7 +1,7 @@
 package cn.o.app.lbs;
 
-import cn.o.app.io.INoProguard;
-import cn.o.app.json.JsonUtil;
+import cn.o.app.core.io.INoProguard;
+import cn.o.app.core.json.JsonUtil;
 
 /**
  * Compatibility for AMap and Baidu Map

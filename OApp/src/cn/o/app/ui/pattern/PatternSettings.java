@@ -2,8 +2,8 @@ package cn.o.app.ui.pattern;
 
 import android.content.Context;
 import cn.o.app.OUtil;
-import cn.o.app.annotation.Ignore;
-import cn.o.app.json.JsonUtil;
+import cn.o.app.core.annotation.Ignore;
+import cn.o.app.core.json.JsonUtil;
 
 @SuppressWarnings("serial")
 public class PatternSettings implements IPatternSettings {

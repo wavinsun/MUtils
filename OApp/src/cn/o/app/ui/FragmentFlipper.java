@@ -19,7 +19,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ViewFlipper;
 import cn.o.app.OUtil;
-import cn.o.app.event.Dispatcher;
+import cn.o.app.core.event.Dispatcher;
 import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.event.listener.OnSelectedChangeListener;
 import cn.o.app.ui.core.ICachedViewManager;

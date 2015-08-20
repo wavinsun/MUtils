@@ -1,6 +1,6 @@
 package cn.o.app.pay;
 
-import cn.o.app.event.Listener;
+import cn.o.app.core.event.Listener;
 
 public interface OPayListener extends Listener {
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.o.app.context.ContextOwner;
-import cn.o.app.json.JsonUtil;
+import cn.o.app.core.json.JsonUtil;
 
 /**
  * Implements {@link IPushManager}

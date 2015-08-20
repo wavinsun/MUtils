@@ -10,7 +10,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.content.CursorLoader;
 import cn.o.app.OUtil;
-import cn.o.app.event.Listener;
+import cn.o.app.core.event.Listener;
 import cn.o.app.ui.core.IActivityExecutor;
 
 /**

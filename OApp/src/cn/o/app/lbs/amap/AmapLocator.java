@@ -8,10 +8,10 @@ import com.amap.api.location.LocationProviderProxy;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
-import cn.o.app.event.Dispatcher;
+import cn.o.app.core.event.Dispatcher;
+import cn.o.app.core.task.IStopable;
 import cn.o.app.event.listener.OLocationListener;
 import cn.o.app.lbs.OLocation;
-import cn.o.app.task.IStopable;
 
 /**
  * AMap Location

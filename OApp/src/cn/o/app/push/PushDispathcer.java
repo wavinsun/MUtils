@@ -1,7 +1,7 @@
 package cn.o.app.push;
 
 import android.content.Context;
-import cn.o.app.annotation.Ignore;
+import cn.o.app.core.annotation.Ignore;
 
 /**
  * Implements {@link IPushDispatcher}

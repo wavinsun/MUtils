@@ -6,7 +6,7 @@ import com.lidroid.xutils.bitmap.callback.DefaultBitmapLoadCallBack;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import cn.o.app.event.Listener;
+import cn.o.app.core.event.Listener;
 import cn.o.app.ui.core.IDefaultDrawableView;
 
 /**

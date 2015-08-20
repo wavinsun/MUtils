@@ -1,14 +1,14 @@
 package cn.o.app.demo.net;
 
 import android.content.Context;
-import cn.o.app.annotation.Format;
-import cn.o.app.annotation.Name;
-import cn.o.app.annotation.Primitive;
-import cn.o.app.annotation.Primitive.PrimitiveType;
+import cn.o.app.core.annotation.Format;
+import cn.o.app.core.annotation.Name;
+import cn.o.app.core.annotation.Primitive;
+import cn.o.app.core.annotation.Primitive.PrimitiveType;
+import cn.o.app.core.io.INoProguard;
+import cn.o.app.core.io.ODate;
 import cn.o.app.demo.net.WeatherTask.WeatherReq;
 import cn.o.app.demo.net.WeatherTask.WeatherRes;
-import cn.o.app.io.INoProguard;
-import cn.o.app.io.ODate;
 
 @SuppressWarnings("serial")
 public class WeatherTask extends BasicTask<WeatherReq, WeatherRes> {

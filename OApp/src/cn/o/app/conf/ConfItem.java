@@ -2,10 +2,10 @@ package cn.o.app.conf;
 
 import android.content.Context;
 import cn.o.app.OUtil;
-import cn.o.app.annotation.Ignore;
-import cn.o.app.json.JsonUtil;
-import cn.o.app.runtime.BeanCache;
-import cn.o.app.xml.XmlUtil;
+import cn.o.app.core.annotation.Ignore;
+import cn.o.app.core.json.JsonUtil;
+import cn.o.app.core.runtime.BeanCache;
+import cn.o.app.core.xml.XmlUtil;
 
 /**
  * JOSN or XML serializer for assets file and shared preferences

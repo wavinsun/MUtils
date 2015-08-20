@@ -7,14 +7,14 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 
 import android.view.Gravity;
 import cn.o.app.OUtil;
-import cn.o.app.event.listener.VersionUpdateListener;
+import cn.o.app.core.event.listener.VersionUpdateListener;
+import cn.o.app.core.text.MBFormat;
+import cn.o.app.core.text.StringUtil;
 import cn.o.app.fir.FIRUpdateTask.FIRUpdateReq;
 import cn.o.app.fir.FIRUpdateTask.FIRUpdateRes;
 import cn.o.app.net.INetTask;
 import cn.o.app.net.NetTaskListener;
 import cn.o.app.task.ContextOwnerTask;
-import cn.o.app.text.MBFormat;
-import cn.o.app.text.StringUtil;
 import cn.o.app.ui.Alert;
 import cn.o.app.ui.Alert.AlertListener;
 

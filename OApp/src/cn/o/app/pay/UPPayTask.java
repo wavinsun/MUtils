@@ -7,7 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import cn.o.app.event.Listener;
+import cn.o.app.core.event.Listener;
 import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.ui.core.IActivityExecutor;
 

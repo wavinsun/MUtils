@@ -1,6 +1,6 @@
 package cn.o.app.demo.net;
 
-import cn.o.app.net.NetClient.ErrorCodeException;
+import cn.o.app.core.net.NetClient.ErrorCodeException;
 import cn.o.app.net.NetTask;
 
 public class BasicTask<REQUEST, RESPONSE> extends NetTask<REQUEST, RESPONSE> {

@@ -2,8 +2,8 @@ package cn.o.app.demo.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import cn.o.app.annotation.res.FindViewById;
-import cn.o.app.annotation.res.SetContentView;
+import cn.o.app.core.annotation.res.FindViewById;
+import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.demo.R;
 import cn.o.app.ui.AMapView;
 import cn.o.app.ui.StateView;

@@ -5,7 +5,7 @@
     <LinearLayout
         android:id="@+id/content_area"
         style="@style/HLinearHFill"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true" >
 
         <kankan.wheel.widget.WheelView
             android:id="@+id/year"
@@ -21,7 +21,7 @@
 
         <kankan.wheel.widget.WheelView
             android:id="@+id/hour"
-            style="@style/HItemWrap"  />
+            style="@style/HItemWrap" />
 
         <kankan.wheel.widget.WheelView
             android:id="@+id/min"
@@ -66,6 +66,20 @@
             android:text="@string/ok"
             android:textColor="#FFC7C7C7"
             android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <cn.o.app.ui.InfoToast
+            android:id="@id/info_toast"
+            style="@style/HFill"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:layout_toLeftOf="@id/ok"
+            android:layout_toRightOf="@id/cancel"
+            android:gravity="center"
+            android:text="无效时间"
+            android:textColor="#DDD"
+            android:textSize="14sp"
             android:textStyle="bold" />
     </RelativeLayout>
 

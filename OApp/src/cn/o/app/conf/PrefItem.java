@@ -8,12 +8,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import cn.o.app.OUtil;
-import cn.o.app.annotation.Ignore;
-import cn.o.app.annotation.Primitive;
-import cn.o.app.annotation.Primitive.PrimitiveType;
-import cn.o.app.json.JsonUtil;
-import cn.o.app.runtime.BeanCache;
-import cn.o.app.runtime.OField;
+import cn.o.app.core.annotation.Ignore;
+import cn.o.app.core.annotation.Primitive;
+import cn.o.app.core.annotation.Primitive.PrimitiveType;
+import cn.o.app.core.json.JsonUtil;
+import cn.o.app.core.runtime.BeanCache;
+import cn.o.app.core.runtime.OField;
 
 /**
  * JOSN or XML serializer for shared preferences

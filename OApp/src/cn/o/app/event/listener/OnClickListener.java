@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 
 import android.view.View;
 import cn.o.app.LogCat;
-import cn.o.app.runtime.ReflectUtil;
+import cn.o.app.core.runtime.ReflectUtil;
 
 /**
  * IOC for @OnClick

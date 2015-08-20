@@ -9,10 +9,11 @@ import android.os.AsyncTask;
 import cn.o.app.BuildConfig;
 import cn.o.app.LogCat;
 import cn.o.app.OUtil;
-import cn.o.app.net.NetClient.ConnectNotFoundException;
-import cn.o.app.net.NetClient.NetClientListener;
+import cn.o.app.core.net.NetClient;
+import cn.o.app.core.net.NetClient.ConnectNotFoundException;
+import cn.o.app.core.net.NetClient.NetClientListener;
+import cn.o.app.core.runtime.ReflectUtil;
 import cn.o.app.queue.QueueItem;
-import cn.o.app.runtime.ReflectUtil;
 
 /**
  * Template of request and response for net API at Android application level
@@ -85,89 +86,89 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 
 	@Override
 	public long getResponseTime() {
-		return mClient.mResponseTime;
+		return mClient.getResponseTime();
 	}
 
 	public boolean isSplitArrayParams() {
-		return mClient.mSplitArrayParams;
+		return mClient.isSplitArrayParams();
 	}
 
 	public void setSplitArrayParams(boolean splitArrayParams) {
 		if (mStarted || mStoped) {
 			return;
 		}
-		mClient.mSplitArrayParams = splitArrayParams;
+		mClient.setSplitArrayParams(splitArrayParams);
 	}
 
 	public boolean isRestUrl() {
-		return mClient.mRestUrl;
+		return mClient.isRestUrl();
 	}
 
 	public void setRestUrl(boolean restUrl) {
 		if (mStarted || mStoped) {
 			return;
 		}
-		mClient.mRestUrl = restUrl;
+		mClient.setRestUrl(restUrl);
 	}
 
 	public boolean isPostParams() {
-		return mClient.mPostParams;
+		return mClient.isPostParams();
 	}
 
 	public void setPostParams(boolean postParams) {
 		if (mStarted || mStoped) {
 			return;
 		}
-		mClient.mPostParams = postParams;
+		mClient.setPostParams(postParams);
 	}
 
 	public boolean isPostJson() {
-		return mClient.mPostJson;
+		return mClient.isPostJson();
 	}
 
 	public void setPostJson(boolean postJson) {
 		if (mStarted || mStoped) {
 			return;
 		}
-		mClient.mPostJson = postJson;
+		mClient.setPostJson(postJson);
 	}
 
 	public void setPostJsonSigned(boolean postJsonSigned) {
 		if (mStarted || mStoped) {
 			return;
 		}
-		mClient.mPostJsonSigned = postJsonSigned;
+		mClient.setPostJsonSigned(postJsonSigned);
 	}
 
 	public boolean isRequestConvertible() {
-		return mClient.mRequestConvertible;
+		return mClient.isRequestConvertible();
 	}
 
 	public void setRequestConvertible(boolean requestConvertible) {
 		if (mStarted || mStoped) {
 			return;
 		}
-		mClient.mRequestConvertible = requestConvertible;
+		mClient.setRequestConvertible(requestConvertible);
 	}
 
 	public boolean isResponseConvertible() {
-		return mClient.mResponseConvertible;
+		return mClient.isResponseConvertible();
 	}
 
 	public void setResponseConvertible(boolean responseConvertible) {
 		if (mStarted || mStoped) {
 			return;
 		}
-		mClient.mResponseConvertible = responseConvertible;
+		mClient.setResponseConvertible(responseConvertible);
 	}
 
 	public Object getResponseConverted() {
-		return mClient.mResponseConverted;
+		return mClient.getResponseConverted();
 	}
 
 	@Override
 	public String getUrl() {
-		return mClient.mUrl;
+		return mClient.getUrl();
 	}
 
 	@Override
@@ -175,12 +176,12 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 		if (this.mStarted || this.mStoped) {
 			return;
 		}
-		mClient.mUrl = url;
+		mClient.setUrl(url);
 	}
 
 	@Override
 	public String getRequestMethod() {
-		return mClient.mRequestMethod;
+		return mClient.getRequestMethod();
 	}
 
 	@Override
@@ -188,12 +189,12 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 		if (this.mStarted || this.mStoped) {
 			return;
 		}
-		mClient.mRequestMethod = requestMethod;
+		mClient.setRequestMethod(requestMethod);
 	}
 
 	@Override
 	public REQUEST getRequest() {
-		return mClient.mRequest;
+		return mClient.getRequest();
 	}
 
 	@Override
@@ -201,12 +202,12 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 		if (this.mStarted || this.mStoped) {
 			return;
 		}
-		mClient.mRequest = request;
+		mClient.setRequest(request);
 	}
 
 	@Override
 	public RESPONSE getResponse() {
-		return mClient.mResponse;
+		return mClient.getResponse();
 	}
 
 	@Override
@@ -214,28 +215,28 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 		if (this.mStoped) {
 			return;
 		}
-		mClient.mResponse = response;
+		mClient.setResponse(response);
 	}
 
 	public void setCookieId(String cookieId) {
 		if (this.mStarted || this.mStoped) {
 			return;
 		}
-		mClient.mCookieCacheId = cookieId;
+		mClient.setCookieCachedId(cookieId);
 	}
 
 	public void setCookieWithRequest(boolean cookieWithRequest) {
 		if (this.mStarted || this.mStoped) {
 			return;
 		}
-		mClient.mCookieWithRequest = cookieWithRequest;
+		mClient.setCookieWithRequest(cookieWithRequest);
 	}
 
 	public void setCookieWithResponse(boolean cookieWithResponse) {
 		if (this.mStarted || this.mStoped) {
 			return;
 		}
-		mClient.mCookieWithResponse = cookieWithResponse;
+		mClient.setCookieWithResponse(cookieWithResponse);
 	}
 
 	protected REQUEST convertToRequest() {
@@ -279,16 +280,16 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 	public boolean stop() {
 		boolean result = super.stop();
 		if (result) {
-			if (mClient.mResponse == null) {
+			if (mClient.getResponse() == null) {
 				if (this.mTask != null) {
 					this.mTask.cancel(true);
 				}
 			}
 		}
 		mContext = null;
-		mClient.mRequest = null;
-		mClient.mResponse = null;
-		mClient.mResponseConverted = null;
+		mClient.setRequest(null);
+		mClient.setResponse(null);
+		mClient.setResponseConverted(null);
 		mTask = null;
 		return result;
 	}
