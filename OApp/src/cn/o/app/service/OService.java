@@ -6,12 +6,12 @@ import java.util.List;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import cn.o.app.core.task.IStopable;
+import cn.o.app.core.task.IStopableManager;
 import cn.o.app.net.INetQueue;
 import cn.o.app.net.INetQueueOwner;
 import cn.o.app.net.INetTask;
 import cn.o.app.net.NetQueue;
-import cn.o.app.task.IStopable;
-import cn.o.app.task.IStopableManager;
 import cn.o.app.ui.core.UICore;
 
 @SuppressWarnings("deprecation")

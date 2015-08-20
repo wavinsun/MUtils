@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import cn.jpush.android.api.JPushInterface;
 import cn.o.app.App;
 import cn.o.app.R;
-import cn.o.app.event.listener.VersionUpdateListener;
+import cn.o.app.core.event.listener.VersionUpdateListener;
 
 @SuppressLint("InflateParams")
 public class ActivityX extends OActivity {

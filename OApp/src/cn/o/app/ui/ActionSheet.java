@@ -20,7 +20,7 @@ import cn.o.app.R;
 import cn.o.app.adapter.IItemView;
 import cn.o.app.adapter.ItemFrame;
 import cn.o.app.adapter.OVLinearAdapter;
-import cn.o.app.annotation.event.OnClick;
+import cn.o.app.core.annotation.event.OnClick;
 import cn.o.app.ui.ActionSheet.ActionItem;
 
 @SuppressWarnings("deprecation")

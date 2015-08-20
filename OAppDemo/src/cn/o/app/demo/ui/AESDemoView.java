@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 import cn.o.app.OUtil;
-import cn.o.app.annotation.res.FindViewById;
-import cn.o.app.annotation.res.SetContentView;
+import cn.o.app.core.annotation.res.FindViewById;
+import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.demo.R;
 import cn.o.app.ui.StateView;
 

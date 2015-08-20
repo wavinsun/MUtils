@@ -1,7 +1,7 @@
 package cn.o.app.push;
 
 import cn.o.app.context.IContextProvider;
-import cn.o.app.io.INoProguard;
+import cn.o.app.core.io.INoProguard;
 
 /**
  * Push dispatcher of framework

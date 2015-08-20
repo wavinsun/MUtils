@@ -1,6 +1,6 @@
 package cn.o.app.queue;
 
-import cn.o.app.event.Listener;
+import cn.o.app.core.event.Listener;
 
 public interface IQueueItemListener<QUEUE_ITEM extends IQueueItem<QUEUE_ITEM>> extends Listener {
 

@@ -10,9 +10,9 @@ import android.widget.TextView;
 import cn.o.app.adapter.IItemView;
 import cn.o.app.adapter.ItemView;
 import cn.o.app.adapter.OAdapter;
-import cn.o.app.annotation.event.OnClick;
-import cn.o.app.annotation.res.FindViewById;
-import cn.o.app.annotation.res.SetContentView;
+import cn.o.app.core.annotation.event.OnClick;
+import cn.o.app.core.annotation.res.FindViewById;
+import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.demo.R;
 import cn.o.app.ui.StateView;
 

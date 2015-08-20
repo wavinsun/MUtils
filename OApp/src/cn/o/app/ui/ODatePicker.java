@@ -18,6 +18,7 @@ import kankan.wheel.widget.WheelView;
  * Date picker like iOS
  */
 @SuppressLint("InflateParams")
+@SuppressWarnings("deprecation")
 public class ODatePicker {
 
 	/**
@@ -50,6 +51,28 @@ public class ODatePicker {
 		 */
 		public void onCancel(ODatePicker picker) {
 
+		}
+
+		/**
+		 * Get text for InfoToast when picked date is above maximum date
+		 * 
+		 * @param picker
+		 * @param maxDate
+		 * @return
+		 */
+		public String onPickedAboveMaxDate(ODatePicker picker, Date maxDate) {
+			return "无效时间";
+		}
+
+		/**
+		 * Get text for InfoToast when picked date is down minimum date
+		 * 
+		 * @param picker
+		 * @param minDate
+		 * @return
+		 */
+		public String onPickedDownMinDate(ODatePicker picker, Date minDate) {
+			return "无效时间";
 		}
 
 	}
@@ -88,11 +111,25 @@ public class ODatePicker {
 	/** Minute wheel view */
 	protected WheelView mMinuteView;
 
+	protected InfoToast mInfoToast;
+
 	/** Date picked */
 	protected Date mPickedDate;
 
+	protected Date mMinDate;
+
+	protected Date mMaxDate;
+
 	public ODatePicker(Context context) {
 		mContext = context;
+	}
+
+	public void setMinDate(Date minDate) {
+		mMinDate = minDate;
+	}
+
+	public void setMaxDate(Date maxDate) {
+		mMaxDate = maxDate;
 	}
 
 	public void setStartYear(int startYear) {
@@ -135,6 +172,22 @@ public class ODatePicker {
 			int hour = mPickTime ? mHourView.getCurrentItem() : 0;
 			int minute = mPickTime ? mMinuteView.getCurrentItem() : 0;
 			mPickedDate = OUtil.getDate(year, month, day, hour, minute);
+			if (mMaxDate != null && mPickedDate.getTime() > mMaxDate.getTime()) {
+				if (mOnPickDateListener != null) {
+					mInfoToast.show(mOnPickDateListener.onPickedAboveMaxDate(ODatePicker.this, mMaxDate), 3000);
+				} else {
+					mInfoToast.show("无效时间", 3000);
+				}
+				return;
+			}
+			if (mMinDate != null && mPickedDate.getTime() < mMinDate.getTime()) {
+				if (mOnPickDateListener != null) {
+					mInfoToast.show(mOnPickDateListener.onPickedDownMinDate(ODatePicker.this, mMinDate), 3000);
+				} else {
+					mInfoToast.show("无效时间", 3000);
+				}
+				return;
+			}
 			if (mOnPickDateListener != null) {
 				mOnPickDateListener.onPicked(ODatePicker.this, mPickedDate);
 			}
@@ -194,14 +247,15 @@ public class ODatePicker {
 				ok();
 			}
 		});
+		mInfoToast = (InfoToast) mContentView.findViewById(R.id.info_toast);
 		mYearView = (WheelView) mContentView.findViewById(R.id.year);
 		if (mStartYear == null) {
 			current = new Date();
-			mStartYear = OUtil.getYear(current) - 100;
+			mStartYear = OUtil.getYear(current) - 50;
 		}
 		if (mEndYear == null) {
 			current = current != null ? current : new Date();
-			mEndYear = OUtil.getYear(current);
+			mEndYear = OUtil.getYear(current) + 50;
 		}
 		if (pickedDate == null) {
 			current = current != null ? current : new Date();
@@ -229,11 +283,11 @@ public class ODatePicker {
 			mHourView.setAdapter(new NumericWheelAdapter(0, 23));
 			mHourView.setCyclic(true);
 			mHourView.setLabel("时");
-			mHourView.setCurrentItem(0);
+			mHourView.setCurrentItem(pickedDate.getHours());
 			mMinuteView.setAdapter(new NumericWheelAdapter(0, 59));
 			mMinuteView.setCyclic(true);
 			mMinuteView.setLabel("分");
-			mMinuteView.setCurrentItem(0);
+			mMinuteView.setCurrentItem(pickedDate.getMinutes());
 		} else {
 			mHourView.setVisibility(View.GONE);
 			mMinuteView.setVisibility(View.GONE);

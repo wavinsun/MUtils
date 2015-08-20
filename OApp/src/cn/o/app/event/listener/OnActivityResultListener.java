@@ -3,7 +3,7 @@ package cn.o.app.event.listener;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import cn.o.app.event.Listener;
+import cn.o.app.core.event.Listener;
 import cn.o.app.ui.OActivity;
 import cn.o.app.ui.OFragment;
 import cn.o.app.ui.StateView;

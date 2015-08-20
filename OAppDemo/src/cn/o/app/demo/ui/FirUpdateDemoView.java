@@ -9,12 +9,12 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import android.content.Context;
 import android.util.AttributeSet;
 import cn.o.app.OUtil;
-import cn.o.app.annotation.event.OnClick;
-import cn.o.app.annotation.res.SetContentView;
+import cn.o.app.core.annotation.event.OnClick;
+import cn.o.app.core.annotation.res.SetContentView;
+import cn.o.app.core.event.listener.VersionUpdateListener;
+import cn.o.app.core.text.MBFormat;
 import cn.o.app.demo.R;
-import cn.o.app.event.listener.VersionUpdateListener;
 import cn.o.app.fir.FIRUpdateAgent;
-import cn.o.app.text.MBFormat;
 import cn.o.app.ui.StateView;
 
 @SetContentView(R.layout.view_fir_update)

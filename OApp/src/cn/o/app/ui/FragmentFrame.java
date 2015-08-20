@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
-import cn.o.app.event.Dispatcher;
+import cn.o.app.core.event.Dispatcher;
 import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.event.listener.OnSelectedChangeListener;
 import cn.o.app.ui.core.ICachedViewManager;

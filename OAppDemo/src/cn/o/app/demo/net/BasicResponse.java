@@ -1,6 +1,6 @@
 package cn.o.app.demo.net;
 
-import cn.o.app.io.INoProguard;
+import cn.o.app.core.io.INoProguard;
 
 @SuppressWarnings("serial")
 public class BasicResponse implements INoProguard {

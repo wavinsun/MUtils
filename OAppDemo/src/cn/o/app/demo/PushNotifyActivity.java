@@ -3,12 +3,12 @@ package cn.o.app.demo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-import cn.o.app.annotation.res.FindViewById;
-import cn.o.app.annotation.res.SetContentView;
+import cn.o.app.core.annotation.res.FindViewById;
+import cn.o.app.core.annotation.res.SetContentView;
+import cn.o.app.core.io.ODate;
 import cn.o.app.demo.push.HelloWorldPushDispatcher.HelloWorldMessage;
 import cn.o.app.demo.ui.BasicActivity;
 import cn.o.app.io.Extra;
-import cn.o.app.io.ODate;
 
 @SuppressWarnings("serial")
 @SetContentView(R.layout.activity_push_notify)

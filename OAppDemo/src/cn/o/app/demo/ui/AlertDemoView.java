@@ -2,8 +2,8 @@ package cn.o.app.demo.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import cn.o.app.annotation.event.OnClick;
-import cn.o.app.annotation.res.SetContentView;
+import cn.o.app.core.annotation.event.OnClick;
+import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.demo.R;
 import cn.o.app.ui.Alert;
 import cn.o.app.ui.Alert.AlertListener;

@@ -2,6 +2,7 @@ package cn.o.app.event;
 
 import android.content.Context;
 import cn.o.app.context.IContextOwner;
+import cn.o.app.core.event.Dispatcher;
 
 public class ContextOwnerDispathcer extends Dispatcher implements IContextOwner {
 

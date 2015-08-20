@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.o.app.R;
-import cn.o.app.event.Listener;
+import cn.o.app.core.event.Listener;
 
 public class FlowLayout extends ViewGroup {
 

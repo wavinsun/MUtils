@@ -9,7 +9,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Video.VideoColumns;
-import cn.o.app.event.Listener;
+import cn.o.app.core.event.Listener;
 import cn.o.app.ui.core.IActivityExecutor;
 
 public class MakeVideoTask extends MediaTask {
