@@ -13,6 +13,7 @@ import android.content.res.Resources;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -49,33 +50,29 @@ public class UICore {
 	 * @param ev
 	 * @param dispatcher
 	 */
-	public static void dispatchTouchEvent(MotionEvent ev, IContextProvider dispatcher) {
+	public static void dispatchTouchEvent(MotionEvent ev, IWindowProvider dispatcher) {
 		if (ev.getAction() != MotionEvent.ACTION_DOWN) {
 			return;
 		}
-		View focus = null;
-		if (dispatcher instanceof Activity) {
-			focus = ((Activity) dispatcher).getCurrentFocus();
-		} else if (dispatcher instanceof Dialog) {
-			focus = ((Dialog) dispatcher).getCurrentFocus();
+		boolean isSoftInputValid = false;
+		Window w = dispatcher.getWindow();
+		View focus = w.getCurrentFocus();
+		if (focus != null && (focus instanceof EditText)) {
+			EditText edit = (EditText) focus;
+			int[] l = new int[2];
+			edit.getLocationInWindow(l);
+			boolean touchEdit = (ev.getX() >= l[0]) && (ev.getX() <= l[0] + edit.getWidth()) && (ev.getY() >= l[1])
+					&& (ev.getY() <= l[1] + edit.getHeight());
+			isSoftInputValid = touchEdit;
 		}
-		if (focus == null) {
-			return;
+		if (!isSoftInputValid) {
+			InputMethodManager imm = (InputMethodManager) dispatcher.getContext()
+					.getSystemService(Context.INPUT_METHOD_SERVICE);
+			if (imm.isActive()) {
+				imm.hideSoftInputFromWindow(focus != null ? focus.getWindowToken() : w.getDecorView().getWindowToken(),
+						InputMethodManager.HIDE_NOT_ALWAYS);
+			}
 		}
-		if (!(focus instanceof EditText)) {
-			return;
-		}
-		EditText edit = (EditText) focus;
-		int[] l = new int[2];
-		edit.getLocationInWindow(l);
-		boolean touchEdit = (ev.getX() >= l[0]) && (ev.getX() <= l[0] + edit.getWidth()) && (ev.getY() >= l[1])
-				&& (ev.getY() <= l[1] + edit.getHeight());
-		if (touchEdit) {
-			return;
-		}
-		InputMethodManager imm = (InputMethodManager) dispatcher.getContext()
-				.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(edit.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 	}
 
 	/**

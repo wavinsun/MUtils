@@ -16,10 +16,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 import cn.o.app.R;
-import cn.o.app.context.IContextProvider;
-import cn.o.app.ui.core.IContentViewOwner;
+import cn.o.app.ui.core.IDialog;
 import cn.o.app.ui.core.IToastOwner;
-import cn.o.app.ui.core.IViewFinder;
 import cn.o.app.ui.core.UICore;
 
 /**
@@ -27,7 +25,7 @@ import cn.o.app.ui.core.UICore;
  */
 @SuppressLint({ "RtlHardcoded", "ShowToast" })
 @SuppressWarnings("deprecation")
-public class ODialog extends Dialog implements IViewFinder, IContentViewOwner, IContextProvider, IToastOwner {
+public class ODialog extends Dialog implements IDialog {
 
 	protected InfoToast mInfoToast;
 
