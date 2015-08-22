@@ -10,12 +10,16 @@ public interface IWoker<JOB> {
 
 	public boolean stop();
 
-	public int getConcurrentCount();
-
-	public double getProgress();
-
 	public void work(JOB job);
 
 	public void done();
+
+	public int getConcurrentCount();
+
+	public boolean prepare(List<JOB> jobs);
+
+	public double getProgress();
+
+	public int getId(JOB job);
 
 }

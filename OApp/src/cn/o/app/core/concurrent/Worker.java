@@ -1,18 +1,20 @@
 package cn.o.app.core.concurrent;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @SuppressWarnings("deprecation")
 public abstract class Worker<JOB> implements IWoker<JOB> {
 
 	protected List<JOB> mJobs;
 
-	protected CopyOnWriteArrayList<JOB> mWorkingJobs;
+	protected List<JOB> mWorkingJobs;
 
-	protected CopyOnWriteArrayList<Thread> mConcurrentWorkers;
+	protected List<Thread> mConcurrentWorkers;
 
 	protected boolean mStarted;
+
+	protected boolean mPrepared;
 
 	public Worker() {
 
@@ -23,23 +25,15 @@ public abstract class Worker<JOB> implements IWoker<JOB> {
 	}
 
 	@Override
-	public void delegate(List<JOB> jobs) {
+	public synchronized void delegate(List<JOB> jobs) {
 		if (mStarted) {
 			return;
 		}
 		mJobs = jobs;
-		if (mJobs != null) {
-			if (mWorkingJobs == null) {
-				mWorkingJobs = new CopyOnWriteArrayList<JOB>(mJobs);
-			} else {
-				mWorkingJobs.clear();
-				mWorkingJobs.addAll(jobs);
-			}
-		}
 	}
 
 	@Override
-	public boolean start() {
+	public synchronized boolean start() {
 		if (mStarted) {
 			return false;
 		}
@@ -48,7 +42,7 @@ public abstract class Worker<JOB> implements IWoker<JOB> {
 			throw new UnsupportedOperationException();
 		}
 		mStarted = true;
-		mConcurrentWorkers = new CopyOnWriteArrayList<Thread>();
+		mConcurrentWorkers = new LinkedList<Thread>();
 		for (int i = 0; i < workerCount; i++) {
 			WorkThread worker = new WorkThread();
 			mConcurrentWorkers.add(worker);
@@ -58,7 +52,7 @@ public abstract class Worker<JOB> implements IWoker<JOB> {
 	}
 
 	@Override
-	public boolean stop() {
+	public synchronized boolean stop() {
 		if (!mStarted) {
 			return false;
 		}
@@ -83,25 +77,49 @@ public abstract class Worker<JOB> implements IWoker<JOB> {
 
 	@Override
 	public double getProgress() {
-		if (mJobs == null || mConcurrentWorkers == null) {
-			return 1;
+		try {
+			double progress = 1 - (mWorkingJobs.size() + 1) / mJobs.size();
+			progress = progress > 1 ? 1 : progress;
+			progress = progress < 0 ? 0 : progress;
+			return progress;
+		} catch (Exception e) {
+			return mStarted ? 1 : 0;
 		}
-		double jobCount = mJobs.size();
-		if (jobCount == 0) {
-			return 1;
+	}
+
+	@Override
+	public synchronized boolean prepare(List<JOB> jobs) {
+		if (mPrepared || !mConcurrentWorkers.contains(Thread.currentThread())) {
+			return false;
 		}
-		double progress = 1 - (mWorkingJobs.size() + 1) / jobCount;
-		return progress < 0 ? 0 : progress;
+		mPrepared = true;
+		mWorkingJobs = new LinkedList<JOB>();
+		if (jobs != null) {
+			mWorkingJobs.addAll(jobs);
+		}
+		return true;
+	}
+
+	@Override
+	public synchronized int getId(JOB job) {
+		try {
+			return mJobs.indexOf(job);
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 
 	class WorkThread extends Thread {
 
 		@Override
 		public void run() {
+			prepare(mJobs);
 			while (true) {
 				JOB job = null;
 				try {
-					job = mWorkingJobs.remove(0);
+					synchronized (Worker.this) {
+						job = mWorkingJobs.remove(0);
+					}
 				} catch (Exception e) {
 					break;
 				}
@@ -112,11 +130,26 @@ public abstract class Worker<JOB> implements IWoker<JOB> {
 				}
 				yield();
 			}
-			mConcurrentWorkers.remove(this);
-			if (mConcurrentWorkers.size() == 0) {
-				mConcurrentWorkers = null;
-				mJobs = null;
-				done();
+			synchronized (Worker.this) {
+				mConcurrentWorkers.remove(this);
+				if (mConcurrentWorkers.size() == 0) {
+					done();
+					mConcurrentWorkers = null;
+					mJobs = null;
+				}
+			}
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) {
+				return true;
+			} else {
+				if (o != null && (o instanceof Thread)) {
+					return this.getId() == ((Thread) o).getId();
+				} else {
+					return false;
+				}
 			}
 		}
 
