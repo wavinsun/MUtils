@@ -78,7 +78,7 @@ public abstract class Worker<JOB> implements IWoker<JOB> {
 	@Override
 	public double getProgress() {
 		try {
-			double progress = 1 - (mWorkingJobs.size() + 1) / mJobs.size();
+			double progress = 1 - (mWorkingJobs.size() + 1.0) / mJobs.size();
 			progress = progress > 1 ? 1 : progress;
 			progress = progress < 0 ? 0 : progress;
 			return progress;
