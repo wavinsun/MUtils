@@ -3,6 +3,9 @@ package cn.o.app.core.concurrent;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Concurrent Worker
+ */
 @SuppressWarnings("deprecation")
 public abstract class Worker<JOB> implements IWoker<JOB> {
 
