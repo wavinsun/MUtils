@@ -3,17 +3,25 @@ package cn.o.app.core.concurrent;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Concurrent Worker
+ */
 @SuppressWarnings("deprecation")
 public abstract class Worker<JOB> implements IWoker<JOB> {
 
+	/** Jobs to work */
 	protected List<JOB> mJobs;
 
+	/** Jobs to work for concurrent threads access */
 	protected List<JOB> mWorkingJobs;
 
+	/** Concurrent threads */
 	protected List<Thread> mConcurrentWorkers;
 
+	/** Whether worker is started */
 	protected boolean mStarted;
 
+	/** Whether worker is prepared to work */
 	protected boolean mPrepared;
 
 	public Worker() {
