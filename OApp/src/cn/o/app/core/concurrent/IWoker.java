@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Concurrent worker of framework
+ * 
+ * @see Worker
  */
 public interface IWoker<JOB> {
 
