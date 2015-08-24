@@ -73,7 +73,7 @@ public abstract class OCacheAdapter<DATA_ITEM, CACHE_ITEM> extends OAdapter<DATA
 	 * @return
 	 */
 	protected boolean freeCacheNoUse() {
-		return true;
+		return Math.random() > 0.7;
 	}
 
 	/**
@@ -82,7 +82,7 @@ public abstract class OCacheAdapter<DATA_ITEM, CACHE_ITEM> extends OAdapter<DATA
 	 * @return
 	 */
 	protected boolean allocCacheMore() {
-		return Math.random() > 0.7;
+		return false;
 	}
 
 	/**

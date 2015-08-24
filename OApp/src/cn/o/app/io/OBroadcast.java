@@ -1,12 +1,10 @@
-package cn.o.app.core.io;
+package cn.o.app.io;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import cn.o.app.core.runtime.ReflectUtil;
-import cn.o.app.io.Extra;
-import cn.o.app.io.IBroadcast;
 
 @SuppressWarnings("unchecked")
 public class OBroadcast<EXTRA extends Extra> implements IBroadcast {

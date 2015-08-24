@@ -5,9 +5,20 @@ import java.util.Date;
 
 import android.annotation.SuppressLint;
 
+/**
+ * Date format of framework
+ */
 @SuppressLint("SimpleDateFormat")
 public class ODateFormat {
 
+	/**
+	 * Parse text to {@link Date} by pattern
+	 * 
+	 * @param text
+	 * @param pattern
+	 * @return
+	 * @throws Exception
+	 */
 	public static Date parse(String text, String pattern) throws Exception {
 		SimpleDateFormat df = new SimpleDateFormat();
 		Date d = null;

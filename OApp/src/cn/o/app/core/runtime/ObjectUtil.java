@@ -8,6 +8,9 @@ import java.io.Serializable;
 
 import cn.o.app.core.io.IOUtil;
 
+/**
+ * Object utility of framework
+ */
 public class ObjectUtil {
 
 	public static Object get(Object object, String property) {
