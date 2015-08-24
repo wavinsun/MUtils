@@ -6,11 +6,13 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+/**
+ * Reflection utility of framework
+ */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class ReflectUtil {
 
-	public static <T> Constructor<T> getConstructor(Class<T> targetClass,
-			Class<?>... parameterTypes) {
+	public static <T> Constructor<T> getConstructor(Class<T> targetClass, Class<?>... parameterTypes) {
 		try {
 			return targetClass.getConstructor(parameterTypes);
 		} catch (Exception e) {
@@ -75,8 +77,7 @@ public class ReflectUtil {
 		}
 	}
 
-	public static Class<?> getParameterizedClass(Class<?> targetClass,
-			Type targetGenericType, int ArgumentIndex) {
+	public static Class<?> getParameterizedClass(Class<?> targetClass, Type targetGenericType, int ArgumentIndex) {
 		if (targetGenericType == null) {
 			targetGenericType = targetClass.getGenericSuperclass();
 		} else {
@@ -85,8 +86,7 @@ public class ReflectUtil {
 			}
 		}
 		if (targetGenericType instanceof ParameterizedType) {
-			Type t = ((ParameterizedType) targetGenericType)
-					.getActualTypeArguments()[ArgumentIndex];
+			Type t = ((ParameterizedType) targetGenericType).getActualTypeArguments()[ArgumentIndex];
 			if (t instanceof Class) {
 				return (Class<?>) t;
 			}
@@ -97,30 +97,25 @@ public class ReflectUtil {
 		return String.class;
 	}
 
-	public static Type getParameterizedType(Class<?> targetClass,
-			Type targetGenericType, int ArgumentIndex) {
+	public static Type getParameterizedType(Class<?> targetClass, Type targetGenericType, int ArgumentIndex) {
 		if (targetGenericType == null) {
 			targetGenericType = targetClass.getGenericSuperclass();
 		}
 		if (targetGenericType instanceof ParameterizedType) {
-			return ((ParameterizedType) targetGenericType)
-					.getActualTypeArguments()[ArgumentIndex];
+			return ((ParameterizedType) targetGenericType).getActualTypeArguments()[ArgumentIndex];
 		}
 		return String.class;
 	}
 
-	public static Class<?> getParameterizedClass(Class<?> targetClass,
-			int ArgumentIndex) {
+	public static Class<?> getParameterizedClass(Class<?> targetClass, int ArgumentIndex) {
 		return getParameterizedClass(targetClass, null, ArgumentIndex);
 	}
 
-	public static Type getParameterizedType(Class<?> targetClass,
-			int ArgumentIndex) {
+	public static Type getParameterizedType(Class<?> targetClass, int ArgumentIndex) {
 		return getParameterizedType(targetClass, null, ArgumentIndex);
 	}
 
-	public static Class<?> getListElementClass(Class<?> listClass,
-			Type genericType) {
+	public static Class<?> getListElementClass(Class<?> listClass, Type genericType) {
 		return getParameterizedClass(listClass, genericType, 0);
 	}
 

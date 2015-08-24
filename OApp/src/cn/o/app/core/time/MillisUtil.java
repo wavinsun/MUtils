@@ -2,6 +2,9 @@ package cn.o.app.core.time;
 
 import java.util.Date;
 
+/**
+ * Milliseconds utility of framework
+ */
 @SuppressWarnings("deprecation")
 public class MillisUtil {
 

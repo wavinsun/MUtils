@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Bean cache of framework
+ */
 public class BeanCache {
 
 	/**

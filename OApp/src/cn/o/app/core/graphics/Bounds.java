@@ -1,13 +1,20 @@
 package cn.o.app.core.graphics;
 
+/**
+ * Bounds for graphics algorithm logic
+ */
 public class Bounds {
 
+	/** X coordinate point */
 	public double x;
 
+	/** Y coordinate point */
 	public double y;
 
+	/** Size of x coordinate for target */
 	public double width;
 
+	/** Size of y coordinate for target */
 	public double height;
 
 	public Bounds() {
@@ -69,6 +76,20 @@ public class Bounds {
 		return (float) this.height;
 	}
 
+	/**
+	 * Get fit bounds for moving source graphics object into target graphics
+	 * object
+	 * 
+	 * @param targetWidth
+	 *            target graphics object width
+	 * @param targetHeight
+	 *            target graphics object height
+	 * @param srcWidth
+	 *            source graphics object width
+	 * @param srcHeight
+	 *            source graphics object height
+	 * @return
+	 */
 	public static Bounds getFitBounds(double targetWidth, double targetHeight, double srcWidth, double srcHeight) {
 		if (srcWidth < targetWidth && srcHeight < targetHeight) {
 			Bounds b = new Bounds();
@@ -82,6 +103,20 @@ public class Bounds {
 		}
 	}
 
+	/**
+	 * Get fill bounds for moving source graphics object into target graphics
+	 * object
+	 * 
+	 * @param targetWidth
+	 *            target graphics object width
+	 * @param targetHeight
+	 *            target graphics object height
+	 * @param srcWidth
+	 *            source graphics object width
+	 * @param srcHeight
+	 *            source graphics object height
+	 * @return
+	 */
 	public static Bounds getFillBounds(double targetWidth, double targetHeight, double srcWidth, double srcHeight) {
 		Bounds b = new Bounds();
 		if (srcWidth / srcHeight > targetWidth / targetHeight) {

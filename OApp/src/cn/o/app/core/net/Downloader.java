@@ -7,22 +7,35 @@ import java.net.URL;
 
 import cn.o.app.core.io.IOUtil;
 
+/**
+ * Simple synchronized HTTP download implementation
+ */
 public class Downloader {
 
+	/** Content type of image */
 	public static final String CONTENT_TYPE_IMAGE = "image";
+	/** Content type of text */
 	public static final String CONTENT_TYPE_TEXT = "text";
 
+	/** Response content type is not that expected */
 	public static final int CODE_CONTENT_INVALID = 1000;
+	/** Response reading error */
 	public static final int CODE_READ_ERROR = 1001;
+	/** Response size read is zero */
 	public static final int CODE_EMPTY_RESPONSE = 1002;
+	/** Error occurred while saving response to file */
 	public static final int CODE_SAVE_ERROR = 1003;
 
+	/** Tag for download state */
 	public static final Object DOWNLOD_SUCCESS = new Object();
 
+	/** Download URL */
 	protected String mUrl;
 
+	/** Download file path */
 	protected String mFileName;
 
+	/** Download content type for HTTP */
 	protected String mContentType;
 
 	public Downloader(String url, String fileName) {

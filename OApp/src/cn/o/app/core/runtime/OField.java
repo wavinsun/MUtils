@@ -15,6 +15,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import cn.o.app.core.annotation.Ignore;
 import cn.o.app.core.annotation.Name;
 
+/**
+ * Bean field of framework reflection
+ */
 public class OField {
 
 	protected static Map<Class<?>, OField[]> sFieldsCache = new ConcurrentHashMap<Class<?>, OField[]>();
