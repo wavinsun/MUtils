@@ -78,7 +78,7 @@ public class AssetItem implements IAssetItem {
 		return false;
 	}
 
-	public void clearCache() {
+	public void clear() {
 		if (mAssetCache != null) {
 			mAssetCache.clear();
 		}

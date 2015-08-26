@@ -2,7 +2,7 @@ package cn.o.app.adapter;
 
 import java.util.List;
 
-import cn.o.app.core.io.ILabelItem;
+import cn.o.app.core.runtime.ILabelItem;
 import kankan.wheel.widget.WheelAdapter;
 
 /**

@@ -1,4 +1,4 @@
-package cn.o.app.core.task;
+package cn.o.app.core.runtime;
 
 public interface ILockable {
 

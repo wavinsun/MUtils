@@ -1,6 +1,7 @@
 package cn.o.app.core.net;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
@@ -33,6 +34,7 @@ import cn.o.app.core.annotation.net.Head;
 import cn.o.app.core.event.Listener;
 import cn.o.app.core.json.JsonUtil;
 import cn.o.app.core.runtime.BeanField;
+import cn.o.app.core.runtime.IClearable;
 import cn.o.app.core.runtime.ReflectUtil;
 import cn.o.app.core.text.MillisFormat;
 import cn.o.app.core.text.StringUtil;
@@ -53,14 +55,32 @@ public class NetClient<REQUEST, RESPONSE> {
 		 * 
 		 * @return
 		 */
-		public abstract Class<REQUEST> requestClass();
+		public abstract Class<?> requestRawType();
+
+		/**
+		 * Get generic type info of request
+		 * 
+		 * @return
+		 */
+		public Type requestGenericType() {
+			return null;
+		}
 
 		/**
 		 * Get response entity class
 		 * 
 		 * @return
 		 */
-		public abstract Class<RESPONSE> responseClass();
+		public abstract Class<?> responseRawType();
+
+		/**
+		 * Get generic type info of response
+		 * 
+		 * @return
+		 */
+		public Type responseGenericType() {
+			return null;
+		}
 
 		/**
 		 * Convert some properties who are come form UI to REQUEST
@@ -332,6 +352,7 @@ public class NetClient<REQUEST, RESPONSE> {
 	 * @return RESPONSE or exception
 	 */
 	public Object execute() {
+		Type resJsonGenericType = null;
 		long time = System.currentTimeMillis();
 		DefaultHttpClient client = new DefaultHttpClient();
 		client.setRedirectHandler(new NetRedirectHandler());
@@ -422,9 +443,10 @@ public class NetClient<REQUEST, RESPONSE> {
 				mListener.debugging(EVENT_RESPONSE, response);
 				mListener.debugging(EVENT_ELASE_TIME, MillisFormat.formatAll(mResponseTime - time));
 			}
-			Class<RESPONSE> resJsonClass = mListener != null ? mListener.responseClass()
-					: ((Class<RESPONSE>) ReflectUtil.getParameterizedClass(getClass(), 1));
-			RESPONSE resJson = JsonUtil.convert(response, resJsonClass);
+			Class<RESPONSE> resJsonClass = (Class<RESPONSE>) (mListener != null ? mListener.responseRawType()
+					: ReflectUtil.getParameterizedClass(getClass(), 1));
+			resJsonGenericType = mListener != null ? mListener.responseGenericType() : null;
+			RESPONSE resJson = JsonUtil.convert(response, resJsonClass, resJsonGenericType);
 			if (mListener != null) {
 				mListener.errorCodeVerify(resJson);
 			}
@@ -440,6 +462,9 @@ public class NetClient<REQUEST, RESPONSE> {
 			return e;
 		} finally {
 			client.getConnectionManager().shutdown();
+			if (resJsonGenericType != null && (resJsonGenericType instanceof IClearable)) {
+				((IClearable) resJsonGenericType).clear();
+			}
 		}
 	}
 

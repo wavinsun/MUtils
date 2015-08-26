@@ -75,8 +75,8 @@ public class ConfItem extends PrefItem implements IAssetItem {
 		return false;
 	}
 
-	public void clearCache() {
-		super.clearCache();
+	public void clear() {
+		super.clear();
 		if (mAssetCache != null) {
 			mAssetCache.clear();
 		}
