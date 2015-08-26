@@ -9,7 +9,7 @@ import cn.o.app.core.annotation.True;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
 import cn.o.app.core.json.IJsonItem;
 import cn.o.app.core.properties.IPropertyItem;
-import cn.o.app.core.runtime.OField;
+import cn.o.app.core.runtime.BeanField;
 import cn.o.app.core.xml.IXmlItem;
 import cn.o.app.core.xml.XmlUtil;
 
@@ -42,7 +42,7 @@ public class OBoolean extends Serial<Boolean> {
 		return mValue.booleanValue();
 	}
 
-	protected void init(OField itemField) {
+	protected void init(BeanField itemField) {
 		if (itemField != null) {
 			Primitive type = itemField.getAnnotation(Primitive.class);
 			if (type != null) {
@@ -60,7 +60,7 @@ public class OBoolean extends Serial<Boolean> {
 	}
 
 	@Override
-	public IJsonItem fromJson(Object json, OField itemField) {
+	public IJsonItem fromJson(Object json, BeanField itemField) {
 		init(itemField);
 		String str = json.toString();
 		if (mType == PrimitiveType.STRING_BOOL) {
@@ -83,7 +83,7 @@ public class OBoolean extends Serial<Boolean> {
 	}
 
 	@Override
-	public Object toJson(OField itemField) {
+	public Object toJson(BeanField itemField) {
 		init(itemField);
 		if (mType == PrimitiveType.STRING_BOOL) {
 			return mValue ? mTrue : mFalse;
@@ -93,7 +93,7 @@ public class OBoolean extends Serial<Boolean> {
 	}
 
 	@Override
-	public IXmlItem fromXml(Node xml, OField itemField) {
+	public IXmlItem fromXml(Node xml, BeanField itemField) {
 		init(itemField);
 		String str = xml.getTextContent();
 		if (str.equals(mTrue)) {
@@ -107,7 +107,7 @@ public class OBoolean extends Serial<Boolean> {
 	}
 
 	@Override
-	public Node toXml(Document doc, OField itemField) {
+	public Node toXml(Document doc, BeanField itemField) {
 		init(itemField);
 		Node node = XmlUtil.newNode(doc, itemField);
 		node.setTextContent(mValue ? mTrue : mFalse);
@@ -115,7 +115,7 @@ public class OBoolean extends Serial<Boolean> {
 	}
 
 	@Override
-	public IPropertyItem fromProperty(String value, OField itemField) {
+	public IPropertyItem fromProperty(String value, BeanField itemField) {
 		init(itemField);
 		if (value.equals(mTrue)) {
 			mValue = Boolean.TRUE;
@@ -128,7 +128,7 @@ public class OBoolean extends Serial<Boolean> {
 	}
 
 	@Override
-	public String toProperty(OField itemField) {
+	public String toProperty(BeanField itemField) {
 		init(itemField);
 		return mValue ? mTrue : mFalse;
 	}

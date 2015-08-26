@@ -12,7 +12,7 @@ import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
 import cn.o.app.core.json.IJsonItem;
 import cn.o.app.core.properties.IPropertyItem;
-import cn.o.app.core.runtime.OField;
+import cn.o.app.core.runtime.BeanField;
 import cn.o.app.core.text.ODateFormat;
 import cn.o.app.core.xml.IXmlItem;
 import cn.o.app.core.xml.XmlUtil;
@@ -85,7 +85,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 		mSerialFormat = format;
 	}
 
-	protected void init(OField itemField) {
+	protected void init(BeanField itemField) {
 		if (itemField != null) {
 			Primitive t = itemField.getAnnotation(Primitive.class);
 			if (t != null) {
@@ -99,7 +99,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 	}
 
 	@Override
-	public IJsonItem fromJson(Object json, OField itemField) {
+	public IJsonItem fromJson(Object json, BeanField itemField) {
 		init(itemField);
 		try {
 			if (mSerialType == PrimitiveType.STRING) {
@@ -114,7 +114,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 	}
 
 	@Override
-	public Object toJson(OField itemField) {
+	public Object toJson(BeanField itemField) {
 		init(itemField);
 		if (mSerialType == PrimitiveType.STRING) {
 			return ODateFormat.format(this, mSerialFormat);
@@ -124,7 +124,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 	}
 
 	@Override
-	public IXmlItem fromXml(Node xml, OField itemField) {
+	public IXmlItem fromXml(Node xml, BeanField itemField) {
 		init(itemField);
 		try {
 			if (mSerialType == PrimitiveType.STRING) {
@@ -139,7 +139,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 	}
 
 	@Override
-	public Node toXml(Document doc, OField itemField) {
+	public Node toXml(Document doc, BeanField itemField) {
 		init(itemField);
 		Node node = XmlUtil.newNode(doc, itemField);
 		if (mSerialType == PrimitiveType.STRING) {
@@ -151,7 +151,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 	}
 
 	@Override
-	public IPropertyItem fromProperty(String value, OField itemField) {
+	public IPropertyItem fromProperty(String value, BeanField itemField) {
 		init(itemField);
 		try {
 			if (mSerialType == PrimitiveType.STRING) {
@@ -166,7 +166,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 	}
 
 	@Override
-	public String toProperty(OField itemField) {
+	public String toProperty(BeanField itemField) {
 		init(itemField);
 		if (mSerialType == PrimitiveType.STRING) {
 			return ODateFormat.format(this, mSerialFormat);

@@ -5,12 +5,47 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 
 /**
  * Reflection utility of framework
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class ReflectUtil {
+
+	/**
+	 * Get TypeVariable generic type information
+	 * 
+	 * @param typeVariableName
+	 * @param targetClass
+	 * @param parameterizedType
+	 * @return
+	 */
+	public static GenericInfo getGenericInfo(String typeVariableName, Class<?> targetClass,
+			ParameterizedType parameterizedType) {
+		GenericInfo gType = new GenericInfo();
+		int index = -1;// Type parameter index of target class
+		TypeVariable<?>[] typeVariables = targetClass.getTypeParameters();
+		for (int i = 0, size = typeVariables.length; i < size; i++) {
+			if (typeVariableName.equals(typeVariables[i].getName())) {
+				index = i;
+				break;
+			}
+		}
+		if (index != -1) {
+			Type[] args = parameterizedType.getActualTypeArguments();
+			if (index < args.length) {
+				Type t = parameterizedType.getActualTypeArguments()[index];
+				if (t instanceof Class) {
+					gType.rawType = (Class<?>) t;
+				} else if (t instanceof ParameterizedType) {
+					gType.rawType = (Class<?>) ((ParameterizedType) t).getRawType();
+					gType.parameterizedType = t;
+				}
+			}
+		}
+		return gType;
+	}
 
 	public static <T> Constructor<T> getConstructor(Class<T> targetClass, Class<?>... parameterTypes) {
 		try {
@@ -28,7 +63,7 @@ public class ReflectUtil {
 		}
 	}
 
-	public static Object get(Object target, OField field) {
+	public static Object get(Object target, BeanField field) {
 		try {
 			return field.get(target);
 		} catch (Exception e) {
@@ -36,7 +71,7 @@ public class ReflectUtil {
 		}
 	}
 
-	public static void set(Object target, OField field, Object value) {
+	public static void set(Object target, BeanField field, Object value) {
 		try {
 			field.set(target, value);
 		} catch (Exception e) {
@@ -137,7 +172,7 @@ public class ReflectUtil {
 				return (Class<?>) t;
 			}
 		}
-		return Void.class;
+		return Object.class;
 	}
 
 	public static Class<?> getMapValueClass(Class<?> mapClass, Type genericType) {

@@ -8,7 +8,7 @@ import org.w3c.dom.Node;
 import cn.o.app.core.json.IJsonItem;
 import cn.o.app.core.json.JsonUtil;
 import cn.o.app.core.properties.IPropertyItem;
-import cn.o.app.core.runtime.OField;
+import cn.o.app.core.runtime.BeanField;
 import cn.o.app.core.runtime.ReflectUtil;
 import cn.o.app.core.xml.IXmlItem;
 import cn.o.app.core.xml.XmlUtil;
@@ -36,9 +36,9 @@ public class StringJson<T> extends Serial<T> {
 		}
 	}
 
-	protected T valueOf(String json, OField itemField) {
+	protected T valueOf(String json, BeanField itemField) {
 		try {
-			Class<?> itemClass = itemField == null ? this.getClass() : itemField.getType();
+			Class<?> itemClass = itemField == null ? this.getClass() : itemField.getRawType();
 			Type genericType = itemField == null ? null : itemField.getGenericType();
 			Class<T> targetClass = (Class<T>) ReflectUtil.getParameterizedClass(itemClass, genericType, 0);
 			Type targetType = ReflectUtil.getParameterizedType(itemClass, genericType, 0);
@@ -49,7 +49,7 @@ public class StringJson<T> extends Serial<T> {
 	}
 
 	@Override
-	public IJsonItem fromJson(Object json, OField itemField) {
+	public IJsonItem fromJson(Object json, BeanField itemField) {
 		mValue = valueOf(json.toString(), itemField);
 		if (mValue == null) {
 			return null;
@@ -58,12 +58,12 @@ public class StringJson<T> extends Serial<T> {
 	}
 
 	@Override
-	public Object toJson(OField itemField) {
+	public Object toJson(BeanField itemField) {
 		return toString();
 	}
 
 	@Override
-	public IXmlItem fromXml(Node xml, OField itemField) {
+	public IXmlItem fromXml(Node xml, BeanField itemField) {
 		mValue = valueOf(xml.getTextContent(), itemField);
 		if (mValue == null) {
 			return null;
@@ -72,7 +72,7 @@ public class StringJson<T> extends Serial<T> {
 	}
 
 	@Override
-	public Node toXml(Document doc, OField itemField) {
+	public Node toXml(Document doc, BeanField itemField) {
 		String str = toString();
 		if (str == null) {
 			return doc.createElement(XmlUtil.TAG_NULL);
@@ -83,13 +83,13 @@ public class StringJson<T> extends Serial<T> {
 	}
 
 	@Override
-	public IPropertyItem fromProperty(String value, OField itemField) {
+	public IPropertyItem fromProperty(String value, BeanField itemField) {
 		mValue = valueOf(value, itemField);
 		return this;
 	}
 
 	@Override
-	public String toProperty(OField itemField) {
+	public String toProperty(BeanField itemField) {
 		return toString();
 	}
 

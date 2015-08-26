@@ -13,7 +13,7 @@ import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
 import cn.o.app.core.json.JsonUtil;
 import cn.o.app.core.runtime.BeanCache;
-import cn.o.app.core.runtime.OField;
+import cn.o.app.core.runtime.BeanField;
 
 /**
  * JOSN or XML serializer for shared preferences
@@ -69,7 +69,7 @@ public class PrefItem implements IPrefItem {
 			sb.append("{");
 			int itemCount = 0;
 			SharedPreferences pref = OUtil.getPref(context, mPrefFileName);
-			for (OField f : OField.getFields(this.getClass())) {
+			for (BeanField f : BeanField.getFields(this.getClass())) {
 				String name = f.getName();
 				if (!changed.contains(name) || !pref.contains(name)) {
 					continue;
@@ -81,7 +81,7 @@ public class PrefItem implements IPrefItem {
 				sb.append("\"");
 				sb.append(name);
 				sb.append("\":");
-				boolean isString = String.class.isAssignableFrom(f.getType());
+				boolean isString = String.class.isAssignableFrom(f.getRawType());
 				if (!isString) {
 					Primitive t = f.getAnnotation(Primitive.class);
 					if (t != null) {
@@ -139,7 +139,7 @@ public class PrefItem implements IPrefItem {
 			try {
 				JSONObject jsonObject = (JSONObject) JsonUtil.convertToJson(this);
 				Editor editor = OUtil.getPref(context, mPrefFileName).edit();
-				for (OField f : OField.getFields(this.getClass())) {
+				for (BeanField f : BeanField.getFields(this.getClass())) {
 					String name = f.getName();
 					if (!changed.contains(name)) {
 						continue;

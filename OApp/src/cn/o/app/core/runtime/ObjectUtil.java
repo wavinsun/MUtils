@@ -15,7 +15,7 @@ public class ObjectUtil {
 
 	public static Object get(Object object, String property) {
 		try {
-			return OField.getField(object, property).get(object);
+			return BeanField.getField(object, property).get(object);
 		} catch (Exception e) {
 			return null;
 		}
@@ -23,7 +23,7 @@ public class ObjectUtil {
 
 	public static void set(Object object, String property, Object value) {
 		try {
-			OField.getField(object, property).set(object, value);
+			BeanField.getField(object, property).set(object, value);
 		} catch (Exception e) {
 
 		}

@@ -10,7 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import cn.o.app.core.runtime.OField;
+import cn.o.app.core.runtime.BeanField;
 import cn.o.app.core.runtime.ReflectUtil;
 
 /**
@@ -73,15 +73,15 @@ public class JsonUtil {
 			return (T) ((IJsonItem) target).fromJson(json, null);
 		}
 		JSONObject jsonObject = (JSONObject) json;
-		for (OField f : OField.getFields(target.getClass())) {
+		for (BeanField f : BeanField.getFields(target.getClass())) {
 			Object sub = jsonObject.opt(f.getName());
 			if (sub == null) {
 				continue;
 			}
-			Class<?> fClass = f.getType();
+			Class<?> fClass = f.getRawType(genericType);
 			f.set(target,
 					IJsonItem.class.isAssignableFrom(fClass) ? (((IJsonItem) fClass.newInstance()).fromJson(sub, f))
-							: convertFromJson(sub, fClass, f.getGenericType()));
+							: convertFromJson(sub, fClass, f.getGenericType(genericType)));
 		}
 		return target;
 	}
@@ -169,7 +169,7 @@ public class JsonUtil {
 			return target.toString();
 		}
 		JSONObject json = new JSONObject();
-		for (OField f : OField.getFields(target.getClass())) {
+		for (BeanField f : BeanField.getFields(target.getClass())) {
 			Object v = f.get(target);
 			if (v == null) {
 				continue;
