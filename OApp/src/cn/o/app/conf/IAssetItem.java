@@ -1,10 +1,10 @@
 package cn.o.app.conf;
 
-import cn.o.app.core.io.ICacheOwner;
-import cn.o.app.core.io.INoProguard;
 import android.content.Context;
+import cn.o.app.core.io.INoProguard;
+import cn.o.app.core.runtime.IClearable;
 
-public interface IAssetItem extends INoProguard, ICacheOwner {
+public interface IAssetItem extends INoProguard, IClearable {
 
 	public boolean getFromAsset(Context context);
 

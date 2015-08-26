@@ -2,7 +2,7 @@ package cn.o.app.task;
 
 import android.os.Handler;
 import cn.o.app.core.event.Listener;
-import cn.o.app.core.task.ILockable;
+import cn.o.app.core.runtime.ILockable;
 import cn.o.app.core.task.Task;
 
 public class AnimTask extends Task implements ILockable {

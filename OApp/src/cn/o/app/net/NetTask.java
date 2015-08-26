@@ -1,5 +1,6 @@
 package cn.o.app.net;
 
+import java.lang.reflect.Type;
 import java.net.URL;
 
 import android.content.Context;
@@ -32,13 +33,23 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 		mClient.setListener(new NetClientListener<REQUEST, RESPONSE>() {
 
 			@Override
-			public Class<REQUEST> requestClass() {
-				return (Class<REQUEST>) ReflectUtil.getParameterizedClass(NetTask.this.getClass(), 0);
+			public Class<?> requestRawType() {
+				return NetTask.this.requestRawType();
 			}
 
 			@Override
-			public Class<RESPONSE> responseClass() {
-				return (Class<RESPONSE>) ReflectUtil.getParameterizedClass(NetTask.this.getClass(), 1);
+			public Type requestGenericType() {
+				return NetTask.this.requestGenericType();
+			}
+
+			@Override
+			public Class<?> responseRawType() {
+				return NetTask.this.responseRawType();
+			}
+
+			@Override
+			public Type responseGenericType() {
+				return NetTask.this.responseGenericType();
 			}
 
 			@Override
@@ -78,6 +89,22 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 			}
 
 		});
+	}
+
+	protected Class<?> requestRawType() {
+		return ReflectUtil.getParameterizedClass(this.getClass(), 0);
+	}
+
+	protected Type requestGenericType() {
+		return null;
+	}
+
+	protected Class<?> responseRawType() {
+		return ReflectUtil.getParameterizedClass(this.getClass(), 1);
+	}
+
+	protected Type responseGenericType() {
+		return null;
 	}
 
 	public void addListener(NetTaskListener<REQUEST, RESPONSE> listener) {

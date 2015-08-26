@@ -3,7 +3,7 @@ package cn.o.app.media;
 import android.content.Context;
 import android.content.Intent;
 import cn.o.app.core.event.Dispatcher;
-import cn.o.app.core.task.ILockable;
+import cn.o.app.core.runtime.ILockable;
 import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.ui.core.IActivityExecutor;
 

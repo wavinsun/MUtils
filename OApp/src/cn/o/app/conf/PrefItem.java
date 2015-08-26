@@ -169,7 +169,7 @@ public class PrefItem implements IPrefItem {
 		return false;
 	}
 
-	public void clearCache() {
+	public void clear() {
 		if (mPrefCache != null) {
 			mPrefCache.clear();
 		}
