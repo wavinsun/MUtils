@@ -36,7 +36,7 @@ public class HashCode {
 				hash = hashCode(entry.getValue(), hash);
 			}
 		} else {
-			for (OField f : OField.getFields(obj.getClass())) {
+			for (BeanField f : BeanField.getFields(obj.getClass())) {
 				try {
 					hash = hashCode(f.get(obj), hash);
 				} catch (Exception e) {

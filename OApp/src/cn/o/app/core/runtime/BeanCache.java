@@ -80,7 +80,7 @@ public class BeanCache {
 			mCache = new HashMap<String, PropertyHash>();
 		}
 		ArrayList<String> changed = new ArrayList<String>();
-		for (OField f : OField.getFields(mTarget.getClass())) {
+		for (BeanField f : BeanField.getFields(mTarget.getClass())) {
 			try {
 				String name = f.getName();
 				Object fValue = f.get(mTarget);
@@ -125,7 +125,7 @@ public class BeanCache {
 			mCache = new HashMap<String, PropertyHash>();
 		}
 		ArrayList<String> changed = new ArrayList<String>();
-		for (OField f : OField.getFields(mTarget.getClass())) {
+		for (BeanField f : BeanField.getFields(mTarget.getClass())) {
 			try {
 				String name = f.getName();
 				Object fValue = f.get(mTarget);

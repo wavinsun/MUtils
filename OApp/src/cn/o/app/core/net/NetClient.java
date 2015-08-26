@@ -32,7 +32,7 @@ import org.apache.http.util.EntityUtils;
 import cn.o.app.core.annotation.net.Head;
 import cn.o.app.core.event.Listener;
 import cn.o.app.core.json.JsonUtil;
-import cn.o.app.core.runtime.OField;
+import cn.o.app.core.runtime.BeanField;
 import cn.o.app.core.runtime.ReflectUtil;
 import cn.o.app.core.text.MillisFormat;
 import cn.o.app.core.text.StringUtil;
@@ -457,7 +457,7 @@ public class NetClient<REQUEST, RESPONSE> {
 		if (object instanceof Map || object instanceof List) {
 			return sb.toString();
 		} else {
-			for (OField field : OField.getFields(object.getClass())) {
+			for (BeanField field : BeanField.getFields(object.getClass())) {
 				try {
 					Object value = field.get(object);
 					if (value == null) {
@@ -516,7 +516,7 @@ public class NetClient<REQUEST, RESPONSE> {
 				}
 			}
 		} else {
-			for (OField field : OField.getFields(object.getClass())) {
+			for (BeanField field : BeanField.getFields(object.getClass())) {
 				try {
 					Object value = field.get(object);
 					if (value == null) {
@@ -577,7 +577,7 @@ public class NetClient<REQUEST, RESPONSE> {
 				}
 			}
 		} else {
-			for (OField field : OField.getFields(object.getClass())) {
+			for (BeanField field : BeanField.getFields(object.getClass())) {
 				try {
 					Object value = field.get(object);
 					if (value == null) {
@@ -661,7 +661,7 @@ public class NetClient<REQUEST, RESPONSE> {
 					}
 				}
 			} else {
-				for (OField field : OField.getFields(object.getClass())) {
+				for (BeanField field : BeanField.getFields(object.getClass())) {
 					try {
 						Object value = field.get(object);
 						if (value == null) {

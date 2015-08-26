@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 import cn.o.app.core.json.JsonUtil;
-import cn.o.app.core.runtime.OField;
+import cn.o.app.core.runtime.BeanField;
 import cn.o.app.core.runtime.ReflectUtil;
 
 /**
@@ -51,12 +51,12 @@ public class PropertiesUtil {
 		if (target instanceof Map) {
 			return (T) convertMapFromProperties(p, (Map<?, ?>) target);
 		}
-		for (OField f : OField.getFields(target.getClass())) {
+		for (BeanField f : BeanField.getFields(target.getClass())) {
 			String value = p.getProperty(f.getName());
 			if (value == null) {
 				continue;
 			}
-			Class<?> fClass = f.getType();
+			Class<?> fClass = f.getRawType();
 			f.set(target,
 					IPropertyItem.class.isAssignableFrom(fClass)
 							? (((IPropertyItem) fClass.newInstance()).fromProperty(value, f))
@@ -104,7 +104,7 @@ public class PropertiesUtil {
 			return convertMapToProperties(target);
 		}
 		Properties p = new Properties();
-		for (OField f : OField.getFields(target.getClass())) {
+		for (BeanField f : BeanField.getFields(target.getClass())) {
 			Object v = f.get(target);
 			if (v == null) {
 				continue;

@@ -44,7 +44,7 @@ import cn.o.app.conf.OLocale;
 import cn.o.app.core.archive.ZipUtil;
 import cn.o.app.core.crypto.AESUtil;
 import cn.o.app.core.io.IOUtil;
-import cn.o.app.core.runtime.OField;
+import cn.o.app.core.runtime.BeanField;
 import cn.o.app.core.runtime.ReflectUtil;
 import cn.o.app.core.text.StringUtil;
 
@@ -572,7 +572,7 @@ public class OUtil {
 		if (list.size() == 0) {
 			return null;
 		}
-		OField propertyField = OField.getField(list.get(0), property);
+		BeanField propertyField = BeanField.getField(list.get(0), property);
 		if (propertyField == null) {
 			return null;
 		}
@@ -591,7 +591,7 @@ public class OUtil {
 		if (list.size() == 0) {
 			return null;
 		}
-		OField propertyField = OField.getField(list.get(0), property);
+		BeanField propertyField = BeanField.getField(list.get(0), property);
 		if (propertyField == null) {
 			return null;
 		}

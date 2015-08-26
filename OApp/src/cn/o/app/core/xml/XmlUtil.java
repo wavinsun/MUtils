@@ -24,7 +24,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import cn.o.app.core.runtime.OField;
+import cn.o.app.core.runtime.BeanField;
 import cn.o.app.core.runtime.ReflectUtil;
 
 /**
@@ -115,8 +115,8 @@ public class XmlUtil {
 		return (NodeList) XPathFactory.newInstance().newXPath().compile(xPath).evaluate(node, XPathConstants.NODESET);
 	}
 
-	public static Node newNode(Document doc, OField field) {
-		Node node = doc.createElement(field.getType().getSimpleName());
+	public static Node newNode(Document doc, BeanField field) {
+		Node node = doc.createElement(field.getRawType().getSimpleName());
 		XmlUtil.setAttr(node, XmlUtil.TAG_NAME, field.getName());
 		return node;
 	}
@@ -204,14 +204,14 @@ public class XmlUtil {
 		} else if (target instanceof IXmlItem) {
 			return (T) ((IXmlItem) target).fromXml(node, null);
 		}
-		for (OField f : OField.getFields(target.getClass())) {
+		for (BeanField f : BeanField.getFields(target.getClass())) {
 			Node sub = getChildNode(node, f.getName());
 			if (sub == null) {
 				continue;
 			}
-			Class<?> fClass = f.getType();
+			Class<?> fClass = f.getRawType(genericType);
 			f.set(target, IXmlItem.class.isAssignableFrom(fClass) ? (((IXmlItem) fClass.newInstance()).fromXml(sub, f))
-					: convertFromNode(sub, fClass, f.getGenericType()));
+					: convertFromNode(sub, fClass, f.getGenericType(genericType)));
 		}
 		return target;
 	}
@@ -311,7 +311,7 @@ public class XmlUtil {
 		}
 		Class<?> targetClass = target.getClass();
 		Node node = doc.createElement(targetClass.getSimpleName());
-		for (OField f : OField.getFields(targetClass)) {
+		for (BeanField f : BeanField.getFields(targetClass)) {
 			Object v = f.get(target);
 			if (v == null) {
 				continue;
