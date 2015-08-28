@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Type;
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -197,8 +197,8 @@ public class XmlUtil {
 			return (T) Boolean.valueOf(node.getTextContent());
 		} else if (target instanceof Enum) {
 			return (T) ReflectUtil.valueOfEnum(target.getClass(), node.getTextContent());
-		} else if (target instanceof List) {
-			return (T) convertArrayFromNode(node, (List<?>) target, genericType);
+		} else if (target instanceof Collection) {
+			return (T) convertCollectionFromNode(node, (Collection<?>) target, genericType);
 		} else if (target instanceof Map) {
 			return (T) convertMapFromNode(node, (Map<?, ?>) target, genericType);
 		} else if (target instanceof IXmlItem) {
@@ -216,10 +216,11 @@ public class XmlUtil {
 		return target;
 	}
 
-	protected static <T extends List> T convertArrayFromNode(Node node, T target, Type genericType) throws Exception {
+	protected static <T extends Collection> T convertCollectionFromNode(Node node, T target, Type genericType)
+			throws Exception {
 		Class<?> targetClass = target.getClass();
-		Class<?> eClass = ReflectUtil.getListElementClass(targetClass, genericType);
-		Type eType = ReflectUtil.getListElementType(targetClass, genericType);
+		Class<?> eClass = ReflectUtil.getCollectionElementRawType(targetClass, genericType);
+		Type eType = ReflectUtil.getCollectionElementGenericType(targetClass, genericType);
 		NodeList childNodes = node.getChildNodes();
 		for (int i = 0, size = childNodes.getLength(); i < size; i++) {
 			Node sub = childNodes.item(i);
@@ -233,12 +234,12 @@ public class XmlUtil {
 
 	protected static <T extends Map> T convertMapFromNode(Node node, T target, Type genericType) throws Exception {
 		Class<?> targetClass = target.getClass();
-		Class<?> keyClass = ReflectUtil.getMapKeyClass(targetClass, genericType);
+		Class<?> keyClass = ReflectUtil.getMapKeyRawType(targetClass, genericType);
 		if (!String.class.isAssignableFrom(keyClass)) {
 			throw new Exception();
 		}
-		Class<?> vClass = ReflectUtil.getMapValueClass(targetClass, genericType);
-		Type vType = ReflectUtil.getMapValueType(targetClass, genericType);
+		Class<?> vClass = ReflectUtil.getMapValueRawType(targetClass, genericType);
+		Type vType = ReflectUtil.getMapValueGenericType(targetClass, genericType);
 		NodeList childNodes = node.getChildNodes();
 		for (int i = childNodes.getLength() - 1; i >= 0; i--) {
 			Node sub = childNodes.item(i);
@@ -302,8 +303,8 @@ public class XmlUtil {
 			Node node = doc.createElement(TAG_ENUM);
 			node.setTextContent(target.toString());
 			return node;
-		} else if (target instanceof List) {
-			return convertArrayToNode(target, doc);
+		} else if (target instanceof Collection) {
+			return convertCollectionToNode(target, doc);
 		} else if (target instanceof Map) {
 			return convertMapToNode(target, doc);
 		} else if (target instanceof IXmlItem) {
@@ -323,9 +324,9 @@ public class XmlUtil {
 		return node;
 	}
 
-	protected static <T> Node convertArrayToNode(T target, Document doc) throws Exception {
+	protected static <T> Node convertCollectionToNode(T target, Document doc) throws Exception {
 		Node node = doc.createElement(target.getClass().getSimpleName());
-		for (Object element : (List<?>) target) {
+		for (Object element : (Collection<?>) target) {
 			node.appendChild(convertToNode(element, doc));
 		}
 		return node;

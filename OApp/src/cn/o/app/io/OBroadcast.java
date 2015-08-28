@@ -117,7 +117,7 @@ public class OBroadcast<EXTRA extends Extra> implements IBroadcast {
 			if (mOnReceiveListener != null) {
 				try {
 					Class<EXTRA> extraClass = (Class<EXTRA>) ReflectUtil
-							.getParameterizedClass(OBroadcast.this.getClass(), 0);
+							.getParameterizedRawType(OBroadcast.this.getClass(), 0);
 					EXTRA extra = extraClass.newInstance();
 					if (extra.getFrom(intent)) {
 						mOnReceiveListener.onReceive(OBroadcast.this, extra);

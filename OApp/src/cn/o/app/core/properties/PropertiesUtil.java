@@ -67,12 +67,12 @@ public class PropertiesUtil {
 
 	protected static <T extends Map> T convertMapFromProperties(Properties p, T target) throws Exception {
 		Class<? extends Map> targetClass = target.getClass();
-		Class<?> keyClass = ReflectUtil.getMapKeyClass(targetClass, null);
+		Class<?> keyClass = ReflectUtil.getMapKeyRawType(targetClass, null);
 		if (!String.class.isAssignableFrom(keyClass)) {
 			throw new Exception();
 		}
-		Class<?> vClass = ReflectUtil.getMapValueClass(targetClass, null);
-		Type vType = ReflectUtil.getMapValueType(targetClass, null);
+		Class<?> vClass = ReflectUtil.getMapValueRawType(targetClass, null);
+		Type vType = ReflectUtil.getMapValueGenericType(targetClass, null);
 		Enumeration<?> enu = p.propertyNames();
 		while (enu.hasMoreElements()) {
 			Object k = enu.nextElement();
