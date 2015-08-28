@@ -9,7 +9,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.content.CursorLoader;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.event.Listener;
 import cn.o.app.ui.core.IActivityExecutor;
 
@@ -61,11 +61,11 @@ public class PickPhotoTask extends MediaTask {
 		if (path == null || path.isEmpty()) {
 			return;
 		}
-		String mediaStorageDir = OUtil.getDiskCacheDir(mExecutor.getContext(), "OApp");
+		String mediaStorageDir = AppUtil.getDiskCacheDir(mExecutor.getContext(), "OApp");
 		if (mediaStorageDir == null) {
 			return;
 		}
-		String md5 = OUtil.md5(path);
+		String md5 = AppUtil.md5(path);
 		if (md5.isEmpty()) {
 			return;
 		}
@@ -76,7 +76,7 @@ public class PickPhotoTask extends MediaTask {
 		sb.append(md5);
 		sb.append(".jpg");
 		String output = sb.toString();
-		if (OUtil.compress(path, output, EXPECT_WIDTH, EXPECT_HEIGHT)) {
+		if (AppUtil.compress(path, output, EXPECT_WIDTH, EXPECT_HEIGHT)) {
 			PickPhotoListener listener = getListener(PickPhotoListener.class);
 			if (listener != null) {
 				listener.onComplete(Uri.fromFile(new File(output)));

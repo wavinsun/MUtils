@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.annotation.Ignore;
 import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
@@ -68,7 +68,7 @@ public class PrefItem implements IPrefItem {
 			StringBuilder sb = new StringBuilder();
 			sb.append("{");
 			int itemCount = 0;
-			SharedPreferences pref = OUtil.getPref(context, mPrefFileName);
+			SharedPreferences pref = AppUtil.getPref(context, mPrefFileName);
 			for (BeanField f : BeanField.getFields(this.getClass())) {
 				String name = f.getName();
 				if (!changed.contains(name) || !pref.contains(name)) {
@@ -113,7 +113,7 @@ public class PrefItem implements IPrefItem {
 			}
 		} else if (mPrefType == TYPE_PREF_JSON) {
 			try {
-				JsonUtil.convert(OUtil.getPrefString(context, mPrefFileName, OUtil.KEY, null), this);
+				JsonUtil.convert(AppUtil.getPrefString(context, mPrefFileName, AppUtil.KEY, null), this);
 				mPrefCache.fromTarget();
 				return true;
 			} catch (Exception e) {
@@ -138,7 +138,7 @@ public class PrefItem implements IPrefItem {
 		if (mPrefType == TYPE_PREF_MAP) {
 			try {
 				JSONObject jsonObject = (JSONObject) JsonUtil.convertToJson(this);
-				Editor editor = OUtil.getPref(context, mPrefFileName).edit();
+				Editor editor = AppUtil.getPref(context, mPrefFileName).edit();
 				for (BeanField f : BeanField.getFields(this.getClass())) {
 					String name = f.getName();
 					if (!changed.contains(name)) {
@@ -159,7 +159,7 @@ public class PrefItem implements IPrefItem {
 			}
 		} else if (mPrefType == TYPE_PREF_JSON) {
 			try {
-				OUtil.setPrefString(context, mPrefFileName, OUtil.KEY, JsonUtil.convert(this));
+				AppUtil.setPrefString(context, mPrefFileName, AppUtil.KEY, JsonUtil.convert(this));
 				return true;
 			} catch (Exception e) {
 				mPrefCache.clear(changed);

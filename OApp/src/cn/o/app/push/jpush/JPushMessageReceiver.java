@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import cn.jpush.android.api.JPushInterface;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.push.PushManager;
 
 /**
@@ -48,7 +48,7 @@ public class JPushMessageReceiver extends BroadcastReceiver {
 	}
 
 	protected void onNotificationOpened(Context context, Bundle bundle) {
-		OUtil.startApp(context);
+		AppUtil.startApp(context);
 	}
 
 }

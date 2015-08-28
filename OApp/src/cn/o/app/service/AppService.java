@@ -15,7 +15,7 @@ import cn.o.app.net.NetQueue;
 import cn.o.app.ui.core.UICore;
 
 @SuppressWarnings("deprecation")
-public class OService extends Service implements INetQueueOwner,
+public class AppService extends Service implements INetQueueOwner,
 		IStopableManager {
 
 	protected NetQueue mNetQueue;

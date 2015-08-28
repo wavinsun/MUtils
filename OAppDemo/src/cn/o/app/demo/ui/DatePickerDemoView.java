@@ -4,7 +4,7 @@ import java.util.Date;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.annotation.event.OnClick;
 import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.core.io.ODate;
@@ -35,7 +35,7 @@ public class DatePickerDemoView extends StateView {
 		ODatePicker picker = new ODatePicker(getContext());
 		picker.setPickTime(true);
 		ODate now = new ODate();
-		picker.setMaxDate(OUtil.getDate(OUtil.getYear(now) + 10, OUtil.getMonth(now), OUtil.getDay(now)));
+		picker.setMaxDate(AppUtil.getDate(AppUtil.getYear(now) + 10, AppUtil.getMonth(now), AppUtil.getDay(now)));
 		picker.setListener(new OnPickDateListener() {
 
 			@Override

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.TextView;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.annotation.event.OnClick;
 import cn.o.app.core.annotation.res.FindViewById;
 import cn.o.app.core.annotation.res.SetContentView;
@@ -58,7 +58,7 @@ public class DemoPathButtonView extends StateView {
 			mOpened = false;
 			OImageView[] pathButtons = new OImageView[] { mLeftPathButton, mRightPathButton, mBottomPathButton };
 			for (OImageView pathButton : pathButtons) {
-				Animation anim = OUtil.animOfPathButton(mOpened, pathButton, mGoButton);
+				Animation anim = AppUtil.animOfPathButton(mOpened, pathButton, mGoButton);
 				anim.setAnimationListener(new AnimationListener() {
 
 					@Override
@@ -84,7 +84,7 @@ public class DemoPathButtonView extends StateView {
 			mOpened = true;
 			OImageView[] pathButtons = new OImageView[] { mLeftPathButton, mRightPathButton, mBottomPathButton };
 			for (OImageView pathButton : pathButtons) {
-				Animation anim = OUtil.animOfPathButton(mOpened, pathButton, mGoButton);
+				Animation anim = AppUtil.animOfPathButton(mOpened, pathButton, mGoButton);
 				pathButton.setVisibility(View.VISIBLE);
 				pathButton.startAnimation(anim);
 			}

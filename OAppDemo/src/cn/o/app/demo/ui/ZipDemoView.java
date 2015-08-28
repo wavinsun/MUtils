@@ -3,7 +3,7 @@ package cn.o.app.demo.ui;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.annotation.res.FindViewById;
 import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.demo.R;
@@ -32,11 +32,11 @@ public class ZipDemoView extends StateView {
 		super.onCreate();
 
 		StringBuilder sb = new StringBuilder();
-		sb.append(OUtil.getAssetZipString(getContext(), "hello.zip", "title/title.txt"));
+		sb.append(AppUtil.getAssetZipString(getContext(), "hello.zip", "title/title.txt"));
 		sb.append("\n");
-		sb.append(OUtil.getAssetZipString(getContext(), "hello.zip", "message/message.txt"));
+		sb.append(AppUtil.getAssetZipString(getContext(), "hello.zip", "message/message.txt"));
 		sb.append("\n");
-		sb.append(OUtil.getAssetZipString(getContext(), "hello.zip", "hello.txt"));
+		sb.append(AppUtil.getAssetZipString(getContext(), "hello.zip", "hello.txt"));
 		sb.append("\n");
 		mLog.setText(sb);
 	}

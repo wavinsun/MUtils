@@ -7,11 +7,11 @@ import android.content.IntentFilter;
 import cn.o.app.core.runtime.ReflectUtil;
 
 @SuppressWarnings("unchecked")
-public class OBroadcast<EXTRA extends Extra> implements IBroadcast {
+public class AppBroadcast<EXTRA extends Extra> implements IBroadcast {
 
 	public static interface OnReceiveListener<EXTRA extends Extra> {
 
-		public void onReceive(OBroadcast<EXTRA> broadcast, EXTRA extra);
+		public void onReceive(AppBroadcast<EXTRA> broadcast, EXTRA extra);
 
 	}
 
@@ -25,7 +25,7 @@ public class OBroadcast<EXTRA extends Extra> implements IBroadcast {
 
 	protected OBroadcastReceiver mReceiver;
 
-	public OBroadcast(Context context) {
+	public AppBroadcast(Context context) {
 		mContext = context;
 		mStoped = true;
 	}
@@ -76,7 +76,7 @@ public class OBroadcast<EXTRA extends Extra> implements IBroadcast {
 		return true;
 	}
 
-	public OBroadcast<EXTRA> start() {
+	public AppBroadcast<EXTRA> start() {
 		this.stop();
 		if (mReceiver == null) {
 			mReceiver = new OBroadcastReceiver();
@@ -117,10 +117,10 @@ public class OBroadcast<EXTRA extends Extra> implements IBroadcast {
 			if (mOnReceiveListener != null) {
 				try {
 					Class<EXTRA> extraClass = (Class<EXTRA>) ReflectUtil
-							.getParameterizedRawType(OBroadcast.this.getClass(), 0);
+							.getParameterizedRawType(AppBroadcast.this.getClass(), 0);
 					EXTRA extra = extraClass.newInstance();
 					if (extra.getFrom(intent)) {
-						mOnReceiveListener.onReceive(OBroadcast.this, extra);
+						mOnReceiveListener.onReceive(AppBroadcast.this, extra);
 					}
 				} catch (Exception e) {
 

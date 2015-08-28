@@ -1,7 +1,7 @@
 package cn.o.app.ui.pattern;
 
 import android.content.Context;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.annotation.Ignore;
 import cn.o.app.core.json.JsonUtil;
 
@@ -78,7 +78,7 @@ public class PatternSettings implements IPatternSettings {
 		mm = "";
 		qy = false;
 		zq = 0;
-		String json = OUtil.getPrefString(context, PATTERN_FILENAME, id, "");
+		String json = AppUtil.getPrefString(context, PATTERN_FILENAME, id, "");
 		if (json.isEmpty()) {
 			return false;
 		}
@@ -96,7 +96,7 @@ public class PatternSettings implements IPatternSettings {
 			return false;
 		}
 		try {
-			return OUtil.setPrefString(context, PATTERN_FILENAME, id, JsonUtil.convert(this));
+			return AppUtil.setPrefString(context, PATTERN_FILENAME, id, JsonUtil.convert(this));
 		} catch (Exception e) {
 			return false;
 		}

@@ -5,7 +5,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 
 @SuppressWarnings("deprecation")
 public class Prompt extends Alert {
@@ -43,7 +43,7 @@ public class Prompt extends Alert {
 	}
 
 	protected View generateContentView() {
-		int padding = (int) OUtil.dp2px(getContext(), 8);
+		int padding = (int) AppUtil.dp2px(getContext(), 8);
 		GradientDrawable drawable = new GradientDrawable();
 		drawable.setColor(0xFFFFFFFF);
 		drawable.setCornerRadius(padding / 2);

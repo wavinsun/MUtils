@@ -10,7 +10,6 @@ import com.umeng.update.UpdateStatus;
 import android.app.Application;
 import android.content.Context;
 import cn.jpush.android.api.JPushInterface;
-import cn.o.app.conf.OLocale;
 import cn.o.app.context.IContextProvider;
 
 /**
@@ -34,13 +33,13 @@ public class App extends Application implements IContextProvider {
 		// Set exception handler to forbid system crash dialog
 		Thread.setDefaultUncaughtExceptionHandler(new AppExceptionHandler());
 
-		OLocale.syncLocale(this);
+		AppLocale.syncLocale(this);
 
-		OUtil.fixAsyncTask();
+		AppUtil.fixAsyncTask();
 
 		sApp = this;
 
-		mUmengEnabled = OUtil.getMetaData(this, UMENG_APPKEY) != null;
+		mUmengEnabled = AppUtil.getMetaData(this, UMENG_APPKEY) != null;
 		if (mUmengEnabled) {
 			if (BuildConfig.DEBUG) {
 				MobclickAgent.setDebugMode(true);
@@ -54,7 +53,7 @@ public class App extends Application implements IContextProvider {
 			UmengUpdateAgent.setUpdateUIStyle(UpdateStatus.STYLE_DIALOG);
 			UmengUpdateAgent.setUpdateAutoPopup(false);
 		}
-		mJPushEnabled = OUtil.getMetaData(this, JPUSH_APPKEY) != null;
+		mJPushEnabled = AppUtil.getMetaData(this, JPUSH_APPKEY) != null;
 		if (mJPushEnabled) {
 			if (BuildConfig.DEBUG) {
 				JPushInterface.setDebugMode(true);
@@ -97,7 +96,7 @@ public class App extends Application implements IContextProvider {
 				if (mJPushEnabled) {
 					JPushInterface.onKillProcess(App.this);
 				}
-				OUtil.exit(10);
+				AppUtil.exit(10);
 			}
 		}
 	}

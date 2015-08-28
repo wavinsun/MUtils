@@ -1,7 +1,7 @@
 package cn.o.app.share;
 
 import android.content.Context;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
@@ -38,7 +38,7 @@ public class ShareWechat extends ShareBase {
 		WXMediaMessage msg = new WXMediaMessage(web);
 		msg.title = mTitle;
 		msg.description = mText;
-		msg.thumbData = OUtil.bitmap2ByteArray(OUtil.getAppIcon(mContext));
+		msg.thumbData = AppUtil.bitmap2ByteArray(AppUtil.getAppIcon(mContext));
 		SendMessageToWX.Req req = new SendMessageToWX.Req();
 		req.transaction = TRANSACTION + System.currentTimeMillis();
 		req.message = msg;
