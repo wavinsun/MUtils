@@ -44,6 +44,7 @@ import android.widget.EditText;
 import cn.o.app.core.archive.ZipUtil;
 import cn.o.app.core.crypto.AESUtil;
 import cn.o.app.core.io.IOUtil;
+import cn.o.app.core.math.NumberUtil;
 import cn.o.app.core.runtime.BeanField;
 import cn.o.app.core.runtime.ReflectUtil;
 import cn.o.app.core.text.StringUtil;
@@ -58,9 +59,9 @@ public class AppUtil {
 	public static final String KEY = "o";
 
 	/** Transform for degress to radian */
-	public static final double TO_RADIAN = Math.PI / 180;
+	public static final double TO_RADIAN = NumberUtil.TO_RADIAN;
 	/** Transform for radian to degress */
-	public static final double TO_DEGRESS = 180 / Math.PI;
+	public static final double TO_DEGRESS = NumberUtil.TO_DEGRESS;
 
 	public static SharedPreferences getPref(Context context, String fileName) {
 		return context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
