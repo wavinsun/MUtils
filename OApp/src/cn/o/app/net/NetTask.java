@@ -9,7 +9,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import cn.o.app.BuildConfig;
 import cn.o.app.LogCat;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.net.NetClient;
 import cn.o.app.core.net.NetClient.ConnectNotFoundException;
 import cn.o.app.core.net.NetClient.NetClientListener;
@@ -334,7 +334,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 				return mClient.execute();
 			} catch (Exception e) {
 				if (BuildConfig.DEBUG) {
-					debugging(NetClient.EVENT_EXCEPTION, OUtil.printStackTrace(e));
+					debugging(NetClient.EVENT_EXCEPTION, AppUtil.printStackTrace(e));
 				}
 				return e;
 			}

@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.event.Listener;
 import cn.o.app.ui.core.IActivityExecutor;
 
@@ -59,11 +59,11 @@ public class CropPhotoTask extends MediaTask {
 
 	protected Uri generateExtraOutput(Uri uri, int width, int height) {
 		try {
-			String mediaStorageDir = OUtil.getDiskCacheDir(mExecutor.getContext(), "OApp");
+			String mediaStorageDir = AppUtil.getDiskCacheDir(mExecutor.getContext(), "OApp");
 			if (mediaStorageDir == null) {
 				return null;
 			}
-			String md5 = OUtil.md5(uri.getPath());
+			String md5 = AppUtil.md5(uri.getPath());
 			if (md5.isEmpty()) {
 				return null;
 			}
@@ -88,7 +88,7 @@ public class CropPhotoTask extends MediaTask {
 		if (resultCode != Activity.RESULT_OK) {
 			return;
 		}
-		if (OUtil.compress(mExtraOutput.getPath())) {
+		if (AppUtil.compress(mExtraOutput.getPath())) {
 			CropPhotoListener listener = getListener(CropPhotoListener.class);
 			if (listener != null) {
 				listener.onComplete(mExtraOutput);

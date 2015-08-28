@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.AttributeSet;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.annotation.event.OnClick;
 import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.demo.R;
@@ -83,7 +83,7 @@ public class MediaDemoView extends StateView {
 				mCropPhotoUri = uri;
 				Intent intent = new Intent(getContext(), PhotoActivity.class);
 				PhotoExtra extra = new PhotoExtra();
-				extra.setPhotos(OUtil.asArrayList(new String[] { uri.getPath() }));
+				extra.setPhotos(AppUtil.asArrayList(new String[] { uri.getPath() }));
 				extra.putTo(intent);
 				startActivity(intent);
 			}
@@ -101,7 +101,7 @@ public class MediaDemoView extends StateView {
 				mCropPhotoUri = uri;
 				Intent intent = new Intent(getContext(), PhotoActivity.class);
 				PhotoExtra extra = new PhotoExtra();
-				extra.setPhotos(OUtil.asArrayList(new String[] { uri.getPath() }));
+				extra.setPhotos(AppUtil.asArrayList(new String[] { uri.getPath() }));
 				extra.putTo(intent);
 				startActivity(intent);
 			}
@@ -122,7 +122,7 @@ public class MediaDemoView extends StateView {
 			public void onComplete(Uri uri) {
 				Intent intent = new Intent(getContext(), PhotoActivity.class);
 				PhotoExtra extra = new PhotoExtra();
-				extra.setPhotos(OUtil.asArrayList(new String[] { uri.getPath() }));
+				extra.setPhotos(AppUtil.asArrayList(new String[] { uri.getPath() }));
 				extra.putTo(intent);
 				startActivity(intent);
 			}

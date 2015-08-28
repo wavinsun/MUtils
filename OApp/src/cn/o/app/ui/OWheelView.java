@@ -6,7 +6,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
 import android.util.AttributeSet;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.R;
 
 @SuppressWarnings("deprecation")
@@ -43,7 +43,7 @@ public class OWheelView extends WheelView {
 		mTextColorValue = 0xFF000000;
 		mTextColorItems = 0xFF888888;
 
-		TEXT_SIZE = (int) OUtil.sp2px(getContext(), 18);
+		TEXT_SIZE = (int) AppUtil.sp2px(getContext(), 18);
 		setFakeBoldText(false);
 		setCyclic(true);
 	}

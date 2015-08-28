@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 
 @SuppressLint("ClickableViewAccessibility")
 public class PatternCanvas extends View {
@@ -76,7 +76,7 @@ public class PatternCanvas extends View {
 		mCircleStonePaint = new Paint(paint);
 		mCircleStonePaint.setColor(0xff000000 | mStoneColor);
 		mCircleStonePaint.setStyle(Paint.Style.STROKE);
-		mCircleStonePaint.setStrokeWidth(OUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 1));
+		mCircleStonePaint.setStrokeWidth(AppUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 1));
 
 		mCircleEarthPaint = new Paint(paint);
 		mCircleEarthPaint.setColor(0x10000000 | mEarthColor);
@@ -87,7 +87,7 @@ public class PatternCanvas extends View {
 
 		mCircleGlowPaint = new Paint(mCircleStonePaint);
 		mCircleGlowPaint.setColor(0x40000000 | mFireColor);
-		mCircleGlowPaint.setStrokeWidth(OUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 6));
+		mCircleGlowPaint.setStrokeWidth(AppUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 6));
 
 		mDotFiredPaint = new Paint(paint);
 		mDotFiredPaint.setColor(0xff000000 | mFireColor);
@@ -99,17 +99,17 @@ public class PatternCanvas extends View {
 		mLinePaint = new Paint(paint);
 		mLinePaint.setColor(0x80000000 | mFireColor);
 		mLinePaint.setStyle(Paint.Style.STROKE);
-		mLinePaint.setStrokeWidth(OUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 8));
+		mLinePaint.setStrokeWidth(AppUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 8));
 	}
 
 	private void initCircles(double w, double h) {
 		int cw = (int) Math.floor(Math.min(Math.floor(w / 3.0), Math.floor(h / 3.0)));
 
 		mCircleOuterRadius = (int) Math.floor((double) cw * 0.3);
-		mCircleInnerRadius = mCircleOuterRadius - (int) OUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 4);
+		mCircleInnerRadius = mCircleOuterRadius - (int) AppUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 4);
 
 		mDotOuterRadius = (int) Math.floor((double) cw * 0.15);
-		mDotInnerRadius = mDotOuterRadius - (int) OUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 4);
+		mDotInnerRadius = mDotOuterRadius - (int) AppUtil.getRawSize(getContext(), TypedValue.COMPLEX_UNIT_DIP, 4);
 
 		int x0, y0, x3, y3;
 		if (h > w) {

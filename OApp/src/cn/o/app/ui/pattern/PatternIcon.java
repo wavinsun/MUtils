@@ -7,7 +7,7 @@ import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 
 public class PatternIcon extends View {
 
@@ -33,14 +33,14 @@ public class PatternIcon extends View {
 		mStrokePaint.setAntiAlias(true);
 		mStrokePaint.setColor(0xffc0c0c0);
 		mStrokePaint.setStyle(Paint.Style.STROKE);
-		mStrokePaint.setStrokeWidth(OUtil.getRawSize(getContext(),
+		mStrokePaint.setStrokeWidth(AppUtil.getRawSize(getContext(),
 				TypedValue.COMPLEX_UNIT_DIP, 1));
 
 		mFillPaint = new Paint();
 		mFillPaint.setAntiAlias(true);
 		mFillPaint.setColor(0xff000000 | 0xffff5f);
 		mFillPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-		mFillPaint.setStrokeWidth(OUtil.getRawSize(getContext(),
+		mFillPaint.setStrokeWidth(AppUtil.getRawSize(getContext(),
 				TypedValue.COMPLEX_UNIT_DIP, 1));
 
 		for (int i = 0; i < mPoints.length; i++)

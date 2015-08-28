@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.event.Listener;
 import cn.o.app.core.io.ODate;
 import cn.o.app.ui.core.IActivityExecutor;
@@ -54,7 +54,7 @@ public class TakePhotoTask extends MediaTask {
 
 	protected Uri generateExtraOutput() {
 		try {
-			String mediaStorageDir = OUtil.getDiskCacheDir(mExecutor.getContext(), "OApp");
+			String mediaStorageDir = AppUtil.getDiskCacheDir(mExecutor.getContext(), "OApp");
 			if (mediaStorageDir == null) {
 				return null;
 			}
@@ -78,7 +78,7 @@ public class TakePhotoTask extends MediaTask {
 			return;
 		}
 		Uri uri = data != null ? data.getData() : mExtraOutput;
-		if (OUtil.compress(uri.getPath(), EXPECT_WIDTH, EXPECT_HEIGHT)) {
+		if (AppUtil.compress(uri.getPath(), EXPECT_WIDTH, EXPECT_HEIGHT)) {
 			TakePhotoListener listener = getListener(TakePhotoListener.class);
 			if (listener != null) {
 				listener.onComplete(uri);

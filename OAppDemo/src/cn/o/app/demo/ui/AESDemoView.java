@@ -3,7 +3,7 @@ package cn.o.app.demo.ui;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.annotation.res.FindViewById;
 import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.demo.R;
@@ -33,8 +33,8 @@ public class AESDemoView extends StateView {
 
 		String text = "OApp";
 		String password = "lounien";
-		String encryptText = OUtil.toAES(text, password);
-		String decryptText = OUtil.fromAES(encryptText, password);
+		String encryptText = AppUtil.toAES(text, password);
+		String decryptText = AppUtil.fromAES(encryptText, password);
 		StringBuilder sb = new StringBuilder();
 		sb.append("Text:");
 		sb.append(text);

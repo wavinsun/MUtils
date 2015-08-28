@@ -8,7 +8,7 @@ import com.tencent.tauth.UiError;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 
 public class ShareQzone extends ShareBase {
 
@@ -30,7 +30,7 @@ public class ShareQzone extends ShareBase {
 		bundle.putString(QzoneShare.SHARE_TO_QQ_TITLE, mTitle);
 		bundle.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, mText);
 		bundle.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, mUrl);
-		bundle.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, OUtil.asArrayList(new String[] { mImageUrl }));
+		bundle.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, AppUtil.asArrayList(new String[] { mImageUrl }));
 		Tencent.createInstance(sAppId, mContext).shareToQzone((Activity) mContext, bundle, new IUiListener() {
 
 			@Override

@@ -1,7 +1,7 @@
 package cn.o.app.conf;
 
 import android.content.Context;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.annotation.Ignore;
 import cn.o.app.core.json.JsonUtil;
 import cn.o.app.core.runtime.BeanCache;
@@ -57,7 +57,7 @@ public class ConfItem extends PrefItem implements IAssetItem {
 		}
 		if (mAssetType == TYPE_ASSET_XML) {
 			try {
-				XmlUtil.convert(OUtil.getAssetString(context, mAssetFileName), this);
+				XmlUtil.convert(AppUtil.getAssetString(context, mAssetFileName), this);
 				mAssetCache.fromTarget();
 				return true;
 			} catch (Exception e) {
@@ -65,7 +65,7 @@ public class ConfItem extends PrefItem implements IAssetItem {
 			}
 		} else if (mAssetType == TYPE_ASSET_JSON) {
 			try {
-				JsonUtil.convert(OUtil.getAssetString(context, mAssetFileName), this);
+				JsonUtil.convert(AppUtil.getAssetString(context, mAssetFileName), this);
 				mAssetCache.fromTarget();
 				return true;
 			} catch (Exception e) {

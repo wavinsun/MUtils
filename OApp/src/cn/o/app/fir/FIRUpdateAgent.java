@@ -6,7 +6,7 @@ import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 
 import android.view.Gravity;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.event.listener.VersionUpdateListener;
 import cn.o.app.core.text.MBFormat;
 import cn.o.app.core.text.StringUtil;
@@ -80,7 +80,7 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 
 		@Override
 		public void onComplete(INetTask<FIRUpdateReq, FIRUpdateRes> task, FIRUpdateRes response) {
-			String version = OUtil.getAppVersionName(mContext);
+			String version = AppUtil.getAppVersionName(mContext);
 			String installUrl = response.installUrl;
 			String versionShort = response.versionShort;
 			if (StringUtil.compareVersion(version, versionShort) >= 0) {
@@ -137,7 +137,7 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 				mVersionUpdateListener.onUpdate(mVersionShort);
 			}
 			StringBuilder sb = new StringBuilder();
-			sb.append(OUtil.getDiskCacheDir(mContext, "FIR"));
+			sb.append(AppUtil.getDiskCacheDir(mContext, "FIR"));
 			sb.append("/");
 			sb.append(mVersionShort);
 			sb.append(".apk");

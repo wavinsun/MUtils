@@ -1,4 +1,4 @@
-package cn.o.app.ui;
+package cn.o.app;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +18,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import cn.jpush.android.api.JPushInterface;
-import cn.o.app.App;
 import cn.o.app.R;
 import cn.o.app.core.event.listener.VersionUpdateListener;
+import cn.o.app.ui.OActivity;
+import cn.o.app.ui.OView;
 
 @SuppressLint("InflateParams")
-public class ActivityX extends OActivity {
+public class AppActivity extends OActivity {
 
 	private static final int NEW_VERSION_STATE_UNKNOWN = -1;
 
@@ -156,7 +157,7 @@ public class ActivityX extends OActivity {
 									};
 								}
 								UmengUpdateAgent.setDialogListener(mUmengDialogButtonListener);
-								UmengUpdateAgent.showUpdateDialog(ActivityX.this, updateInfo);
+								UmengUpdateAgent.showUpdateDialog(AppActivity.this, updateInfo);
 							}
 						}
 					}

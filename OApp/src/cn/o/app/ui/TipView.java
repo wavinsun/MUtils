@@ -10,7 +10,7 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.R;
 
 /**
@@ -156,7 +156,7 @@ public class TipView extends RelativeLayout {
 		float t = l;// top
 		float r = getWidth() - l;// right
 		float b = getHeight() - t;// bottom
-		float triangleBottomRadius = (float) Math.tan(OUtil.TO_RADIAN * mTriangleAngle / 2) * mTriangleHeight;
+		float triangleBottomRadius = (float) Math.tan(AppUtil.TO_RADIAN * mTriangleAngle / 2) * mTriangleHeight;
 		float triangleTopX = 0, triangleTopY = 0;
 		boolean canDrawTriangle = false;
 		boolean pointValid = mPointToScreenX != 0 || mPointToScreenY != 0;

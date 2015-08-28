@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 
 /**
  * Cookie cache
@@ -26,7 +26,7 @@ public class NetCookieCache {
 				return cachedCookie;
 			}
 		}
-		return OUtil.getPrefString(context, COOKIE_FILENAME, cookieKey, "");
+		return AppUtil.getPrefString(context, COOKIE_FILENAME, cookieKey, "");
 	}
 
 	public static boolean setCookie(Context context, URL url, String value) {
@@ -38,14 +38,14 @@ public class NetCookieCache {
 			}
 			sCookieMap.put(cookieKey, value);
 		}
-		return OUtil.setPrefString(context, COOKIE_FILENAME, cookieKey, value);
+		return AppUtil.setPrefString(context, COOKIE_FILENAME, cookieKey, value);
 	}
 
 	private static String getCookieKey(URL url) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(url.getHost());
 		sb.append(url.getPort() != -1 ? url.getPort() : url.getDefaultPort());
-		return OUtil.md5(sb.toString());
+		return AppUtil.md5(sb.toString());
 	}
 
 }

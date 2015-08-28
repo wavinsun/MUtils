@@ -1,7 +1,7 @@
 package cn.o.app.share;
 
 import android.content.Context;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 
 import com.sina.weibo.sdk.api.TextObject;
 import com.sina.weibo.sdk.api.WebpageObject;
@@ -46,7 +46,7 @@ public class ShareWeibo extends ShareBase {
 		web.description = mText;
 		web.actionUrl = mUrl;
 		web.defaultText = "Webpage 默认文案";
-		web.thumbData = OUtil.bitmap2ByteArray(OUtil.getAppIcon(mContext));
+		web.thumbData = AppUtil.bitmap2ByteArray(AppUtil.getAppIcon(mContext));
 		WeiboMultiMessage msg = new WeiboMultiMessage();
 		msg.textObject = text;
 		msg.mediaObject = web;

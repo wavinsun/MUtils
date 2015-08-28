@@ -37,10 +37,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
-import cn.o.app.conf.OLocale;
 import cn.o.app.core.archive.ZipUtil;
 import cn.o.app.core.crypto.AESUtil;
 import cn.o.app.core.io.IOUtil;
@@ -52,7 +52,7 @@ import cn.o.app.core.text.StringUtil;
  * Utility of framework
  */
 @SuppressWarnings("deprecation")
-public class OUtil {
+public class AppUtil {
 
 	/** Framework internal data identity key */
 	public static final String KEY = "o";
@@ -481,7 +481,7 @@ public class OUtil {
 	}
 
 	public static int getDaysOfMonth(Date date) {
-		return getDaysOfMonth(OUtil.getYear(date), OUtil.getMonth(date));
+		return getDaysOfMonth(AppUtil.getYear(date), AppUtil.getMonth(date));
 	}
 
 	public static Date getDate(int year, int month, int day) {
@@ -577,7 +577,7 @@ public class OUtil {
 			return null;
 		}
 		for (T element : list) {
-			if (OUtil.equals(propertyValue, ReflectUtil.get(element, propertyField))) {
+			if (AppUtil.equals(propertyValue, ReflectUtil.get(element, propertyField))) {
 				return element;
 			}
 		}
@@ -599,7 +599,7 @@ public class OUtil {
 		for (T element : list) {
 			try {
 				Object v = propertyField.get(element);
-				if (OUtil.equals(v, propertyValue)) {
+				if (AppUtil.equals(v, propertyValue)) {
 					result.add(element);
 				}
 			} catch (Exception e) {
@@ -695,15 +695,15 @@ public class OUtil {
 	}
 
 	public static Locale getLocale(Context context) {
-		return OLocale.getLocale(context);
+		return AppLocale.getLocale(context);
 	}
 
 	public static void setLocale(Context context, Locale locale) {
-		OLocale.setLocale(context, locale);
+		AppLocale.setLocale(context, locale);
 	}
 
 	public static void setLocaleFromString(Context context, String locale) {
-		OLocale.setLocale(context, StringUtil.getLocale(locale));
+		AppLocale.setLocale(context, StringUtil.getLocale(locale));
 	}
 
 	/**
@@ -772,6 +772,19 @@ public class OUtil {
 		anim.setDuration(300);
 		anim.setFillAfter(true);
 		return anim;
+	}
+
+	public static ViewGroup getParent(View v, int parentId) {
+		ViewGroup p = (ViewGroup) v.getParent();
+		while (true) {
+			if (p == null) {
+				return null;
+			}
+			if (p.getId() == parentId) {
+				return p;
+			}
+			p = (ViewGroup) p.getParent();
+		}
 	}
 
 	public static TextWatcher setEditTextDecimals(EditText editText, int decimals) {

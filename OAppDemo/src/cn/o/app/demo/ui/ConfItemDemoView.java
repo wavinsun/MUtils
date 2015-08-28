@@ -3,7 +3,7 @@ package cn.o.app.demo.ui;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.conf.ConfItem;
 import cn.o.app.core.annotation.Format;
 import cn.o.app.core.annotation.Name;
@@ -37,7 +37,7 @@ public class ConfItemDemoView extends StateView {
 		confItem.getFromAsset(getContext());
 		Alert alert = new Alert(getContext());
 		alert.setMessageGravity(Gravity.NO_GRAVITY);
-		alert.setMessage(OUtil.toStringXML(confItem));
+		alert.setMessage(AppUtil.toStringXML(confItem));
 		alert.show();
 	}
 
@@ -47,7 +47,7 @@ public class ConfItemDemoView extends StateView {
 		confItem.getFromPref(getContext());
 		Alert alert = new Alert(getContext());
 		alert.setMessageGravity(Gravity.NO_GRAVITY);
-		alert.setMessage(OUtil.toStringXML(confItem));
+		alert.setMessage(AppUtil.toStringXML(confItem));
 		alert.show();
 	}
 
@@ -61,7 +61,7 @@ public class ConfItemDemoView extends StateView {
 		confItem.putToPref(getContext());
 		Alert alert = new Alert(getContext());
 		alert.setMessageGravity(Gravity.NO_GRAVITY);
-		alert.setMessage(OUtil.toStringXML(confItem));
+		alert.setMessage(AppUtil.toStringXML(confItem));
 		alert.show();
 	}
 

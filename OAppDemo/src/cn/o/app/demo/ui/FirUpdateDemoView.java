@@ -8,7 +8,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.annotation.event.OnClick;
 import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.core.event.listener.VersionUpdateListener;
@@ -42,7 +42,7 @@ public class FirUpdateDemoView extends StateView {
 
 			@Override
 			public void onSuccess(ResponseInfo<File> responseInfo) {
-				OUtil.installApp(getContext(), responseInfo.result);
+				AppUtil.installApp(getContext(), responseInfo.result);
 			}
 
 			@Override

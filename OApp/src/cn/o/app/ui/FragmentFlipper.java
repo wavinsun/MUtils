@@ -18,7 +18,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ViewFlipper;
-import cn.o.app.OUtil;
+import cn.o.app.AppUtil;
 import cn.o.app.core.event.Dispatcher;
 import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.event.listener.OnSelectedChangeListener;
@@ -318,8 +318,8 @@ public class FragmentFlipper extends ViewFlipper implements IStateView, IStateVi
 		mGestureDetectorEnabled = v;
 		if (mGestureDetectorEnabled) {
 			Context context = this.getContext();
-			mMinDistance = (int) OUtil.getRawSize(context, TypedValue.COMPLEX_UNIT_DIP, 64);
-			mMinVelocity = (int) OUtil.getRawSize(context, TypedValue.COMPLEX_UNIT_DIP, 16);
+			mMinDistance = (int) AppUtil.getRawSize(context, TypedValue.COMPLEX_UNIT_DIP, 64);
+			mMinVelocity = (int) AppUtil.getRawSize(context, TypedValue.COMPLEX_UNIT_DIP, 16);
 		}
 	}
 
