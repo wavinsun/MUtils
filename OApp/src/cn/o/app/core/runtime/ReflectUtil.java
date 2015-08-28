@@ -112,7 +112,7 @@ public class ReflectUtil {
 		}
 	}
 
-	public static Class<?> getParameterizedClass(Class<?> targetClass, Type targetGenericType, int ArgumentIndex) {
+	public static Class<?> getParameterizedRawType(Class<?> targetClass, Type targetGenericType, int ArgumentIndex) {
 		if (targetGenericType == null) {
 			targetGenericType = targetClass.getGenericSuperclass();
 		} else {
@@ -132,7 +132,7 @@ public class ReflectUtil {
 		return String.class;
 	}
 
-	public static Type getParameterizedType(Class<?> targetClass, Type targetGenericType, int ArgumentIndex) {
+	public static Type getParameterizedGenericType(Class<?> targetClass, Type targetGenericType, int ArgumentIndex) {
 		if (targetGenericType == null) {
 			targetGenericType = targetClass.getGenericSuperclass();
 		}
@@ -142,23 +142,23 @@ public class ReflectUtil {
 		return String.class;
 	}
 
-	public static Class<?> getParameterizedClass(Class<?> targetClass, int ArgumentIndex) {
-		return getParameterizedClass(targetClass, null, ArgumentIndex);
+	public static Class<?> getParameterizedRawType(Class<?> targetClass, int ArgumentIndex) {
+		return getParameterizedRawType(targetClass, null, ArgumentIndex);
 	}
 
-	public static Type getParameterizedType(Class<?> targetClass, int ArgumentIndex) {
-		return getParameterizedType(targetClass, null, ArgumentIndex);
+	public static Type getParameterizedGenericType(Class<?> targetClass, int ArgumentIndex) {
+		return getParameterizedGenericType(targetClass, null, ArgumentIndex);
 	}
 
-	public static Class<?> getListElementClass(Class<?> listClass, Type genericType) {
-		return getParameterizedClass(listClass, genericType, 0);
+	public static Class<?> getCollectionElementRawType(Class<?> collectionClass, Type genericType) {
+		return getParameterizedRawType(collectionClass, genericType, 0);
 	}
 
-	public static Type getListElementType(Class<?> listClass, Type genericType) {
-		return getParameterizedType(listClass, genericType, 0);
+	public static Type getCollectionElementGenericType(Class<?> collectionClass, Type genericType) {
+		return getParameterizedGenericType(collectionClass, genericType, 0);
 	}
 
-	public static Class<?> getMapKeyClass(Class<?> mapClass, Type genericType) {
+	public static Class<?> getMapKeyRawType(Class<?> mapClass, Type genericType) {
 		if (genericType == null) {
 			genericType = mapClass.getGenericSuperclass();
 		} else {
@@ -175,12 +175,12 @@ public class ReflectUtil {
 		return Object.class;
 	}
 
-	public static Class<?> getMapValueClass(Class<?> mapClass, Type genericType) {
-		return getParameterizedClass(mapClass, genericType, 1);
+	public static Class<?> getMapValueRawType(Class<?> mapClass, Type genericType) {
+		return getParameterizedRawType(mapClass, genericType, 1);
 	}
 
-	public static Type getMapValueType(Class<?> mapClass, Type genericType) {
-		return getParameterizedType(mapClass, genericType, 1);
+	public static Type getMapValueGenericType(Class<?> mapClass, Type genericType) {
+		return getParameterizedGenericType(mapClass, genericType, 1);
 	}
 
 	public static Object valueOfEnum(Class<?> enumType, String name) {

@@ -1,8 +1,8 @@
 package cn.o.app.core.json;
 
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -65,8 +65,8 @@ public class JsonUtil {
 					(json instanceof String) ? (String) json : json.toString());
 		} else if (target instanceof JSONObject || target instanceof JSONArray) {
 			return (T) json;
-		} else if (target instanceof List) {
-			return (T) convertArrayFromJson(json, (List<?>) target, genericType);
+		} else if (target instanceof Collection) {
+			return (T) convertCollectionFromJson(json, (Collection<?>) target, genericType);
 		} else if (target instanceof Map) {
 			return (T) convertMapFromJson(json, (Map<?, ?>) target, genericType);
 		} else if (target instanceof IJsonItem) {
@@ -86,10 +86,11 @@ public class JsonUtil {
 		return target;
 	}
 
-	protected static <T extends List> T convertArrayFromJson(Object json, T target, Type genericType) throws Exception {
+	protected static <T extends Collection> T convertCollectionFromJson(Object json, T target, Type genericType)
+			throws Exception {
 		Class<?> targetClass = target.getClass();
-		Class<?> eClass = ReflectUtil.getListElementClass(targetClass, genericType);
-		Type eType = ReflectUtil.getListElementType(targetClass, genericType);
+		Class<?> eClass = ReflectUtil.getCollectionElementRawType(targetClass, genericType);
+		Type eType = ReflectUtil.getCollectionElementGenericType(targetClass, genericType);
 		JSONArray jsonArray = (JSONArray) json;
 		for (int i = 0, size = jsonArray.length(); i < size; i++) {
 			target.add(convertFromJson(jsonArray.opt(i), eClass, eType));
@@ -99,12 +100,12 @@ public class JsonUtil {
 
 	protected static <T extends Map> T convertMapFromJson(Object json, T target, Type genericType) throws Exception {
 		Class<? extends Map> targetClass = target.getClass();
-		Class<?> keyClass = ReflectUtil.getMapKeyClass(targetClass, genericType);
+		Class<?> keyClass = ReflectUtil.getMapKeyRawType(targetClass, genericType);
 		if (!String.class.isAssignableFrom(keyClass)) {
 			throw new Exception();
 		}
-		Class<?> vClass = ReflectUtil.getMapValueClass(targetClass, genericType);
-		Type vType = ReflectUtil.getMapValueType(targetClass, genericType);
+		Class<?> vClass = ReflectUtil.getMapValueRawType(targetClass, genericType);
+		Type vType = ReflectUtil.getMapValueGenericType(targetClass, genericType);
 		JSONObject jsonObject = (JSONObject) json;
 		Iterator<String> keys = jsonObject.keys();
 		while (keys.hasNext()) {
@@ -145,8 +146,8 @@ public class JsonUtil {
 	public static <T> Object convertToJson(T target) throws Exception {
 		if (target == null) {
 			return JSONObject.NULL;
-		} else if (target instanceof List) {
-			return convertArrayToJson(target);
+		} else if (target instanceof Collection) {
+			return convertCollectionToJson(target);
 		} else if (target instanceof Map) {
 			return convertMapToJson(target);
 		} else if (target instanceof IJsonItem) {
@@ -179,9 +180,9 @@ public class JsonUtil {
 		return json;
 	}
 
-	protected static <T> Object convertArrayToJson(T target) throws Exception {
+	protected static <T> Object convertCollectionToJson(T target) throws Exception {
 		JSONArray json = new JSONArray();
-		for (Object e : (List<?>) target) {
+		for (Object e : (Collection<?>) target) {
 			json.put(convertToJson(e));
 		}
 		return json;
