@@ -7,10 +7,12 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import cn.o.app.core.io.IOUtil;
+import cn.o.app.core.json.JsonUtil;
 
 /**
  * Object utility of framework
  */
+@SuppressWarnings("unchecked")
 public class ObjectUtil {
 
 	public static Object get(Object object, String property) {
@@ -37,7 +39,7 @@ public class ObjectUtil {
 	 * 
 	 * @return
 	 */
-	public static Object clone(Object object) {
+	public static Object clone(Serializable object) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		ObjectOutputStream oos = null;
 		ByteArrayInputStream bis = null;
@@ -55,6 +57,23 @@ public class ObjectUtil {
 			IOUtil.close(oos);
 			IOUtil.close(bis);
 			IOUtil.close(ois);
+		}
+	}
+
+	public static <T> T copy(T src) {
+		try {
+			return (T) JsonUtil.convertFromJson(JsonUtil.convertToJson(src), src.getClass());
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public static boolean copy(Object target, Object src) {
+		try {
+			JsonUtil.convertFromJson(JsonUtil.convertToJson(src), target);
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
 	}
 
