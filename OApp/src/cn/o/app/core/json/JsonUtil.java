@@ -46,6 +46,10 @@ public class JsonUtil {
 		return convertFromJson(json, targetClass.newInstance(), genericType);
 	}
 
+	public static <T> T convertFromJson(Object json, T target) throws Exception {
+		return convertFromJson(json, target, null);
+	}
+
 	protected static <T> T convertFromJson(Object json, T target, Type genericType) throws Exception {
 		if (JSONObject.NULL.equals(json)) {
 			return null;
