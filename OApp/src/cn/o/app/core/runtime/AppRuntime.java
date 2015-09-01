@@ -30,6 +30,12 @@ public enum AppRuntime {
 	/** Application runtime of ANDROID tag in active threads */
 	protected static final String TAG_ANDROID = "android.os.";
 
+	/** Application runtime of common WEB tag in active threads */
+	protected static final String TAG_JAVA_WEB = "javax.servlet.";
+
+	/** Application runtime of TOMCAt tag in active threads */
+	protected static final String TAG_JAVA_WEB_TOMCAT = "org.apache.catalina.";
+
 	/**
 	 * Detect application runtime environment
 	 * 
@@ -63,6 +69,12 @@ public enum AppRuntime {
 				}
 				if (className.startsWith(TAG_JAVA_AWT)) {
 					return JAVA_AWT;
+				}
+				if (className.startsWith(TAG_JAVA_WEB_TOMCAT)) {
+					return JAVA_WEB;
+				}
+				if (className.startsWith(TAG_JAVA_WEB)) {
+					return JAVA_WEB;
 				}
 				if (tagMap != null) {
 					AppRuntime runtime = detect(className, tagMap);
