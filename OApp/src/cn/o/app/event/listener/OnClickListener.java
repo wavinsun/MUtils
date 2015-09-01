@@ -45,7 +45,7 @@ public class OnClickListener implements View.OnClickListener {
 			}
 		}
 		if (!invoked) {
-			Logs.e("OnClick Invalid: " + v);
+			Logs.e(mCallBack.getDeclaringClass().getSimpleName() + "." + mCallBack.getName(), "OnClick Invalid: " + v);
 		}
 	}
 }
