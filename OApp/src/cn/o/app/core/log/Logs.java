@@ -6,6 +6,18 @@ import cn.o.app.core.runtime.AppRuntime;
 import cn.o.app.core.runtime.StackTraceUtil;
 import cn.o.app.core.text.StringUtil;
 
+/**
+ * Logs of framework<br>
+ * This logs instance is used for Java runtime logs<br>
+ * You should use this class with static calls as:<br>
+ * Logs.v("Hello world!");<br>
+ * Logs.i("Hello world!");<br>
+ * Logs.d("Hello world!");<br>
+ * Logs.w("Hello world!");<br>
+ * Logs.e("Hello world!");<br>
+ * 
+ * @see AppLogs
+ */
 public class Logs implements ILogs {
 
 	protected static ILogs sLogs = null;
@@ -26,46 +38,127 @@ public class Logs implements ILogs {
 		sLogs = logs;
 	}
 
+	/**
+	 * Print logs of verbose level
+	 * 
+	 * @param tag
+	 * @param msg
+	 * @return
+	 */
 	public static int v(String tag, String msg) {
 		return getLogs().verbose(tag, msg);
 	}
 
+	/**
+	 * Print logs of verbose level
+	 * 
+	 * @param tag
+	 * @param msg
+	 * @param tr
+	 * @return
+	 */
 	public static int v(String tag, String msg, Throwable tr) {
 		return getLogs().verbose(tag, msg, tr);
 	}
 
+	/**
+	 * Print logs of debug level
+	 * 
+	 * @param tag
+	 * @param msg
+	 * @return
+	 */
 	public static int d(String tag, String msg) {
 		return getLogs().debug(tag, msg);
 	}
 
+	/**
+	 * Print logs of debug level
+	 * 
+	 * @param tag
+	 * @param msg
+	 * @param tr
+	 * @return
+	 */
 	public static int d(String tag, String msg, Throwable tr) {
 		return getLogs().debug(tag, msg, tr);
 	}
 
+	/**
+	 * Print logs of info level
+	 * 
+	 * @param tag
+	 * @param msg
+	 * @return
+	 */
 	public static int i(String tag, String msg) {
 		return getLogs().info(tag, msg);
 	}
 
+	/**
+	 * Print logs of info level
+	 * 
+	 * @param tag
+	 * @param msg
+	 * @param tr
+	 * @return
+	 */
 	public static int i(String tag, String msg, Throwable tr) {
 		return getLogs().info(tag, msg, tr);
 	}
 
+	/**
+	 * Print logs of warn level
+	 * 
+	 * @param tag
+	 * @param msg
+	 * @return
+	 */
 	public static int w(String tag, String msg) {
 		return getLogs().warn(tag, msg);
 	}
 
+	/**
+	 * Print logs of warn level
+	 * 
+	 * @param tag
+	 * @param msg
+	 * @param tr
+	 * @return
+	 */
 	public static int w(String tag, String msg, Throwable tr) {
 		return getLogs().warn(tag, msg, tr);
 	}
 
+	/**
+	 * Print logs of error level
+	 * 
+	 * @param tag
+	 * @param msg
+	 * @return
+	 */
 	public static int e(String tag, String msg) {
 		return getLogs().error(tag, msg);
 	}
 
+	/**
+	 * Print logs of error level
+	 * 
+	 * @param tag
+	 * @param msg
+	 * @param tr
+	 * @return
+	 */
 	public static int e(String tag, String msg, Throwable tr) {
 		return getLogs().error(tag, msg, tr);
 	}
 
+	/**
+	 * Print logs of verbose level
+	 * 
+	 * @param msg
+	 * @return
+	 */
 	public static int v(String msg) {
 		ILogs logs = getLogs();
 		if (!logs.isEnabled()) {
@@ -74,6 +167,13 @@ public class Logs implements ILogs {
 		return logs.verbose(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg);
 	}
 
+	/**
+	 * Print logs of verbose level
+	 * 
+	 * @param msg
+	 * @param tr
+	 * @return
+	 */
 	public static int v(String msg, Throwable tr) {
 		ILogs logs = getLogs();
 		if (!logs.isEnabled()) {
@@ -82,6 +182,12 @@ public class Logs implements ILogs {
 		return logs.verbose(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg, tr);
 	}
 
+	/**
+	 * Print logs of debug level
+	 * 
+	 * @param msg
+	 * @return
+	 */
 	public static int d(String msg) {
 		ILogs logs = getLogs();
 		if (!logs.isEnabled()) {
@@ -90,6 +196,13 @@ public class Logs implements ILogs {
 		return logs.debug(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg);
 	}
 
+	/**
+	 * Print logs of debug level
+	 * 
+	 * @param msg
+	 * @param tr
+	 * @return
+	 */
 	public static int d(String msg, Throwable tr) {
 		ILogs logs = getLogs();
 		if (!logs.isEnabled()) {
@@ -98,6 +211,12 @@ public class Logs implements ILogs {
 		return logs.debug(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg, tr);
 	}
 
+	/**
+	 * Print logs of info level
+	 * 
+	 * @param msg
+	 * @return
+	 */
 	public static int i(String msg) {
 		ILogs logs = getLogs();
 		if (!logs.isEnabled()) {
@@ -106,6 +225,13 @@ public class Logs implements ILogs {
 		return logs.info(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg);
 	}
 
+	/**
+	 * Print logs of info level
+	 * 
+	 * @param msg
+	 * @param tr
+	 * @return
+	 */
 	public static int i(String msg, Throwable tr) {
 		ILogs logs = getLogs();
 		if (!logs.isEnabled()) {
@@ -114,6 +240,12 @@ public class Logs implements ILogs {
 		return logs.info(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg, tr);
 	}
 
+	/**
+	 * Print logs of warn level
+	 * 
+	 * @param msg
+	 * @return
+	 */
 	public static int w(String msg) {
 		ILogs logs = getLogs();
 		if (!logs.isEnabled()) {
@@ -122,6 +254,13 @@ public class Logs implements ILogs {
 		return logs.warn(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg);
 	}
 
+	/**
+	 * Print logs of warn level
+	 * 
+	 * @param msg
+	 * @param tr
+	 * @return
+	 */
 	public static int w(String msg, Throwable tr) {
 		ILogs logs = getLogs();
 		if (!logs.isEnabled()) {
@@ -130,6 +269,12 @@ public class Logs implements ILogs {
 		return logs.warn(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg, tr);
 	}
 
+	/**
+	 * Print logs of error level
+	 * 
+	 * @param msg
+	 * @return
+	 */
 	public static int e(String msg) {
 		ILogs logs = getLogs();
 		if (!logs.isEnabled()) {
@@ -138,6 +283,13 @@ public class Logs implements ILogs {
 		return logs.error(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg);
 	}
 
+	/**
+	 * Print logs of error level
+	 * 
+	 * @param msg
+	 * @param tr
+	 * @return
+	 */
 	public static int e(String msg, Throwable tr) {
 		ILogs logs = getLogs();
 		if (!logs.isEnabled()) {
@@ -244,7 +396,7 @@ public class Logs implements ILogs {
 			return 0;
 		}
 		String log = generate(tag, msg, tr);
-		System.out.println(log);
+		System.err.println(log);
 		return log.length();
 	}
 

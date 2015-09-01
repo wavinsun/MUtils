@@ -5,6 +5,9 @@ import cn.o.app.core.log.Logs;
 import cn.o.app.core.runtime.StackTraceUtil;
 import cn.o.app.core.text.StringUtil;
 
+/**
+ * Logs for Android runtime
+ */
 public class AppLogs extends Logs {
 
 	@Override
@@ -84,7 +87,7 @@ public class AppLogs extends Logs {
 		}
 		tag = tag != null ? tag : "";
 		msg = msg != null ? msg : "";
-		return Log.d(tag, msg, tr);
+		return Log.w(tag, msg, tr);
 	}
 
 	@Override

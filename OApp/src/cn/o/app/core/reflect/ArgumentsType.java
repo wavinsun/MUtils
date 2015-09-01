@@ -5,7 +5,12 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
-public class ArgumentsType implements ParameterizedType {
+import cn.o.app.core.IClearable;
+
+/**
+ * Simple implementation of {@link ParameterizedType}
+ */
+public class ArgumentsType implements ParameterizedType, IClearable {
 
 	protected Type[] mArguments;
 

@@ -50,7 +50,7 @@ import cn.o.app.core.reflect.ReflectUtil;
 import cn.o.app.core.text.StringUtil;
 
 /**
- * Utility of framework
+ * Utility of framework for Android runtime
  */
 @SuppressWarnings("deprecation")
 public class AppUtil {

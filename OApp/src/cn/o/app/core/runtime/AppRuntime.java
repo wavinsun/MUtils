@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * Application runtime environment of framework
+ */
 public enum AppRuntime {
 
 	/** Unknown */
@@ -21,13 +24,27 @@ public enum AppRuntime {
 	/** Android */
 	ANDROID;
 
+	/** Application runtime of AWT tag in active threads */
 	protected static final String TAG_JAVA_AWT = "java.awt.";
+
+	/** Application runtime of ANDROID tag in active threads */
 	protected static final String TAG_ANDROID = "android.os.";
 
+	/**
+	 * Detect application runtime environment
+	 * 
+	 * @return
+	 */
 	public static AppRuntime detect() {
 		return detect(null);
 	}
 
+	/**
+	 * Detect application runtime environment with tag map
+	 * 
+	 * @param tagMap
+	 * @return
+	 */
 	public static AppRuntime detect(Map<AppRuntime, List<String>> tagMap) {
 		Thread[] mainThreads = ThreadUtil.getGroup(ThreadUtil.GROUP_MAIN);
 		if (mainThreads.length == 0) {
@@ -58,6 +75,13 @@ public enum AppRuntime {
 		return JAVA;
 	}
 
+	/**
+	 * Detect application runtime environment for stack trace element
+	 * 
+	 * @param stackTraceElementClass
+	 * @param tagMap
+	 * @return
+	 */
 	protected static AppRuntime detect(String stackTraceElementClass, Map<AppRuntime, List<String>> tagMap) {
 		if (tagMap == null) {
 			return null;
