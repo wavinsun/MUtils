@@ -11,7 +11,7 @@ import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
 import cn.o.app.core.annotation.event.OnClick;
 import cn.o.app.core.annotation.res.SetContentView;
-import cn.o.app.core.io.ODate;
+import cn.o.app.core.time.ODate;
 import cn.o.app.demo.R;
 import cn.o.app.ui.Alert;
 import cn.o.app.ui.StateView;

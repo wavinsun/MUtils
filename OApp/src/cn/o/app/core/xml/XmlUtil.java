@@ -24,8 +24,8 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import cn.o.app.core.runtime.BeanField;
-import cn.o.app.core.runtime.ReflectUtil;
+import cn.o.app.core.beans.BeanField;
+import cn.o.app.core.reflect.ReflectUtil;
 
 /**
  * XML serializer of framework

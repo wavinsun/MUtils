@@ -1,7 +1,7 @@
 package cn.o.app.core.json;
 
-import cn.o.app.core.io.INoProguard;
-import cn.o.app.core.runtime.BeanField;
+import cn.o.app.core.INoProguard;
+import cn.o.app.core.beans.BeanField;
 
 public interface IJsonItem extends INoProguard {
 

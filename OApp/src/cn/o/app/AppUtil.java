@@ -42,11 +42,11 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import cn.o.app.core.archive.ZipUtil;
+import cn.o.app.core.beans.BeanField;
 import cn.o.app.core.crypto.AESUtil;
 import cn.o.app.core.io.IOUtil;
 import cn.o.app.core.math.NumberUtil;
-import cn.o.app.core.runtime.BeanField;
-import cn.o.app.core.runtime.ReflectUtil;
+import cn.o.app.core.reflect.ReflectUtil;
 import cn.o.app.core.text.StringUtil;
 
 /**

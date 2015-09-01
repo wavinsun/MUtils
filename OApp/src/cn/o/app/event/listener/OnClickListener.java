@@ -3,8 +3,8 @@ package cn.o.app.event.listener;
 import java.lang.reflect.Method;
 
 import android.view.View;
-import cn.o.app.LogCat;
-import cn.o.app.core.runtime.ReflectUtil;
+import cn.o.app.core.log.Logs;
+import cn.o.app.core.reflect.ReflectUtil;
 
 /**
  * IOC for @OnClick
@@ -45,7 +45,7 @@ public class OnClickListener implements View.OnClickListener {
 			}
 		}
 		if (!invoked) {
-			LogCat.e("OnClick Invalid: " + v);
+			Logs.e("OnClick Invalid: " + v);
 		}
 	}
 }

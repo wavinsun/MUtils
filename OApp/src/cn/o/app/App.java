@@ -11,6 +11,7 @@ import android.app.Application;
 import android.content.Context;
 import cn.jpush.android.api.JPushInterface;
 import cn.o.app.context.IContextProvider;
+import cn.o.app.core.log.Logs;
 
 /**
  * Application of framework
@@ -84,7 +85,7 @@ public class App extends Application implements IContextProvider {
 
 		@Override
 		public void uncaughtException(Thread thread, Throwable ex) {
-			LogCat.e("AndroidRuntime", thread.getName(), ex);
+			Logs.e("AndroidRuntime", thread.getName(), ex);
 			try {
 				Thread.sleep(300L);
 			} catch (Exception e) {

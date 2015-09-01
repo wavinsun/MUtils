@@ -3,8 +3,8 @@ package cn.o.app.conf;
 import android.content.Context;
 import cn.o.app.AppUtil;
 import cn.o.app.core.annotation.Ignore;
+import cn.o.app.core.beans.BeanCache;
 import cn.o.app.core.json.JsonUtil;
-import cn.o.app.core.runtime.BeanCache;
 import cn.o.app.core.xml.XmlUtil;
 
 /**

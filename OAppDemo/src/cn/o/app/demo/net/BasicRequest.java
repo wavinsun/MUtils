@@ -1,8 +1,8 @@
 package cn.o.app.demo.net;
 
+import cn.o.app.core.INoProguard;
 import cn.o.app.core.annotation.Name;
 import cn.o.app.core.annotation.net.Head;
-import cn.o.app.core.io.INoProguard;
 
 @SuppressWarnings("serial")
 public class BasicRequest implements INoProguard {

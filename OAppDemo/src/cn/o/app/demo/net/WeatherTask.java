@@ -1,12 +1,12 @@
 package cn.o.app.demo.net;
 
 import android.content.Context;
+import cn.o.app.core.INoProguard;
 import cn.o.app.core.annotation.Format;
 import cn.o.app.core.annotation.Name;
 import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
-import cn.o.app.core.io.INoProguard;
-import cn.o.app.core.io.ODate;
+import cn.o.app.core.time.ODate;
 import cn.o.app.demo.net.WeatherTask.WeatherReq;
 import cn.o.app.demo.net.WeatherTask.WeatherRes;
 

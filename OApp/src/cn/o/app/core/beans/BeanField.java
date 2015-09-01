@@ -1,4 +1,4 @@
-package cn.o.app.core.runtime;
+package cn.o.app.core.beans;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -15,6 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import cn.o.app.core.annotation.Ignore;
 import cn.o.app.core.annotation.Name;
+import cn.o.app.core.reflect.GenericInfo;
+import cn.o.app.core.reflect.ReflectUtil;
 
 /**
  * Bean field of framework reflection

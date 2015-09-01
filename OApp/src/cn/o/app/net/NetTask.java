@@ -7,13 +7,13 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import cn.o.app.BuildConfig;
-import cn.o.app.LogCat;
 import cn.o.app.AppUtil;
+import cn.o.app.BuildConfig;
+import cn.o.app.core.log.Logs;
 import cn.o.app.core.net.NetClient;
 import cn.o.app.core.net.NetClient.ConnectNotFoundException;
 import cn.o.app.core.net.NetClient.NetClientListener;
-import cn.o.app.core.runtime.ReflectUtil;
+import cn.o.app.core.reflect.ReflectUtil;
 import cn.o.app.queue.QueueItem;
 
 /**
@@ -279,9 +279,9 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 			return;
 		}
 		if (NetClient.EVENT_EXCEPTION.equals(event)) {
-			LogCat.e(this.getClass().getSimpleName(), NetClient.getLog(event, message).toString());
+			Logs.e(this.getClass().getSimpleName(), NetClient.getLog(event, message).toString());
 		} else {
-			LogCat.i(this.getClass().getSimpleName(), NetClient.getLog(event, message).toString());
+			Logs.i(this.getClass().getSimpleName(), NetClient.getLog(event, message).toString());
 		}
 	}
 

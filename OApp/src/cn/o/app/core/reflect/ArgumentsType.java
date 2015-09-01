@@ -1,4 +1,4 @@
-package cn.o.app.core.runtime;
+package cn.o.app.core.reflect;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

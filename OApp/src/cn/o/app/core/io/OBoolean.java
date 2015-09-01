@@ -7,9 +7,9 @@ import cn.o.app.core.annotation.False;
 import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.True;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
+import cn.o.app.core.beans.BeanField;
 import cn.o.app.core.json.IJsonItem;
 import cn.o.app.core.properties.IPropertyItem;
-import cn.o.app.core.runtime.BeanField;
 import cn.o.app.core.xml.IXmlItem;
 import cn.o.app.core.xml.XmlUtil;
 

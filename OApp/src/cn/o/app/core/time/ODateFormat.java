@@ -1,4 +1,4 @@
-package cn.o.app.core.text;
+package cn.o.app.core.time;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

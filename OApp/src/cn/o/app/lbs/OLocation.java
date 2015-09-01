@@ -1,6 +1,6 @@
 package cn.o.app.lbs;
 
-import cn.o.app.core.io.INoProguard;
+import cn.o.app.core.INoProguard;
 import cn.o.app.core.json.JsonUtil;
 
 /**

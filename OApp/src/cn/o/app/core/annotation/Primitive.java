@@ -5,12 +5,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import cn.o.app.core.io.ODate;
 import cn.o.app.core.io.ODouble;
 import cn.o.app.core.io.OEnum;
 import cn.o.app.core.io.OInteger;
 import cn.o.app.core.io.OLong;
 import cn.o.app.core.io.StringJson;
+import cn.o.app.core.time.ODate;
 
 /**
  * IOC for primitive type of property of entity

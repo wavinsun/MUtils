@@ -2,7 +2,7 @@ package cn.o.app.core.text;
 
 import java.util.ArrayList;
 
-import cn.o.app.core.io.INoProguard;
+import cn.o.app.core.INoProguard;
 
 /**
  * String ArrayList

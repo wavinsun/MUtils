@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import cn.o.app.core.annotation.res.FindViewById;
 import cn.o.app.core.annotation.res.SetContentView;
-import cn.o.app.core.io.ODate;
+import cn.o.app.core.time.ODate;
 import cn.o.app.demo.push.HelloWorldPushDispatcher.HelloWorldMessage;
 import cn.o.app.demo.ui.BasicActivity;
 import cn.o.app.io.Extra;

@@ -1,6 +1,8 @@
-package cn.o.app.core.runtime;
+package cn.o.app.core.reflect;
 
 import java.lang.reflect.Type;
+
+import cn.o.app.core.IClearable;
 
 public class GenericInfo implements IClearable {
 

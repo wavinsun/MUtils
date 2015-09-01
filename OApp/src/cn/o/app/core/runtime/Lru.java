@@ -1,4 +1,4 @@
-package cn.o.app.core.io;
+package cn.o.app.core.runtime;
 
 import android.support.v4.util.LruCache;
 

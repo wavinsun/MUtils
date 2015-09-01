@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import cn.o.app.core.beans.BeanField;
 import cn.o.app.core.json.JsonUtil;
-import cn.o.app.core.runtime.BeanField;
-import cn.o.app.core.runtime.ReflectUtil;
+import cn.o.app.core.reflect.ReflectUtil;
 
 /**
  * It will throw exception when you call "Properties.setProperty("...",null)"
