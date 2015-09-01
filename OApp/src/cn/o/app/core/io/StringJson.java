@@ -5,11 +5,11 @@ import java.lang.reflect.Type;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import cn.o.app.core.beans.BeanField;
 import cn.o.app.core.json.IJsonItem;
 import cn.o.app.core.json.JsonUtil;
 import cn.o.app.core.properties.IPropertyItem;
-import cn.o.app.core.runtime.BeanField;
-import cn.o.app.core.runtime.ReflectUtil;
+import cn.o.app.core.reflect.ReflectUtil;
 import cn.o.app.core.xml.IXmlItem;
 import cn.o.app.core.xml.XmlUtil;
 

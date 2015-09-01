@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import cn.o.app.core.runtime.ReflectUtil;
+import cn.o.app.core.reflect.ReflectUtil;
 
 @SuppressWarnings("unchecked")
 public class AppBroadcast<EXTRA extends Extra> implements IBroadcast {

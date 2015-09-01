@@ -3,7 +3,7 @@ package cn.o.app.io;
 import android.content.Intent;
 import android.os.Bundle;
 import cn.o.app.AppUtil;
-import cn.o.app.core.io.INoProguard;
+import cn.o.app.core.INoProguard;
 import cn.o.app.core.json.JsonUtil;
 
 /**

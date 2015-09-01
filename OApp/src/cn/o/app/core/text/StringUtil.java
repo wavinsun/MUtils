@@ -279,7 +279,7 @@ public class StringUtil {
 	 * @param e
 	 * @return
 	 */
-	public static String printStackTrace(Exception e) {
+	public static String printStackTrace(Throwable e) {
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
 		e.printStackTrace(pw);

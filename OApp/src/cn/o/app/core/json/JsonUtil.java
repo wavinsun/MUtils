@@ -10,8 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import cn.o.app.core.runtime.BeanField;
-import cn.o.app.core.runtime.ReflectUtil;
+import cn.o.app.core.beans.BeanField;
+import cn.o.app.core.reflect.ReflectUtil;
 
 /**
  * JSON serializer of framework.<br>

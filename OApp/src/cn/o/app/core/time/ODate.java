@@ -1,4 +1,4 @@
-package cn.o.app.core.io;
+package cn.o.app.core.time;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,10 +10,9 @@ import org.w3c.dom.Node;
 import cn.o.app.core.annotation.Format;
 import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
+import cn.o.app.core.beans.BeanField;
 import cn.o.app.core.json.IJsonItem;
 import cn.o.app.core.properties.IPropertyItem;
-import cn.o.app.core.runtime.BeanField;
-import cn.o.app.core.text.ODateFormat;
 import cn.o.app.core.xml.IXmlItem;
 import cn.o.app.core.xml.XmlUtil;
 

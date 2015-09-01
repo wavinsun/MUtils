@@ -1,4 +1,4 @@
-package cn.o.app.core.runtime;
+package cn.o.app.core.beans;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

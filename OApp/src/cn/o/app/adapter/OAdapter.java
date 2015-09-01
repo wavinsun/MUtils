@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import cn.o.app.context.IContextProvider;
-import cn.o.app.core.runtime.ReflectUtil;
+import cn.o.app.core.reflect.ReflectUtil;
 
 /**
  * Provide object-oriented item view

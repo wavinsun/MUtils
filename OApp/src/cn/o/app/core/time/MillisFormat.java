@@ -1,4 +1,4 @@
-package cn.o.app.core.text;
+package cn.o.app.core.time;
 
 /**
  * String format tool for millisecond: 6000 -> 00:00:06

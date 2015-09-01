@@ -11,9 +11,9 @@ import cn.o.app.AppUtil;
 import cn.o.app.core.annotation.Ignore;
 import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
+import cn.o.app.core.beans.BeanCache;
+import cn.o.app.core.beans.BeanField;
 import cn.o.app.core.json.JsonUtil;
-import cn.o.app.core.runtime.BeanCache;
-import cn.o.app.core.runtime.BeanField;
 
 /**
  * JOSN or XML serializer for shared preferences

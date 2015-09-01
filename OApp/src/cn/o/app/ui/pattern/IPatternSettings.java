@@ -1,7 +1,7 @@
 package cn.o.app.ui.pattern;
 
 import android.content.Context;
-import cn.o.app.core.io.INoProguard;
+import cn.o.app.core.INoProguard;
 
 public interface IPatternSettings extends INoProguard {
 

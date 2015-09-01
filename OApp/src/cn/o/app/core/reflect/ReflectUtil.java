@@ -1,4 +1,4 @@
-package cn.o.app.core.runtime;
+package cn.o.app.core.reflect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -6,6 +6,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+
+import cn.o.app.core.beans.BeanField;
 
 /**
  * Reflection utility of framework

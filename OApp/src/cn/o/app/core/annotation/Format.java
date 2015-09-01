@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import cn.o.app.core.io.ODate;
+import cn.o.app.core.time.ODate;
 
 /**
  * IOC for format of property of entity

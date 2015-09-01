@@ -30,14 +30,14 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
+import cn.o.app.core.IClearable;
 import cn.o.app.core.annotation.net.Head;
+import cn.o.app.core.beans.BeanField;
 import cn.o.app.core.event.Listener;
 import cn.o.app.core.json.JsonUtil;
-import cn.o.app.core.runtime.BeanField;
-import cn.o.app.core.runtime.IClearable;
-import cn.o.app.core.runtime.ReflectUtil;
-import cn.o.app.core.text.MillisFormat;
+import cn.o.app.core.reflect.ReflectUtil;
 import cn.o.app.core.text.StringUtil;
+import cn.o.app.core.time.MillisFormat;
 
 /**
  * Template of request and response for net API at Java application level

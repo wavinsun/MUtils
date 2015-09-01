@@ -1,4 +1,4 @@
-package cn.o.app.core.io;
+package cn.o.app.core;
 
 import java.io.Serializable;
 

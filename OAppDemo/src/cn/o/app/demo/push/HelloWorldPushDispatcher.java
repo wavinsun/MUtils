@@ -8,7 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
-import cn.o.app.core.io.INoProguard;
+import cn.o.app.core.INoProguard;
 import cn.o.app.core.json.JsonUtil;
 import cn.o.app.demo.PushNotifyActivity;
 import cn.o.app.demo.PushNotifyActivity.DemoPushNotifyExtra;
