@@ -1,13 +1,18 @@
 package cn.o.app.share;
 
-import android.content.Context;
-
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+
+import android.content.Context;
 
 public class ShareWechatMoments extends ShareWechat {
 
 	public ShareWechatMoments(Context context) {
 		super(context);
+	}
+
+	@Override
+	public int getPlatform() {
+		return PLATFORM_WECHAT_MOMENTS;
 	}
 
 	@Override

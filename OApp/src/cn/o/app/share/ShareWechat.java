@@ -1,13 +1,13 @@
 package cn.o.app.share;
 
-import android.content.Context;
-import cn.o.app.AppUtil;
-
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import android.content.Context;
+import cn.o.app.AppUtil;
 
 public class ShareWechat extends ShareBase {
 
@@ -52,7 +52,12 @@ public class ShareWechat extends ShareBase {
 
 	@Override
 	public int getPlatform() {
-		return IShare.PLATFORM_WECHAT;
+		return PLATFORM_WECHAT;
+	}
+
+	@Override
+	public int getMethod() {
+		return METHOD_API;
 	}
 
 	public static void setAppId(String appId) {

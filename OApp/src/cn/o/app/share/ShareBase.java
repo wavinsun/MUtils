@@ -12,7 +12,9 @@ public abstract class ShareBase implements IShare {
 
 	protected String mImageUrl;
 
-	protected int mPlatform = IShare.PLATFORM_QQ;
+	protected int mPlatform = PLATFORM_UNKNOWN;
+
+	protected int mMethod = METHOD_UNKNOWN;
 
 	protected IShareListener mListener;
 
@@ -66,6 +68,16 @@ public abstract class ShareBase implements IShare {
 	@Override
 	public void setPlatform(int platform) {
 		mPlatform = platform;
+	}
+
+	@Override
+	public int getMethod() {
+		return mMethod;
+	}
+
+	@Override
+	public void setMethod(int method) {
+		mMethod = method;
 	}
 
 	@Override

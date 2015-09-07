@@ -17,13 +17,20 @@ public interface IShare extends IContextOwner {
 	public static final String PACKAGE_QQ = "com.tencent.mobileqq";
 	public static final String PACKAGE_QZONE = "com.qzone";
 	public static final String PACKAGE_WECHAT = "com.tencent.mm";
-	public static final String PACKAGE_SINA_WEIBO = "com.sina.weibo";
+	public static final String PACKAGE_WEIBO = "com.sina.weibo";
+	public static final String PACKAGE_TENCENT_WEIBO = "com.tencent.WBlog";
 
+	public static final int PLATFORM_UNKNOWN = 0;
 	public static final int PLATFORM_QQ = 1;
 	public static final int PLATFORM_QZONE = 2;
 	public static final int PLATFORM_WECHAT = 3;
 	public static final int PLATFORM_WECHAT_MOMENTS = 4;
 	public static final int PLATFORM_WEIBO = 5;
+	public static final int PLATFORM_TENCENT_WEIBO = 6;
+
+	public static final int METHOD_UNKNOWN = 0;
+	public static final int METHOD_INTENT = 1;
+	public static final int METHOD_API = 2;
 
 	public String getTitle();
 
@@ -44,6 +51,10 @@ public interface IShare extends IContextOwner {
 	public int getPlatform();
 
 	public void setPlatform(int platform);
+
+	public int getMethod();
+
+	public void setMethod(int method);
 
 	public void share();
 

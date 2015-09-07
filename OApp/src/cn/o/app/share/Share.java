@@ -1,11 +1,15 @@
 package cn.o.app.share;
 
 import android.content.Context;
+import cn.o.app.share.intent.IntentShareQzone;
+import cn.o.app.share.intent.IntentShareTencentWeibo;
+import cn.o.app.share.intent.IntentShareWeibo;
 
 public class Share extends ShareBase {
 
 	public Share(Context context) {
 		setContext(context);
+		mMethod = METHOD_INTENT;
 	}
 
 	@Override
@@ -13,19 +17,22 @@ public class Share extends ShareBase {
 		IShare wrapper = null;
 		switch (mPlatform) {
 		case PLATFORM_QQ:
-			wrapper = new ShareQQ(mContext);
+			wrapper = mMethod == METHOD_INTENT ? null : new ShareQQ(mContext);
 			break;
 		case PLATFORM_QZONE:
-			wrapper = new ShareQzone(mContext);
+			wrapper = mMethod == METHOD_INTENT ? new IntentShareQzone(mContext) : new ShareQzone(mContext);
 			break;
 		case PLATFORM_WEIBO:
-			wrapper = new ShareWeibo(mContext);
+			wrapper = mMethod == METHOD_INTENT ? new IntentShareWeibo(mContext) : new ShareWeibo(mContext);
 			break;
 		case PLATFORM_WECHAT:
-			wrapper = new ShareWechat(mContext);
+			wrapper = mMethod == METHOD_INTENT ? null : new ShareWechat(mContext);
 			break;
 		case PLATFORM_WECHAT_MOMENTS:
-			wrapper = new ShareWechatMoments(mContext);
+			wrapper = mMethod == METHOD_INTENT ? null : new ShareWechatMoments(mContext);
+			break;
+		case PLATFORM_TENCENT_WEIBO:
+			wrapper = mMethod == METHOD_INTENT ? new IntentShareTencentWeibo(mContext) : null;
 			break;
 		default:
 			break;

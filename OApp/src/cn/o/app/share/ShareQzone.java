@@ -58,7 +58,12 @@ public class ShareQzone extends ShareBase {
 
 	@Override
 	public int getPlatform() {
-		return IShare.PLATFORM_QZONE;
+		return PLATFORM_QZONE;
+	}
+
+	@Override
+	public int getMethod() {
+		return METHOD_API;
 	}
 
 	public static void setAppId(String appId) {

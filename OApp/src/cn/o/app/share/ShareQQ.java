@@ -56,7 +56,12 @@ public class ShareQQ extends ShareBase {
 
 	@Override
 	public int getPlatform() {
-		return IShare.PLATFORM_QQ;
+		return PLATFORM_QQ;
+	}
+
+	@Override
+	public int getMethod() {
+		return METHOD_API;
 	}
 
 	public static void setAppId(String appId) {
