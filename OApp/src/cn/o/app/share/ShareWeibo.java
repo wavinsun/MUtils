@@ -1,8 +1,5 @@
 package cn.o.app.share;
 
-import android.content.Context;
-import cn.o.app.AppUtil;
-
 import com.sina.weibo.sdk.api.TextObject;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
@@ -10,6 +7,9 @@ import com.sina.weibo.sdk.api.share.IWeiboShareAPI;
 import com.sina.weibo.sdk.api.share.SendMultiMessageToWeiboRequest;
 import com.sina.weibo.sdk.api.share.WeiboShareSDK;
 import com.sina.weibo.sdk.utils.Utility;
+
+import android.content.Context;
+import cn.o.app.AppUtil;
 
 public class ShareWeibo extends ShareBase {
 
@@ -26,8 +26,7 @@ public class ShareWeibo extends ShareBase {
 				mListener.onError(this);
 			}
 		}
-		IWeiboShareAPI api = WeiboShareSDK.createWeiboAPI(mContext, sAppId,
-				false);
+		IWeiboShareAPI api = WeiboShareSDK.createWeiboAPI(mContext, sAppId, false);
 		if (!api.checkEnvironment(true)) {
 			if (mListener != null) {
 				mListener.onError(this);
@@ -58,7 +57,12 @@ public class ShareWeibo extends ShareBase {
 
 	@Override
 	public int getPlatform() {
-		return IShare.PLATFORM_WEIBO;
+		return PLATFORM_WEIBO;
+	}
+
+	@Override
+	public int getMethod() {
+		return METHOD_API;
 	}
 
 	public static void setAppId(String appId) {
