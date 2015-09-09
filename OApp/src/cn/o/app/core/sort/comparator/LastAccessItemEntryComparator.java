@@ -12,10 +12,11 @@ import cn.o.app.core.sort.OrderItem;
  *
  * @param <K>
  */
-public class LastAccessItemEntryComparator<K> extends OrderItem implements Comparator<Entry<K, ILastAccessItem>> {
+public class LastAccessItemEntryComparator<K, V extends ILastAccessItem> extends OrderItem
+		implements Comparator<Entry<K, V>> {
 
 	@Override
-	public int compare(Entry<K, ILastAccessItem> lhs, Entry<K, ILastAccessItem> rhs) {
+	public int compare(Entry<K, V> lhs, Entry<K, V> rhs) {
 		long diff = lhs.getValue().lastAccess() - rhs.getValue().lastAccess();
 		if (diff > 0) {
 			return mOrder == Order.ASC ? 1 : -1;
