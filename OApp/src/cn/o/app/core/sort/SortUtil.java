@@ -10,6 +10,7 @@ import java.util.Map;
 import cn.o.app.core.sort.comparator.CreationItemComparator;
 import cn.o.app.core.sort.comparator.FileLengthComparator;
 import cn.o.app.core.sort.comparator.FileModifiedComparator;
+import cn.o.app.core.sort.comparator.IndexItemComparator;
 import cn.o.app.core.sort.comparator.LastAccessItemComparator;
 import cn.o.app.core.sort.comparator.LastAccessItemEntryComparator;
 import cn.o.app.core.sort.comparator.PreSortedComparator;
@@ -73,7 +74,7 @@ public class SortUtil {
 	 * @param list
 	 * @return
 	 */
-	public static List<ILastAccessItem> sortByLastAccess(List<ILastAccessItem> list) {
+	public static <E extends ILastAccessItem> List<E> sortByLastAccess(List<E> list) {
 		return sortByLastAccess(list, Order.ASC);
 	}
 
@@ -84,7 +85,7 @@ public class SortUtil {
 	 * @param order
 	 * @return
 	 */
-	public static List<ILastAccessItem> sortByLastAccess(List<ILastAccessItem> list, Order order) {
+	public static <E extends ILastAccessItem> List<E> sortByLastAccess(List<E> list, Order order) {
 		LastAccessItemComparator comparator = new LastAccessItemComparator();
 		comparator.setOrder(order);
 		Collections.sort(list, comparator);
@@ -97,7 +98,7 @@ public class SortUtil {
 	 * @param list
 	 * @return
 	 */
-	public static List<ICreationItem> sortByCreation(List<ICreationItem> list) {
+	public static <E extends ICreationItem> List<E> sortByCreation(List<E> list) {
 		return sortByCreation(list, Order.ASC);
 	}
 
@@ -108,7 +109,7 @@ public class SortUtil {
 	 * @param order
 	 * @return
 	 */
-	public static List<ICreationItem> sortByCreation(List<ICreationItem> list, Order order) {
+	public static <E extends ICreationItem> List<E> sortByCreation(List<E> list, Order order) {
 		CreationItemComparator comparator = new CreationItemComparator();
 		comparator.setOrder(order);
 		Collections.sort(list, comparator);
@@ -121,7 +122,7 @@ public class SortUtil {
 	 * @param map
 	 * @return
 	 */
-	public static <K> Map<K, ILastAccessItem> sortByLru(Map<K, ILastAccessItem> map) {
+	public static <K, V extends ILastAccessItem> Map<K, V> sortByLru(Map<K, V> map) {
 		return sortByLru(map, Integer.MAX_VALUE);
 	}
 
@@ -132,14 +133,14 @@ public class SortUtil {
 	 * @param lruSize
 	 * @return
 	 */
-	public static <K> Map<K, ILastAccessItem> sortByLru(Map<K, ILastAccessItem> map, int lruSize) {
-		List<Map.Entry<K, ILastAccessItem>> entryList = new ArrayList<Map.Entry<K, ILastAccessItem>>(map.entrySet());
-		LastAccessItemEntryComparator<K> comparator = new LastAccessItemEntryComparator<K>();
+	public static <K, V extends ILastAccessItem> Map<K, V> sortByLru(Map<K, V> map, int lruSize) {
+		List<Map.Entry<K, V>> entryList = new ArrayList<Map.Entry<K, V>>(map.entrySet());
+		LastAccessItemEntryComparator<K, V> comparator = new LastAccessItemEntryComparator<K, V>();
 		comparator.setOrder(Order.DESC);
 		Collections.sort(entryList, comparator);
-		HashMap<K, ILastAccessItem> sortedMap = new HashMap<K, ILastAccessItem>();
-		for (int i = 0; i < lruSize; i++) {
-			Map.Entry<K, ILastAccessItem> entry = entryList.get(i);
+		HashMap<K, V> sortedMap = new HashMap<K, V>();
+		for (int i = 0, size = entryList.size(); i < size && i < lruSize; i++) {
+			Map.Entry<K, V> entry = entryList.get(i);
 			sortedMap.put(entry.getKey(), entry.getValue());
 		}
 		entryList.clear();
@@ -153,7 +154,7 @@ public class SortUtil {
 	 * @param preSorted
 	 * @return
 	 */
-	public static <E> List<E> sortByPreSorted(List<E> list, List<E> preSorted) {
+	public static <E> List<E> sortByPreSorted(List<E> list, List<?> preSorted) {
 		return sortByPreSorted(list, preSorted, Order.ASC);
 	}
 
@@ -165,12 +166,36 @@ public class SortUtil {
 	 * @param order
 	 * @return
 	 */
-	public static <E> List<E> sortByPreSorted(List<E> list, List<E> preSorted, Order order) {
+	public static <E> List<E> sortByPreSorted(List<E> list, List<?> preSorted, Order order) {
 		PreSortedComparator<E> comparator = new PreSortedComparator<E>();
 		comparator.setOrder(order);
 		comparator.setPreSorted(preSorted);
 		Collections.sort(list, comparator);
-		comparator.setPreSorted(null);
+		comparator.clear();
+		return list;
+	}
+
+	/**
+	 * Sort list by index
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public static <E extends IIndexItem> List<E> sortByIndex(List<E> list) {
+		return sortByIndex(list, Order.ASC);
+	}
+
+	/**
+	 * Sort list by index for order
+	 * 
+	 * @param list
+	 * @param order
+	 * @return
+	 */
+	public static <E extends IIndexItem> List<E> sortByIndex(List<E> list, Order order) {
+		IndexItemComparator comparator = new IndexItemComparator();
+		comparator.setOrder(order);
+		Collections.sort(list, comparator);
 		return list;
 	}
 
