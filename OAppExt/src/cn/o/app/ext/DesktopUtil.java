@@ -1,12 +1,18 @@
 package cn.o.app.ext;
 
 import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.io.File;
 import java.util.List;
 
 import javax.swing.UIManager;
 
 import com.sun.jna.platform.FileUtils;
+
+import cn.o.app.core.graphics.Bounds;
 
 /**
  * Desktop utility for Windows platform or Others.
@@ -92,6 +98,26 @@ public class DesktopUtil {
 			rootDir += File.separator;
 		}
 		return rootDir;
+	}
+
+	/**
+	 * Get max window bounds
+	 * 
+	 * @return
+	 */
+	public static Bounds getMaxWindowBounds() {
+		Rectangle rect = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+		return new Bounds(rect.x, rect.y, rect.width, rect.height);
+	}
+
+	/**
+	 * Get screen bounds
+	 * 
+	 * @return
+	 */
+	public static Bounds getScreenBounds() {
+		Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+		return new Bounds(0, 0, size.width, size.height);
 	}
 
 }
