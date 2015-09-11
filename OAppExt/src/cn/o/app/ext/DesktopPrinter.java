@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Rectangle;
 import java.awt.Window;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
@@ -25,7 +26,8 @@ import cn.o.app.core.io.ISystemPrinter;
 @SuppressWarnings("serial")
 public class DesktopPrinter extends JDialog implements ISystemPrinter {
 
-	public static final int BUFFER_SIZE = 100000;
+	/** Console buffer size of default like eclipse */
+	public static final int BUFFER_SIZE = 80000;
 
 	protected int mBufferSize = BUFFER_SIZE;
 
@@ -40,8 +42,8 @@ public class DesktopPrinter extends JDialog implements ISystemPrinter {
 	/**
 	 * Create the dialog.
 	 */
-	public DesktopPrinter() {
-		super();
+	public DesktopPrinter(Window owner) {
+		super(owner);
 		setBounds(100, 100, 550, 200);
 
 		mScrollPane = new JScrollPane();
@@ -72,6 +74,22 @@ public class DesktopPrinter extends JDialog implements ISystemPrinter {
 		mStyleSysout = mTextPane.getStyledDocument().addStyle(null, null);
 		mStyleSyserr = mTextPane.addStyle("syserr", mStyleSysout);
 		StyleConstants.setForeground(mStyleSyserr, Color.RED);
+
+		this.setLocationRelativeTo(null);
+	}
+
+	@Override
+	protected void processWindowEvent(WindowEvent e) {
+		if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+			DesktopApp app = DesktopApp.getApp();
+			if (app != null) {
+				if (app.getMainWindow() == null) {
+					// Main window startup happens exception
+					System.exit(0);
+				}
+			}
+		}
+		super.processWindowEvent(e);
 	}
 
 	public void log(String text) {

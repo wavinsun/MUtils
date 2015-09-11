@@ -5,6 +5,7 @@ import java.awt.Window;
 
 import cn.o.app.core.io.ISystemPrinter;
 import cn.o.app.core.io.SystemStream;
+import cn.o.app.core.log.Logs;
 import cn.o.app.core.runtime.OSRuntime;
 
 /**
@@ -29,7 +30,7 @@ public class DesktopApp {
 
 	public synchronized ISystemPrinter getSystemPrinter() {
 		if (mSystemPrinter == null) {
-			mSystemPrinter = new DesktopPrinter();
+			mSystemPrinter = new DesktopPrinter(mMainWindow);
 		}
 		return mSystemPrinter;
 	}
@@ -88,7 +89,7 @@ public class DesktopApp {
 					mMainWindow.setVisible(false);
 				}
 			} catch (Exception e) {
-
+				Logs.e("", e);
 			}
 		}
 	}
