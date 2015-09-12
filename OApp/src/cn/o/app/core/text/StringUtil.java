@@ -399,4 +399,41 @@ public class StringUtil {
 		}
 	}
 
+	/**
+	 * Convert class to lower case id<br>
+	 * "StringUtil"->"string.util"
+	 * 
+	 * @param cls
+	 * @return
+	 */
+	public static String toLowerCaseId(Class<?> cls) {
+		return toLowerCaseId(cls.getName());
+	}
+
+	/**
+	 * Convert source string to lower case id<br>
+	 * "StringUtil"->"string.util"
+	 * 
+	 * @param src
+	 * @return
+	 */
+	public static String toLowerCaseId(String src) {
+		StringBuilder sb = new StringBuilder();
+		String lower = src.toLowerCase(Locale.getDefault());
+		for (int i = 0, size = lower.length(); i < size; i++) {
+			char lowerChar = lower.charAt(i);
+			char srcChar = src.charAt(i);
+			if (lowerChar != srcChar && i != 0 && i != size - 1) {
+				char lowerCharBefore = lower.charAt(i - 1);
+				if (lowerCharBefore != '.') {
+					if (lowerCharBefore == src.charAt(i - 1) || lower.charAt(i + 1) == src.charAt(i + 1)) {
+						sb.append('.');
+					}
+				}
+			}
+			sb.append(lowerChar);
+		}
+		return sb.toString();
+	}
+
 }

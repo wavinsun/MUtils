@@ -2,20 +2,29 @@ package cn.o.app.ext;
 
 import java.awt.EventQueue;
 import java.awt.Window;
+import java.io.File;
 
+import cn.o.app.core.io.FileUtil;
 import cn.o.app.core.io.ISystemPrinter;
 import cn.o.app.core.io.SystemStream;
 import cn.o.app.core.log.Logs;
 import cn.o.app.core.runtime.OSRuntime;
+import cn.o.app.core.text.StringUtil;
 
 /**
  * Desktop application of framework
  */
 public class DesktopApp {
 
+	public static final String APP_DIR = ".app";
+
 	protected static DesktopApp sApp = null;
 
 	protected ISystemPrinter mSystemPrinter = null;
+
+	protected String mAppId;
+
+	protected String mAppDir;
 
 	protected Window mMainWindow;
 
@@ -26,6 +35,48 @@ public class DesktopApp {
 		if (OSRuntime.getOSRuntime() == OSRuntime.WINDOWS) {
 			DesktopUtil.setWindowsLookAndFeel();
 		}
+		// Make directory for all application
+		File appDir = new File(DesktopUtil.getRootDir() + APP_DIR);
+		if (!appDir.exists()) {
+			if (appDir.mkdirs()) {
+				FileUtil.setHidden(appDir, true);
+			}
+		}
+	}
+
+	public String getAppDir() {
+		if (mAppDir == null) {
+			String id = mAppId;
+			if (id == null) {
+				id = StringUtil.toLowerCaseId(this.getClass());
+			}
+			mAppDir = DesktopUtil.getRootDir() + APP_DIR + File.separator + id + File.separator;
+			File appDirFile = new File(mAppDir);
+			if (!appDirFile.exists()) {
+				appDirFile.mkdirs();
+			}
+		}
+		return mAppDir;
+	}
+
+	public void setAppDir(String appDir) {
+		File appDirFile = new File(appDir);
+		if (!appDirFile.exists()) {
+			appDirFile.mkdirs();
+		}
+		try {
+			mAppDir = appDirFile.getCanonicalPath() + File.separator;
+		} catch (Exception e) {
+
+		}
+	}
+
+	public String getAppId() {
+		return mAppId;
+	}
+
+	public void setAppId(String appId) {
+		mAppId = appId;
 	}
 
 	public synchronized ISystemPrinter getSystemPrinter() {
@@ -56,6 +107,9 @@ public class DesktopApp {
 	}
 
 	public void start(Class<? extends Window> mainWindowClass, boolean locationCenter, boolean showOnStart) {
+		if (mAppId == null) {
+			mAppId = StringUtil.toLowerCaseId(mainWindowClass);
+		}
 		EventQueue.invokeLater(new StartRunnable(mainWindowClass, locationCenter, showOnStart));
 	}
 
