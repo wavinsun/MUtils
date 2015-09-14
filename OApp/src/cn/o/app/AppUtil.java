@@ -28,6 +28,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
+import android.graphics.Paint.FontMetrics;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -773,6 +774,11 @@ public class AppUtil {
 		anim.setDuration(300);
 		anim.setFillAfter(true);
 		return anim;
+	}
+
+	public static float getYOfDrawText(Paint p, float centerY) {
+		FontMetrics metrics = p.getFontMetrics();
+		return centerY - (metrics.top + (metrics.bottom - metrics.top) / 2);
 	}
 
 	public static ViewGroup getParent(View v, int parentId) {
