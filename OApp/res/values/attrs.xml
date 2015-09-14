@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Framework attributes -->
+    <attr name="textVisible" format="enum">
+        <enum name="invisible" value="0"/>
+        <enum name="visible" value="1"/> 
+    </attr>
+    <attr name="bgColor" format="color"/>
+    <attr name="strokeColor" format ="color"/>
+    <attr name="strokeWidth" format="dimension" />
+    <attr name="strokeCap" format="enum">
+        <enum name="butt" value="0"/>
+        <enum name="round" value="1"/>
+       	<enum name="square" value="2"/>
+    </attr>
+    <attr name="borderColor" format="color"/>
+    <attr name="borderWidth" format="dimension"/>
+</resources>

@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="OImageView">
-        <attr name="shape" format="enum">
-            <enum name="rect" value="0"/>
-            <enum name="round_rect" value="1"/>
-            <enum name="circle" value="2"/>
-        </attr>
-        <attr name="borderWidth" format="dimension"/>
-        <attr name="borderColor" format="color"/>
+        <attr name="borderWidth" />
+        <attr name="borderColor" />
         <attr name="drawableDefault" format="reference"/>
         <attr name="android:radius" />
+        <attr name="android:shape" />
     </declare-styleable>
 </resources>

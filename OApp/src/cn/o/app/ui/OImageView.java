@@ -48,8 +48,8 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 
 	protected Drawable mDefaultDrawable;
 
-	protected boolean mIsCircle;
-	protected boolean mIsRoundRect;
+	protected boolean mIsCircle = true;
+	protected boolean mIsRoundRect = false;
 	protected int mRoundRectRadius = DEFAULT_RADIUS;
 
 	public OImageView(Context context) {
@@ -73,23 +73,27 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 			mBorderWidth = typedArray.getDimensionPixelSize(R.styleable.OImageView_borderWidth, DEFAULT_BORDER_WIDTH);
 			mBorderColor = typedArray.getColor(R.styleable.OImageView_borderColor, DEFAULT_BORDER_COLOR);
 			mDefaultDrawable = typedArray.getDrawable(R.styleable.OImageView_drawableDefault);
+			mRoundRectRadius = typedArray.getDimensionPixelSize(R.styleable.OImageView_android_radius, 0);
 			try {
-				int shape = typedArray.getInt(R.styleable.OImageView_shape, 0);
+				int shape = typedArray.getInt(R.styleable.OImageView_android_shape, 1);
 				switch (shape) {
 				case 0:// Rectangle
 					mIsCircle = false;
-					mIsRoundRect = false;
+					mIsRoundRect = mRoundRectRadius != 0;
 					break;
-				case 1:// Round rectangle
-					mIsCircle = false;
-					mIsRoundRect = true;
-					break;
-				case 2:// Circle
+				case 1:// Oval
 					mIsCircle = true;
 					mIsRoundRect = false;
 					break;
-				default:
+				case 2:// Line
 					mIsCircle = false;
+					mIsRoundRect = mRoundRectRadius != 0;
+					break;
+				case 3:// Ring
+					mIsCircle = true;
+					mIsRoundRect = false;
+				default:
+					mIsCircle = true;
 					mIsRoundRect = false;
 					break;
 				}

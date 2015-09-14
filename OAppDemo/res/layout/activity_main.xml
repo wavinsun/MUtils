@@ -99,9 +99,9 @@
                	android:text="Prompt"/>
             
             <TextView
-                android:id="@+id/round_progress_bar"
+                android:id="@+id/progress_view"
                 style="@style/MainBtn"
-                android:text="RoundProgressBar"/>
+                android:text="ProgressView"/>
             
             <TextView
                 android:id="@+id/tip_view"
