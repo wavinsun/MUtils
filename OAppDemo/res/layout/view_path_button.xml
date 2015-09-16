@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Fill">
     
-    <cn.o.app.ui.OImageView 
+    <cn.o.app.ui.ImageIcon 
         android:id="@+id/path_left"
         style="@style/PathButtonItem"
         android:layout_below="@id/go"
@@ -10,7 +10,7 @@
         android:layout_marginTop="15dp"
         android:visibility="invisible"/>
     
-     <cn.o.app.ui.OImageView 
+     <cn.o.app.ui.ImageIcon 
         android:id="@+id/path_right"
         style="@style/PathButtonItem"
         android:layout_below="@id/go"
@@ -18,7 +18,7 @@
         android:layout_marginTop="15dp"
         android:visibility="invisible"/>
      
-      <cn.o.app.ui.OImageView 
+      <cn.o.app.ui.ImageIcon 
         android:id="@+id/path_bottom"
         style="@style/PathButtonItem"
         android:layout_below="@id/go"

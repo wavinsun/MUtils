@@ -11,13 +11,13 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 
-public class OSwitch extends View {
+public class SwitchButton extends View {
 
 	public static interface OnCheckedChangeListener {
 
-		public boolean onCheckedChanging(OSwitch v, boolean checked);
+		public boolean onCheckedChanging(SwitchButton v, boolean checked);
 
-		public void onCheckedChanged(OSwitch v, boolean checked);
+		public void onCheckedChanged(SwitchButton v, boolean checked);
 
 	}
 
@@ -41,17 +41,17 @@ public class OSwitch extends View {
 
 	protected OnCheckedChangeListener mListener;
 
-	public OSwitch(Context context) {
+	public SwitchButton(Context context) {
 		super(context);
 		init(context);
 	}
 
-	public OSwitch(Context context, AttributeSet attrs) {
+	public SwitchButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context);
 	}
 
-	public OSwitch(Context context, AttributeSet attrs, int defStyleAttr) {
+	public SwitchButton(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		init(context);
 	}
@@ -71,7 +71,7 @@ public class OSwitch extends View {
 			@Override
 			public void onClick(View v) {
 				if (mListener != null) {
-					if (mListener.onCheckedChanging((OSwitch) v, mChecked)) {
+					if (mListener.onCheckedChanging((SwitchButton) v, mChecked)) {
 						setChecked(!mChecked);
 					}
 				} else {
@@ -151,7 +151,7 @@ public class OSwitch extends View {
 		mChecked = checked;
 		invalidate();
 		if (mListener != null) {
-			mListener.onCheckedChanged(OSwitch.this, mChecked);
+			mListener.onCheckedChanged(SwitchButton.this, mChecked);
 		}
 	}
 
