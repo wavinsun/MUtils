@@ -3,6 +3,7 @@ package cn.o.app.ui;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
@@ -80,6 +81,17 @@ public class ODialog extends Dialog implements IDialog {
 		Window w = getWindow();
 		WindowManager.LayoutParams attrs = w.getAttributes();
 		w.setLayout(WindowManager.LayoutParams.MATCH_PARENT, attrs.height);
+	}
+
+	/**
+	 * Make width and height to be MATCH_PARENT
+	 */
+	public void requestFill() {
+		getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+	}
+
+	public Resources getResources() {
+		return getContext().getResources();
 	}
 
 	public void setWindowAnimations(int resId) {

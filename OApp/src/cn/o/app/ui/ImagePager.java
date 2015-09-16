@@ -12,26 +12,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import cn.o.app.core.ILinkItem;
 
-public class ImageViewPager extends ViewPager {
+public class ImagePager extends ViewPager {
+
+	public static interface OnImageItemClickListener {
+
+		public void onItemClick(ImagePager pager, View v, int position, ILinkItem dataItem);
+
+	}
 
 	protected BitmapUtils mBitmapUtils;
 
-	protected ImageViewPagerAdapter mAdapter;
+	protected ImagePagerAdapter mAdapter;
 
-	public ImageViewPager(Context context) {
+	protected OnImageItemClickListener mOnImageItemClickListener;
+
+	public ImagePager(Context context) {
 		super(context);
 		init(context, null);
 	}
 
-	public ImageViewPager(Context context, AttributeSet attrs) {
+	public ImagePager(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context, attrs);
 	}
 
 	protected void init(Context context, AttributeSet attrs) {
 		mBitmapUtils = new BitmapUtils(context);
-		mAdapter = new ImageViewPagerAdapter();
+		mAdapter = new ImagePagerAdapter();
 		super.setAdapter(mAdapter);
 	}
 
@@ -44,16 +53,32 @@ public class ImageViewPager extends ViewPager {
 		throw new UnsupportedOperationException();
 	}
 
-	public void setDataProvider(List<String> dataProvider) {
+	public void setDataProvider(List<? extends ILinkItem> dataProvider) {
 		mAdapter.setDataProvider(dataProvider);
 		if (mAdapter.getCount() > 0) {
 			super.setCurrentItem(0);
 		}
 	}
 
-	class ImageViewPagerAdapter extends PagerAdapter {
+	public List<? extends ILinkItem> getDataProvider() {
+		return mAdapter.getDataProvider();
+	}
 
-		protected List<String> mDataProvider;
+	public void setOnImageItemClickListener(OnImageItemClickListener listener) {
+		mOnImageItemClickListener = listener;
+	}
+
+	protected void onClickItem(View v, int position) {
+		if (mOnImageItemClickListener == null) {
+			return;
+		}
+		ILinkItem item = mAdapter.getDataProvider().get(position);
+		mOnImageItemClickListener.onItemClick(this, v, position, item);
+	}
+
+	class ImagePagerAdapter extends PagerAdapter {
+
+		protected List<? extends ILinkItem> mDataProvider;
 
 		@Override
 		public int getCount() {
@@ -63,7 +88,11 @@ public class ImageViewPager extends ViewPager {
 			return mDataProvider.size();
 		}
 
-		public void setDataProvider(List<String> dataProvider) {
+		public List<? extends ILinkItem> getDataProvider() {
+			return mDataProvider;
+		}
+
+		public void setDataProvider(List<? extends ILinkItem> dataProvider) {
 			mDataProvider = dataProvider;
 			notifyDataSetChanged();
 		}
@@ -71,10 +100,18 @@ public class ImageViewPager extends ViewPager {
 		@Override
 		public View instantiateItem(ViewGroup container, int position) {
 			ImageView imageView = new ImageView(getContext());
+			imageView.setId(position);
 			imageView.setScaleType(ScaleType.CENTER_CROP);
 			imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.MATCH_PARENT));
-			mBitmapUtils.display(imageView, mDataProvider.get(position));
+			imageView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					onClickItem(v, v.getId());
+				}
+			});
+			mBitmapUtils.display(imageView, mDataProvider.get(position).getLink());
 			container.addView(imageView);
 			return imageView;
 		}
