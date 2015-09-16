@@ -32,6 +32,8 @@ public class AnimTask extends Task implements ILockable {
 	protected Handler mHandler = new Handler();
 	protected Runnable mRunnable = new AnimRunnable();
 
+	protected boolean mPaused = false;
+
 	public AnimTask() {
 		mRestartable = true;
 	}
@@ -114,8 +116,31 @@ public class AnimTask extends Task implements ILockable {
 		}
 		mStarted = true;
 		mStoped = false;
+		mPaused = false;
 		onStart();
 		return true;
+	}
+
+	public boolean pause() {
+		if (isRunning()) {
+			if (!mPaused) {
+				mPaused = true;
+				mHandler.removeCallbacksAndMessages(null);
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public boolean resume() {
+		if (isRunning()) {
+			if (mPaused) {
+				mPaused = false;
+				mHandler.postDelayed(mRunnable, mStepMillis);
+			}
+			return true;
+		}
+		return false;
 	}
 
 	class AnimRunnable implements Runnable {
