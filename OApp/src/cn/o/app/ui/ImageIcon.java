@@ -26,88 +26,83 @@ import cn.o.app.ui.core.IDefaultDrawableView;
  * Provide circle shape and round rectangle for content image.
  */
 @SuppressWarnings("deprecation")
-public class OImageView extends ImageView implements IDefaultDrawableView {
+public class ImageIcon extends ImageView implements IDefaultDrawableView {
+
+	public static final int SHAPE_CIRCLE = 0;
+	public static final int SHAPE_RECT = 1;
+	public static final int SHAPE_ROUND_RECT = 2;
 
 	protected static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 	protected static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
 	protected static final int COLOR_DRAWABLE_DIMENSION = 1;
 	protected static final int DEFAULT_BORDER_WIDTH = 0;
 	protected static final int DEFAULT_BORDER_COLOR = Color.WHITE;
-	protected static final int DEFAULT_RADIUS = 8;
 
 	protected WeakReference<Bitmap> mBitmapRef = new WeakReference<Bitmap>(null);
 	protected BitmapShader mBitmapShader;
 	protected Matrix mBitmapShaderMatrix = new Matrix();
 	protected int mBorderColor = DEFAULT_BORDER_COLOR;
 	protected int mBorderWidth = DEFAULT_BORDER_WIDTH;
+	protected int mCornerRadius = 0;
 	protected Paint mPaint = new Paint();
-
 	protected RectF mRectF = new RectF();
 
 	protected boolean mReady;
 
 	protected Drawable mDefaultDrawable;
+	protected int mShape = SHAPE_CIRCLE;
 
-	protected boolean mIsCircle = true;
-	protected boolean mIsRoundRect = false;
-	protected int mRoundRectRadius = DEFAULT_RADIUS;
-
-	public OImageView(Context context) {
+	public ImageIcon(Context context) {
 		super(context);
 		init(context, null);
 	}
 
-	public OImageView(Context context, AttributeSet attrs) {
+	public ImageIcon(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context, attrs);
 	}
 
-	public OImageView(Context context, AttributeSet attrs, int defStyle) {
+	public ImageIcon(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context, attrs);
 	}
 
 	protected void init(Context context, AttributeSet attrs) {
 		if (attrs != null) {
-			TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.OImageView);
-			mBorderWidth = typedArray.getDimensionPixelSize(R.styleable.OImageView_borderWidth, DEFAULT_BORDER_WIDTH);
-			mBorderColor = typedArray.getColor(R.styleable.OImageView_borderColor, DEFAULT_BORDER_COLOR);
-			mDefaultDrawable = typedArray.getDrawable(R.styleable.OImageView_drawableDefault);
-			mRoundRectRadius = typedArray.getDimensionPixelSize(R.styleable.OImageView_android_radius, 0);
+			TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImageIcon);
+			mBorderWidth = typedArray.getDimensionPixelSize(R.styleable.ImageIcon_borderWidth, DEFAULT_BORDER_WIDTH);
+			mBorderColor = typedArray.getColor(R.styleable.ImageIcon_borderColor, DEFAULT_BORDER_COLOR);
+			mDefaultDrawable = typedArray.getDrawable(R.styleable.ImageIcon_drawableDefault);
+			mCornerRadius = typedArray.getDimensionPixelSize(R.styleable.ImageIcon_android_radius, 0);
 			try {
-				int shape = typedArray.getInt(R.styleable.OImageView_android_shape, 1);
+				int shape = typedArray.getInt(R.styleable.ImageIcon_android_shape, 1);
 				switch (shape) {
 				case 0:// Rectangle
-					mIsCircle = false;
-					mIsRoundRect = mRoundRectRadius != 0;
+					mShape = SHAPE_RECT;
 					break;
 				case 1:// Oval
-					mIsCircle = true;
-					mIsRoundRect = false;
+					mShape = SHAPE_CIRCLE;
 					break;
 				case 2:// Line
-					mIsCircle = false;
-					mIsRoundRect = mRoundRectRadius != 0;
+					mShape = SHAPE_RECT;
 					break;
 				case 3:// Ring
-					mIsCircle = true;
-					mIsRoundRect = false;
+					mShape = SHAPE_CIRCLE;
+					break;
 				default:
-					mIsCircle = true;
-					mIsRoundRect = false;
+					mShape = SHAPE_CIRCLE;
 					break;
 				}
 			} catch (Exception e) {
 
 			}
-			if (mIsRoundRect) {
-				if (mIsCircle) {
-					mIsRoundRect = false;
-				}
+			mCornerRadius = typedArray.getDimensionPixelSize(R.styleable.ImageIcon_android_radius, 0);
+			if (mCornerRadius != 0 && mShape == SHAPE_RECT) {
+				mShape = SHAPE_ROUND_RECT;
 			}
 			typedArray.recycle();
 		}
-		if (mIsCircle) {
+		if (mShape == SHAPE_CIRCLE) {
 			setScaleType(SCALE_TYPE);
 		}
 		mReady = true;
@@ -116,7 +111,7 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 
 	@Override
 	public void setScaleType(ScaleType scaleType) {
-		if (mIsCircle) {
+		if (mShape == SHAPE_CIRCLE) {
 			if (scaleType != SCALE_TYPE) {
 				throw new UnsupportedOperationException();
 			}
@@ -124,31 +119,15 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 		super.setScaleType(scaleType);
 	}
 
-	public boolean isCircle() {
-		return mIsCircle;
+	public int getShape() {
+		return mShape;
 	}
 
-	public void setIsCircle(boolean isCircle) {
-		if (isCircle) {
-			if (mIsRoundRect) {
-				mIsRoundRect = false;
-			}
+	public void setShape(int shape) {
+		if (mShape == shape) {
+			return;
 		}
-		mIsCircle = isCircle;
-		setup();
-	}
-
-	public boolean isRoundRect() {
-		return mIsRoundRect;
-	}
-
-	public void setIsRoundRect(boolean isRoundRect) {
-		if (isRoundRect) {
-			if (mIsCircle) {
-				mIsCircle = false;
-			}
-		}
-		mIsRoundRect = isRoundRect;
+		mShape = shape;
 		setup();
 	}
 
@@ -179,7 +158,7 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 	@Override
 	public void setImageBitmap(Bitmap bm) {
 		super.setImageBitmap(bm);
-		if (mIsCircle || mIsRoundRect) {
+		if (mShape != SHAPE_RECT) {
 			mBitmapRef = new WeakReference<Bitmap>(getBitmapFromDrawable());
 		}
 		setup();
@@ -188,7 +167,7 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 	@Override
 	public void setImageDrawable(Drawable drawable) {
 		super.setImageDrawable(drawable);
-		if (mIsCircle || mIsRoundRect) {
+		if (mShape != SHAPE_RECT) {
 			mBitmapRef = new WeakReference<Bitmap>(getBitmapFromDrawable());
 		}
 		setup();
@@ -197,7 +176,7 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 	@Override
 	public void setImageResource(int resId) {
 		super.setImageResource(resId);
-		if (mIsCircle || mIsRoundRect) {
+		if (mShape != SHAPE_RECT) {
 			mBitmapRef = new WeakReference<Bitmap>(getBitmapFromDrawable());
 		}
 		setup();
@@ -213,7 +192,7 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 		if (!mReady) {
 			return;
 		}
-		if (!mIsCircle && !mIsRoundRect) {
+		if (mShape == SHAPE_RECT) {
 			invalidate();
 			return;
 		}
@@ -283,14 +262,14 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 		if (getDrawable() == null) {
 			return;
 		}
-		if (!mIsCircle && !mIsRoundRect) {
+		if (mShape == SHAPE_RECT) {
 			super.onDraw(canvas);
 			return;
 		}
 		int w = getWidth();
 		int h = getHeight();
 		float halfBorderWidth = mBorderWidth * 0.5f;
-		if (mIsCircle) {
+		if (mShape == SHAPE_CIRCLE) {
 			float cx = w * 0.5f;
 			float cy = h * 0.5f;
 			float borderRadius = cx < cy ? cx : cy;
@@ -309,13 +288,13 @@ public class OImageView extends ImageView implements IDefaultDrawableView {
 				mPaint.setStrokeWidth(mBorderWidth);
 				canvas.drawCircle(cx, cy, borderRadius, mPaint);
 			}
-		} else if (mIsRoundRect) {
+		} else if (mShape == SHAPE_ROUND_RECT) {
 			mRectF.set(0, 0, w, h);
 			mPaint.reset();
 			mPaint.setAntiAlias(true);
 			mPaint.setFilterBitmap(true);
 			mPaint.setShader(mBitmapShader);
-			canvas.drawRoundRect(mRectF, mRoundRectRadius, mRoundRectRadius, mPaint);
+			canvas.drawRoundRect(mRectF, mCornerRadius, mCornerRadius, mPaint);
 		}
 	}
 

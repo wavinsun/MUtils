@@ -21,7 +21,7 @@ import android.widget.TextView;
 import cn.o.app.R;
 
 @SuppressWarnings("deprecation")
-public class OEdit extends LinearLayout {
+public class EditBox extends LinearLayout {
 
 	protected Pattern mRegex;
 
@@ -43,76 +43,76 @@ public class OEdit extends LinearLayout {
 
 	protected boolean mAttachedToWindow;
 
-	public OEdit(Context context) {
+	public EditBox(Context context) {
 		super(context);
 		init(context, null);
 	}
 
-	public OEdit(Context context, AttributeSet attrs) {
+	public EditBox(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context, attrs);
 	}
 
 	protected void init(Context context, AttributeSet attrs) {
 		if (attrs != null) {
-			TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.OEdit);
-			String text = typedArray.getString(R.styleable.OEdit_android_text);
+			TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.EditBox);
+			String text = typedArray.getString(R.styleable.EditBox_android_text);
 			if (text != null) {
 				this.setText(text);
 			}
-			String hint = typedArray.getString(R.styleable.OEdit_android_hint);
+			String hint = typedArray.getString(R.styleable.EditBox_android_hint);
 			if (hint != null) {
 				this.setHint(hint);
 			}
-			ColorStateList hintTextColor = typedArray.getColorStateList(R.styleable.OEdit_android_textColorHint);
+			ColorStateList hintTextColor = typedArray.getColorStateList(R.styleable.EditBox_android_textColorHint);
 			if (hintTextColor != null) {
 				this.setHintTextColor(hintTextColor);
 			}
-			int textSize = typedArray.getDimensionPixelSize(R.styleable.OEdit_android_textSize, 0);
+			int textSize = typedArray.getDimensionPixelSize(R.styleable.EditBox_android_textSize, 0);
 			if (textSize != 0) {
 				this.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 			}
-			ColorStateList textColor = typedArray.getColorStateList(R.styleable.OEdit_android_textColor);
+			ColorStateList textColor = typedArray.getColorStateList(R.styleable.EditBox_android_textColor);
 			if (textColor != null) {
 				this.setTextColor(textColor);
 			}
-			ColorStateList tipTextColor = typedArray.getColorStateList(R.styleable.OEdit_textColorTip);
+			ColorStateList tipTextColor = typedArray.getColorStateList(R.styleable.EditBox_textColorTip);
 			if (tipTextColor != null) {
 				this.setTipColor(tipTextColor);
 			}
-			String textTip = typedArray.getString(R.styleable.OEdit_textTip);
+			String textTip = typedArray.getString(R.styleable.EditBox_textTip);
 			if (textTip != null) {
 				this.setTipText(textTip);
 			}
-			Drawable iconTip = typedArray.getDrawable(R.styleable.OEdit_iconTip);
+			Drawable iconTip = typedArray.getDrawable(R.styleable.EditBox_iconTip);
 			if (iconTip != null) {
 				this.setTipIcon(iconTip);
 			}
-			Drawable iconClear = typedArray.getDrawable(R.styleable.OEdit_iconClear);
+			Drawable iconClear = typedArray.getDrawable(R.styleable.EditBox_iconClear);
 			if (iconClear != null) {
 				this.setClearIcon(iconClear);
 			}
-			Drawable warnBackground = typedArray.getDrawable(R.styleable.OEdit_backgroundWarn);
+			Drawable warnBackground = typedArray.getDrawable(R.styleable.EditBox_backgroundWarn);
 			if (warnBackground != null) {
 				this.setWarnBackground(warnBackground);
 			}
-			int inputType = typedArray.getInt(R.styleable.OEdit_android_inputType, EditorInfo.TYPE_NULL);
+			int inputType = typedArray.getInt(R.styleable.EditBox_android_inputType, EditorInfo.TYPE_NULL);
 			if (inputType != EditorInfo.TYPE_NULL) {
 				this.setInputType(inputType);
 			}
-			int contentPadding = typedArray.getDimensionPixelSize(R.styleable.OEdit_iconPadding, 0);
+			int contentPadding = typedArray.getDimensionPixelSize(R.styleable.EditBox_iconPadding, 0);
 			if (contentPadding != 0) {
 				this.setIconPadding(contentPadding);
 			}
-			int tipTextWidth = typedArray.getDimensionPixelSize(R.styleable.OEdit_textWidthTip, 0);
+			int tipTextWidth = typedArray.getDimensionPixelSize(R.styleable.EditBox_textWidthTip, 0);
 			if (tipTextWidth != 0) {
 				this.setTipTextWidth(tipTextWidth);
 			}
-			int maxLength = typedArray.getInt(R.styleable.OEdit_android_maxLength, 0);
+			int maxLength = typedArray.getInt(R.styleable.EditBox_android_maxLength, 0);
 			if (maxLength != 0) {
 				this.setMaxLength(maxLength);
 			}
-			String regex = typedArray.getString(R.styleable.OEdit_regex);
+			String regex = typedArray.getString(R.styleable.EditBox_regex);
 			if (regex != null) {
 				this.setRegex(regex);
 			}
@@ -179,7 +179,7 @@ public class OEdit extends LinearLayout {
 				}
 				OnFocusChangeListener listener = getOnFocusChangeListener();
 				if (listener != null) {
-					listener.onFocusChange(OEdit.this, hasFocus);
+					listener.onFocusChange(EditBox.this, hasFocus);
 				}
 			}
 		});

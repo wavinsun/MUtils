@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="OImageView">
+    <declare-styleable name="ImageIcon">
         <attr name="borderWidth" />
         <attr name="borderColor" />
         <attr name="drawableDefault" format="reference"/>
