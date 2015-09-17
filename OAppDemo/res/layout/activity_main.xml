@@ -123,6 +123,11 @@
                 style="@style/MainBtn"
                 android:text="OHLinearAdapter"/>
             
+            <TextView 
+                android:id="@+id/index_view"
+                style="@style/MainBtn"
+                android:text="IndexView"/>
+            
         </cn.o.app.ui.FlowLayout>
     </ScrollView>
 
