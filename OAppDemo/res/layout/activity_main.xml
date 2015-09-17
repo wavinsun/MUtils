@@ -118,6 +118,11 @@
                 style="@style/MainBtn"
                 android:text="PathButton"/>
             
+            <TextView
+                android:id="@+id/ohlinearadapter"
+                style="@style/MainBtn"
+                android:text="OHLinearAdapter"/>
+            
         </cn.o.app.ui.FlowLayout>
     </ScrollView>
 
