@@ -41,6 +41,7 @@ public class ShareDemoView extends StateView {
 		share.setUrl("http://www.baidu.com/");
 		share.setContext(getContext());
 		share.setImageUrl("http://www.baidu.com/favicon.ico");
+		share.setMethod(Share.METHOD_API);
 		switch (v.getId()) {
 		case R.id.qq:
 			share.setPlatform(Share.PLATFORM_QQ);
