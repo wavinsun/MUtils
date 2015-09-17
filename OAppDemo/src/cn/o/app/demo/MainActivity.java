@@ -18,6 +18,7 @@ import cn.o.app.demo.ui.ConfItemDemoView;
 import cn.o.app.demo.ui.DatePickerDemoView;
 import cn.o.app.demo.ui.DemoPathButtonView;
 import cn.o.app.demo.ui.FirUpdateDemoView;
+import cn.o.app.demo.ui.IndexViewDemoView;
 import cn.o.app.demo.ui.MediaDemoView;
 import cn.o.app.demo.ui.NetTaskDemoView;
 import cn.o.app.demo.ui.OAdapterDemoView;
@@ -51,7 +52,7 @@ public class MainActivity extends BasicActivity {
 
 	@OnClick({ R.id.oadapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir, R.id.anim_task, R.id.media, R.id.net_task,
 			R.id.pay, R.id.qrcode, R.id.share, R.id.action_sheet, R.id.amap, R.id.date_picker, R.id.prompt,
-			R.id.progress_view, R.id.tip_view, R.id.busy, R.id.path_button, R.id.ohlinearadapter })
+			R.id.progress_view, R.id.tip_view, R.id.busy, R.id.path_button, R.id.ohlinearadapter, R.id.index_view })
 	protected void onClick(View v) {
 		Intent intent = new Intent(this, ShellActivity.class);
 		ShellExtra extra = new ShellExtra();
@@ -118,6 +119,9 @@ public class MainActivity extends BasicActivity {
 			break;
 		case R.id.ohlinearadapter:
 			extra.setViewName(OHLinearAdapterDemoView.class.getName());
+			break;
+		case R.id.index_view:
+			extra.setViewName(IndexViewDemoView.class.getName());
 			break;
 		default:
 			break;

@@ -96,7 +96,6 @@ public class ImageIcon extends ImageView implements IDefaultDrawableView {
 			} catch (Exception e) {
 
 			}
-			mCornerRadius = typedArray.getDimensionPixelSize(R.styleable.ImageIcon_android_radius, 0);
 			if (mCornerRadius != 0 && mShape == SHAPE_RECT) {
 				mShape = SHAPE_ROUND_RECT;
 			}
