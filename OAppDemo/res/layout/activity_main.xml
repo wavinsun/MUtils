@@ -128,6 +128,11 @@
                 style="@style/MainBtn"
                 android:text="IndexView"/>
             
+            <TextView
+                android:id="@+id/uppay"
+                style="@style/MainBtn"
+                android:text="UPPay"/>
+            
         </cn.o.app.ui.FlowLayout>
     </ScrollView>
 
