@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html >
+	<head>
+		<script src="app-api.js"></script>
+		<script>
+			function onClickByeByeButton(){
+				app.invoke({
+					"name":"byebye",
+					callback:function(ret){
+						console.log(ret.state);
+					}
+				});
+			}
+			function onClickLogButton(){
+				console.log("app-api");
+			}
+			function onClickGetAppInfoButton(){
+				app.invoke({
+					"name":"getAppInfo",
+					callback:function(ret){
+						console.log(JSON.stringify(ret));
+					}
+				});
+			}
+		</script>
+	</head>
+	<body style="text-align:center">
+		<button type="button" onclick="onClickLogButton()">Log</button>
+		<br>
+		<button type="button" onclick="onClickByeByeButton()" >ByeBye</button>
+		<br>
+		<button type="button" onclick="onClickGetAppInfoButton()" >GetAppInfo</button>
+		<br>
+	</body>
+</html>
