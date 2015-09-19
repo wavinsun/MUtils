@@ -29,6 +29,7 @@ import cn.o.app.demo.ui.QRCodeDemoView;
 import cn.o.app.demo.ui.ShareDemoView;
 import cn.o.app.demo.ui.TipViewDemoView;
 import cn.o.app.demo.ui.UPPayDemoView;
+import cn.o.app.demo.ui.WebFrameDemoView;
 import cn.o.app.demo.ui.ZipDemoView;
 
 @SetContentView(R.layout.activity_main)
@@ -54,7 +55,7 @@ public class MainActivity extends BasicActivity {
 	@OnClick({ R.id.oadapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir, R.id.anim_task, R.id.media, R.id.net_task,
 			R.id.pay, R.id.qrcode, R.id.share, R.id.action_sheet, R.id.amap, R.id.date_picker, R.id.prompt,
 			R.id.progress_view, R.id.tip_view, R.id.busy, R.id.path_button, R.id.ohlinearadapter, R.id.index_view,
-			R.id.uppay })
+			R.id.uppay, R.id.web_frame })
 	protected void onClick(View v) {
 		Intent intent = new Intent(this, ShellActivity.class);
 		ShellExtra extra = new ShellExtra();
@@ -127,6 +128,9 @@ public class MainActivity extends BasicActivity {
 			break;
 		case R.id.uppay:
 			extra.setViewName(UPPayDemoView.class.getName());
+			break;
+		case R.id.web_frame:
+			extra.setViewName(WebFrameDemoView.class.getName());
 			break;
 		default:
 			break;
