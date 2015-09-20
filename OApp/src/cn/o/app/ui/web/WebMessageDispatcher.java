@@ -4,6 +4,11 @@ import android.content.Context;
 import cn.o.app.core.annotation.Ignore;
 import cn.o.app.core.json.JsonUtil;
 
+/**
+ * Implements {@link IWebMessageDispatcher}
+ *
+ * @param <MESSAGE>
+ */
 @SuppressWarnings("serial")
 public abstract class WebMessageDispatcher<MESSAGE> implements IWebMessageDispatcher<MESSAGE> {
 

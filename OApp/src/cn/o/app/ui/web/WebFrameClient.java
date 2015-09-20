@@ -3,6 +3,9 @@ package cn.o.app.ui.web;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+/**
+ * WebFrame WebView client of framework
+ */
 public class WebFrameClient extends WebViewClient {
 
 	@Override

@@ -3,6 +3,9 @@ package cn.o.app.ui.web;
 import android.webkit.WebChromeClient;
 import cn.o.app.core.log.Logs;
 
+/**
+ * WebFrame chrome client of framework
+ */
 public class WebFrameChromeClient extends WebChromeClient {
 
 	@Override

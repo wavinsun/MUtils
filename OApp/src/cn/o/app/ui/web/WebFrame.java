@@ -9,6 +9,9 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import cn.o.app.ui.StateView;
 
+/**
+ * Implements {@link IWebFrame}
+ */
 @SuppressLint("SetJavaScriptEnabled")
 @SuppressWarnings("serial")
 public class WebFrame extends StateView implements IWebFrame {

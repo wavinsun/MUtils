@@ -7,6 +7,9 @@ import android.content.Context;
 import cn.o.app.core.json.JsonUtil;
 import cn.o.app.core.log.Logs;
 
+/**
+ * Implements {@link IWebMessageManager}
+ */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class WebMessageManager implements IWebMessageManager {
 
