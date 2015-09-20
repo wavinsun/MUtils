@@ -15,6 +15,7 @@ public interface IPushManager extends IContextOwner {
 	public void add(Class<? extends IPushDispatcher<?>> dispatcherClass);
 
 	/**
+	 * Dispatch message
 	 * 
 	 * @param message
 	 */
