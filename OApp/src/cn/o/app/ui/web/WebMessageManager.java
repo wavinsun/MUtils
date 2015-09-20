@@ -1,10 +1,11 @@
 package cn.o.app.ui.web;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.content.Context;
 import cn.o.app.core.json.JsonUtil;
+import cn.o.app.core.log.Logs;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class WebMessageManager implements IWebMessageManager {
@@ -21,7 +22,7 @@ public class WebMessageManager implements IWebMessageManager {
 	@Override
 	public void add(Class<? extends IWebMessageDispatcher<?>> dispatcherClass) {
 		if (mDispatchers == null) {
-			mDispatchers = new ArrayList<Class<? extends IWebMessageDispatcher<?>>>();
+			mDispatchers = new CopyOnWriteArrayList<Class<? extends IWebMessageDispatcher<?>>>();
 		}
 		mDispatchers.add(dispatcherClass);
 	}
@@ -37,6 +38,7 @@ public class WebMessageManager implements IWebMessageManager {
 		} catch (Exception e) {
 			return;
 		}
+		boolean dispatched = false;
 		for (Class<? extends IWebMessageDispatcher<?>> dispatcherClass : mDispatchers) {
 			IWebMessageDispatcher dispatcher = null;
 			try {
@@ -46,6 +48,7 @@ public class WebMessageManager implements IWebMessageManager {
 					Object msg = dispatcher.translateMessage();
 					if (msg != null) {
 						dispatcher.onMessage(msg);
+						dispatched = true;
 					}
 				}
 			} catch (Exception e) {
@@ -55,6 +58,12 @@ public class WebMessageManager implements IWebMessageManager {
 					dispatcher.setManager(null);
 				}
 			}
+		}
+		if (!dispatched) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("Message has not been succcessfully dispatched: ");
+			sb.append(message);
+			Logs.e("WebMessageManager", sb.toString());
 		}
 	}
 
@@ -81,7 +90,6 @@ public class WebMessageManager implements IWebMessageManager {
 		mWebFrame = null;
 		if (mDispatchers != null) {
 			mDispatchers.clear();
-			mDispatchers = null;
 		}
 	}
 

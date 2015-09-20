@@ -3,33 +3,47 @@
 	<head>
 		<script src="app-api.js"></script>
 		<script>
-			function onClickByeByeButton(){
+			function onClickToastButton(){
 				app.invoke({
-					"name":"byebye",
+					name:"toast",
+					data:{toast:"hello world!"},
 					callback:function(ret){
-						console.log(ret.state);
+						console.log("toast callback: "+ret.state);
 					}
 				});
-			}
-			function onClickLogButton(){
-				console.log("app-api");
 			}
 			function onClickGetAppInfoButton(){
 				app.invoke({
-					"name":"getAppInfo",
+					name:"getAppInfo",
 					callback:function(ret){
-						console.log(JSON.stringify(ret));
+						var retStr=JSON.stringify(ret);
+						console.log(retStr);
+						app.invoke({name:"toast",data:{toast:retStr}});
 					}
 				});
+			}
+			function onClickByeByeButton(){
+				app.invoke("byebye");
+			}
+			function onClickInalidMessageButton(){
+				app.invoke("");
 			}
 		</script>
 	</head>
 	<body style="text-align:center">
-		<button type="button" onclick="onClickLogButton()">Log</button>
+		<br>
+		<br>
+		<button type="button" onclick="onClickToastButton()">Toast</button>
+		<br>
+		<br>
+		<button type="button" onclick="onClickGetAppInfoButton()" >GetAppInfo</button>
+		<br>
 		<br>
 		<button type="button" onclick="onClickByeByeButton()" >ByeBye</button>
 		<br>
-		<button type="button" onclick="onClickGetAppInfoButton()" >GetAppInfo</button>
+		<br>
+		<button type="button" onclick="onClickInalidMessageButton()" >InalidMessage</button>
+		<br>
 		<br>
 	</body>
 </html>

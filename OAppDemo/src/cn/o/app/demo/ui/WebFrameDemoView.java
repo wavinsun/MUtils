@@ -7,6 +7,7 @@ import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.demo.R;
 import cn.o.app.demo.web.ByeByeWebDispatcher;
 import cn.o.app.demo.web.GetAppInfoWebDispatcher;
+import cn.o.app.demo.web.ToastWebDispatcher;
 import cn.o.app.ui.StateView;
 import cn.o.app.ui.web.WebFrame;
 
@@ -33,6 +34,7 @@ public class WebFrameDemoView extends StateView {
 		super.onCreate();
 		mWebFrame.add(ByeByeWebDispatcher.class);
 		mWebFrame.add(GetAppInfoWebDispatcher.class);
+		mWebFrame.add(ToastWebDispatcher.class);
 		mWebFrame.getWebView().loadUrl("file:///android_asset/app-api.htm");
 	}
 
