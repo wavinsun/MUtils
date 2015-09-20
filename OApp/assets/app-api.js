@@ -1,5 +1,5 @@
 if(app){
-	app.callbacks=[];
+	app.callbacks={};
 	app.onMessage=function(s){
 		var o=JSON.parse(s);
 		if(o.callbacker){
@@ -14,19 +14,19 @@ if(app){
 	};
 	app.invoke=function(o){
 		if((typeof o)=="number"&&o.constructor==Number){
-			o={"id":o};
+			o={id:o};
 		}else if((typeof o)=="string"&&o.constructor==String){
-			o={"name":o};
+			o={name:o};
 		}
 		if(o.callback){
 			o.callbacker=new Date().getTime()+"";
 			app.callbacks[o.callbacker]=o;
 		}
 		app.sendMessage(JSON.stringify({
-			"id":o.id,
-			"name":o.name,
-			"data":o.data,
-			"callbacker":o.callbacker
+			id:o.id,
+			name:o.name,
+			data:o.data,
+			callbacker:o.callbacker
 		}));
 	};
 }

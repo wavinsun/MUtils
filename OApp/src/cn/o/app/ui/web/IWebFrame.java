@@ -1,8 +1,11 @@
 package cn.o.app.ui.web;
 
+import android.webkit.WebView;
 import cn.o.app.context.IContextProvider;
 
 public interface IWebFrame extends IContextProvider {
+
+	public WebView getWebView();
 
 	public void sendMessage(String json);
 
