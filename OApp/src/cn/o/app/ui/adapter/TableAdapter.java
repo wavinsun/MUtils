@@ -1,4 +1,4 @@
-package cn.o.app.adapter;
+package cn.o.app.ui.adapter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,9 +12,9 @@ import android.widget.TableRow;
 /**
  * Adapter for {@link TableLayout}
  * 
- * @see OAdapter
+ * @see UIAdapter
  */
-public abstract class OTableAdapter<DATA_ITEM> extends OCacheAdapter<DATA_ITEM, List<IItemView<DATA_ITEM>>> {
+public abstract class TableAdapter<DATA_ITEM> extends CacheAdapter<DATA_ITEM, List<IItemView<DATA_ITEM>>> {
 
 	protected int mColumnCount;
 

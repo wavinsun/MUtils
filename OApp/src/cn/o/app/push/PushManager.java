@@ -3,8 +3,8 @@ package cn.o.app.push;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.o.app.context.ContextOwner;
 import cn.o.app.core.json.JsonUtil;
+import cn.o.app.os.ContextOwner;
 
 /**
  * Implements {@link IPushManager}

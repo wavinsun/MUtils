@@ -1,7 +1,7 @@
 package cn.o.app.queue;
 
-import cn.o.app.context.IContextOwner;
 import cn.o.app.core.event.IDispatcher;
+import cn.o.app.os.IContextOwner;
 
 public interface IQueue extends IContextOwner, IDispatcher {
 

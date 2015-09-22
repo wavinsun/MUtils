@@ -1,4 +1,4 @@
-package cn.o.app.adapter;
+package cn.o.app.ui.adapter;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
@@ -7,14 +7,14 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import cn.o.app.context.IContextProvider;
 import cn.o.app.core.reflect.ReflectUtil;
+import cn.o.app.os.IContextProvider;
 
 /**
  * Provide object-oriented item view
  */
 @SuppressWarnings("unchecked")
-public class OAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvider {
+public class UIAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvider {
 
 	/** Container who hold item views */
 	protected ViewGroup mContainer;

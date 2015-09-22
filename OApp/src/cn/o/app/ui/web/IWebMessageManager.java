@@ -1,7 +1,7 @@
 package cn.o.app.ui.web;
 
-import cn.o.app.context.IContextProvider;
 import cn.o.app.core.IClearable;
+import cn.o.app.os.IContextProvider;
 
 /**
  * Web message manager of framework

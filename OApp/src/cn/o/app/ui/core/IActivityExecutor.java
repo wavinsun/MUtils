@@ -4,8 +4,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import cn.o.app.context.IContextProvider;
 import cn.o.app.event.listener.OnActivityResultListener;
+import cn.o.app.os.IContextProvider;
 
 public interface IActivityExecutor extends IContextProvider {
 

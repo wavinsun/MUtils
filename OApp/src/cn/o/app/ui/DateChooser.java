@@ -15,70 +15,70 @@ import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;
 
 /**
- * Date picker like iOS
+ * Date chooser like iOS
  */
 @SuppressLint("InflateParams")
 @SuppressWarnings("deprecation")
-public class ODatePicker {
+public class DateChooser {
 
 	/**
-	 * Date picker listener
+	 * Date chooser listener
 	 */
-	public static abstract class OnPickDateListener {
+	public static abstract class OnChooseDateListener {
 
 		/**
-		 * Submit date picked
+		 * Submit date choose
 		 * 
-		 * @param picker
+		 * @param chooser
 		 * @param date
 		 */
-		public abstract void onPicked(ODatePicker picker, Date date);
+		public abstract void onChoosed(DateChooser chooser, Date date);
 
 		/**
-		 * Give date while picking
+		 * Give date while choosing
 		 * 
-		 * @param picker
+		 * @param chooser
 		 * @param date
 		 */
-		public void onPicking(ODatePicker picker, Date date) {
+		public void onChoosing(DateChooser chooser, Date date) {
 
 		}
 
 		/**
-		 * Cancel pick
+		 * Cancel choose
 		 * 
-		 * @param picker
+		 * @param chooser
 		 */
-		public void onCancel(ODatePicker picker) {
+		public void onCancel(DateChooser chooser) {
 
 		}
 
 		/**
-		 * Get text for InfoToast when picked date is above maximum date
+		 * Get text for InfoToast when choose date is above maximum date
 		 * 
-		 * @param picker
+		 * @param chooser
 		 * @param maxDate
 		 * @return
 		 */
-		public String onPickedAboveMaxDate(ODatePicker picker, Date maxDate) {
+		public String onChoosedAboveMaxDate(DateChooser chooser, Date maxDate) {
 			return "无效时间";
 		}
 
 		/**
-		 * Get text for InfoToast when picked date is down minimum date
+		 * Get text for InfoToast when choose date is down minimum date
 		 * 
-		 * @param picker
+		 * @param chooser
 		 * @param minDate
 		 * @return
 		 */
-		public String onPickedDownMinDate(ODatePicker picker, Date minDate) {
+		public String onChoosedDownMinDate(DateChooser chooser, Date minDate) {
 			return "无效时间";
 		}
 
 	}
 
 	/** Listener */
-	protected OnPickDateListener mOnPickDateListener;
+	protected OnChooseDateListener mOnChooseDateListener;
 
 	/** Dialog */
 	protected ODialog mDialog;
@@ -120,7 +120,7 @@ public class ODatePicker {
 
 	protected Date mMaxDate;
 
-	public ODatePicker(Context context) {
+	public DateChooser(Context context) {
 		mContext = context;
 	}
 
@@ -157,15 +157,15 @@ public class ODatePicker {
 		mPickTime = pickTime;
 	}
 
-	public void setListener(OnPickDateListener listener) {
-		mOnPickDateListener = listener;
+	public void setListener(OnChooseDateListener listener) {
+		mOnChooseDateListener = listener;
 	}
 
 	public void ok() {
 		if (mDialog == null) {
 			return;
 		}
-		if (mOnPickDateListener != null) {
+		if (mOnChooseDateListener != null) {
 			int year = mYearView.getCurrentItem() + mStartYear;
 			int month = mMonthView.getCurrentItem() + 1;
 			int day = mDayView.getCurrentItem() + 1;
@@ -173,23 +173,23 @@ public class ODatePicker {
 			int minute = mPickTime ? mMinuteView.getCurrentItem() : 0;
 			mPickedDate = AppUtil.getDate(year, month, day, hour, minute);
 			if (mMaxDate != null && mPickedDate.getTime() > mMaxDate.getTime()) {
-				if (mOnPickDateListener != null) {
-					mInfoToast.show(mOnPickDateListener.onPickedAboveMaxDate(ODatePicker.this, mMaxDate), 3000);
+				if (mOnChooseDateListener != null) {
+					mInfoToast.show(mOnChooseDateListener.onChoosedAboveMaxDate(DateChooser.this, mMaxDate), 3000);
 				} else {
 					mInfoToast.show("无效时间", 3000);
 				}
 				return;
 			}
 			if (mMinDate != null && mPickedDate.getTime() < mMinDate.getTime()) {
-				if (mOnPickDateListener != null) {
-					mInfoToast.show(mOnPickDateListener.onPickedDownMinDate(ODatePicker.this, mMinDate), 3000);
+				if (mOnChooseDateListener != null) {
+					mInfoToast.show(mOnChooseDateListener.onChoosedDownMinDate(DateChooser.this, mMinDate), 3000);
 				} else {
 					mInfoToast.show("无效时间", 3000);
 				}
 				return;
 			}
-			if (mOnPickDateListener != null) {
-				mOnPickDateListener.onPicked(ODatePicker.this, mPickedDate);
+			if (mOnChooseDateListener != null) {
+				mOnChooseDateListener.onChoosed(DateChooser.this, mPickedDate);
 			}
 		}
 		dismiss();
@@ -199,8 +199,8 @@ public class ODatePicker {
 		if (mDialog == null) {
 			return;
 		}
-		if (mOnPickDateListener != null) {
-			mOnPickDateListener.onCancel(this);
+		if (mOnChooseDateListener != null) {
+			mOnChooseDateListener.onCancel(this);
 		}
 		mDialog.cancel();
 		mDialog = null;
@@ -328,8 +328,8 @@ public class ODatePicker {
 				int hour = mPickTime ? mHourView.getCurrentItem() : 0;
 				int minute = mPickTime ? mMinuteView.getCurrentItem() : 0;
 				mPickedDate = AppUtil.getDate(year, month, day, hour, minute);
-				if (mOnPickDateListener != null) {
-					mOnPickDateListener.onPicking(ODatePicker.this, mPickedDate);
+				if (mOnChooseDateListener != null) {
+					mOnChooseDateListener.onChoosing(DateChooser.this, mPickedDate);
 				}
 			}
 

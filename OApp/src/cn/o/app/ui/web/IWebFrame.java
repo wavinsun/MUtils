@@ -1,7 +1,7 @@
 package cn.o.app.ui.web;
 
 import android.webkit.WebView;
-import cn.o.app.context.IContextProvider;
+import cn.o.app.os.IContextProvider;
 
 /**
  * WebFrame of framework

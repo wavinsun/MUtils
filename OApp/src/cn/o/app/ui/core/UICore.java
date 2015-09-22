@@ -18,7 +18,6 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
-import cn.o.app.context.IContextProvider;
 import cn.o.app.core.ILockable;
 import cn.o.app.core.annotation.event.OnClick;
 import cn.o.app.core.annotation.res.FindViewById;
@@ -36,6 +35,7 @@ import cn.o.app.core.task.IStopable;
 import cn.o.app.core.task.IStopableManager;
 import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.event.listener.OnClickListener;
+import cn.o.app.os.IContextProvider;
 import cn.o.app.ui.InfoToast;
 
 /**

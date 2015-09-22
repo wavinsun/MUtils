@@ -9,37 +9,37 @@ import cn.o.app.core.annotation.event.OnClick;
 import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.core.time.ODate;
 import cn.o.app.demo.R;
-import cn.o.app.ui.ODatePicker;
-import cn.o.app.ui.ODatePicker.OnPickDateListener;
+import cn.o.app.ui.DateChooser;
+import cn.o.app.ui.DateChooser.OnChooseDateListener;
 import cn.o.app.ui.StateView;
 
-@SetContentView(R.layout.view_date_picker)
-public class DatePickerDemoView extends StateView {
+@SetContentView(R.layout.view_date_chooser)
+public class DateChooserDemoView extends StateView {
 
 	protected ODate mPickedDate;
 
-	public DatePickerDemoView(Context context) {
+	public DateChooserDemoView(Context context) {
 		super(context);
 	}
 
-	public DatePickerDemoView(Context context, AttributeSet attrs) {
+	public DateChooserDemoView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public DatePickerDemoView(Context context, AttributeSet attrs, int defStyle) {
+	public DateChooserDemoView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
 	@OnClick(R.id.go)
 	protected void onClickGo() {
-		ODatePicker picker = new ODatePicker(getContext());
+		DateChooser picker = new DateChooser(getContext());
 		picker.setPickTime(true);
 		ODate now = new ODate();
 		picker.setMaxDate(AppUtil.getDate(AppUtil.getYear(now) + 10, AppUtil.getMonth(now), AppUtil.getDay(now)));
-		picker.setListener(new OnPickDateListener() {
+		picker.setListener(new OnChooseDateListener() {
 
 			@Override
-			public void onPicked(ODatePicker picker, Date date) {
+			public void onChoosed(DateChooser chooser, Date date) {
 				mPickedDate = new ODate(date.getTime());
 				mPickedDate.setFormat("yyyy-MM-dd HH:mm");
 				toast(mPickedDate.toString());

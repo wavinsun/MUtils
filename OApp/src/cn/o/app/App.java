@@ -10,8 +10,8 @@ import com.umeng.update.UpdateStatus;
 import android.app.Application;
 import android.content.Context;
 import cn.jpush.android.api.JPushInterface;
-import cn.o.app.context.IContextProvider;
 import cn.o.app.core.log.Logs;
+import cn.o.app.os.IContextProvider;
 
 /**
  * Application of framework

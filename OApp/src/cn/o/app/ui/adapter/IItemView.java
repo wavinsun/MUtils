@@ -1,8 +1,8 @@
-package cn.o.app.adapter;
+package cn.o.app.ui.adapter;
 
 import android.view.View;
 import android.widget.BaseAdapter;
-import cn.o.app.context.IContextProvider;
+import cn.o.app.os.IContextProvider;
 import cn.o.app.ui.core.IContentViewOwner;
 import cn.o.app.ui.core.IView;
 import cn.o.app.ui.core.IViewFinder;
@@ -11,29 +11,29 @@ import cn.o.app.ui.core.IViewFinder;
  * Object-oriented for
  * {@link BaseAdapter#getView(int, View, android.view.ViewGroup)}
  * 
- * @see OAdapter#getItemView()
- * @see OAdapter#getView(int, View, android.view.ViewGroup)
+ * @see UIAdapter#getItemView()
+ * @see UIAdapter#getView(int, View, android.view.ViewGroup)
  */
 public interface IItemView<DATA_ITEM> extends IView, IViewFinder, IContentViewOwner, IContextProvider {
 
 	/**
 	 * Get Adapter for IItemView.
 	 * 
-	 * @return {@link OAdapter}
+	 * @return {@link UIAdapter}
 	 */
-	public OAdapter<DATA_ITEM> getAdapter();
+	public UIAdapter<DATA_ITEM> getAdapter();
 
 	/**
 	 * Set Adapter for IItemView.
 	 * 
 	 * It called by framework.
 	 * 
-	 * @see OAdapter#getView(int, View, android.view.ViewGroup)
+	 * @see UIAdapter#getView(int, View, android.view.ViewGroup)
 	 * 
 	 * @param dapter
 	 * 
 	 */
-	public void setAdapter(OAdapter<DATA_ITEM> dapter);
+	public void setAdapter(UIAdapter<DATA_ITEM> dapter);
 
 	/**
 	 * Get position for IItemView.
@@ -46,7 +46,7 @@ public interface IItemView<DATA_ITEM> extends IView, IViewFinder, IContentViewOw
 	 * Set position for IItemView.<br>
 	 * It called by framework.
 	 * 
-	 * @see OAdapter#getView(int, View, android.view.ViewGroup)
+	 * @see UIAdapter#getView(int, View, android.view.ViewGroup)
 	 * 
 	 * @param position
 	 */
@@ -62,7 +62,7 @@ public interface IItemView<DATA_ITEM> extends IView, IViewFinder, IContentViewOw
 	/**
 	 * Set data provider for IItemView.
 	 * 
-	 * @see OAdapter#getView(int, View, android.view.ViewGroup)
+	 * @see UIAdapter#getView(int, View, android.view.ViewGroup)
 	 * 
 	 * @param dataProvider
 	 */
@@ -71,21 +71,21 @@ public interface IItemView<DATA_ITEM> extends IView, IViewFinder, IContentViewOw
 	/**
 	 * Notify data set changed by IItemView
 	 * 
-	 * @see OAdapter#notifyDataSetChanged()
+	 * @see UIAdapter#notifyDataSetChanged()
 	 */
 	public void notifyDataSetChanged();
 
 	/**
 	 * IItemView creation
 	 * 
-	 * @see OAdapter#getView(int, View, android.view.ViewGroup)
+	 * @see UIAdapter#getView(int, View, android.view.ViewGroup)
 	 */
 	public void onCreate();
 
 	/**
 	 * IItemView reuse
 	 * 
-	 * @see OAdapter#getView(int, View, android.view.ViewGroup)
+	 * @see UIAdapter#getView(int, View, android.view.ViewGroup)
 	 */
 	public void onResume();
 

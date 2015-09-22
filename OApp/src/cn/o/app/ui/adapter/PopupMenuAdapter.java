@@ -1,13 +1,13 @@
-package cn.o.app.adapter;
+package cn.o.app.ui.adapter;
 
 import cn.o.app.ui.OPopupMenu;
 
 /**
  * Adapter for {@link OPopupMenu}
  * 
- * @see OAdapter
+ * @see UIAdapter
  */
-public abstract class OPopupMenuAdapter<DATA_ITEM> extends OVLinearAdapter<DATA_ITEM> {
+public abstract class PopupMenuAdapter<DATA_ITEM> extends VLinearAdapter<DATA_ITEM> {
 
 	protected OPopupMenu<DATA_ITEM> mPopMenu;
 

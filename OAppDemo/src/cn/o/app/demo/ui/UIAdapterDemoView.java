@@ -7,32 +7,32 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import cn.o.app.adapter.IItemView;
-import cn.o.app.adapter.ItemView;
-import cn.o.app.adapter.OAdapter;
 import cn.o.app.core.annotation.event.OnClick;
 import cn.o.app.core.annotation.res.FindViewById;
 import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.demo.R;
 import cn.o.app.ui.StateView;
+import cn.o.app.ui.adapter.IItemView;
+import cn.o.app.ui.adapter.ItemView;
+import cn.o.app.ui.adapter.UIAdapter;
 
-@SetContentView(R.layout.view_oadapter)
-public class OAdapterDemoView extends StateView {
+@SetContentView(R.layout.view_ui_adapter)
+public class UIAdapterDemoView extends StateView {
 
 	@FindViewById(R.id.list)
 	protected ListView mList;
 
 	protected MyAdapter mAdapter;
 
-	public OAdapterDemoView(Context context) {
+	public UIAdapterDemoView(Context context) {
 		super(context);
 	}
 
-	public OAdapterDemoView(Context context, AttributeSet attrs) {
+	public UIAdapterDemoView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public OAdapterDemoView(Context context, AttributeSet attrs, int defStyle) {
+	public UIAdapterDemoView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
@@ -77,7 +77,7 @@ public class OAdapterDemoView extends StateView {
 
 	}
 
-	class MyAdapter extends OAdapter<MyItem> {
+	class MyAdapter extends UIAdapter<MyItem> {
 
 		@Override
 		public IItemView<MyItem> getItemView() {
