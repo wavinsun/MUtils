@@ -1,4 +1,4 @@
-package cn.o.app.conf;
+package cn.o.app.settings;
 
 import java.util.List;
 

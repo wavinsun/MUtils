@@ -1,4 +1,4 @@
-package cn.o.app.adapter;
+package cn.o.app.ui.adapter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,9 +11,9 @@ import android.widget.AdapterView;
  * 
  * @see AdapterView
  * 
- * @see OAdapter
+ * @see UIAdapter
  */
-public abstract class OCacheAdapter<DATA_ITEM, CACHE_ITEM> extends OAdapter<DATA_ITEM> {
+public abstract class CacheAdapter<DATA_ITEM, CACHE_ITEM> extends UIAdapter<DATA_ITEM> {
 
 	/** Cache views */
 	protected List<CACHE_ITEM> mCacheViews;
@@ -23,7 +23,7 @@ public abstract class OCacheAdapter<DATA_ITEM, CACHE_ITEM> extends OAdapter<DATA
 	/** Auto allocate more views */
 	protected boolean mAutoAllocMore;
 
-	public OCacheAdapter() {
+	public CacheAdapter() {
 		super();
 		mCacheViews = new LinkedList<CACHE_ITEM>();
 		mAutoAllocMore = true;

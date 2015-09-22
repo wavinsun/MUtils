@@ -1,40 +1,40 @@
-package cn.o.app.adapter;
+package cn.o.app.ui.adapter;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 import cn.o.app.ui.core.UICore;
 
 /**
- * RelativeLayout implements {@link IItemView}
+ * FrameLayout implements {@link IItemView}
  */
-public abstract class ItemView<DATA_ITEM> extends RelativeLayout implements IItemView<DATA_ITEM> {
+public abstract class ItemFrame<DATA_ITEM> extends FrameLayout implements IItemView<DATA_ITEM> {
 
 	protected int mPosition = -1;
 
 	protected DATA_ITEM mDataProvider;
 
-	protected OAdapter<DATA_ITEM> mAdapter;
+	protected UIAdapter<DATA_ITEM> mAdapter;
 
-	public ItemView(Context context) {
+	public ItemFrame(Context context) {
 		super(context);
 	}
 
-	public ItemView(Context context, AttributeSet attrs) {
+	public ItemFrame(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public ItemView(Context context, AttributeSet attrs, int defStyle) {
+	public ItemFrame(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
-	public void setAdapter(OAdapter<DATA_ITEM> adapter) {
+	public void setAdapter(UIAdapter<DATA_ITEM> adapter) {
 		mAdapter = adapter;
 	}
 
-	public OAdapter<DATA_ITEM> getAdapter() {
+	public UIAdapter<DATA_ITEM> getAdapter() {
 		return mAdapter;
 	}
 

@@ -17,11 +17,11 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import cn.o.app.R;
-import cn.o.app.adapter.IItemView;
-import cn.o.app.adapter.ItemFrame;
-import cn.o.app.adapter.OVLinearAdapter;
 import cn.o.app.core.annotation.event.OnClick;
 import cn.o.app.ui.ActionSheet.ActionItem;
+import cn.o.app.ui.adapter.IItemView;
+import cn.o.app.ui.adapter.ItemFrame;
+import cn.o.app.ui.adapter.VLinearAdapter;
 
 @SuppressWarnings("deprecation")
 public class ActionSheet<DATA_ITEM extends ActionItem> {
@@ -229,7 +229,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 
 	}
 
-	static class OActionSheetAdapter<DATA_ITEM extends ActionItem> extends OVLinearAdapter<DATA_ITEM> {
+	static class OActionSheetAdapter<DATA_ITEM extends ActionItem> extends VLinearAdapter<DATA_ITEM> {
 
 		protected ActionSheet<DATA_ITEM> mActionSheet;
 

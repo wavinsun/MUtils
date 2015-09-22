@@ -1,6 +1,6 @@
 package cn.o.app.push;
 
-import cn.o.app.context.IContextOwner;
+import cn.o.app.os.IContextOwner;
 
 /**
  * Push manager of framework

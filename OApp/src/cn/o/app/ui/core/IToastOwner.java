@@ -1,7 +1,7 @@
 package cn.o.app.ui.core;
 
 import android.widget.Toast;
-import cn.o.app.context.IContextProvider;
+import cn.o.app.os.IContextProvider;
 import cn.o.app.ui.InfoToast;
 
 /**

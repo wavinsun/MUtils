@@ -24,9 +24,9 @@
                 android:text="Alert"/>
             
             <TextView
-                android:id="@+id/oadapter"
+                android:id="@+id/ui_adapter"
                 style="@style/MainBtn"
-                android:text="OAdapter"/>
+                android:text="UIAdapter"/>
             
             <TextView
                 android:id="@+id/zip"
@@ -89,9 +89,9 @@
                 android:text="AMap"/>
             
             <TextView
-                android:id="@+id/date_picker"
+                android:id="@+id/date_chooser"
                 style="@style/MainBtn"
-                android:text="ODatePicker"/>
+                android:text="DateChooser"/>
             
             <TextView 
                 android:id="@+id/prompt"
@@ -119,9 +119,9 @@
                 android:text="PathButton"/>
             
             <TextView
-                android:id="@+id/ohlinearadapter"
+                android:id="@+id/hlinear_adapter"
                 style="@style/MainBtn"
-                android:text="OHLinearAdapter"/>
+                android:text="HLinearAdapter"/>
             
             <TextView 
                 android:id="@+id/index_view"

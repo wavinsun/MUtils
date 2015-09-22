@@ -1,4 +1,4 @@
-package cn.o.app.conf;
+package cn.o.app.settings;
 
 import android.content.Context;
 import cn.o.app.AppUtil;
@@ -8,13 +8,10 @@ import cn.o.app.core.json.JsonUtil;
 import cn.o.app.core.xml.XmlUtil;
 
 /**
- * JSON or XML serializer for assets file
- * 
- * @see JsonUtil
- * @see XmlUtil
+ * JOSN or XML serializer for assets file and shared preferences
  */
 @SuppressWarnings("serial")
-public class AssetItem implements IAssetItem {
+public class ConfItem extends PrefItem implements IAssetItem {
 
 	/** Assets file type of XML */
 	public static final int TYPE_ASSET_XML = 0;
@@ -79,8 +76,10 @@ public class AssetItem implements IAssetItem {
 	}
 
 	public void clear() {
+		super.clear();
 		if (mAssetCache != null) {
 			mAssetCache.clear();
 		}
 	}
+
 }

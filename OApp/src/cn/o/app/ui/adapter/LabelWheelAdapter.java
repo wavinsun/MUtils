@@ -1,4 +1,4 @@
-package cn.o.app.adapter;
+package cn.o.app.ui.adapter;
 
 import java.util.List;
 

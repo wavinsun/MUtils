@@ -16,7 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
-import cn.o.app.adapter.OPopupMenuAdapter;
+import cn.o.app.ui.adapter.PopupMenuAdapter;
 
 @SuppressWarnings("deprecation")
 public class OPopupMenu<DATA_ITEM> {
@@ -25,7 +25,7 @@ public class OPopupMenu<DATA_ITEM> {
 
 	protected PopupWindow mPopupWindow;
 
-	protected OPopupMenuAdapter<DATA_ITEM> mAdapter;
+	protected PopupMenuAdapter<DATA_ITEM> mAdapter;
 
 	protected OPopupMenuListener mListener;
 
@@ -47,7 +47,7 @@ public class OPopupMenu<DATA_ITEM> {
 		mPopupY = anchorLocation[1];
 	}
 
-	public void setAdapter(OPopupMenuAdapter<DATA_ITEM> adapter) {
+	public void setAdapter(PopupMenuAdapter<DATA_ITEM> adapter) {
 		if (mPopupWindow != null) {
 			return;
 		}

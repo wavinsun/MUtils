@@ -1,4 +1,4 @@
-package cn.o.app.adapter;
+package cn.o.app.ui.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,12 +7,13 @@ import android.widget.LinearLayout;
 
 /**
  * Adapter for {@link LinearLayout} whose orientation is
- * {@link LinearLayout#HORIZONTAL}
- *
- * @see LinearLayout#HORIZONTAL
- * @see OAdapter
+ * {@link LinearLayout#VERTICAL}
+ * 
+ * @see LinearLayout#VERTICAL
+ * @see UIAdapter
+ * 
  */
-public class OHLinearAdapter<DATA_ITEM> extends OCacheAdapter<DATA_ITEM, IItemView<DATA_ITEM>> {
+public abstract class VLinearAdapter<DATA_ITEM> extends CacheAdapter<DATA_ITEM, IItemView<DATA_ITEM>> {
 
 	@Override
 	public void setContainer(ViewGroup container) {
@@ -21,8 +22,8 @@ public class OHLinearAdapter<DATA_ITEM> extends OCacheAdapter<DATA_ITEM, IItemVi
 				throw new IllegalArgumentException("container is not LinearLayout");
 			}
 			LinearLayout linearLayout = (LinearLayout) container;
-			if (linearLayout.getOrientation() != LinearLayout.HORIZONTAL) {
-				linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+			if (linearLayout.getOrientation() != LinearLayout.VERTICAL) {
+				linearLayout.setOrientation(LinearLayout.VERTICAL);
 			}
 		}
 		super.setContainer(container);
@@ -60,7 +61,6 @@ public class OHLinearAdapter<DATA_ITEM> extends OCacheAdapter<DATA_ITEM, IItemVi
 		return mCacheViews.get(index);
 	}
 
-	@Override
 	protected void fixContainerSize() {
 		int requiredViews = getCacheSizeRequired();
 		if (requiredViews == 0) {
@@ -82,17 +82,16 @@ public class OHLinearAdapter<DATA_ITEM> extends OCacheAdapter<DATA_ITEM, IItemVi
 		boolean changed = false;
 		LayoutParams itemParams = v.getLayoutParams();
 		if (itemParams != null) {
-			if (itemParams.height <= 0 && itemParams.height != LayoutParams.MATCH_PARENT) {
-				itemParams.height = LayoutParams.MATCH_PARENT;
+			if (itemParams.width <= 0 && itemParams.width != LayoutParams.MATCH_PARENT) {
+				itemParams.width = LayoutParams.MATCH_PARENT;
 				changed = true;
 			}
 		} else {
-			itemParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+			itemParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 			changed = true;
 		}
 		if (changed) {
 			v.setLayoutParams(itemParams);
 		}
 	}
-
 }

@@ -1,6 +1,6 @@
 package cn.o.app.share;
 
-import cn.o.app.context.IContextOwner;
+import cn.o.app.os.IContextOwner;
 
 public interface IShare extends IContextOwner {
 
