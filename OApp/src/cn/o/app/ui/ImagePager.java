@@ -12,13 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import cn.o.app.core.ILinkItem;
+import cn.o.app.core.IPhotoItem;
 
 public class ImagePager extends ViewPager {
 
 	public static interface OnImageItemClickListener {
 
-		public void onItemClick(ImagePager pager, View v, int position, ILinkItem dataItem);
+		public void onItemClick(ImagePager pager, View v, int position, IPhotoItem item);
 
 	}
 
@@ -53,14 +53,14 @@ public class ImagePager extends ViewPager {
 		throw new UnsupportedOperationException();
 	}
 
-	public void setDataProvider(List<? extends ILinkItem> dataProvider) {
+	public void setDataProvider(List<? extends IPhotoItem> dataProvider) {
 		mAdapter.setDataProvider(dataProvider);
 		if (mAdapter.getCount() > 0) {
 			super.setCurrentItem(0);
 		}
 	}
 
-	public List<? extends ILinkItem> getDataProvider() {
+	public List<? extends IPhotoItem> getDataProvider() {
 		return mAdapter.getDataProvider();
 	}
 
@@ -72,13 +72,13 @@ public class ImagePager extends ViewPager {
 		if (mOnImageItemClickListener == null) {
 			return;
 		}
-		ILinkItem item = mAdapter.getDataProvider().get(position);
+		IPhotoItem item = mAdapter.getDataProvider().get(position);
 		mOnImageItemClickListener.onItemClick(this, v, position, item);
 	}
 
 	class ImagePagerAdapter extends PagerAdapter {
 
-		protected List<? extends ILinkItem> mDataProvider;
+		protected List<? extends IPhotoItem> mDataProvider;
 
 		@Override
 		public int getCount() {
@@ -88,11 +88,11 @@ public class ImagePager extends ViewPager {
 			return mDataProvider.size();
 		}
 
-		public List<? extends ILinkItem> getDataProvider() {
+		public List<? extends IPhotoItem> getDataProvider() {
 			return mDataProvider;
 		}
 
-		public void setDataProvider(List<? extends ILinkItem> dataProvider) {
+		public void setDataProvider(List<? extends IPhotoItem> dataProvider) {
 			mDataProvider = dataProvider;
 			notifyDataSetChanged();
 		}
@@ -111,7 +111,7 @@ public class ImagePager extends ViewPager {
 					onClickItem(v, v.getId());
 				}
 			});
-			mBitmapUtils.display(imageView, mDataProvider.get(position).getLink());
+			mBitmapUtils.display(imageView, mDataProvider.get(position).photoUrl());
 			container.addView(imageView);
 			return imageView;
 		}
