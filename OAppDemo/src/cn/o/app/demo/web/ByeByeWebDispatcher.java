@@ -2,6 +2,8 @@ package cn.o.app.demo.web;
 
 import android.app.Activity;
 import android.content.Context;
+import cn.o.app.demo.MainActivity;
+import cn.o.app.demo.ui.BasicActivity;
 import cn.o.app.demo.web.BasicWebMessage.BasicWebMessageData;
 import cn.o.app.demo.web.BasicWebMessage.BasicWebMessageResult;
 import cn.o.app.demo.web.ByeByeWebDispatcher.ByeByeWebData;
@@ -10,6 +12,8 @@ import cn.o.app.ui.web.WebMessageState;
 
 @SuppressWarnings("serial")
 public class ByeByeWebDispatcher extends BasicWebMessageDispatcher<ByeByeWebData, ByeByeWebResult> {
+
+	public static final String APP_HOME = "appHome";
 
 	public static class ByeByeWebData extends BasicWebMessageData {
 		public String redirect;
@@ -40,6 +44,9 @@ public class ByeByeWebDispatcher extends BasicWebMessageDispatcher<ByeByeWebData
 		}
 		if (complete) {
 			((Activity) context).finish();
+			if (APP_HOME.equals(message.data.redirect)) {
+				BasicActivity.redirectTo(MainActivity.class);
+			}
 		}
 	}
 

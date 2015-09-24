@@ -6,7 +6,9 @@
 			function onClickToastButton(){
 				app.invoke({
 					name:"toast",
-					data:{toast:"hello world!"},
+					data:{
+						toast:"hello world!"
+					},
 					callback:function(ret){
 						console.log("toast callback: "+ret.state);
 					}
@@ -23,7 +25,12 @@
 				});
 			}
 			function onClickByeByeButton(){
-				app.invoke("byebye");
+				app.invoke({
+					name:"byebye",
+					data:{
+						redirect:"appHome"
+					}
+				});
 			}
 			function onClickInalidMessageButton(){
 				app.invoke("");

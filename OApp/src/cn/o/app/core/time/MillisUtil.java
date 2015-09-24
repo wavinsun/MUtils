@@ -13,4 +13,16 @@ public class MillisUtil {
 		return new Date(d.getYear(), d.getMonth(), d.getDate()).getTime();
 	}
 
+	public static long getDayTime(Date date) {
+		return new Date(date.getYear(), date.getMonth(), date.getDate()).getTime();
+	}
+
+	public static boolean isSameDay(long one, long another) {
+		return getDayTime(one) == getDayTime(another);
+	}
+
+	public static boolean isSameDay(Date one, Date another) {
+		return getDayTime(one) == getDayTime(another);
+	}
+
 }
