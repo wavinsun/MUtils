@@ -62,11 +62,10 @@ public class WebMessageManager implements IWebMessageManager {
 				}
 			}
 		}
-		if (!dispatched) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Message has not been succcessfully dispatched: ");
-			sb.append(message);
-			Logs.e("WebMessageManager", sb.toString());
+		if (dispatched) {
+			Logs.i("WebMessageManager", message);
+		} else {
+			Logs.e("WebMessageManager", message);
 		}
 	}
 

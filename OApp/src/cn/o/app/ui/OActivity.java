@@ -73,6 +73,10 @@ public class OActivity extends FragmentActivity implements IActivity {
 
 	protected Dispatcher mDispatcher;
 
+	public static void redirectTo(Class<? extends Activity> activityCls) {
+		ActivityMgr.redirectTo(activityCls);
+	}
+
 	public static void finishAll() {
 		ActivityMgr.finishAll();
 	}
@@ -838,6 +842,24 @@ public class OActivity extends FragmentActivity implements IActivity {
 	protected static class ActivityMgr {
 
 		protected static ArrayList<Activity> sActivitys;
+
+		public static void redirectTo(Class<? extends Activity> activityCls) {
+			if (sActivitys == null) {
+				return;
+			}
+			boolean finishBehind = false;
+			for (int i = 0; i < sActivitys.size(); i++) {
+				Activity activity = sActivitys.get(i);
+				if (finishBehind) {
+					activity.finish();
+					i--;
+				} else {
+					if (activityCls.isInstance(activity)) {
+						finishBehind = true;
+					}
+				}
+			}
+		}
 
 		public static void finishAll() {
 			if (sActivitys == null) {
