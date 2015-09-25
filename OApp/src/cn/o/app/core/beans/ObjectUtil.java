@@ -77,4 +77,15 @@ public class ObjectUtil {
 		}
 	}
 
+	public static boolean equals(Object one, Object another) {
+		if (one == another) {
+			return true;
+		}
+		if (one == null) {
+			return false;
+		} else {
+			return one.equals(another);
+		}
+	}
+
 }
