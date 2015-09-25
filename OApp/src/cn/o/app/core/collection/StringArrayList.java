@@ -1,4 +1,4 @@
-package cn.o.app.core.text;
+package cn.o.app.core.collection;
 
 import java.util.ArrayList;
 

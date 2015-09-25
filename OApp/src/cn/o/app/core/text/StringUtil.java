@@ -436,4 +436,8 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	public static boolean isEmpty(String str) {
+		return str == null ? true : str.isEmpty();
+	}
+
 }

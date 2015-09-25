@@ -21,7 +21,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -29,6 +28,9 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -43,12 +45,13 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import cn.o.app.core.archive.ZipUtil;
-import cn.o.app.core.beans.BeanField;
+import cn.o.app.core.beans.ObjectUtil;
+import cn.o.app.core.collection.CollectionUtil;
 import cn.o.app.core.crypto.AESUtil;
 import cn.o.app.core.io.IOUtil;
 import cn.o.app.core.math.NumberUtil;
-import cn.o.app.core.reflect.ReflectUtil;
 import cn.o.app.core.text.StringUtil;
+import cn.o.app.core.time.TimeUtil;
 
 /**
  * Utility of framework for Android runtime
@@ -243,26 +246,23 @@ public class AppUtil {
 	}
 
 	public static float getRawSize(Context context, int unit, float size) {
-		return TypedValue.applyDimension(unit, size,
-				(context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics());
+		return TypedValue.applyDimension(unit, size, context.getResources().getDisplayMetrics());
 	}
 
 	public static float dp2px(Context context, float size) {
-		return size * (context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics().density;
+		return size * context.getResources().getDisplayMetrics().density;
 	}
 
 	public static float sp2px(Context context, float size) {
-		return size
-				* (context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics().scaledDensity;
+		return size * context.getResources().getDisplayMetrics().scaledDensity;
 	}
 
 	public static float px2dp(Context context, float size) {
-		return size / (context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics().density;
+		return size / context.getResources().getDisplayMetrics().density;
 	}
 
 	public static float px2sp(Context context, float size) {
-		return size
-				/ (context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics().scaledDensity;
+		return size / context.getResources().getDisplayMetrics().scaledDensity;
 	}
 
 	public static String md5(String text) {
@@ -270,14 +270,7 @@ public class AppUtil {
 	}
 
 	public static <T> ArrayList<T> asArrayList(T[] array) {
-		ArrayList<T> arrayList = new ArrayList<T>();
-		if (array == null) {
-			return arrayList;
-		}
-		for (int i = 0, size = array.length; i < size; i++) {
-			arrayList.add(array[i]);
-		}
-		return arrayList;
+		return CollectionUtil.asArrayList(array);
 	}
 
 	public static boolean compress(String sourceImage) {
@@ -359,10 +352,30 @@ public class AppUtil {
 		Paint p = new Paint();
 		ColorMatrix cm = new ColorMatrix();
 		cm.setSaturation(0);
-		ColorMatrixColorFilter cmf = new ColorMatrixColorFilter(cm);
-		p.setColorFilter(cmf);
+		p.setColorFilter(new ColorMatrixColorFilter(cm));
 		c.drawBitmap(bitmap, 0, 0, p);
 		return grey;
+	}
+
+	public static Drawable drawable2Grey(Drawable drawable) {
+		int w = drawable.getMinimumWidth();
+		int h = drawable.getMinimumHeight();
+		if (w <= 0 || h <= 0) {
+			return drawable;
+		}
+		Rect bounds = drawable.getBounds();
+		Bitmap grey = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+		Canvas c = new Canvas(grey);
+		ColorMatrix cm = new ColorMatrix();
+		cm.setSaturation(0);
+		drawable.setColorFilter(new ColorMatrixColorFilter(cm));
+		drawable.setBounds(0, 0, w, h);
+		drawable.draw(c);
+		drawable.clearColorFilter();
+		drawable.setBounds(bounds);
+		BitmapDrawable bd = new BitmapDrawable(grey);
+		bd.setBounds(0, 0, w, h);
+		return bd;
 	}
 
 	public static String uuid() {
@@ -450,15 +463,15 @@ public class AppUtil {
 	}
 
 	public static int getYear(Date date) {
-		return date.getYear() + 1900;
+		return TimeUtil.getYear(date);
 	}
 
 	public static int getMonth(Date date) {
-		return date.getMonth() + 1;
+		return TimeUtil.getMonth(date);
 	}
 
 	public static int getDay(Date date) {
-		return date.getDate();
+		return TimeUtil.getDay(date);
 	}
 
 	/**
@@ -468,8 +481,7 @@ public class AppUtil {
 	 * @return
 	 */
 	public static boolean isLeap(Date date) {
-		int year = date.getYear() + 1900;
-		return isLeap(year);
+		return TimeUtil.isLeap(date);
 	}
 
 	/**
@@ -479,44 +491,35 @@ public class AppUtil {
 	 * @return
 	 */
 	public static boolean isLeap(int year) {
-		return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+		return TimeUtil.isLeap(year);
 	}
 
 	public static int getDaysOfMonth(Date date) {
-		return getDaysOfMonth(AppUtil.getYear(date), AppUtil.getMonth(date));
+		return TimeUtil.getDaysOfMonth(TimeUtil.getYear(date), TimeUtil.getMonth(date));
 	}
 
 	public static Date getDate(int year, int month, int day) {
-		return new Date(year - 1900, month - 1, day);
+		return TimeUtil.getDate(year, month, day);
 	}
 
 	public static Date getDate(int year, int month, int day, int hour, int minute) {
-		return new Date(year - 1900, month - 1, day, hour, minute);
+		return TimeUtil.getDate(year, month, day, hour, minute);
 	}
 
 	public static int getDaysOfMonth(int year, int month) {
-		if (month == 2) {
-			return isLeap(year) ? 29 : 28;
-		} else if (month == 4 || month == 6 || month == 9 || month == 11) {
-			return 30;
-		} else {
-			return 31;
-		}
+		return TimeUtil.getDaysOfMonth(year, month);
 	}
 
 	public static boolean isSameDay(Date d1, Date d2) {
-		return (d1 != null && d2 != null)
-				? (d1.getYear() == d2.getYear() && d1.getMonth() == d2.getMonth() && d1.getDate() == d2.getDate())
-				: (d1 == d2);
+		return TimeUtil.isSameDay(d1, d2);
 	}
 
 	public static boolean isSameMonth(Date d1, Date d2) {
-		return (d1 != null && d2 != null) ? (d1.getYear() == d2.getYear() && d1.getMonth() == d2.getMonth())
-				: (d1 == d2);
+		return TimeUtil.isSameMonth(d1, d2);
 	}
 
 	public static boolean isEmpty(String str) {
-		return str == null ? true : str.isEmpty();
+		return StringUtil.isEmpty(str);
 	}
 
 	public static String getPhoneNumber(Context context) {
@@ -557,61 +560,15 @@ public class AppUtil {
 	}
 
 	public static boolean equals(Object one, Object another) {
-		if (one == another) {
-			return true;
-		}
-		if (one == null) {
-			return false;
-		} else {
-			return one.equals(another);
-		}
+		return ObjectUtil.equals(one, another);
 	}
 
 	public static <T> T findByProperty(List<T> list, String property, Object propertyValue) {
-		if (list == null) {
-			return null;
-		}
-		if (list.size() == 0) {
-			return null;
-		}
-		BeanField propertyField = BeanField.getField(list.get(0), property);
-		if (propertyField == null) {
-			return null;
-		}
-		for (T element : list) {
-			if (AppUtil.equals(propertyValue, ReflectUtil.get(element, propertyField))) {
-				return element;
-			}
-		}
-		return null;
+		return CollectionUtil.findByProperty(list, property, propertyValue);
 	}
 
 	public static <T> List<T> findAllByProperty(List<T> list, String property, Object propertyValue) {
-		if (list == null) {
-			return null;
-		}
-		if (list.size() == 0) {
-			return null;
-		}
-		BeanField propertyField = BeanField.getField(list.get(0), property);
-		if (propertyField == null) {
-			return null;
-		}
-		List<T> result = new ArrayList<T>();
-		for (T element : list) {
-			try {
-				Object v = propertyField.get(element);
-				if (AppUtil.equals(v, propertyValue)) {
-					result.add(element);
-				}
-			} catch (Exception e) {
-
-			}
-		}
-		if (result.size() != 0) {
-			return result;
-		}
-		return null;
+		return CollectionUtil.findAllByProperty(list, property, propertyValue);
 	}
 
 	public static boolean isVersionStable(String version) {
