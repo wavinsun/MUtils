@@ -10,8 +10,8 @@ import android.location.Location;
 import android.os.Bundle;
 import cn.o.app.core.event.Dispatcher;
 import cn.o.app.core.task.IStopable;
-import cn.o.app.event.listener.OLocationListener;
-import cn.o.app.lbs.OLocation;
+import cn.o.app.event.listener.AppLocationListener;
+import cn.o.app.lbs.AppLocation;
 
 /**
  * AMap Location
@@ -50,11 +50,11 @@ public class AmapLocator implements IStopable {
 
 		@Override
 		public void onLocationChanged(AMapLocation location) {
-			OLocationListener listener = (OLocationListener) mDispatcher.getListener();
+			AppLocationListener listener = (AppLocationListener) mDispatcher.getListener();
 			if (listener == null) {
 				return;
 			}
-			OLocation loc = new OLocation();
+			AppLocation loc = new AppLocation();
 			loc.setAddress(location.getAddress());
 			loc.setAltitude(location.getAltitude());
 			loc.setCity(location.getCity());
@@ -110,11 +110,11 @@ public class AmapLocator implements IStopable {
 		return true;
 	}
 
-	public OLocationListener getListener() {
-		return mDispatcher.getListener(OLocationListener.class);
+	public AppLocationListener getListener() {
+		return mDispatcher.getListener(AppLocationListener.class);
 	}
 
-	public void setListener(OLocationListener listener) {
+	public void setListener(AppLocationListener listener) {
 		mDispatcher.setListener(listener);
 	}
 

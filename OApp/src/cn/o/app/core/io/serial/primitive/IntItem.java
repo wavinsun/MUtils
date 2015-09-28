@@ -1,4 +1,4 @@
-package cn.o.app.core.io;
+package cn.o.app.core.io.serial.primitive;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -6,34 +6,35 @@ import org.w3c.dom.Node;
 import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
 import cn.o.app.core.beans.BeanField;
+import cn.o.app.core.io.serial.Serial;
 import cn.o.app.core.json.IJsonItem;
 import cn.o.app.core.properties.IPropertyItem;
 import cn.o.app.core.xml.IXmlItem;
 import cn.o.app.core.xml.XmlUtil;
 
 /**
- * Support two data types:{"n":3.14} {"n":"3.14"}
+ * Support two data types:{"n":"0"} {"n":0}
  */
 @SuppressWarnings("serial")
-public class ODouble extends Serial<Double> {
+public class IntItem extends Serial<Integer> {
 
-	public ODouble() {
-		mType = PrimitiveType.STRING_DOUBLE;
-		mValue = Double.valueOf(0D);
+	public IntItem() {
+		mType = PrimitiveType.STRING_INT;
+		mValue = Integer.valueOf(0);
 	}
 
-	public ODouble(double value) {
-		mType = PrimitiveType.STRING_DOUBLE;
-		mValue = Double.valueOf(value);
+	public IntItem(int value) {
+		mType = PrimitiveType.STRING_INT;
+		mValue = Integer.valueOf(value);
 	}
 
-	public ODouble(String value) {
-		mType = PrimitiveType.STRING_DOUBLE;
-		mValue = Double.valueOf(value);
+	public IntItem(String value) {
+		mType = PrimitiveType.STRING_INT;
+		mValue = Integer.valueOf(value);
 	}
 
-	public double doubleValue() {
-		return mValue.doubleValue();
+	public int intValue() {
+		return mValue.intValue();
 	}
 
 	protected void init(BeanField itemField) {
@@ -49,7 +50,7 @@ public class ODouble extends Serial<Double> {
 	public IJsonItem fromJson(Object json, BeanField itemField) {
 		init(itemField);
 		try {
-			mValue = Double.valueOf(json.toString());
+			mValue = Integer.valueOf(json.toString());
 		} catch (Exception e) {
 			return null;
 		}
@@ -59,7 +60,7 @@ public class ODouble extends Serial<Double> {
 	@Override
 	public Object toJson(BeanField itemField) {
 		init(itemField);
-		if (mType == PrimitiveType.STRING_DOUBLE) {
+		if (mType == PrimitiveType.STRING_INT) {
 			return mValue.toString();
 		} else {
 			return mValue;
@@ -70,7 +71,7 @@ public class ODouble extends Serial<Double> {
 	public IXmlItem fromXml(Node xml, BeanField itemField) {
 		init(itemField);
 		try {
-			mValue = Double.valueOf(xml.getTextContent());
+			mValue = Integer.valueOf(xml.getTextContent());
 		} catch (Exception e) {
 			return null;
 		}
@@ -89,7 +90,7 @@ public class ODouble extends Serial<Double> {
 	public IPropertyItem fromProperty(String value, BeanField itemField) {
 		init(itemField);
 		try {
-			mValue = Double.valueOf(value);
+			mValue = Integer.valueOf(value);
 		} catch (Exception e) {
 			return null;
 		}

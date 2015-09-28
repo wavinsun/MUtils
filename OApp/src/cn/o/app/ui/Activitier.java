@@ -47,7 +47,7 @@ import cn.o.app.ui.pattern.IPatternDataProvider;
 import cn.o.app.ui.pattern.IPatternView;
 
 @SuppressLint("ShowToast")
-public class OActivity extends FragmentActivity implements IActivity {
+public class Activitier extends FragmentActivity implements IActivity {
 
 	protected AsyncDataQueue mAsyncDataQueue;
 
@@ -343,7 +343,7 @@ public class OActivity extends FragmentActivity implements IActivity {
 				@Override
 				public void onRunStateChanged(IQueue queue) {
 					if (mWaitingViewHelper == null) {
-						mWaitingViewHelper = new WaitingViewHelper(OActivity.this);
+						mWaitingViewHelper = new WaitingViewHelper(Activitier.this);
 					}
 					mWaitingViewHelper.postUpdateWaitingViewState();
 				}
@@ -361,7 +361,7 @@ public class OActivity extends FragmentActivity implements IActivity {
 				@Override
 				public void onRunStateChanged(IQueue queue) {
 					if (mWaitingViewHelper == null) {
-						mWaitingViewHelper = new WaitingViewHelper(OActivity.this);
+						mWaitingViewHelper = new WaitingViewHelper(Activitier.this);
 					}
 					mWaitingViewHelper.postUpdateWaitingViewState();
 				}
@@ -542,9 +542,9 @@ public class OActivity extends FragmentActivity implements IActivity {
 
 		protected Runnable mWaitingViewRunnable;
 
-		protected OActivity mContext;
+		protected Activitier mContext;
 
-		public WaitingViewHelper(OActivity context) {
+		public WaitingViewHelper(Activitier context) {
 			mContext = context;
 			mView = new FrameLayout(mContext);
 			mViewParams = new WindowManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -682,9 +682,9 @@ public class OActivity extends FragmentActivity implements IActivity {
 
 		protected Animation mFadeOutAnim;
 
-		protected OActivity mContext;
+		protected Activitier mContext;
 
-		public PatternViewHelper(OActivity context) {
+		public PatternViewHelper(Activitier context) {
 			mContext = context;
 			mView = new FrameLayout(mContext);
 			mViewParams = new WindowManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,

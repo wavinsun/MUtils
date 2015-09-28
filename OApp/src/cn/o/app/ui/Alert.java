@@ -66,7 +66,7 @@ public class Alert implements IViewFinder {
 
 	protected CharSequence mCancel;
 
-	protected ODialog mDialog;
+	protected Dialoger mDialog;
 
 	protected Context mContext;
 
@@ -610,7 +610,7 @@ public class Alert implements IViewFinder {
 		realContentView.addView(alertView,
 				new FrameLayout.LayoutParams(mFixedWidth != 0 ? mFixedWidth : FrameLayout.LayoutParams.MATCH_PARENT,
 						FrameLayout.LayoutParams.WRAP_CONTENT));
-		mDialog = new ODialog(mContext);
+		mDialog = new Dialoger(mContext);
 		mDialog.setCancelable(mCancelable);
 		mDialog.setCanceledOnTouchOutside(mCancelable);
 		mDialog.setContentView(realContentView,

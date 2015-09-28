@@ -5,12 +5,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import cn.o.app.core.io.OBoolean;
+import cn.o.app.core.io.serial.primitive.BoolItem;
 
 /**
  * IOC for Boolean property of entity
  * 
- * @see OBoolean
+ * @see BoolItem
  * @see Boolean#TRUE
  */
 @Retention(RetentionPolicy.RUNTIME)

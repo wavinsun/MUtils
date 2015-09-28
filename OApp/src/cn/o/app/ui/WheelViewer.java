@@ -10,19 +10,19 @@ import cn.o.app.AppUtil;
 import cn.o.app.R;
 
 @SuppressWarnings("deprecation")
-public class OWheelView extends WheelView {
+public class WheelViewer extends WheelView {
 
-	public OWheelView(Context context, AttributeSet attrs, int defStyle) {
+	public WheelViewer(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context, attrs);
 	}
 
-	public OWheelView(Context context, AttributeSet attrs) {
+	public WheelViewer(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context, attrs);
 	}
 
-	public OWheelView(Context context) {
+	public WheelViewer(Context context) {
 		super(context);
 		init(context, null);
 	}

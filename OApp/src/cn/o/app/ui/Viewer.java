@@ -13,19 +13,19 @@ import cn.o.app.ui.core.UICore;
 /**
  * View of framework
  */
-public class OView extends RelativeLayout implements IView, IViewFinder, IContentViewOwner {
+public class Viewer extends RelativeLayout implements IView, IViewFinder, IContentViewOwner {
 
-	public OView(Context context) {
+	public Viewer(Context context) {
 		super(context);
 		init();
 	}
 
-	public OView(Context context, AttributeSet attrs) {
+	public Viewer(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
 	}
 
-	public OView(Context context, AttributeSet attrs, int defStyle) {
+	public Viewer(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init();
 	}

@@ -10,29 +10,29 @@ import android.widget.TabWidget;
 /**
  * Badge view: red point
  */
-public class OBadgeView extends BadgeView {
+public class BadgeViewer extends BadgeView {
 
-	public OBadgeView(Context context) {
+	public BadgeViewer(Context context) {
 		super(context);
 	}
 
-	public OBadgeView(Context context, AttributeSet attrs) {
+	public BadgeViewer(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public OBadgeView(Context context, View target) {
+	public BadgeViewer(Context context, View target) {
 		super(context, target);
 	}
 
-	public OBadgeView(Context context, TabWidget target, int index) {
+	public BadgeViewer(Context context, TabWidget target, int index) {
 		super(context, target, index);
 	}
 
-	public OBadgeView(Context context, AttributeSet attrs, int defStyle) {
+	public BadgeViewer(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
-	public OBadgeView(Context context, AttributeSet attrs, int defStyle, View target, int tabIndex) {
+	public BadgeViewer(Context context, AttributeSet attrs, int defStyle, View target, int tabIndex) {
 		super(context, attrs, defStyle, target, tabIndex);
 	}
 

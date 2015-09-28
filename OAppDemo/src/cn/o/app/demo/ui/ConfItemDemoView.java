@@ -10,7 +10,7 @@ import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
 import cn.o.app.core.annotation.event.OnClick;
 import cn.o.app.core.annotation.res.SetContentView;
-import cn.o.app.core.time.ODate;
+import cn.o.app.core.time.DateTime;
 import cn.o.app.demo.R;
 import cn.o.app.settings.ConfItem;
 import cn.o.app.ui.Alert;
@@ -53,7 +53,7 @@ public class ConfItemDemoView extends StateView {
 
 	@OnClick(R.id.conf_to_pref)
 	protected void onClikcConfToPref() {
-		ODate now = new ODate();
+		DateTime now = new DateTime();
 		MyConfItem confItem = new MyConfItem();
 		confItem.setId((int) now.getTime());
 		confItem.setName("lounien");
@@ -72,7 +72,7 @@ public class ConfItemDemoView extends StateView {
 
 		protected String mName;
 
-		protected ODate mCreateTime;
+		protected DateTime mCreateTime;
 
 		public MyConfItem() {
 			mAssetFileName = "MyConfItem.xml";
@@ -98,11 +98,11 @@ public class ConfItemDemoView extends StateView {
 		@Name("createAt")
 		@Primitive(PrimitiveType.STRING)
 		@Format("yyyy-MM-dd HH:mm:ss")
-		public ODate getCreateTime() {
+		public DateTime getCreateTime() {
 			return mCreateTime;
 		}
 
-		public void setCreateTime(ODate createTime) {
+		public void setCreateTime(DateTime createTime) {
 			mCreateTime = createTime;
 		}
 

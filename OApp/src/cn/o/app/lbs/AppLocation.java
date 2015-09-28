@@ -7,7 +7,7 @@ import cn.o.app.core.json.JsonUtil;
  * Compatibility for AMap and Baidu Map
  */
 @SuppressWarnings("serial")
-public class OLocation implements INoProguard {
+public class AppLocation implements INoProguard {
 
 	/** 海拔 */
 	protected double mAltitude;
@@ -39,7 +39,7 @@ public class OLocation implements INoProguard {
 	/** 精度 */
 	protected double mRadius;
 
-	public OLocation() {
+	public AppLocation() {
 
 	}
 

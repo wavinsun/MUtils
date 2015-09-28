@@ -1,4 +1,4 @@
-package cn.o.app.core.io;
+package cn.o.app.core.io.serial.primitive;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -6,6 +6,7 @@ import org.w3c.dom.Node;
 import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
 import cn.o.app.core.beans.BeanField;
+import cn.o.app.core.io.serial.Serial;
 import cn.o.app.core.json.IJsonItem;
 import cn.o.app.core.properties.IPropertyItem;
 import cn.o.app.core.reflect.ReflectUtil;
@@ -16,24 +17,24 @@ import cn.o.app.core.xml.XmlUtil;
  * Support three data types:{"state":"INIT"} {"state":"0"} {"state":0}
  */
 @SuppressWarnings({ "serial", "unchecked" })
-public abstract class OEnum<E extends Enum<E>> extends Serial<Enum<E>> {
+public abstract class EnumItem<E extends Enum<E>> extends Serial<Enum<E>> {
 
-	public OEnum() {
+	public EnumItem() {
 		mType = PrimitiveType.INT;
 		mValue = valueOf(0);
 	}
 
-	public OEnum(int value) {
+	public EnumItem(int value) {
 		mType = PrimitiveType.INT;
 		mValue = valueOf(value);
 	}
 
-	public OEnum(String name) {
+	public EnumItem(String name) {
 		mType = PrimitiveType.INT;
 		mValue = (E) ReflectUtil.valueOfEnum(valueOf(0).getClass(), name);
 	}
 
-	public OEnum(E value) {
+	public EnumItem(E value) {
 		mType = PrimitiveType.INT;
 		mValue = value;
 	}

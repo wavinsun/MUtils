@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import cn.o.app.core.annotation.res.FindViewById;
 import cn.o.app.core.annotation.res.SetContentView;
-import cn.o.app.core.time.ODate;
+import cn.o.app.core.time.DateTime;
 import cn.o.app.demo.push.HelloWorldPushDispatcher.HelloWorldMessage;
 import cn.o.app.demo.ui.BasicActivity;
 import cn.o.app.io.Extra;
@@ -51,7 +51,7 @@ public class PushNotifyActivity extends BasicActivity {
 			mLog.append("\n");
 			mLog.append(msg.getMessage());
 			mLog.append("\n");
-			mLog.append(new ODate().toString());
+			mLog.append(new DateTime().toString());
 			mLog.append("\n");
 		}
 	}

@@ -59,7 +59,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 
 	protected OActionSheetAdapter<DATA_ITEM> mAdapter;
 
-	protected ODialog mDialog;
+	protected Dialoger mDialog;
 
 	protected Context mContext;
 
@@ -212,7 +212,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 		scrollParams.addRule(RelativeLayout.ABOVE, cancelButtonId);
 		scrollParams.setMargins(0, 0, 0, margin);
 		realContentView.addView(scrollView, scrollParams);
-		mDialog = new ODialog(mContext);
+		mDialog = new Dialoger(mContext);
 		mDialog.setWindowAnimations(R.style.ActionSheetAnim);
 		mDialog.setContentView(realContentView,
 				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

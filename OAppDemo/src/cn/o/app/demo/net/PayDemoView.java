@@ -12,8 +12,8 @@ import cn.o.app.net.NetExceptionUtil;
 import cn.o.app.net.NetTask;
 import cn.o.app.net.NetTaskListener;
 import cn.o.app.pay.AlipayTask;
-import cn.o.app.pay.OPayListener;
-import cn.o.app.pay.OPayTask;
+import cn.o.app.pay.AppPayListener;
+import cn.o.app.pay.AppPayTask;
 import cn.o.app.pay.UPPayTask;
 import cn.o.app.ui.Alert;
 import cn.o.app.ui.StateView;
@@ -63,17 +63,17 @@ public class PayDemoView extends StateView {
 				payTask.setDebug(true);
 				payTask.setTradeNo(response);
 				payTask.setContext(getContext());
-				payTask.addListener(new OPayListener() {
+				payTask.addListener(new AppPayListener() {
 
 					@Override
-					public void onError(OPayTask task, Exception e) {
+					public void onError(AppPayTask task, Exception e) {
 						Alert alert = new Alert(getContext());
 						alert.setTitle("Pay Error");
 						alert.show();
 					}
 
 					@Override
-					public void onComplete(OPayTask task) {
+					public void onComplete(AppPayTask task) {
 						Alert alert = new Alert(getContext());
 						alert.setTitle("Pay Complete");
 						alert.show();
@@ -98,17 +98,17 @@ public class PayDemoView extends StateView {
 		task.setSeller("***@***.com");
 		task.setSubject("Subject");
 		task.setTotalFee("0.01");
-		task.addListener(new OPayListener() {
+		task.addListener(new AppPayListener() {
 
 			@Override
-			public void onError(OPayTask task, Exception e) {
+			public void onError(AppPayTask task, Exception e) {
 				Alert alert = new Alert(getContext());
 				alert.setTitle("Pay Error");
 				alert.show();
 			}
 
 			@Override
-			public void onComplete(OPayTask task) {
+			public void onComplete(AppPayTask task) {
 				Alert alert = new Alert(getContext());
 				alert.setTitle("Pay Complete");
 				alert.show();

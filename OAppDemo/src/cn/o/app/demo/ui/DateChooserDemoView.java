@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import cn.o.app.AppUtil;
 import cn.o.app.core.annotation.event.OnClick;
 import cn.o.app.core.annotation.res.SetContentView;
-import cn.o.app.core.time.ODate;
+import cn.o.app.core.time.DateTime;
 import cn.o.app.demo.R;
 import cn.o.app.ui.DateChooser;
 import cn.o.app.ui.DateChooser.OnChooseDateListener;
@@ -16,7 +16,7 @@ import cn.o.app.ui.StateView;
 @SetContentView(R.layout.view_date_chooser)
 public class DateChooserDemoView extends StateView {
 
-	protected ODate mPickedDate;
+	protected DateTime mPickedDate;
 
 	public DateChooserDemoView(Context context) {
 		super(context);
@@ -34,13 +34,13 @@ public class DateChooserDemoView extends StateView {
 	protected void onClickGo() {
 		DateChooser picker = new DateChooser(getContext());
 		picker.setPickTime(true);
-		ODate now = new ODate();
+		DateTime now = new DateTime();
 		picker.setMaxDate(AppUtil.getDate(AppUtil.getYear(now) + 10, AppUtil.getMonth(now), AppUtil.getDay(now)));
 		picker.setListener(new OnChooseDateListener() {
 
 			@Override
 			public void onChoosed(DateChooser chooser, Date date) {
-				mPickedDate = new ODate(date.getTime());
+				mPickedDate = new DateTime(date.getTime());
 				mPickedDate.setFormat("yyyy-MM-dd HH:mm");
 				toast(mPickedDate.toString());
 			}

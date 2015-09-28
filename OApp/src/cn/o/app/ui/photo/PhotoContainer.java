@@ -24,7 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.o.app.core.event.Dispatcher;
 import cn.o.app.core.event.Listener;
-import cn.o.app.event.listener.OBitmapLoadCallBack;
+import cn.o.app.event.listener.AppBitmapLoadCallBack;
 import cn.o.app.event.listener.OnSelectedChangeListener;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
@@ -188,7 +188,7 @@ public class PhotoContainer extends RelativeLayout {
 			progressBarParams.addRule(RelativeLayout.CENTER_IN_PARENT);
 			progressBar.setLayoutParams(progressBarParams);
 
-			mBitmapUtils.display(photoView, mDataProvider.get(position), new OBitmapLoadCallBack<View>() {
+			mBitmapUtils.display(photoView, mDataProvider.get(position), new AppBitmapLoadCallBack<View>() {
 
 				@Override
 				public void onLoadFailed(View container, String uri, Drawable drawable) {

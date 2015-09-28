@@ -16,7 +16,7 @@ import cn.o.app.ui.core.IStateView;
 import cn.o.app.ui.core.UICore;
 
 @SuppressWarnings("unchecked")
-public class OFragment extends StateView implements IFragment, IFragmentManager {
+public class Fragmenter extends StateView implements IFragment, IFragmentManager {
 
 	protected FragmentManager mParentSupportFragmentManager;
 
@@ -28,15 +28,15 @@ public class OFragment extends StateView implements IFragment, IFragmentManager 
 
 	protected boolean mLocked;
 
-	public OFragment(Context context) {
+	public Fragmenter(Context context) {
 		super(context);
 	}
 
-	public OFragment(Context context, AttributeSet attrs) {
+	public Fragmenter(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public OFragment(Context context, AttributeSet attrs, int defStyle) {
+	public Fragmenter(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 

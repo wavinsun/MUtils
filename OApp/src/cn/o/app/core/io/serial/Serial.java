@@ -1,4 +1,4 @@
-package cn.o.app.core.io;
+package cn.o.app.core.io.serial;
 
 import cn.o.app.core.annotation.Ignore;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;

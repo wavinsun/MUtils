@@ -1,4 +1,4 @@
-package cn.o.app.core.io;
+package cn.o.app.core.io.serial.primitive;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -6,6 +6,7 @@ import org.w3c.dom.Node;
 import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
 import cn.o.app.core.beans.BeanField;
+import cn.o.app.core.io.serial.Serial;
 import cn.o.app.core.json.IJsonItem;
 import cn.o.app.core.properties.IPropertyItem;
 import cn.o.app.core.xml.IXmlItem;
@@ -15,19 +16,19 @@ import cn.o.app.core.xml.XmlUtil;
  * Support two data types:{"n":"0"} {"n":0}
  */
 @SuppressWarnings("serial")
-public class OLong extends Serial<Long> {
+public class LongItem extends Serial<Long> {
 
-	public OLong() {
+	public LongItem() {
 		mType = PrimitiveType.STRING_LONG;
 		mValue = Long.valueOf(0L);
 	}
 
-	public OLong(long value) {
+	public LongItem(long value) {
 		mType = PrimitiveType.STRING_LONG;
 		mValue = Long.valueOf(value);
 	}
 
-	public OLong(String value) {
+	public LongItem(String value) {
 		mType = PrimitiveType.STRING_LONG;
 		mValue = Long.valueOf(value);
 	}

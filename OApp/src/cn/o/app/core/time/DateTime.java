@@ -20,7 +20,7 @@ import cn.o.app.core.xml.XmlUtil;
  * Support two data types:{"date":"2015-05-21 13:39:40"} {"date":1432186780000}
  */
 @SuppressWarnings("serial")
-public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
+public class DateTime extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 
 	/** Used to give format of toString() output */
 	protected String mFormat = "yyyy-MM-dd HH:mm:ss";
@@ -30,19 +30,19 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 	/** Used to give format of serialization and deserialization */
 	protected String mSerialFormat = "yyyy-MM-dd HH:mm:ss";
 
-	public ODate() {
+	public DateTime() {
 		super();
 	}
 
-	public ODate(long milliseconds) {
+	public DateTime(long milliseconds) {
 		super(milliseconds);
 	}
 
-	public ODate(String format) {
+	public DateTime(String format) {
 		this.setFormat(format);
 	}
 
-	public ODate(String format, String text) {
+	public DateTime(String format, String text) {
 		try {
 			this.setTime(new SimpleDateFormat(format, Locale.getDefault()).parse(text).getTime());
 			this.setFormat(format);
@@ -64,7 +64,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 		if (mFormat == null) {
 			return super.toString();
 		} else {
-			return ODateFormat.format(this, mFormat);
+			return DateTimeFormat.format(this, mFormat);
 		}
 	}
 
@@ -102,7 +102,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 		init(itemField);
 		try {
 			if (mSerialType == PrimitiveType.STRING) {
-				this.setTime(ODateFormat.parse(json.toString(), mSerialFormat).getTime());
+				this.setTime(DateTimeFormat.parse(json.toString(), mSerialFormat).getTime());
 			} else {
 				this.setTime(Long.parseLong(json.toString()));
 			}
@@ -116,7 +116,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 	public Object toJson(BeanField itemField) {
 		init(itemField);
 		if (mSerialType == PrimitiveType.STRING) {
-			return ODateFormat.format(this, mSerialFormat);
+			return DateTimeFormat.format(this, mSerialFormat);
 		} else {
 			return this.getTime();
 		}
@@ -127,7 +127,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 		init(itemField);
 		try {
 			if (mSerialType == PrimitiveType.STRING) {
-				this.setTime(ODateFormat.parse(xml.getTextContent(), mSerialFormat).getTime());
+				this.setTime(DateTimeFormat.parse(xml.getTextContent(), mSerialFormat).getTime());
 			} else {
 				this.setTime(Long.parseLong(xml.getTextContent()));
 			}
@@ -142,7 +142,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 		init(itemField);
 		Node node = XmlUtil.newNode(doc, itemField);
 		if (mSerialType == PrimitiveType.STRING) {
-			node.setTextContent(ODateFormat.format(this, mSerialFormat));
+			node.setTextContent(DateTimeFormat.format(this, mSerialFormat));
 		} else {
 			node.setTextContent(this.getTime() + "");
 		}
@@ -154,7 +154,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 		init(itemField);
 		try {
 			if (mSerialType == PrimitiveType.STRING) {
-				this.setTime(ODateFormat.parse(value, mSerialFormat).getTime());
+				this.setTime(DateTimeFormat.parse(value, mSerialFormat).getTime());
 			} else {
 				this.setTime(Long.parseLong(value));
 			}
@@ -168,7 +168,7 @@ public class ODate extends Date implements IJsonItem, IXmlItem, IPropertyItem {
 	public String toProperty(BeanField itemField) {
 		init(itemField);
 		if (mSerialType == PrimitiveType.STRING) {
-			return ODateFormat.format(this, mSerialFormat);
+			return DateTimeFormat.format(this, mSerialFormat);
 		} else {
 			return this.getTime() + "";
 		}

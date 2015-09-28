@@ -1,7 +1,7 @@
 package cn.o.app.ui.core;
 
 import android.app.Activity;
-import cn.o.app.ui.OActivity;
+import cn.o.app.ui.Activitier;
 import cn.o.app.ui.StateView;
 import cn.o.app.ui.StateViewFrame;
 
@@ -59,7 +59,7 @@ public interface IStateView extends IViewFinder, IActivityExecutor {
 	/**
 	 * Intercept back press
 	 * 
-	 * @see OActivity#onInterceptBackPressed()
+	 * @see Activitier#onInterceptBackPressed()
 	 * @see StateView#onInterceptBackPressed()
 	 * @see StateViewFrame#onInterceptBackPressed()
 	 * 

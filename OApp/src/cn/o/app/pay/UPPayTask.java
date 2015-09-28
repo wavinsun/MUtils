@@ -14,7 +14,7 @@ import cn.o.app.ui.core.IActivityExecutor;
 /**
  * UnionPay
  */
-public class UPPayTask extends OPayTask {
+public class UPPayTask extends AppPayTask {
 
 	/** UnionPay trade number */
 	protected String mTradeNo;
@@ -94,7 +94,7 @@ public class UPPayTask extends OPayTask {
 			}
 			if (payResult.equalsIgnoreCase("success")) {
 				mStatus = STATUS_UP_SUCCESS;
-				for (OPayListener listener : getListeners(OPayListener.class)) {
+				for (AppPayListener listener : getListeners(AppPayListener.class)) {
 					listener.onComplete(UPPayTask.this);
 				}
 			} else {
@@ -103,7 +103,7 @@ public class UPPayTask extends OPayTask {
 				} else if (payResult.equalsIgnoreCase("cancel")) {
 					mStatus = STATUS_UP_CANCEL;
 				}
-				for (OPayListener listener : getListeners(OPayListener.class)) {
+				for (AppPayListener listener : getListeners(AppPayListener.class)) {
 					listener.onError(UPPayTask.this, null);
 				}
 			}

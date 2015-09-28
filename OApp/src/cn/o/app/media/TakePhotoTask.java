@@ -9,7 +9,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import cn.o.app.AppUtil;
 import cn.o.app.core.event.Listener;
-import cn.o.app.core.time.ODate;
+import cn.o.app.core.time.DateTime;
 import cn.o.app.ui.core.IActivityExecutor;
 
 /**
@@ -58,7 +58,7 @@ public class TakePhotoTask extends MediaTask {
 			if (mediaStorageDir == null) {
 				return null;
 			}
-			ODate date = new ODate();
+			DateTime date = new DateTime();
 			date.setFormat("yyyyMMdd_HHmmss");
 			StringBuilder sb = new StringBuilder();
 			sb.append(mediaStorageDir);

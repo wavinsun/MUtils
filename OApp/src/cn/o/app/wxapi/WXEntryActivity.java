@@ -3,7 +3,7 @@ package cn.o.app.wxapi;
 import android.os.Bundle;
 import cn.o.app.share.Share;
 import cn.o.app.share.ShareWechat;
-import cn.o.app.ui.OActivity;
+import cn.o.app.ui.Activitier;
 
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -12,7 +12,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-public class WXEntryActivity extends OActivity implements IWXAPIEventHandler {
+public class WXEntryActivity extends Activitier implements IWXAPIEventHandler {
 
 	private IWXAPI api;
 
