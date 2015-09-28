@@ -8,8 +8,8 @@ import cn.o.app.demo.R;
 import cn.o.app.demo.net.GetTNTask;
 import cn.o.app.net.INetTask;
 import cn.o.app.net.NetTaskListener;
-import cn.o.app.pay.OPayListener;
-import cn.o.app.pay.OPayTask;
+import cn.o.app.pay.AppPayListener;
+import cn.o.app.pay.AppPayTask;
 import cn.o.app.pay.UPPayTask;
 import cn.o.app.ui.Alert;
 import cn.o.app.ui.StateView;
@@ -52,17 +52,17 @@ public class UPPayDemoView extends StateView {
 		payTask.setContext(getContext());
 		payTask.setDebug(true);
 		payTask.setTradeNo(tn);
-		payTask.addListener(new OPayListener() {
+		payTask.addListener(new AppPayListener() {
 
 			@Override
-			public void onError(OPayTask task, Exception e) {
+			public void onError(AppPayTask task, Exception e) {
 				Alert alert = new Alert(getContext());
 				alert.setTitle("error");
 				alert.show();
 			}
 
 			@Override
-			public void onComplete(OPayTask task) {
+			public void onComplete(AppPayTask task) {
 				Alert alert = new Alert(getContext());
 				alert.setTitle("complete");
 				alert.show();

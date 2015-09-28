@@ -5,12 +5,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import cn.o.app.core.time.ODate;
+import cn.o.app.core.time.DateTime;
 
 /**
  * IOC for format of property of entity
  * 
- * @see ODate
+ * @see DateTime
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.TYPE })

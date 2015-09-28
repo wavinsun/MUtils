@@ -12,7 +12,7 @@ import android.os.AsyncTask;
 /**
  * AliPay
  */
-public class AlipayTask extends OPayTask {
+public class AlipayTask extends AppPayTask {
 
 	protected String mPartner;
 
@@ -231,7 +231,7 @@ public class AlipayTask extends OPayTask {
 
 		@Override
 		protected void onPostExecute(Object result) {
-			for (OPayListener listener : getListeners(OPayListener.class)) {
+			for (AppPayListener listener : getListeners(AppPayListener.class)) {
 				if (result instanceof Exception) {
 					listener.onError(AlipayTask.this, (Exception) result);
 				} else {

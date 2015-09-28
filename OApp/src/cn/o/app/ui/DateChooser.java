@@ -81,7 +81,7 @@ public class DateChooser {
 	protected OnChooseDateListener mOnChooseDateListener;
 
 	/** Dialog */
-	protected ODialog mDialog;
+	protected Dialoger mDialog;
 
 	protected Context mContext;
 
@@ -340,7 +340,7 @@ public class DateChooser {
 		mHourView.addChangingListener(onWheelChangedListener);
 		mMinuteView.addChangingListener(onWheelChangedListener);
 
-		mDialog = new ODialog(mContext);
+		mDialog = new Dialoger(mContext);
 		mDialog.setWindowAnimations(R.style.DatePickerAnim);
 		mDialog.setContentView(mContentView,
 				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

@@ -14,7 +14,7 @@ import cn.o.app.ui.core.IDefaultDrawableView;
  * 
  * @see BitmapUtils#display(View, String, BitmapLoadCallBack)
  */
-public class OBitmapLoadCallBack<T extends View> extends DefaultBitmapLoadCallBack<T>implements Listener {
+public class AppBitmapLoadCallBack<T extends View> extends DefaultBitmapLoadCallBack<T>implements Listener {
 
 	/**
 	 * Subclass need to override this method

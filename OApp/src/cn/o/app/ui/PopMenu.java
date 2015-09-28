@@ -16,18 +16,18 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
-import cn.o.app.ui.adapter.PopupMenuAdapter;
+import cn.o.app.ui.adapter.PopMenuAdapter;
 
 @SuppressWarnings("deprecation")
-public class OPopupMenu<DATA_ITEM> {
+public class PopMenu<DATA_ITEM> {
 
 	protected View mAnchor;
 
 	protected PopupWindow mPopupWindow;
 
-	protected PopupMenuAdapter<DATA_ITEM> mAdapter;
+	protected PopMenuAdapter<DATA_ITEM> mAdapter;
 
-	protected OPopupMenuListener mListener;
+	protected PopMenuListener mListener;
 
 	protected int mBackgroundRes;
 
@@ -35,7 +35,7 @@ public class OPopupMenu<DATA_ITEM> {
 
 	protected int mPopupY;
 
-	public OPopupMenu(View anchor) {
+	public PopMenu(View anchor) {
 		Context context = anchor.getContext();
 		if (!(context instanceof Activity)) {
 			throw new IllegalArgumentException("Context is not Activity");
@@ -47,7 +47,7 @@ public class OPopupMenu<DATA_ITEM> {
 		mPopupY = anchorLocation[1];
 	}
 
-	public void setAdapter(PopupMenuAdapter<DATA_ITEM> adapter) {
+	public void setAdapter(PopMenuAdapter<DATA_ITEM> adapter) {
 		if (mPopupWindow != null) {
 			return;
 		}
@@ -58,7 +58,7 @@ public class OPopupMenu<DATA_ITEM> {
 		mAdapter.setPopupMenu(this);
 	}
 
-	public void setListener(OPopupMenuListener listener) {
+	public void setListener(PopMenuListener listener) {
 		mListener = listener;
 	}
 
@@ -148,7 +148,7 @@ public class OPopupMenu<DATA_ITEM> {
 		});
 	}
 
-	public static interface OPopupMenuListener {
+	public static interface PopMenuListener {
 
 		public void onDismiss();
 

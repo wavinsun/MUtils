@@ -2,7 +2,7 @@ package cn.o.app.pay;
 
 import cn.o.app.task.ContextOwnerTask;
 
-public class OPayTask extends ContextOwnerTask {
+public class AppPayTask extends ContextOwnerTask {
 
 	/** Unknown */
 	public static final int STATUS_UNKNOWN = 0;
@@ -21,7 +21,7 @@ public class OPayTask extends ContextOwnerTask {
 		return mStatus;
 	}
 
-	public void addListener(OPayListener listener) {
+	public void addListener(AppPayListener listener) {
 		super.addListener(listener);
 	}
 

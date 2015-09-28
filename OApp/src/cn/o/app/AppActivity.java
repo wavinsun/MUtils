@@ -20,11 +20,11 @@ import android.widget.ImageView;
 import cn.jpush.android.api.JPushInterface;
 import cn.o.app.R;
 import cn.o.app.core.event.listener.VersionUpdateListener;
-import cn.o.app.ui.OActivity;
-import cn.o.app.ui.OView;
+import cn.o.app.ui.Activitier;
+import cn.o.app.ui.Viewer;
 
 @SuppressLint("InflateParams")
-public class AppActivity extends OActivity {
+public class AppActivity extends Activitier {
 
 	private static final int NEW_VERSION_STATE_UNKNOWN = -1;
 
@@ -184,7 +184,7 @@ public class AppActivity extends OActivity {
 		mFeedbackAgent.startFeedbackActivity();
 	}
 
-	static class WaitingView extends OView {
+	static class WaitingView extends Viewer {
 
 		protected ImageView mWaitingProgressView;
 

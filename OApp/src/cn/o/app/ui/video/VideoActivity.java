@@ -7,11 +7,11 @@ import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 import cn.o.app.io.Extra;
-import cn.o.app.ui.OActivity;
-import cn.o.app.ui.OView;
+import cn.o.app.ui.Activitier;
+import cn.o.app.ui.Viewer;
 
 @SuppressWarnings("serial")
-public class VideoActivity extends OActivity {
+public class VideoActivity extends Activitier {
 
 	public static class VideoExtra extends Extra {
 
@@ -59,7 +59,7 @@ public class VideoActivity extends OActivity {
 		videoView.requestFocus();
 	}
 
-	static class VideoContainer extends OView {
+	static class VideoContainer extends Viewer {
 
 		protected VideoView mVideoView;
 

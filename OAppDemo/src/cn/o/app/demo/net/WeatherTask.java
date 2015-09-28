@@ -6,7 +6,7 @@ import cn.o.app.core.annotation.Format;
 import cn.o.app.core.annotation.Name;
 import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
-import cn.o.app.core.time.ODate;
+import cn.o.app.core.time.DateTime;
 import cn.o.app.demo.net.WeatherTask.WeatherReq;
 import cn.o.app.demo.net.WeatherTask.WeatherRes;
 
@@ -49,9 +49,9 @@ public class WeatherTask extends BasicTask<WeatherReq, WeatherRes> {
 
 		protected String mCitycode;
 
-		protected ODate mDate;
+		protected DateTime mDate;
 
-		protected ODate mTime;
+		protected DateTime mTime;
 
 		protected String mPostCode;
 
@@ -103,21 +103,21 @@ public class WeatherTask extends BasicTask<WeatherReq, WeatherRes> {
 
 		@Primitive(PrimitiveType.STRING)
 		@Format("yy-MM-dd")
-		public ODate getDate() {
+		public DateTime getDate() {
 			return mDate;
 		}
 
-		public void setDate(ODate date) {
+		public void setDate(DateTime date) {
 			mDate = date;
 		}
 
 		@Primitive(PrimitiveType.STRING)
 		@Format("HH:mm")
-		public ODate getTime() {
+		public DateTime getTime() {
 			return mTime;
 		}
 
-		public void setTime(ODate time) {
+		public void setTime(DateTime time) {
 			mTime = time;
 		}
 

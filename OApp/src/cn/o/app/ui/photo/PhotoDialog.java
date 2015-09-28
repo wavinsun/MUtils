@@ -7,11 +7,11 @@ import android.content.DialogInterface;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.o.app.event.listener.OnSelectedChangeListener;
-import cn.o.app.ui.ODialog;
+import cn.o.app.ui.Dialoger;
 
 public class PhotoDialog {
 
-	protected ODialog mDialog;
+	protected Dialoger mDialog;
 
 	protected PhotoContainer mPhotoContainer;
 
@@ -26,7 +26,7 @@ public class PhotoDialog {
 				dismiss();
 			}
 		});
-		mDialog = new ODialog(context);
+		mDialog = new Dialoger(context);
 		mDialog.setCancelable(true);
 		mDialog.setContentView(mPhotoContainer);
 		mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {

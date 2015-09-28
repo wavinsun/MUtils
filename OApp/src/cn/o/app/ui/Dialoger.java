@@ -26,23 +26,23 @@ import cn.o.app.ui.core.UICore;
  */
 @SuppressLint({ "RtlHardcoded", "ShowToast" })
 @SuppressWarnings("deprecation")
-public class ODialog extends Dialog implements IDialog {
+public class Dialoger extends Dialog implements IDialog {
 
 	protected InfoToast mInfoToast;
 
 	protected Toast mToast;
 
-	public ODialog(Context context) {
+	public Dialoger(Context context) {
 		super(context);
 		init();
 	}
 
-	public ODialog(Context context, int theme) {
+	public Dialoger(Context context, int theme) {
 		super(context, theme);
 		init();
 	}
 
-	public ODialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
+	public Dialoger(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
 		init();
 	}
@@ -216,7 +216,7 @@ public class ODialog extends Dialog implements IDialog {
 	}
 
 	/**
-	 * Drop down frame for {@link ODialog#showAsDropDown(View)} who has max
+	 * Drop down frame for {@link Dialoger#showAsDropDown(View)} who has max
 	 * height.
 	 */
 	protected static class DropDownFrame extends FrameLayout {

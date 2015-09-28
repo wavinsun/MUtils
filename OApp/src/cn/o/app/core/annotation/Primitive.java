@@ -5,21 +5,21 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import cn.o.app.core.io.ODouble;
-import cn.o.app.core.io.OEnum;
-import cn.o.app.core.io.OInteger;
-import cn.o.app.core.io.OLong;
-import cn.o.app.core.io.StringJson;
-import cn.o.app.core.time.ODate;
+import cn.o.app.core.io.serial.StringJson;
+import cn.o.app.core.io.serial.primitive.DoubleItem;
+import cn.o.app.core.io.serial.primitive.EnumItem;
+import cn.o.app.core.io.serial.primitive.IntItem;
+import cn.o.app.core.io.serial.primitive.LongItem;
+import cn.o.app.core.time.DateTime;
 
 /**
  * IOC for primitive type of property of entity
  * 
- * @see OInteger
- * @see OLong
- * @see ODouble
- * @see ODate
- * @see OEnum
+ * @see IntItem
+ * @see LongItem
+ * @see DoubleItem
+ * @see DateTime
+ * @see EnumItem
  * @see StringJson
  */
 @Retention(RetentionPolicy.RUNTIME)

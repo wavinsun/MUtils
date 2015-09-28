@@ -1,4 +1,4 @@
-package cn.o.app.core.io;
+package cn.o.app.core.io.serial;
 
 import java.lang.reflect.Type;
 

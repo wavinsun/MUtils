@@ -1,4 +1,4 @@
-package cn.o.app.core.io;
+package cn.o.app.core.io.serial.primitive;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -8,6 +8,7 @@ import cn.o.app.core.annotation.Primitive;
 import cn.o.app.core.annotation.True;
 import cn.o.app.core.annotation.Primitive.PrimitiveType;
 import cn.o.app.core.beans.BeanField;
+import cn.o.app.core.io.serial.Serial;
 import cn.o.app.core.json.IJsonItem;
 import cn.o.app.core.properties.IPropertyItem;
 import cn.o.app.core.xml.IXmlItem;
@@ -17,23 +18,23 @@ import cn.o.app.core.xml.XmlUtil;
  * Support two data types: {"isOK":true} {"isOK":"true"}
  */
 @SuppressWarnings("serial")
-public class OBoolean extends Serial<Boolean> {
+public class BoolItem extends Serial<Boolean> {
 
 	protected String mTrue = "true";
 
 	protected String mFalse = "false";
 
-	public OBoolean() {
+	public BoolItem() {
 		mType = PrimitiveType.STRING_BOOL;
 		mValue = Boolean.FALSE;
 	}
 
-	public OBoolean(boolean value) {
+	public BoolItem(boolean value) {
 		mType = PrimitiveType.STRING_BOOL;
 		mValue = Boolean.valueOf(value);
 	}
 
-	public OBoolean(String value) {
+	public BoolItem(String value) {
 		mType = PrimitiveType.STRING_BOOL;
 		mValue = Boolean.valueOf(value);
 	}

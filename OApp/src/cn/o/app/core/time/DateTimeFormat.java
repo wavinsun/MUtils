@@ -9,7 +9,7 @@ import android.annotation.SuppressLint;
  * Date format of framework
  */
 @SuppressLint("SimpleDateFormat")
-public class ODateFormat {
+public class DateTimeFormat {
 
 	/**
 	 * Parse text to {@link Date} by pattern

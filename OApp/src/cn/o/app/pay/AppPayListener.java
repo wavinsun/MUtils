@@ -2,14 +2,14 @@ package cn.o.app.pay;
 
 import cn.o.app.core.event.Listener;
 
-public interface OPayListener extends Listener {
+public interface AppPayListener extends Listener {
 
 	/**
 	 * Pay success
 	 * 
 	 * @param task
 	 */
-	public void onComplete(OPayTask task);
+	public void onComplete(AppPayTask task);
 
 	/**
 	 * Pay error
@@ -18,6 +18,6 @@ public interface OPayListener extends Listener {
 	 * @param e
 	 *            It is not null when exception happens
 	 */
-	public void onError(OPayTask task, Exception e);
+	public void onError(AppPayTask task, Exception e);
 
 }
