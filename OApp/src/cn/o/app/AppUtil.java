@@ -67,6 +67,97 @@ public class AppUtil {
 	/** Transform for radian to degress */
 	public static final double TO_DEGRESS = NumberUtil.TO_DEGRESS;
 
+	// ==============================================================
+	// ========================= Begin Application =========================
+	public static String getAppVersionName(Context context) {
+		try {
+			PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(),
+					PackageManager.GET_META_DATA);
+			return info.versionName;
+		} catch (NameNotFoundException e) {
+			return "";
+		}
+	}
+
+	public static String getAppPackage(Context context) {
+		return context.getPackageName();
+	}
+
+	public static String getAppName(Context context) {
+		return getAppName(context, context.getPackageName());
+	}
+
+	public static String getAppName(Context context, String packageName) {
+		try {
+			PackageManager pm = context.getPackageManager();
+			ApplicationInfo info = pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+			return pm.getApplicationLabel(info).toString();
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
+	public static Bitmap getAppIcon(Context context) {
+		try {
+			Class<?> drawableClass = Class.forName(context.getPackageName() + ".R$drawable");
+			Field f = drawableClass.getField("ic_launcher");
+			return BitmapFactory.decodeResource(context.getResources(), f.getInt(null));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public static boolean isAppInstalled(Context context, String name) {
+		try {
+			context.getPackageManager().getPackageInfo(name, 0);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public static boolean startApp(Context context) {
+		return startApp(context, context.getPackageName());
+	}
+
+	public static boolean startApp(Context context, String packageName) {
+		try {
+			ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+			for (RunningTaskInfo taskInfo : am.getRunningTasks(500)) {
+				if (taskInfo.topActivity.getPackageName().equals(packageName)) {
+					Intent intent = new Intent();
+					intent.setClassName(packageName, taskInfo.topActivity.getClassName());
+					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+					context.startActivity(intent);
+					return true;
+				}
+			}
+			Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+			if (intent == null) {
+				return false;
+			}
+			context.startActivity(intent);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public static boolean installApp(Context context, File apkFile) {
+		try {
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+			context.startActivity(intent);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	// ========================= End Application =========================
+	// =============================================================
+
+	// ============================================================
+	// ========================= Begin Settings =========================
 	public static SharedPreferences getPref(Context context, String fileName) {
 		return context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
 	}
@@ -198,53 +289,26 @@ public class AppUtil {
 		}
 	}
 
-	public static String getAppVersionName(Context context) {
+	/**
+	 * Get meta data of named node: fix bug for integer values
+	 * 
+	 * @param context
+	 * @param name
+	 * @return
+	 */
+	public static String getMetaData(Context context, String name) {
 		try {
-			PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(),
-					PackageManager.GET_META_DATA);
-			return info.versionName;
-		} catch (NameNotFoundException e) {
-			return "";
-		}
-	}
-
-	public static String getAppPackage(Context context) {
-		return context.getPackageName();
-	}
-
-	public static String getAppName(Context context) {
-		return getAppName(context, context.getPackageName());
-	}
-
-	public static String getAppName(Context context, String packageName) {
-		try {
-			PackageManager pm = context.getPackageManager();
-			ApplicationInfo info = pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-			return pm.getApplicationLabel(info).toString();
-		} catch (Exception e) {
-			return "";
-		}
-	}
-
-	public static Bitmap getAppIcon(Context context) {
-		try {
-			Class<?> drawableClass = Class.forName(context.getPackageName() + ".R$drawable");
-			Field f = drawableClass.getField("ic_launcher");
-			return BitmapFactory.decodeResource(context.getResources(), f.getInt(null));
+			return context.getPackageManager().getApplicationInfo(context.getPackageName(),
+					PackageManager.GET_META_DATA).metaData.get(name).toString();
 		} catch (Exception e) {
 			return null;
 		}
 	}
+	// ========================= End Settings =========================
+	// ===========================================================
 
-	public static boolean isAppInstalled(Context context, String name) {
-		try {
-			context.getPackageManager().getPackageInfo(name, 0);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
+	// =========================================================
+	// ========================= Begin Size =========================
 	public static float getRawSize(Context context, int unit, float size) {
 		return TypedValue.applyDimension(unit, size, context.getResources().getDisplayMetrics());
 	}
@@ -264,15 +328,104 @@ public class AppUtil {
 	public static float px2sp(Context context, float size) {
 		return size / context.getResources().getDisplayMetrics().scaledDensity;
 	}
+	// ========================= End Size =========================
+	// ========================================================
+
+	// ==========================================================
+	// ========================= Begin String =========================
+	public static String printStackTrace(Exception e) {
+		return StringUtil.printStackTrace(e);
+	}
+
+	/**
+	 * AES encrypt
+	 * 
+	 * @param text
+	 * @param pwd
+	 * @return
+	 */
+	public static String toAES(String text, String pwd) {
+		return AESUtil.encrypt(text, pwd);
+	}
+
+	/**
+	 * AES decrypt
+	 * 
+	 * @param hex
+	 * @param pwd
+	 * @return
+	 */
+	public static String fromAES(String hex, String pwd) {
+		return AESUtil.decrypt(hex, pwd);
+	}
+
+	/**
+	 * toStirng of JSON
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public static String toStringJSON(Object obj) {
+		return StringUtil.toJSON(obj);
+	}
+
+	/**
+	 * toString of XML
+	 * 
+	 * @return
+	 */
+	public static String toStringXML(Object obj) {
+		return StringUtil.toXML(obj);
+	}
 
 	public static String md5(String text) {
 		return StringUtil.md5(text);
 	}
 
+	public static String uuid() {
+		return StringUtil.uuid();
+	}
+
+	public static boolean isEmpty(String str) {
+		return StringUtil.isEmpty(str);
+	}
+
+	public static String getString(File file) {
+		return StringUtil.get(file);
+	}
+
+	public static String getString(InputStream is) {
+		return StringUtil.get(is);
+	}
+
+	public static boolean isVersionStable(String version) {
+		return StringUtil.isVersionStable(version);
+	}
+	// ========================= End String =========================
+	// =========================================================
+
+	public static boolean equals(Object one, Object another) {
+		return ObjectUtil.equals(one, another);
+	}
+
+	// =============================================================
+	// ========================= Begin Collection =========================
 	public static <T> ArrayList<T> asArrayList(T[] array) {
 		return CollectionUtil.asArrayList(array);
 	}
 
+	public static <T> T findByProperty(List<T> list, String property, Object propertyValue) {
+		return CollectionUtil.findByProperty(list, property, propertyValue);
+	}
+
+	public static <T> List<T> findAllByProperty(List<T> list, String property, Object propertyValue) {
+		return CollectionUtil.findAllByProperty(list, property, propertyValue);
+	}
+	// ========================= End Collection =========================
+	// ============================================================
+
+	// ============================================================
+	// ========================= Begin Graphics =========================
 	public static boolean compress(String sourceImage) {
 		return compress(sourceImage, sourceImage);
 	}
@@ -378,10 +531,15 @@ public class AppUtil {
 		return bd;
 	}
 
-	public static String uuid() {
-		return StringUtil.uuid();
+	public static float getYOfDrawText(Paint p, float centerY) {
+		FontMetrics metrics = p.getFontMetrics();
+		return centerY - (metrics.top + (metrics.bottom - metrics.top) / 2);
 	}
+	// ========================= End Graphics =========================
+	// ===========================================================
 
+	// ==========================================================
+	// ========================= Begin Cache =========================
 	/**
 	 * Get disk cache root directory
 	 * 
@@ -442,6 +600,8 @@ public class AppUtil {
 	public static String getDiskCacheRandomJpg(Context context) {
 		return getDiskCacheRandomFile(context, "IMG_", ".jpg");
 	}
+	// ========================= End Cache =========================
+	// =========================================================
 
 	/**
 	 * Calculate distance for two points by given latitude and longitude
@@ -462,6 +622,8 @@ public class AppUtil {
 						* Math.cos(radianLatitudeB) * Math.pow(Math.sin(radianLongitudeDistance * 0.5), 2)));
 	}
 
+	// ==========================================================
+	// ========================= Begin Time =========================
 	public static int getYear(Date date) {
 		return TimeUtil.getYear(date);
 	}
@@ -517,11 +679,55 @@ public class AppUtil {
 	public static boolean isSameMonth(Date d1, Date d2) {
 		return TimeUtil.isSameMonth(d1, d2);
 	}
+	// ========================= End Time =========================
+	// =========================================================
 
-	public static boolean isEmpty(String str) {
-		return StringUtil.isEmpty(str);
+	// ==========================================================
+	// ========================= Begin View =========================
+	/**
+	 * Get translate animation of PathButton.<br>
+	 * The visibility of path button and anchor view must be
+	 * {@link View#VISIBLE} or {@link View#INVISIBLE}.
+	 * 
+	 * @param isOpen
+	 *            Is open for button
+	 * @param button
+	 *            Path button
+	 * @param anchor
+	 *            Control button
+	 * @return
+	 */
+	public static Animation animOfPathButton(boolean isOpen, View button, View anchor) {
+		int[] anchorL = new int[2];
+		anchor.getLocationOnScreen(anchorL);
+		int[] buttonL = new int[2];
+		button.getLocationOnScreen(buttonL);
+		int x = anchorL[0] - buttonL[0] + (anchor.getWidth() - button.getWidth()) / 2;
+		int y = anchorL[1] - buttonL[1] + (anchor.getHeight() - button.getHeight()) / 2;
+		TranslateAnimation anim = new TranslateAnimation(Animation.ABSOLUTE, isOpen ? x : 0, Animation.ABSOLUTE,
+				isOpen ? 0 : x, Animation.ABSOLUTE, isOpen ? y : 0, Animation.ABSOLUTE, isOpen ? 0 : y);
+		anim.setDuration(300);
+		anim.setFillAfter(true);
+		return anim;
 	}
 
+	public static ViewGroup getParent(View v, int parentId) {
+		ViewGroup p = (ViewGroup) v.getParent();
+		while (true) {
+			if (p == null) {
+				return null;
+			}
+			if (p.getId() == parentId) {
+				return p;
+			}
+			p = (ViewGroup) p.getParent();
+		}
+	}
+	// =========================End View=========================
+	// ========================================================
+
+	// ===========================================================
+	// ========================= Begin Device =========================
 	public static String getPhoneNumber(Context context) {
 		TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		return tm.getLine1Number();
@@ -550,31 +756,11 @@ public class AppUtil {
 		}
 		return null;
 	}
+	// ========================= End Device =========================
+	// ==========================================================
 
-	public static String getString(File file) {
-		return StringUtil.get(file);
-	}
-
-	public static String getString(InputStream is) {
-		return StringUtil.get(is);
-	}
-
-	public static boolean equals(Object one, Object another) {
-		return ObjectUtil.equals(one, another);
-	}
-
-	public static <T> T findByProperty(List<T> list, String property, Object propertyValue) {
-		return CollectionUtil.findByProperty(list, property, propertyValue);
-	}
-
-	public static <T> List<T> findAllByProperty(List<T> list, String property, Object propertyValue) {
-		return CollectionUtil.findAllByProperty(list, property, propertyValue);
-	}
-
-	public static boolean isVersionStable(String version) {
-		return StringUtil.isVersionStable(version);
-	}
-
+	// ============================================================
+	// ========================= Begin Runtime =========================
 	public static void exit() {
 		exit(0);
 	}
@@ -582,64 +768,6 @@ public class AppUtil {
 	public static void exit(int code) {
 		android.os.Process.killProcess(android.os.Process.myPid());
 		System.exit(code);
-	}
-
-	public static String printStackTrace(Exception e) {
-		return StringUtil.printStackTrace(e);
-	}
-
-	/**
-	 * Get meta data of named node: fix bug for integer values
-	 * 
-	 * @param context
-	 * @param name
-	 * @return
-	 */
-	public static String getMetaData(Context context, String name) {
-		try {
-			return context.getPackageManager().getApplicationInfo(context.getPackageName(),
-					PackageManager.GET_META_DATA).metaData.get(name).toString();
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	public static boolean startApp(Context context) {
-		return startApp(context, context.getPackageName());
-	}
-
-	public static boolean startApp(Context context, String packageName) {
-		try {
-			ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-			for (RunningTaskInfo taskInfo : am.getRunningTasks(500)) {
-				if (taskInfo.topActivity.getPackageName().equals(packageName)) {
-					Intent intent = new Intent();
-					intent.setClassName(packageName, taskInfo.topActivity.getClassName());
-					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-					context.startActivity(intent);
-					return true;
-				}
-			}
-			Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
-			if (intent == null) {
-				return false;
-			}
-			context.startActivity(intent);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
-	public static boolean installApp(Context context, File apkFile) {
-		try {
-			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
-			context.startActivity(intent);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
 	}
 
 	/**
@@ -664,92 +792,8 @@ public class AppUtil {
 	public static void setLocaleFromString(Context context, String locale) {
 		AppLocale.setLocale(context, StringUtil.getLocale(locale));
 	}
-
-	/**
-	 * AES encrypt
-	 * 
-	 * @param text
-	 * @param pwd
-	 * @return
-	 */
-	public static String toAES(String text, String pwd) {
-		return AESUtil.encrypt(text, pwd);
-	}
-
-	/**
-	 * AES decrypt
-	 * 
-	 * @param hex
-	 * @param pwd
-	 * @return
-	 */
-	public static String fromAES(String hex, String pwd) {
-		return AESUtil.decrypt(hex, pwd);
-	}
-
-	/**
-	 * toStirng of JSON
-	 * 
-	 * @param obj
-	 * @return
-	 */
-	public static String toStringJSON(Object obj) {
-		return StringUtil.toJSON(obj);
-	}
-
-	/**
-	 * toString of XML
-	 * 
-	 * @return
-	 */
-	public static String toStringXML(Object obj) {
-		return StringUtil.toXML(obj);
-	}
-
-	/**
-	 * Get translate animation of PathButton.<br>
-	 * The visibility of path button and anchor view must be
-	 * {@link View#VISIBLE} or {@link View#INVISIBLE}.
-	 * 
-	 * @param isOpen
-	 *            Is open for button
-	 * @param button
-	 *            Path button
-	 * @param anchor
-	 *            Control button
-	 * @return
-	 */
-	public static Animation animOfPathButton(boolean isOpen, View button, View anchor) {
-		int[] anchorL = new int[2];
-		anchor.getLocationOnScreen(anchorL);
-		int[] buttonL = new int[2];
-		button.getLocationOnScreen(buttonL);
-		int x = anchorL[0] - buttonL[0] + (anchor.getWidth() - button.getWidth()) / 2;
-		int y = anchorL[1] - buttonL[1] + (anchor.getHeight() - button.getHeight()) / 2;
-		TranslateAnimation anim = new TranslateAnimation(Animation.ABSOLUTE, isOpen ? x : 0, Animation.ABSOLUTE,
-				isOpen ? 0 : x, Animation.ABSOLUTE, isOpen ? y : 0, Animation.ABSOLUTE, isOpen ? 0 : y);
-		anim.setDuration(300);
-		anim.setFillAfter(true);
-		return anim;
-	}
-
-	public static float getYOfDrawText(Paint p, float centerY) {
-		FontMetrics metrics = p.getFontMetrics();
-		return centerY - (metrics.top + (metrics.bottom - metrics.top) / 2);
-	}
-
-	public static ViewGroup getParent(View v, int parentId) {
-		ViewGroup p = (ViewGroup) v.getParent();
-		while (true) {
-			if (p == null) {
-				return null;
-			}
-			if (p.getId() == parentId) {
-				return p;
-			}
-			p = (ViewGroup) p.getParent();
-		}
-	}
+	// ========================= End Runtime =========================
+	// ===========================================================
 
 	public static TextWatcher setEditTextDecimals(EditText editText, int decimals) {
 		EditTextDecimalsTextWatcher watcher = new EditTextDecimalsTextWatcher();
