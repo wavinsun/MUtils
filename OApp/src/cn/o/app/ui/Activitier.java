@@ -3,6 +3,7 @@ package cn.o.app.ui;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -841,7 +842,7 @@ public class Activitier extends FragmentActivity implements IActivity {
 
 	protected static class ActivityMgr {
 
-		protected static ArrayList<Activity> sActivitys;
+		protected static List<Activity> sActivitys;
 
 		public static void redirectTo(Class<? extends Activity> activityCls) {
 			if (sActivitys == null) {
@@ -873,7 +874,7 @@ public class Activitier extends FragmentActivity implements IActivity {
 
 		public static void attach(Activity activity) {
 			if (sActivitys == null) {
-				sActivitys = new ArrayList<Activity>();
+				sActivitys = new CopyOnWriteArrayList<Activity>();
 			} else {
 				if (sActivitys.contains(activity)) {
 					return;
