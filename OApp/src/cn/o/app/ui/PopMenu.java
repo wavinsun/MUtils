@@ -55,7 +55,7 @@ public class PopMenu<DATA_ITEM> {
 			throw new IllegalArgumentException("I will set container by myslef");
 		}
 		mAdapter = adapter;
-		mAdapter.setPopupMenu(this);
+		mAdapter.setPopMenu(this);
 	}
 
 	public void setListener(PopMenuListener listener) {

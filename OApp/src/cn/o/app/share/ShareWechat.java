@@ -38,7 +38,7 @@ public class ShareWechat extends ShareBase {
 		WXMediaMessage msg = new WXMediaMessage(web);
 		msg.title = mTitle;
 		msg.description = mText;
-		msg.thumbData = AppUtil.bitmap2ByteArray(AppUtil.getAppIcon(mContext));
+		msg.thumbData = AppUtil.toByteArray(AppUtil.getAppIcon(mContext));
 		SendMessageToWX.Req req = new SendMessageToWX.Req();
 		req.transaction = TRANSACTION + System.currentTimeMillis();
 		req.message = msg;

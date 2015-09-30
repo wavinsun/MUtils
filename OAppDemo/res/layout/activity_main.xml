@@ -138,6 +138,11 @@
                 style="@style/MainBtn"
                 android:text="WebFrame"/>
             
+            <TextView
+                android:id="@+id/intent_executor"
+                style="@style/MainBtn"
+                android:text="IntentExecutor"/>
+            
         </cn.o.app.ui.FlowLayout>
     </ScrollView>
 

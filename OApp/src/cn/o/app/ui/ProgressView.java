@@ -159,7 +159,7 @@ public class ProgressView extends View {
 			float progressLineWidth = w * mRatio;
 			canvas.drawLine(stokePadding, centerY, stokePadding + progressLineWidth, centerY, mPaint);
 			if (mTextVisible) {
-				String text = ((int) (mRatio * 100)) + "%";
+				String text = Math.round(mRatio * 100) + "%";
 				mPaint.reset();
 				mPaint.setAntiAlias(true);
 				mPaint.setColor(mTextColor);
@@ -188,7 +188,6 @@ public class ProgressView extends View {
 	public void setProgress(int progress) {
 		progress = progress < 0 ? 0 : progress;
 		progress = progress > mMax ? mMax : progress;
-		mProgress = progress;
 		setRatio(((float) mProgress) / mMax);
 	}
 
@@ -196,6 +195,7 @@ public class ProgressView extends View {
 		ratio = ratio < 0 ? 0 : ratio;
 		ratio = ratio > 1 ? 1 : ratio;
 		mRatio = ratio;
+		mProgress = Math.round(mRatio * mMax);
 		postInvalidate();
 	}
 

@@ -67,7 +67,6 @@ public class AppUtil {
 	/** Transform for radian to degress */
 	public static final double TO_DEGRESS = NumberUtil.TO_DEGRESS;
 
-	// ==============================================================
 	// ========================= Begin Application =========================
 	public static String getAppVersionName(Context context) {
 		try {
@@ -154,9 +153,7 @@ public class AppUtil {
 		}
 	}
 	// ========================= End Application =========================
-	// =============================================================
 
-	// ============================================================
 	// ========================= Begin Settings =========================
 	public static SharedPreferences getPref(Context context, String fileName) {
 		return context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
@@ -305,9 +302,7 @@ public class AppUtil {
 		}
 	}
 	// ========================= End Settings =========================
-	// ===========================================================
 
-	// =========================================================
 	// ========================= Begin Size =========================
 	public static float getRawSize(Context context, int unit, float size) {
 		return TypedValue.applyDimension(unit, size, context.getResources().getDisplayMetrics());
@@ -329,9 +324,7 @@ public class AppUtil {
 		return size / context.getResources().getDisplayMetrics().scaledDensity;
 	}
 	// ========================= End Size =========================
-	// ========================================================
 
-	// ==========================================================
 	// ========================= Begin String =========================
 	public static String printStackTrace(Exception e) {
 		return StringUtil.printStackTrace(e);
@@ -402,13 +395,11 @@ public class AppUtil {
 		return StringUtil.isVersionStable(version);
 	}
 	// ========================= End String =========================
-	// =========================================================
 
 	public static boolean equals(Object one, Object another) {
 		return ObjectUtil.equals(one, another);
 	}
 
-	// =============================================================
 	// ========================= Begin Collection =========================
 	public static <T> ArrayList<T> asArrayList(T[] array) {
 		return CollectionUtil.asArrayList(array);
@@ -422,9 +413,7 @@ public class AppUtil {
 		return CollectionUtil.findAllByProperty(list, property, propertyValue);
 	}
 	// ========================= End Collection =========================
-	// ============================================================
 
-	// ============================================================
 	// ========================= Begin Graphics =========================
 	public static boolean compress(String sourceImage) {
 		return compress(sourceImage, sourceImage);
@@ -487,7 +476,21 @@ public class AppUtil {
 		}
 	}
 
-	public static byte[] bitmap2ByteArray(Bitmap bitmap) {
+	public static boolean save(Bitmap bitmap, String path) {
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(path);
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+			fos.flush();
+			return true;
+		} catch (Exception e) {
+			return false;
+		} finally {
+			IOUtil.close(fos);
+		}
+	}
+
+	public static byte[] toByteArray(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -499,7 +502,7 @@ public class AppUtil {
 		}
 	}
 
-	public static Bitmap bitmap2Grey(Bitmap bitmap) {
+	public static Bitmap toGrey(Bitmap bitmap) {
 		Bitmap grey = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 		Canvas c = new Canvas(grey);
 		Paint p = new Paint();
@@ -510,7 +513,7 @@ public class AppUtil {
 		return grey;
 	}
 
-	public static Drawable drawable2Grey(Drawable drawable) {
+	public static Drawable toGrey(Drawable drawable) {
 		int w = drawable.getMinimumWidth();
 		int h = drawable.getMinimumHeight();
 		if (w <= 0 || h <= 0) {
@@ -531,14 +534,24 @@ public class AppUtil {
 		return bd;
 	}
 
+	public static Bitmap toBitmap(View v) {
+		int w = v.getWidth();
+		int h = v.getHeight();
+		if (w <= 0 || h <= 0) {
+			return null;
+		}
+		Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(bitmap);
+		v.draw(canvas);
+		return bitmap;
+	}
+
 	public static float getYOfDrawText(Paint p, float centerY) {
 		FontMetrics metrics = p.getFontMetrics();
 		return centerY - (metrics.top + (metrics.bottom - metrics.top) / 2);
 	}
 	// ========================= End Graphics =========================
-	// ===========================================================
 
-	// ==========================================================
 	// ========================= Begin Cache =========================
 	/**
 	 * Get disk cache root directory
@@ -566,11 +579,11 @@ public class AppUtil {
 				return null;
 			}
 		}
-		return cacheRoot.getPath();
+		return cacheRoot.getPath() + File.separator;
 	}
 
 	public static String getDiskCacheDir(Context context, String dirName) {
-		File dir = new File(getDiskCacheRoot(context) + File.separator + dirName);
+		File dir = new File(getDiskCacheRoot(context) + dirName);
 		if (!dir.exists()) {
 			if (!dir.mkdirs()) {
 				return null;
@@ -600,8 +613,35 @@ public class AppUtil {
 	public static String getDiskCacheRandomJpg(Context context) {
 		return getDiskCacheRandomFile(context, "IMG_", ".jpg");
 	}
+
+	/**
+	 * Get data directory to share data to other applications
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static String getDiskDataRoot(Context context) {
+		if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+			return null;
+		}
+		String path = Environment.getExternalStorageDirectory().getPath();
+		StringBuilder sb = new StringBuilder();
+		sb.append(path);
+		sb.append(File.separator);
+		sb.append("data");
+		sb.append(File.separator);
+		sb.append(AppUtil.getAppPackage(context));
+		sb.append(File.separator);
+		path = sb.toString();
+		File root = new File(path);
+		if (!root.exists()) {
+			if (!root.mkdirs()) {
+				return null;
+			}
+		}
+		return path;
+	}
 	// ========================= End Cache =========================
-	// =========================================================
 
 	/**
 	 * Calculate distance for two points by given latitude and longitude
@@ -622,7 +662,6 @@ public class AppUtil {
 						* Math.cos(radianLatitudeB) * Math.pow(Math.sin(radianLongitudeDistance * 0.5), 2)));
 	}
 
-	// ==========================================================
 	// ========================= Begin Time =========================
 	public static int getYear(Date date) {
 		return TimeUtil.getYear(date);
@@ -680,9 +719,7 @@ public class AppUtil {
 		return TimeUtil.isSameMonth(d1, d2);
 	}
 	// ========================= End Time =========================
-	// =========================================================
 
-	// ==========================================================
 	// ========================= Begin View =========================
 	/**
 	 * Get translate animation of PathButton.<br>
@@ -724,9 +761,7 @@ public class AppUtil {
 		}
 	}
 	// =========================End View=========================
-	// ========================================================
 
-	// ===========================================================
 	// ========================= Begin Device =========================
 	public static String getPhoneNumber(Context context) {
 		TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -757,9 +792,7 @@ public class AppUtil {
 		return null;
 	}
 	// ========================= End Device =========================
-	// ==========================================================
 
-	// ============================================================
 	// ========================= Begin Runtime =========================
 	public static void exit() {
 		exit(0);
@@ -793,7 +826,6 @@ public class AppUtil {
 		AppLocale.setLocale(context, StringUtil.getLocale(locale));
 	}
 	// ========================= End Runtime =========================
-	// ===========================================================
 
 	public static TextWatcher setEditTextDecimals(EditText editText, int decimals) {
 		EditTextDecimalsTextWatcher watcher = new EditTextDecimalsTextWatcher();

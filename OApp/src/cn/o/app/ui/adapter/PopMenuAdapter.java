@@ -11,11 +11,11 @@ public abstract class PopMenuAdapter<DATA_ITEM> extends VLinearAdapter<DATA_ITEM
 
 	protected PopMenu<DATA_ITEM> mPopMenu;
 
-	public void setPopupMenu(PopMenu<DATA_ITEM> popupMenu) {
-		mPopMenu = popupMenu;
+	public void setPopMenu(PopMenu<DATA_ITEM> popMenu) {
+		mPopMenu = popMenu;
 	}
 
-	public PopMenu<DATA_ITEM> getPopupMenue() {
+	public PopMenu<DATA_ITEM> getPopMenue() {
 		return mPopMenu;
 	}
 
