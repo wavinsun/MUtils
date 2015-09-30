@@ -45,7 +45,7 @@ public class ShareWeibo extends ShareBase {
 		web.description = mText;
 		web.actionUrl = mUrl;
 		web.defaultText = "Webpage 默认文案";
-		web.thumbData = AppUtil.bitmap2ByteArray(AppUtil.getAppIcon(mContext));
+		web.thumbData = AppUtil.toByteArray(AppUtil.getAppIcon(mContext));
 		WeiboMultiMessage msg = new WeiboMultiMessage();
 		msg.textObject = text;
 		msg.mediaObject = web;

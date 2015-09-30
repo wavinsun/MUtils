@@ -20,6 +20,7 @@ import cn.o.app.demo.ui.DemoPathButtonView;
 import cn.o.app.demo.ui.FirUpdateDemoView;
 import cn.o.app.demo.ui.HLinearAdapterDemoView;
 import cn.o.app.demo.ui.IndexViewDemoView;
+import cn.o.app.demo.ui.IntentExecutorDemoView;
 import cn.o.app.demo.ui.MediaDemoView;
 import cn.o.app.demo.ui.NetTaskDemoView;
 import cn.o.app.demo.ui.ProgressViewDemoView;
@@ -55,7 +56,7 @@ public class MainActivity extends BasicActivity {
 	@OnClick({ R.id.ui_adapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir, R.id.anim_task, R.id.media, R.id.net_task,
 			R.id.pay, R.id.qrcode, R.id.share, R.id.action_sheet, R.id.amap, R.id.date_chooser, R.id.prompt,
 			R.id.progress_view, R.id.tip_view, R.id.busy, R.id.path_button, R.id.hlinear_adapter, R.id.index_view,
-			R.id.uppay, R.id.web_frame })
+			R.id.uppay, R.id.web_frame, R.id.intent_executor })
 	protected void onClick(View v) {
 		Intent intent = new Intent(this, ShellActivity.class);
 		ShellExtra extra = new ShellExtra();
@@ -131,6 +132,9 @@ public class MainActivity extends BasicActivity {
 			break;
 		case R.id.web_frame:
 			extra.setViewName(WebFrameDemoView.class.getName());
+			break;
+		case R.id.intent_executor:
+			extra.setViewName(IntentExecutorDemoView.class.getName());
 			break;
 		default:
 			break;
