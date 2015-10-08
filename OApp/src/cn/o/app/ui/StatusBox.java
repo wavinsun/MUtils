@@ -2,6 +2,8 @@ package cn.o.app.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.view.View;
 import cn.o.app.AppUtil;
@@ -36,7 +38,11 @@ public class StatusBox extends View {
 						mMeasuredHeight = AppUtil.getStatusBarHeight(context);
 					}
 				} else {
-					mMeasuredHeight = 0;
+					if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
+						mMeasuredHeight = AppUtil.getStatusBarHeight(context);
+					} else {
+						mMeasuredHeight = 0;
+					}
 				}
 			}
 			heightMeasureSpec = MeasureSpec.makeMeasureSpec(mMeasuredHeight, MeasureSpec.EXACTLY);
