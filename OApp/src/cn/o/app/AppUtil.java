@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.Context;
@@ -826,6 +827,25 @@ public class AppUtil {
 		AppLocale.setLocale(context, StringUtil.getLocale(locale));
 	}
 	// ========================= End Runtime =========================
+
+	public static int getStatusBarHeight(Context context) {
+		int h = 0;
+		Rect r = new Rect();
+		if (context instanceof Activity) {
+			((Activity) context).getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
+			h = r.top;
+		}
+		if (h == 0) {
+			try {
+				Class<?> c = Class.forName("com.android.internal.R$dimen");
+				int id = Integer.parseInt(c.getField("status_bar_height").get(null).toString());
+				h = context.getResources().getDimensionPixelSize(id);
+			} catch (Exception e) {
+
+			}
+		}
+		return h;
+	}
 
 	public static TextWatcher setEditTextDecimals(EditText editText, int decimals) {
 		EditTextDecimalsTextWatcher watcher = new EditTextDecimalsTextWatcher();

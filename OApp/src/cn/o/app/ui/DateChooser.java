@@ -341,7 +341,7 @@ public class DateChooser {
 		mMinuteView.addChangingListener(onWheelChangedListener);
 
 		mDialog = new Dialoger(mContext);
-		mDialog.setWindowAnimations(R.style.DatePickerAnim);
+		mDialog.setWindowAnimations(R.style.DateChooserAnim);
 		mDialog.setContentView(mContentView,
 				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {

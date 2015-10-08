@@ -28,7 +28,14 @@ public class AlertDemoView extends StateView {
 	protected void onClickGo() {
 		Alert alert = new Alert(getContext());
 		alert.setTitle("标题");
-		alert.setMessage("消息");
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < 50; i++) {
+			if (i != 0) {
+				sb.append("\n");
+			}
+			sb.append("消息");
+		}
+		alert.setMessage(sb);
 		alert.setOK(R.string.ok);
 		alert.setCancel(R.string.cancel);
 		alert.setListener(new AlertListener() {

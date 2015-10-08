@@ -16,7 +16,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
+import cn.o.app.AppUtil;
 import cn.o.app.ui.adapter.PopMenuAdapter;
+import cn.o.app.ui.core.IStatusBarOwner;
 
 @SuppressWarnings("deprecation")
 public class PopMenu<DATA_ITEM> {
@@ -87,8 +89,16 @@ public class PopMenu<DATA_ITEM> {
 		Rect popupArea = new Rect();
 		((Activity) context).getWindow().getDecorView().getWindowVisibleDisplayFrame(popupArea);
 		boolean statusBarAtTop = popupArea.top > 1;
+		boolean statusBarTranslucent = (context instanceof IStatusBarOwner)
+				&& ((IStatusBarOwner) context).isStatusBarTranslucent();
+		if (statusBarTranslucent) {
+			statusBarAtTop = true;// Do not know how to do with this case.
+		}
 		int popupAreaHeight = popupArea.height();
 		int statusBarHeight = screenHeight - popupAreaHeight;
+		if (statusBarTranslucent) {
+			statusBarHeight = AppUtil.getStatusBarHeight(context);
+		}
 		int anchorHeight = mAnchor.getHeight();
 		int halfPopupAreaHeight = popupAreaHeight >> 1;
 		boolean underAnchor = (mPopupY - popupArea.top + (anchorHeight >> 1)) < halfPopupAreaHeight;
