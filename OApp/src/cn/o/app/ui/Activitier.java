@@ -10,6 +10,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -47,7 +49,7 @@ import cn.o.app.ui.core.UICore;
 import cn.o.app.ui.pattern.IPatternDataProvider;
 import cn.o.app.ui.pattern.IPatternView;
 
-@SuppressLint("ShowToast")
+@SuppressLint({ "ShowToast", "InlinedApi" })
 public class Activitier extends FragmentActivity implements IActivity {
 
 	protected AsyncDataQueue mAsyncDataQueue;
@@ -71,6 +73,8 @@ public class Activitier extends FragmentActivity implements IActivity {
 	protected boolean mRunning;
 
 	protected boolean mFinished;
+
+	protected boolean mStatusBarTranslucent;
 
 	protected Dispatcher mDispatcher;
 
@@ -231,10 +235,21 @@ public class Activitier extends FragmentActivity implements IActivity {
 	}
 
 	@Override
+	public boolean isStatusBarTranslucent() {
+		return mStatusBarTranslucent;
+	}
+
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Window w = this.getWindow();
 		w.requestFeature(Window.FEATURE_NO_TITLE);
 		w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+		if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
+			w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+			mStatusBarTranslucent = true;
+		}
+
 		super.onCreate(savedInstanceState);
 
 		ActivityMgr.attach(this);
@@ -552,6 +567,10 @@ public class Activitier extends FragmentActivity implements IActivity {
 					ViewGroup.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.TYPE_APPLICATION,
 					WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
 					PixelFormat.TRANSPARENT);
+			if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
+				mViewParams.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+				mViewParams.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
+			}
 			// Used to implement animation
 			// The view added by WindowManager can not use animation.
 			View virtualWaitingView;
@@ -691,6 +710,10 @@ public class Activitier extends FragmentActivity implements IActivity {
 			mViewParams = new WindowManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.TYPE_APPLICATION,
 					WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, PixelFormat.TRANSPARENT);
+			if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
+				mViewParams.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+				mViewParams.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
+			}
 			View virtualPatternView = (View) mContext.newPattern();
 			mView.addView(virtualPatternView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 					FrameLayout.LayoutParams.MATCH_PARENT));

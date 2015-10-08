@@ -9,5 +9,6 @@
     <item name="navigation_bar" type="id"></item>
     <item name="empty_info" type="id"></item>
     <item name="info_toast" type="id"></item>
+    <item name="status_box" type="id"></item>
 
 </resources>

@@ -64,7 +64,7 @@ public class Dialoger extends Dialog implements IDialog {
 	 * clear window animations
 	 */
 	public void clearAnimation() {
-		setWindowAnimations(R.style.ODialogNoAnim);
+		setWindowAnimations(R.style.DialogerNoAnim);
 	}
 
 	/**

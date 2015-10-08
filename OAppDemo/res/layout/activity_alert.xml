@@ -3,6 +3,8 @@
     style="@style/VLinearFill"
     android:background="@color/background">
     
+    <cn.o.app.ui.StatusBox style="@style/StatusBox"/>
+    
     <RelativeLayout style="@style/NavigationBar">
         <ImageView style="@style/NavigationBackButton"/>
         <TextView style="@style/NavigationTitle"
