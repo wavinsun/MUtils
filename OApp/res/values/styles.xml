@@ -17,8 +17,13 @@
     <style name="AppTheme" parent="AppBaseTheme">
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar" tools:targetApi="22">false</item>
+        
+        <item name="android:windowTranslucentStatus" tools:targetApi="22">true</item>
+    	<item name="android:windowTranslucentNavigation" tools:targetApi="22">true</item>
+    	
     </style>
 
     <style name="Wrap">
