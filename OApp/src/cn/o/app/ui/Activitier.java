@@ -246,7 +246,6 @@ public class Activitier extends FragmentActivity implements IActivity {
 		w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
 			w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 			mStatusBarTranslucent = true;
 		}
 
@@ -569,7 +568,6 @@ public class Activitier extends FragmentActivity implements IActivity {
 					PixelFormat.TRANSPARENT);
 			if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
 				mViewParams.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-				mViewParams.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
 			}
 			// Used to implement animation
 			// The view added by WindowManager can not use animation.
@@ -712,7 +710,6 @@ public class Activitier extends FragmentActivity implements IActivity {
 					WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, PixelFormat.TRANSPARENT);
 			if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
 				mViewParams.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-				mViewParams.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
 			}
 			View virtualPatternView = (View) mContext.newPattern();
 			mView.addView(virtualPatternView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,

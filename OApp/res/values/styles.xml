@@ -22,7 +22,6 @@
         <item name="android:windowActionBar" tools:targetApi="22">false</item>
         
         <item name="android:windowTranslucentStatus" tools:targetApi="22">true</item>
-    	<item name="android:windowTranslucentNavigation" tools:targetApi="22">true</item>
     	
     </style>
 
