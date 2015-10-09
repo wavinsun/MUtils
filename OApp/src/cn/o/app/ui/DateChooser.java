@@ -225,7 +225,7 @@ public class DateChooser {
 		}
 		Date current = null;
 		LayoutInflater inflater = LayoutInflater.from(mContext);
-		mContentView = inflater.inflate(R.layout.date_picker, null);
+		mContentView = inflater.inflate(R.layout.date_chooser, null);
 		mContentView.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -341,7 +341,7 @@ public class DateChooser {
 		mMinuteView.addChangingListener(onWheelChangedListener);
 
 		mDialog = new Dialoger(mContext);
-		mDialog.setWindowAnimations(R.style.DateChooserAnim);
+		mDialog.setWindowAnimations(R.style.DialogerOnBottomAnim);
 		mDialog.setContentView(mContentView,
 				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {

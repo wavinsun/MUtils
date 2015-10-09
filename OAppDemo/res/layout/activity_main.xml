@@ -145,6 +145,10 @@
                 style="@style/MainBtn"
                 android:text="IntentExecutor"/>
             
+            <TextView android:id="@+id/umeng"
+                style="@style/MainBtn"
+                android:text="Umeng"/>
+            
         </cn.o.app.ui.FlowLayout>
     </ScrollView>
 

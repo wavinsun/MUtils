@@ -5,5 +5,10 @@
         <item name="android:windowEnterAnimation">@null</item>
         <item name="android:windowExitAnimation">@null</item>
     </style>
+    
+    <style name="DialogerOnBottomAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialoger_bottom_to_top</item>
+        <item name="android:windowExitAnimation">@anim/dialoger_top_to_bottom</item>
+    </style>
 
 </resources>
