@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <style name="ActionSheetAnim" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/action_sheet_enter</item>
-        <item name="android:windowExitAnimation">@anim/action_sheet_exit</item>
-    </style>
-
-</resources>

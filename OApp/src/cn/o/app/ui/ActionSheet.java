@@ -213,7 +213,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
 		scrollParams.setMargins(0, 0, 0, margin);
 		realContentView.addView(scrollView, scrollParams);
 		mDialog = new Dialoger(mContext);
-		mDialog.setWindowAnimations(R.style.ActionSheetAnim);
+		mDialog.setWindowAnimations(R.style.DialogerOnBottomAnim);
 		mDialog.setContentView(realContentView,
 				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		mDialog.requestHFill();

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DemoFeatureList" >
+
+    <TextView
+        android:id="@+id/umeng_update"
+        style="@style/DemoFeatureItem"
+        android:text="Umeng Update" />
+
+    <TextView
+        android:id="@+id/umeng_feedback"
+        style="@style/DemoFeatureItem"
+        android:text="Umeng Feedback" />
+
+</LinearLayout>
