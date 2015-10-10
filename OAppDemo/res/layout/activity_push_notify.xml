@@ -4,12 +4,12 @@
     
     <cn.o.app.ui.StatusBox style="@style/StatusBox"/>
 
-    <RelativeLayout style="@style/NavigationBar" >
+    <RelativeLayout style="@style/TitleBox" >
 
-        <ImageView style="@style/NavigationBackButton" />
+        <ImageView style="@style/TitleBoxBackButton" />
 
         <TextView
-            style="@style/NavigationTitle"
+            style="@style/TitleBoxName"
             android:text="Push Notify" />
     </RelativeLayout>
     

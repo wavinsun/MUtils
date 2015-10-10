@@ -13,7 +13,7 @@
         android:shape="line"
         android:textColor="#FFF"
         android:textSize="12sp"
-        app:strokeColor="@color/navigation"
+        app:strokeColor="@color/title_box"
         app:strokeWidth="20dp"
         app:textVisible="visible" />
 

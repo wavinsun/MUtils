@@ -13,36 +13,63 @@ import com.umeng.update.UpdateStatus;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import cn.jpush.android.api.JPushInterface;
-import cn.o.app.R;
 import cn.o.app.core.event.listener.VersionUpdateListener;
 import cn.o.app.ui.Activitier;
+import cn.o.app.ui.StatusBox;
 import cn.o.app.ui.Viewer;
 
 @SuppressLint("InflateParams")
 public class AppActivity extends Activitier {
 
 	private static final int NEW_VERSION_STATE_UNKNOWN = -1;
-
 	private static final int NEW_VERSION_STATE_NO = 0;
-
 	private static final int NEW_VERSION_STATE_YES = 1;
 
-	protected FeedbackAgent mFeedbackAgent;
-
-	protected List<VersionUpdateListener> mVersionUpdateListeners;
-
 	protected static Object sSync = new Object();
-
 	protected static int sNewVersionState = NEW_VERSION_STATE_UNKNOWN;
 
+	protected FeedbackAgent mFeedbackAgent;
 	protected UmengUpdateListener mUmengUpdateListener;
-
 	protected UmengDialogButtonListener mUmengDialogButtonListener;
+	protected List<VersionUpdateListener> mVersionUpdateListeners;
+
+	protected StatusBox mStatusBox;
+	protected RelativeLayout mTitleBox;
+	protected TextView mTitleBoxName;
+	protected ImageView mTitleBoxBackButton;
+
+	protected void onClickTitleBoxBackBtn() {
+		finish();
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		if (mStatusBox == null) {
+			mStatusBox = findViewById(R.id.status_box, StatusBox.class);
+		}
+		if (mTitleBox == null) {
+			mTitleBox = findViewById(R.id.title_box, RelativeLayout.class);
+		}
+		if (mTitleBoxName == null) {
+			mTitleBoxName = findViewById(R.id.title_box_name, TextView.class);
+		}
+		if (mTitleBoxBackButton == null) {
+			mTitleBoxBackButton = findViewById(R.id.title_box_back, ImageView.class);
+			if (mTitleBoxBackButton != null) {
+				mTitleBoxBackButton.setOnClickListener(new OnClickTitleBoxBackButtonListener());
+			}
+		}
+	}
 
 	@Override
 	protected void onResume() {
@@ -182,6 +209,15 @@ public class AppActivity extends Activitier {
 			mFeedbackAgent.sync();
 		}
 		mFeedbackAgent.startFeedbackActivity();
+	}
+
+	class OnClickTitleBoxBackButtonListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			onClickTitleBoxBackBtn();
+		}
+
 	}
 
 	static class WaitingView extends Viewer {

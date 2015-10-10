@@ -3,7 +3,7 @@
     
     <style name="StatusBox" parent="HFill">
         <item name="android:id">@id/status_box</item>
-        <item name="android:background">@color/navigation</item>
+        <item name="android:background">@color/title_box</item>
     </style>
     
 </resources>
