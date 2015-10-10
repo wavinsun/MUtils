@@ -46,7 +46,7 @@ public class ShellActivity extends BasicActivity {
 
 		ShellExtra extra = new ShellExtra();
 		if (extra.getFrom(getIntent())) {
-			mNavigationTitle.setText(extra.getTitle());
+			mTitleBoxName.setText(extra.getTitle());
 			try {
 				Class<View> viewClass = (Class<View>) Class.forName(extra.getViewName());
 				View v = viewClass.getConstructor(Context.class).newInstance(getContext());

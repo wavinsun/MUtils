@@ -5,8 +5,8 @@
     
     <cn.o.app.ui.StatusBox style="@style/StatusBox"/>
     
-    <RelativeLayout style="@style/NavigationBar">
-        <TextView style="@style/NavigationTitle"
+    <RelativeLayout style="@style/TitleBox">
+        <TextView style="@style/TitleBoxName"
             android:text="OApp Demo"/>
     </RelativeLayout>
     
