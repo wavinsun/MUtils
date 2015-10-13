@@ -16,7 +16,19 @@ app.onMessage=function(s){
 };
 app.invoke=function(o){
 	if(typeof(app.sendMessage)=="undefined"){
-		return;
+		if(typeof(app.alias)=="undefined"){
+			return;
+		}else{
+			if(typeof(app.alias.sendMessage)=="undefined"){
+				return;
+			}
+			app.sendMessage=function(s){
+				app.alias.sendMessage(s);
+			};
+			app.alias.onMessage=function(s){
+				app.onMessage(s);
+			};
+		}
 	}
 	if(typeof(o)=="number"&&o.constructor==Number){
 		o={id:o};
