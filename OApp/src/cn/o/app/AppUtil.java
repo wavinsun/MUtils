@@ -832,8 +832,9 @@ public class AppUtil {
 	public static int getStatusBarHeight(Context context) {
 		int h = 0;
 		Rect r = new Rect();
-		if (context instanceof Activity) {
-			((Activity) context).getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
+		Activity activity = AppUtil.toActivity(context);
+		if (activity != null) {
+			activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
 			h = r.top;
 		}
 		if (h == 0) {
