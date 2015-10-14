@@ -23,13 +23,13 @@ import cn.o.app.core.event.Dispatcher;
 import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.event.listener.OnSelectedChangeListener;
 import cn.o.app.ui.core.ICachedViewManager;
-import cn.o.app.ui.core.IFragment;
+import cn.o.app.ui.core.IFragmenter;
 import cn.o.app.ui.core.IStateView;
 import cn.o.app.ui.core.IStateViewManager;
 import cn.o.app.ui.core.UICore;
 
 @SuppressLint("ClickableViewAccessibility")
-public class FragmentFlipper extends ViewFlipper implements IStateView, IStateViewManager, ICachedViewManager {
+public class FragmenterFlipper extends ViewFlipper implements IStateView, IStateViewManager, ICachedViewManager {
 
 	protected Handler mAnimHandler;
 
@@ -72,11 +72,11 @@ public class FragmentFlipper extends ViewFlipper implements IStateView, IStateVi
 
 	protected Dispatcher mDispatcher = new Dispatcher();
 
-	public FragmentFlipper(Context context) {
+	public FragmenterFlipper(Context context) {
 		super(context);
 	}
 
-	public FragmentFlipper(Context context, AttributeSet attrs) {
+	public FragmenterFlipper(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
@@ -214,8 +214,8 @@ public class FragmentFlipper extends ViewFlipper implements IStateView, IStateVi
 			if (childView.equals(view)) {
 				continue;
 			}
-			if (childView instanceof IFragment) {
-				IFragment fragment = (IFragment) childView;
+			if (childView instanceof IFragmenter) {
+				IFragmenter fragment = (IFragmenter) childView;
 				fragment.setLocked(false);
 				fragment.setFragmentVisible(false);
 			}
@@ -233,8 +233,8 @@ public class FragmentFlipper extends ViewFlipper implements IStateView, IStateVi
 			pushLeft = target > mTargetIndex;
 			view = mCachedViews.get(mTargetIndex);
 			if (view instanceof IStateView) {
-				if (view instanceof IFragment) {
-					((IFragment) view).setLocked(true);
+				if (view instanceof IFragmenter) {
+					((IFragmenter) view).setLocked(true);
 				}
 				((IStateView) view).onStop();
 			}
@@ -245,8 +245,8 @@ public class FragmentFlipper extends ViewFlipper implements IStateView, IStateVi
 			pushLeft = target > mSelectedIndex;
 			view = mCachedViews.get(mSelectedIndex);
 			if (view instanceof IStateView) {
-				if (view instanceof IFragment) {
-					((IFragment) view).setLocked(true);
+				if (view instanceof IFragmenter) {
+					((IFragmenter) view).setLocked(true);
 				}
 				((IStateView) view).onPause();
 				((IStateView) view).onStop();
@@ -256,8 +256,8 @@ public class FragmentFlipper extends ViewFlipper implements IStateView, IStateVi
 
 		view = mCachedViews.get(mTargetIndex);
 		if (view instanceof IStateView) {
-			if (view instanceof IFragment) {
-				((IFragment) view).setLocked(false);
+			if (view instanceof IFragmenter) {
+				((IFragmenter) view).setLocked(false);
 			}
 			((IStateView) view).onStart();
 		}
@@ -289,8 +289,8 @@ public class FragmentFlipper extends ViewFlipper implements IStateView, IStateVi
 		}
 		View view = mCachedViews.get(mTargetIndex);
 		if (view instanceof IStateView) {
-			if (view instanceof IFragment) {
-				((IFragment) view).setLocked(false);
+			if (view instanceof IFragmenter) {
+				((IFragmenter) view).setLocked(false);
 			}
 			((IStateView) view).onResume();
 		}

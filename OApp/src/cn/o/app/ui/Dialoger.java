@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -18,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+import cn.o.app.AppUtil;
 import cn.o.app.R;
 import cn.o.app.ui.core.IDialog;
 import cn.o.app.ui.core.IToastOwner;
@@ -93,16 +93,7 @@ public class Dialoger extends Dialog implements IDialog {
 	}
 
 	public Activity getActivity() {
-		Context context = getContext();
-		if (context instanceof Activity) {
-			return (Activity) context;
-		} else if (context instanceof ContextWrapper) {
-			Context base = ((ContextWrapper) context).getBaseContext();
-			if (base instanceof Activity) {
-				return (Activity) base;
-			}
-		}
-		return null;
+		return AppUtil.toActivity(getContext());
 	}
 
 	public Resources getResources() {

@@ -1,11 +1,13 @@
 package cn.o.app.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.WindowManager;
 import cn.o.app.AppUtil;
 import cn.o.app.ui.core.IStatusBarOwner;
 
@@ -39,7 +41,17 @@ public class StatusBox extends View {
 					}
 				} else {
 					if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
-						mMeasuredHeight = AppUtil.getStatusBarHeight(context);
+						if (context instanceof Activity) {
+							int flags = ((Activity) context).getWindow().getAttributes().flags;
+							if ((WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+									& flags) == WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) {
+								mMeasuredHeight = AppUtil.getStatusBarHeight(context);
+							} else {
+								mMeasuredHeight = 0;
+							}
+						} else {
+							mMeasuredHeight = 0;
+						}
 					} else {
 						mMeasuredHeight = 0;
 					}

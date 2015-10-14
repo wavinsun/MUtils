@@ -5,7 +5,7 @@ import cn.o.app.data.IAsyncDataQueueOwner;
 import cn.o.app.net.INetQueueOwner;
 import cn.o.app.ui.pattern.IPatternOwner;
 
-public interface IActivity extends IFragmentManager, INetQueueOwner, IPatternOwner, IAsyncDataQueueOwner, IToastOwner,
+public interface IActivity extends IFragmenterManager, INetQueueOwner, IPatternOwner, IAsyncDataQueueOwner, IToastOwner,
 		IStopableManager, IActivityExecutor, IContentViewOwner, IWindowProvider, IStatusBarOwner {
 
 	public boolean isBusy();

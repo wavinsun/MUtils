@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -845,6 +846,18 @@ public class AppUtil {
 			}
 		}
 		return h;
+	}
+
+	public static Activity toActivity(Context context) {
+		if (context instanceof Activity) {
+			return (Activity) context;
+		} else if (context instanceof ContextWrapper) {
+			Context base = ((ContextWrapper) context).getBaseContext();
+			if (base instanceof Activity) {
+				return (Activity) base;
+			}
+		}
+		return null;
 	}
 
 	public static TextWatcher setEditTextDecimals(EditText editText, int decimals) {

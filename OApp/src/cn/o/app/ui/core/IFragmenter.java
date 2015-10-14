@@ -3,9 +3,9 @@ package cn.o.app.ui.core;
 import android.support.v4.app.FragmentManager;
 import cn.o.app.core.ILockable;
 
-public interface IFragment extends IStateView, ILockable {
+public interface IFragmenter extends IStateView, ILockable {
 
-	public FragmentManager getParentSupportFragmentManager();
+	public FragmentManager getSupportFragmentManagerFromParent();
 
 	public boolean isFragmentVisible();
 
