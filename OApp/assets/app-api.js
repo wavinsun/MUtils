@@ -17,10 +17,10 @@ app.onMessage=function(s){
 app.invoke=function(o){
 	if(typeof(app.sendMessage)=="undefined"){
 		if(typeof(app.alias)=="undefined"){
-			return;
+			return false;
 		}else{
 			if(typeof(app.alias.sendMessage)=="undefined"){
-				return;
+				return false;
 			}
 			app.sendMessage=function(s){
 				app.alias.sendMessage(s);
@@ -45,4 +45,5 @@ app.invoke=function(o){
 		data:o.data,
 		callbacker:o.callbacker
 	}));
+	return true;
 };
