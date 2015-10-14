@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -26,7 +28,7 @@ import cn.o.app.ui.core.UICore;
 /**
  * Dialog of framework
  */
-@SuppressLint({ "RtlHardcoded", "ShowToast" })
+@SuppressLint({ "RtlHardcoded", "ShowToast", "InlinedApi" })
 @SuppressWarnings("deprecation")
 public class Dialoger extends Dialog implements IDialog {
 
@@ -56,6 +58,12 @@ public class Dialoger extends Dialog implements IDialog {
 		w.requestFeature(Window.FEATURE_NO_TITLE);
 		w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		w.setBackgroundDrawable(new ColorDrawable(0x00000000));
+		if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
+			w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			View decor = w.getDecorView();
+			decor.setPadding(decor.getPaddingLeft(), decor.getPaddingTop() + AppUtil.getStatusBarHeight(getContext()),
+					decor.getPaddingRight(), decor.getPaddingBottom());
+		}
 
 		UICore.injectContentView(this);
 	}
