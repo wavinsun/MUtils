@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class StateViewFrame extends FragmentFrame {
+public class StateViewFrame extends FragmenterFrame {
 
 	public StateViewFrame(Context context) {
 		super(context);

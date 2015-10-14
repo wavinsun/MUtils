@@ -12,12 +12,12 @@ import cn.o.app.core.event.Dispatcher;
 import cn.o.app.event.listener.OnActivityResultListener;
 import cn.o.app.event.listener.OnSelectedChangeListener;
 import cn.o.app.ui.core.ICachedViewManager;
-import cn.o.app.ui.core.IFragment;
+import cn.o.app.ui.core.IFragmenter;
 import cn.o.app.ui.core.IStateView;
 import cn.o.app.ui.core.IStateViewManager;
 import cn.o.app.ui.core.UICore;
 
-public class FragmentFrame extends FrameLayout implements IStateView, IStateViewManager, ICachedViewManager {
+public class FragmenterFrame extends FrameLayout implements IStateView, IStateViewManager, ICachedViewManager {
 
 	protected boolean mCreateDispatched;
 
@@ -32,15 +32,15 @@ public class FragmentFrame extends FrameLayout implements IStateView, IStateView
 
 	protected Dispatcher mDispatcher = new Dispatcher();
 
-	public FragmentFrame(Context context) {
+	public FragmenterFrame(Context context) {
 		super(context);
 	}
 
-	public FragmentFrame(Context context, AttributeSet attrs) {
+	public FragmenterFrame(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public FragmentFrame(Context context, AttributeSet attrs, int defStyle) {
+	public FragmenterFrame(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
@@ -120,8 +120,8 @@ public class FragmentFrame extends FrameLayout implements IStateView, IStateView
 		if (mSelectedIndex >= 0) {
 			view = mCachedViews.get(mSelectedIndex);
 			if (view instanceof IStateView) {
-				if (view instanceof IFragment) {
-					((IFragment) view).setLocked(true);
+				if (view instanceof IFragmenter) {
+					((IFragmenter) view).setLocked(true);
 				}
 				((IStateView) view).onPause();
 				((IStateView) view).onStop();
@@ -129,8 +129,8 @@ public class FragmentFrame extends FrameLayout implements IStateView, IStateView
 		}
 		view = mCachedViews.get(selectedIndex);
 		if (view instanceof IStateView) {
-			if (view instanceof IFragment) {
-				((IFragment) view).setLocked(false);
+			if (view instanceof IFragmenter) {
+				((IFragmenter) view).setLocked(false);
 			}
 			((IStateView) view).onStart();
 		}
@@ -141,8 +141,8 @@ public class FragmentFrame extends FrameLayout implements IStateView, IStateView
 
 		// post selecting
 		if (view instanceof IStateView) {
-			if (view instanceof IFragment) {
-				((IFragment) view).setLocked(false);
+			if (view instanceof IFragmenter) {
+				((IFragmenter) view).setLocked(false);
 			}
 			((IStateView) view).onResume();
 		}
@@ -164,8 +164,8 @@ public class FragmentFrame extends FrameLayout implements IStateView, IStateView
 			if (childView.equals(view)) {
 				continue;
 			}
-			if (childView instanceof IFragment) {
-				IFragment fragment = (IFragment) childView;
+			if (childView instanceof IFragmenter) {
+				IFragmenter fragment = (IFragmenter) childView;
 				fragment.setLocked(false);
 				fragment.setFragmentVisible(false);
 			}

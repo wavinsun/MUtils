@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class StateViewFlipper extends FragmentFlipper {
+public class StateViewFlipper extends FragmenterFlipper {
 
 	public StateViewFlipper(Context context) {
 		super(context);

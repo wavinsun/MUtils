@@ -10,15 +10,15 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import cn.o.app.ui.core.IFragment;
-import cn.o.app.ui.core.IFragmentManager;
+import cn.o.app.ui.core.IFragmenter;
+import cn.o.app.ui.core.IFragmenterManager;
 import cn.o.app.ui.core.IStateView;
 import cn.o.app.ui.core.UICore;
 
 @SuppressWarnings("unchecked")
-public class Fragmenter extends StateView implements IFragment, IFragmentManager {
+public class Fragmenter extends StateView implements IFragmenter, IFragmenterManager {
 
-	protected FragmentManager mParentSupportFragmentManager;
+	protected FragmentManager mSupportFragmentManagerFromParent;
 
 	protected FragmentWrapper mFragment;
 
@@ -42,7 +42,7 @@ public class Fragmenter extends StateView implements IFragment, IFragmentManager
 
 	protected void checkValidId() {
 		if (this.getId() == View.NO_ID) {
-			throw new UnsupportedOperationException("OFragment must has id");
+			throw new UnsupportedOperationException("Fragmenter must has id");
 		}
 	}
 
@@ -69,7 +69,7 @@ public class Fragmenter extends StateView implements IFragment, IFragmentManager
 		if (mFragmentVisible == visible) {
 			return;
 		}
-		FragmentManager fm = this.getParentSupportFragmentManager();
+		FragmentManager fm = this.getSupportFragmentManagerFromParent();
 		FragmentTransaction ft = fm.beginTransaction();
 		if (visible) {
 			ft.show(mFragment);
@@ -94,7 +94,7 @@ public class Fragmenter extends StateView implements IFragment, IFragmentManager
 
 	@Override
 	public void onDestroy() {
-		FragmentManager fm = this.getParentSupportFragmentManager();
+		FragmentManager fm = this.getSupportFragmentManagerFromParent();
 		FragmentTransaction ft = fm.beginTransaction();
 		ft.remove(mFragment);
 		ft.commitAllowingStateLoss();
@@ -105,7 +105,7 @@ public class Fragmenter extends StateView implements IFragment, IFragmentManager
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		if (this.getChildCount() != 0) {
-			throw new UnsupportedOperationException("OFragment must be empty in layout Resource");
+			throw new UnsupportedOperationException("Fragmenter must be empty in layout Resource");
 		}
 	}
 
@@ -121,7 +121,7 @@ public class Fragmenter extends StateView implements IFragment, IFragmentManager
 		mFragment = new FragmentWrapper();
 		mFragment.setContentView(mContentView);
 
-		FragmentManager fm = this.getParentSupportFragmentManager();
+		FragmentManager fm = this.getSupportFragmentManagerFromParent();
 		FragmentTransaction ft = fm.beginTransaction();
 		ft.add(this.getId(), mFragment);
 		ft.hide(mFragment);
@@ -166,12 +166,12 @@ public class Fragmenter extends StateView implements IFragment, IFragmentManager
 	}
 
 	@Override
-	public FragmentManager getParentSupportFragmentManager() {
-		if (mParentSupportFragmentManager == null) {
+	public FragmentManager getSupportFragmentManagerFromParent() {
+		if (mSupportFragmentManagerFromParent == null) {
 			Object o = this.getManager();
 			while (o != null) {
-				if (o instanceof IFragmentManager) {
-					mParentSupportFragmentManager = ((IFragmentManager) o).getSupportFragmentManager();
+				if (o instanceof IFragmenterManager) {
+					mSupportFragmentManagerFromParent = ((IFragmenterManager) o).getSupportFragmentManager();
 				}
 				if (o instanceof IStateView) {
 					o = ((IStateView) o).getManager();
@@ -181,12 +181,12 @@ public class Fragmenter extends StateView implements IFragment, IFragmentManager
 			}
 			Context context = this.getContext();
 			if (context instanceof FragmentActivity) {
-				mParentSupportFragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+				mSupportFragmentManagerFromParent = ((FragmentActivity) context).getSupportFragmentManager();
 			} else {
 				throw new UnsupportedOperationException();
 			}
 		}
-		return mParentSupportFragmentManager;
+		return mSupportFragmentManagerFromParent;
 	}
 
 	public static class FragmentWrapper extends Fragment {
