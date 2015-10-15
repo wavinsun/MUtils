@@ -188,7 +188,7 @@ public class ProgressView extends View {
 	public void setProgress(int progress) {
 		progress = progress < 0 ? 0 : progress;
 		progress = progress > mMax ? mMax : progress;
-		setRatio(((float) mProgress) / mMax);
+		setRatio(((float) progress) / mMax);
 	}
 
 	public void setRatio(float ratio) {
