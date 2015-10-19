@@ -31,6 +31,7 @@ public interface IShare extends IContextOwner {
 	public static final int METHOD_UNKNOWN = 0;
 	public static final int METHOD_INTENT = 1;
 	public static final int METHOD_API = 2;
+	public static final int METHOD_SHARE_SDK = 3;
 
 	public String getTitle();
 

@@ -227,6 +227,19 @@ public class AppUtil {
 		return setPrefString(context, fileName, key, value + "");
 	}
 
+	public static boolean isAssetExists(Context context, String fileName) {
+		AssetManager am = context.getAssets();
+		InputStream is = null;
+		try {
+			is = am.open(fileName);
+			return true;
+		} catch (Exception e) {
+			return false;
+		} finally {
+			IOUtil.close(is);
+		}
+	}
+
 	/**
 	 * Get string content of assets file
 	 * 

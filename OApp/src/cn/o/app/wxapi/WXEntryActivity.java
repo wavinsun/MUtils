@@ -1,16 +1,16 @@
 package cn.o.app.wxapi;
 
-import android.os.Bundle;
-import cn.o.app.share.Share;
-import cn.o.app.share.ShareWechat;
-import cn.o.app.ui.Activitier;
-
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import android.os.Bundle;
+import cn.o.app.share.Share;
+import cn.o.app.share.ShareWechat;
+import cn.o.app.ui.Activitier;
 
 public class WXEntryActivity extends Activitier implements IWXAPIEventHandler {
 
@@ -20,7 +20,7 @@ public class WXEntryActivity extends Activitier implements IWXAPIEventHandler {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (ShareWechat.getAppId() != null) {
-			api = WXAPIFactory.createWXAPI(this, Share.getWeiboAppId(), false);
+			api = WXAPIFactory.createWXAPI(this, Share.getWechatAppId(), false);
 			api.handleIntent(getIntent(), this);
 		}
 	}

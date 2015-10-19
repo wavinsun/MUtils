@@ -4,6 +4,8 @@ import android.content.Context;
 import cn.o.app.share.intent.IntentShareQzone;
 import cn.o.app.share.intent.IntentShareTencentWeibo;
 import cn.o.app.share.intent.IntentShareWeibo;
+import cn.o.app.share.mob.MobShareTencentWeibo;
+import cn.o.app.share.mob.MobShareWeibo;
 
 public class Share extends ShareBase {
 
@@ -17,22 +19,92 @@ public class Share extends ShareBase {
 		IShare wrapper = null;
 		switch (mPlatform) {
 		case PLATFORM_QQ:
-			wrapper = mMethod == METHOD_INTENT ? null : new ShareQQ(mContext);
+			switch (mMethod) {
+			case METHOD_API:
+				wrapper = new ShareQQ(mContext);
+				break;
+			case METHOD_INTENT:
+				wrapper = null;
+				break;
+			case METHOD_SHARE_SDK:
+				wrapper = null;
+				break;
+			default:
+				break;
+			}
 			break;
 		case PLATFORM_QZONE:
-			wrapper = mMethod == METHOD_INTENT ? new IntentShareQzone(mContext) : new ShareQzone(mContext);
+			switch (mMethod) {
+			case METHOD_API:
+				wrapper = new ShareQzone(mContext);
+				break;
+			case METHOD_INTENT:
+				wrapper = new IntentShareQzone(mContext);
+				break;
+			case METHOD_SHARE_SDK:
+				wrapper = null;
+				break;
+			default:
+				break;
+			}
 			break;
 		case PLATFORM_WEIBO:
-			wrapper = mMethod == METHOD_INTENT ? new IntentShareWeibo(mContext) : new ShareWeibo(mContext);
+			switch (mMethod) {
+			case METHOD_API:
+				wrapper = null;
+				break;
+			case METHOD_INTENT:
+				wrapper = new IntentShareWeibo(mContext);
+				break;
+			case METHOD_SHARE_SDK:
+				wrapper = new MobShareWeibo(mContext);
+				break;
+			default:
+				break;
+			}
 			break;
 		case PLATFORM_WECHAT:
-			wrapper = mMethod == METHOD_INTENT ? null : new ShareWechat(mContext);
+			switch (mMethod) {
+			case METHOD_API:
+				wrapper = new ShareWechat(mContext);
+				break;
+			case METHOD_INTENT:
+				wrapper = null;
+				break;
+			case METHOD_SHARE_SDK:
+				wrapper = null;
+				break;
+			default:
+				break;
+			}
 			break;
 		case PLATFORM_WECHAT_MOMENTS:
+			switch (mMethod) {
+			case METHOD_API:
+				break;
+			case METHOD_INTENT:
+				break;
+			case METHOD_SHARE_SDK:
+				break;
+			default:
+				break;
+			}
 			wrapper = mMethod == METHOD_INTENT ? null : new ShareWechatMoments(mContext);
 			break;
 		case PLATFORM_TENCENT_WEIBO:
-			wrapper = mMethod == METHOD_INTENT ? new IntentShareTencentWeibo(mContext) : null;
+			switch (mMethod) {
+			case METHOD_API:
+				wrapper = null;
+				break;
+			case METHOD_INTENT:
+				wrapper = new IntentShareTencentWeibo(mContext);
+				break;
+			case METHOD_SHARE_SDK:
+				wrapper = new MobShareTencentWeibo(mContext);
+				break;
+			default:
+				break;
+			}
 			break;
 		default:
 			break;
@@ -64,16 +136,8 @@ public class Share extends ShareBase {
 		ShareWechat.setAppId(appId);
 	}
 
-	public static String getAppId() {
+	public static String getWechatAppId() {
 		return ShareWechat.getAppId();
-	}
-
-	public static void setWeiboAppId(String appId) {
-		ShareWeibo.setAppId(appId);
-	}
-
-	public static String getWeiboAppId() {
-		return ShareWeibo.getAppId();
 	}
 
 }

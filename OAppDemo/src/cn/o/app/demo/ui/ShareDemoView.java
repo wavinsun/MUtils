@@ -30,11 +30,10 @@ public class ShareDemoView extends StateView {
 
 	}
 
-	@OnClick({ R.id.qq, R.id.qzone, R.id.wechat, R.id.momoents, R.id.weibo })
+	@OnClick({ R.id.qq, R.id.qzone, R.id.wechat, R.id.momoents, R.id.weibo, R.id.tencent_weibo_share_sdk })
 	protected void onClick(View v) {
 		Share.setTencentAppId("1104746550");
 		Share.setWechatAppId("wx143c7417f8f7f690");
-		Share.setWeiboAppId("");
 		Share share = new Share(getContext());
 		share.setTitle("Title");
 		share.setText("Text");
@@ -56,7 +55,12 @@ public class ShareDemoView extends StateView {
 			share.setPlatform(Share.PLATFORM_WECHAT_MOMENTS);
 			break;
 		case R.id.weibo:
+			share.setMethod(Share.METHOD_SHARE_SDK);
 			share.setPlatform(Share.PLATFORM_WEIBO);
+			break;
+		case R.id.tencent_weibo_share_sdk:
+			share.setMethod(Share.METHOD_SHARE_SDK);
+			share.setPlatform(Share.PLATFORM_TENCENT_WEIBO);
 			break;
 
 		default:
