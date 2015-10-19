@@ -26,5 +26,10 @@
         android:id="@+id/weibo"
         style="@style/DemoFeatureItem"
         android:text="Weibo"/>
+    
+    <TextView
+        android:id="@+id/tencent_weibo_share_sdk"
+        style="@style/DemoFeatureItem"
+        android:text="TencentWeibo ShareSDK"/>
 
 </LinearLayout>

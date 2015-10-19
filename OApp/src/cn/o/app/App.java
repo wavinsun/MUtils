@@ -12,6 +12,7 @@ import android.content.Context;
 import cn.jpush.android.api.JPushInterface;
 import cn.o.app.core.log.Logs;
 import cn.o.app.os.IContextProvider;
+import cn.sharesdk.framework.ShareSDK;
 
 /**
  * Application of framework
@@ -22,11 +23,15 @@ public class App extends Application implements IContextProvider {
 
 	public static final String JPUSH_APPKEY = "JPUSH_APPKEY";
 
+	public static final String SHARE_SDK_INFO = "ShareSDK.xml";
+
 	protected static App sApp;
 
 	protected boolean mUmengEnabled;
 
 	protected boolean mJPushEnabled;
+
+	protected boolean mShareSDKEnabled;
 
 	@Override
 	public void onCreate() {
@@ -61,7 +66,10 @@ public class App extends Application implements IContextProvider {
 			}
 			JPushInterface.init(this);
 		}
-
+		mShareSDKEnabled = AppUtil.isAssetExists(this, SHARE_SDK_INFO);
+		if (mShareSDKEnabled) {
+			ShareSDK.initSDK(this);
+		}
 	}
 
 	public static App getApp() {
