@@ -28,21 +28,7 @@ public class MobShareTencentWeibo extends ShareBase {
 
 	@Override
 	public void share() {
-		String text = mText;
-		if (mUrl != null) {
-			text += "\n" + mUrl;
-		}
-		ShareParams params = new ShareParams();
-		params.setTitle(mTitle);
-		params.setTitleUrl(mUrl);
-		params.setText(text);
-		params.setImageUrl(mImageUrl);
-		params.setSite(mTitle);
-		params.setSiteUrl(mUrl);
 		Platform platform = ShareSDK.getPlatform(TencentWeibo.NAME);
-		if (platform.isValid()) {
-			platform.removeAccount(true);
-		}
 		platform.setPlatformActionListener(new PlatformActionListener() {
 
 			@Override
@@ -54,7 +40,20 @@ public class MobShareTencentWeibo extends ShareBase {
 
 			@Override
 			public void onComplete(Platform platform, int action, HashMap<String, Object> result) {
-				if (action == Platform.ACTION_SHARE) {
+				if (action == Platform.ACTION_AUTHORIZING) {
+					String text = mText;
+					if (mUrl != null) {
+						text += "\n" + mUrl;
+					}
+					ShareParams params = new ShareParams();
+					params.setTitle(mTitle);
+					params.setTitleUrl(mUrl);
+					params.setText(text);
+					params.setImageUrl(mImageUrl);
+					params.setSite(mTitle);
+					params.setSiteUrl(mUrl);
+					platform.share(params);
+				} else if (action == Platform.ACTION_SHARE) {
 					if (mListener != null) {
 						mListener.onComplete(MobShareTencentWeibo.this);
 					}
@@ -69,7 +68,7 @@ public class MobShareTencentWeibo extends ShareBase {
 			}
 
 		});
-		platform.share(params);
+		platform.authorize();
 	}
 
 }
