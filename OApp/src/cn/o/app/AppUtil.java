@@ -23,6 +23,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -39,7 +40,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
+import android.text.Spannable;
 import android.text.TextWatcher;
+import android.text.style.TextAppearanceSpan;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -874,13 +877,29 @@ public class AppUtil {
 		return null;
 	}
 
-	public static TextWatcher setEditTextDecimals(EditText editText, int decimals) {
+	// ========================= Begin Text =========================
+	public static Object setSpan(Spannable s, int start, int end, ColorStateList textColor) {
+		return AppUtil.setSpan(s, start, end, textColor, 0);
+	}
+
+	public static Object setSpan(Spannable s, int start, int end, int textSize) {
+		return AppUtil.setSpan(s, start, end, null, textSize);
+	}
+
+	public static Object setSpan(Spannable s, int start, int end, ColorStateList textColor, int textSize) {
+		TextAppearanceSpan span = new TextAppearanceSpan(null, 0, textSize, textColor, null);
+		s.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+		return span;
+	}
+
+	public static TextWatcher setDecimals(EditText text, int decimals) {
 		EditTextDecimalsTextWatcher watcher = new EditTextDecimalsTextWatcher();
-		watcher.setEditText(editText);
+		watcher.setEditText(text);
 		watcher.setDecimals(decimals);
-		editText.addTextChangedListener(watcher);
+		text.addTextChangedListener(watcher);
 		return watcher;
 	}
+	// ========================= End Text =========================
 
 	public static class EditTextDecimalsTextWatcher implements TextWatcher {
 
@@ -890,8 +909,8 @@ public class AppUtil {
 
 		protected boolean catchChanged;
 
-		public void setEditText(EditText editText) {
-			mEditText = editText;
+		public void setEditText(EditText text) {
+			mEditText = text;
 		}
 
 		public void setDecimals(int decimals) {
