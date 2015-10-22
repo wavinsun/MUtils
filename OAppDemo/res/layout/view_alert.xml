@@ -4,5 +4,10 @@
     
     <TextView
         style="@style/GoBtn"/>
+    
+    <TextView
+        android:id="@+id/dialoger" 
+        style="@style/DemoFeatureItem"
+        android:text="Dialoger"/>
 
 </LinearLayout>

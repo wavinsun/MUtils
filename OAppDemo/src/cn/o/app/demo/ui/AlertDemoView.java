@@ -7,6 +7,7 @@ import cn.o.app.core.annotation.res.SetContentView;
 import cn.o.app.demo.R;
 import cn.o.app.ui.Alert;
 import cn.o.app.ui.Alert.AlertListener;
+import cn.o.app.ui.Dialoger;
 import cn.o.app.ui.StateView;
 
 @SetContentView(R.layout.view_alert)
@@ -53,6 +54,14 @@ public class AlertDemoView extends StateView {
 			}
 		});
 		alert.show();
+	}
+
+	@OnClick(R.id.dialoger)
+	protected void onClickDialoger() {
+		Dialoger dialoger = new Dialoger(getContext());
+		dialoger.setContentView(R.layout.dialog_edit);
+		dialoger.requestHFill();
+		dialoger.show();
 	}
 
 }

@@ -56,7 +56,7 @@ public class ConfItemDemoView extends StateView {
 		DateTime now = new DateTime();
 		MyConfItem confItem = new MyConfItem();
 		confItem.setId((int) now.getTime());
-		confItem.setName("lounien");
+		confItem.setName("wavinsun");
 		confItem.setCreateTime(now);
 		confItem.putToPref(getContext());
 		Alert alert = new Alert(getContext());
