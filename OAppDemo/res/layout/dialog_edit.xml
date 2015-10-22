@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/VLinearHFill"
+    android:layout_margin="@dimen/margin"
+    android:background="@drawable/round_rect_white"
+    android:padding="16dp" >
+
+    <EditText
+        style="@style/Fill"
+        android:background="@drawable/round_rect_grey"
+        android:inputType="number"
+        android:maxLength="11"
+        android:padding="@dimen/padding"
+        android:textColor="#000"
+        android:textSize="14sp" />
+    
+    <EditText
+        style="@style/Fill"
+        android:background="@drawable/round_rect_grey"
+        android:inputType="number"
+        android:maxLength="11"
+        android:padding="@dimen/padding"
+        android:textColor="#000"
+        android:textSize="14sp" 
+        android:layout_marginTop="@dimen/margin"/>
+    
+    
+    <EditText
+        style="@style/Fill"
+        android:background="@drawable/round_rect_grey"
+        android:inputType="number"
+        android:maxLength="11"
+        android:padding="@dimen/padding"
+        android:textColor="#000"
+        android:textSize="14sp"
+        android:layout_marginTop="@dimen/margin" />
+    
+    
+    <EditText
+        style="@style/Fill"
+        android:background="@drawable/round_rect_grey"
+        android:inputType="number"
+        android:maxLength="11"
+        android:padding="@dimen/padding"
+        android:textColor="#000"
+        android:textSize="14sp"
+        android:layout_marginTop="@dimen/margin" />
+    
+    <EditText
+        style="@style/Fill"
+        android:background="@drawable/round_rect_grey"
+        android:inputType="number"
+        android:maxLength="11"
+        android:padding="@dimen/padding"
+        android:textColor="#000"
+        android:textSize="14sp"
+        android:layout_marginTop="@dimen/margin" />
+
+</LinearLayout>

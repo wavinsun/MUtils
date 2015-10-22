@@ -66,11 +66,17 @@ public class Alert implements IViewFinder {
 
 	protected CharSequence mCancel;
 
+	protected boolean mCancelVisible;
+
 	protected Dialoger mDialog;
 
 	protected Context mContext;
 
 	protected boolean mCancelable = true;
+
+	protected int mTitleIconResId;
+
+	protected int mTitleTextColor;
 
 	protected CharSequence mTitle;
 
@@ -117,6 +123,30 @@ public class Alert implements IViewFinder {
 
 	public Alert(Context context) {
 		mContext = context;
+	}
+
+	public boolean isCancelVisible() {
+		return mCancelVisible;
+	}
+
+	public void setCancelVisible(boolean visible) {
+		if (mDialog != null) {
+			return;
+		}
+		if (mCancelVisible == visible) {
+			return;
+		}
+		mCancelVisible = visible;
+		if (mCancelVisible && mCancel == null) {
+			String country = mContext.getResources().getConfiguration().locale.getCountry();
+			if (country.equals("CN")) {
+				mOK = "取消";
+			} else if (country.equals("TW")) {
+				mOK = "取消";
+			} else {
+				mOK = "Cancel";
+			}
+		}
 	}
 
 	public int getFixedWidth() {
@@ -204,6 +234,20 @@ public class Alert implements IViewFinder {
 		mActionBar = actionBar;
 	}
 
+	public void setTitleIcon(int resId) {
+		if (mDialog != null) {
+			return;
+		}
+		mTitleIconResId = resId;
+	}
+
+	public void setTitleTextColor(int color) {
+		if (mDialog != null) {
+			return;
+		}
+		mTitleTextColor = color;
+	}
+
 	public void setTitleId(int titleId) {
 		if (mDialog != null) {
 			return;
@@ -266,6 +310,7 @@ public class Alert implements IViewFinder {
 			return;
 		}
 		mCancel = cancel;
+		mCancelVisible = mCancel != null;
 	}
 
 	public void setCancel(int cancelStringId) {
@@ -277,6 +322,7 @@ public class Alert implements IViewFinder {
 		} else {
 			mCancel = mContext.getText(cancelStringId);
 		}
+		mCancelVisible = mCancel != null;
 	}
 
 	public void setTitle(CharSequence title) {
@@ -449,9 +495,16 @@ public class Alert implements IViewFinder {
 				TextView titleTextView = new TextView(mContext);
 				titleTextView.setGravity(Gravity.CENTER);
 				titleTextView.setPadding(padding, padding, padding, padding);
-				titleTextView.setTextColor(0xFF000000);
 				titleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
 				titleTextView.setText(mTitle);
+				if (mTitleTextColor != 0) {
+					titleTextView.setTextColor(mTitleTextColor);
+				} else {
+					titleTextView.setTextColor(0xFF000000);
+				}
+				if (mTitleIconResId != 0) {
+					titleTextView.setCompoundDrawablesWithIntrinsicBounds(mTitleIconResId, 0, 0, 0);
+				}
 				alertView.addView(titleTextView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 						LinearLayout.LayoutParams.WRAP_CONTENT));
 			}
@@ -462,6 +515,12 @@ public class Alert implements IViewFinder {
 					if (titleView instanceof TextView) {
 						TextView titleTextView = (TextView) titleView;
 						titleTextView.setText(mTitle);
+						if (mTitleTextColor != 0) {
+							titleTextView.setTextColor(mTitleTextColor);
+						}
+						if (mTitleIconResId != 0) {
+							titleTextView.setCompoundDrawablesWithIntrinsicBounds(mTitleIconResId, 0, 0, 0);
+						}
 					}
 				}
 			}
@@ -512,7 +571,7 @@ public class Alert implements IViewFinder {
 				alertView.addView(hLine, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1));
 				LinearLayout buttonArea = new LinearLayout(mContext);
 				buttonArea.setOrientation(LinearLayout.HORIZONTAL);
-				if (mCancel != null) {
+				if (mCancelVisible && mCancel != null) {
 					TextView cancelButton = new TextView(mContext);
 					StateListDrawable cancelButtonDrawable = new StateListDrawable();
 					GradientDrawable cancelButtonPressedDrawable = new GradientDrawable();
@@ -574,7 +633,7 @@ public class Alert implements IViewFinder {
 				if (mCancelId != View.NO_ID) {
 					View cancelView = mActionBar.findViewById(mCancelId);
 					if (cancelView != null) {
-						if (mCancel != null) {
+						if (mCancelVisible && mCancel != null) {
 							if (cancelView instanceof TextView) {
 								TextView cancelButton = (TextView) cancelView;
 								cancelButton.setText(mCancel);

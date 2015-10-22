@@ -102,7 +102,7 @@
             android:value="5592083c67e58ed2d10022a3" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="lounien" />
+            android:value="wavinsun" />
         <!-- 自动更新 -->
         <service
             android:name="com.umeng.update.net.DownloadingService"
@@ -186,7 +186,7 @@
             android:value="59629df554e1032134f2cdac" />
         <meta-data
             android:name="JPUSH_CHANNEL"
-            android:value="lounien" />
+            android:value="wavinsun" />
         <!-- Required SDK核心功能 -->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"

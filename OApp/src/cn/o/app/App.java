@@ -19,11 +19,21 @@ import cn.sharesdk.framework.ShareSDK;
  */
 public class App extends Application implements IContextProvider {
 
-	public static final String UMENG_APPKEY = "UMENG_APPKEY";
+	/**
+	 * Application Edition
+	 */
+	public static enum Edition {
 
-	public static final String JPUSH_APPKEY = "JPUSH_APPKEY";
+		/** Debug edition */
+		DEBUG,
 
-	public static final String SHARE_SDK_INFO = "ShareSDK.xml";
+		/** Beta edition */
+		BETA,
+
+		/** Release edition */
+		RELEASE
+
+	}
 
 	protected static App sApp;
 
@@ -32,6 +42,8 @@ public class App extends Application implements IContextProvider {
 	protected boolean mJPushEnabled;
 
 	protected boolean mShareSDKEnabled;
+
+	protected Edition mEdition;
 
 	@Override
 	public void onCreate() {
@@ -45,9 +57,10 @@ public class App extends Application implements IContextProvider {
 
 		sApp = this;
 
-		mUmengEnabled = AppUtil.getMetaData(this, UMENG_APPKEY) != null;
+		mEdition = detectEdition();
+		mUmengEnabled = AppUtil.getMetaData(this, "UMENG_APPKEY") != null;
 		if (mUmengEnabled) {
-			if (BuildConfig.DEBUG) {
+			if (mEdition == Edition.DEBUG) {
 				MobclickAgent.setDebugMode(true);
 				MobclickAgent.setCatchUncaughtExceptions(false);
 				UpdateConfig.setDebug(true);
@@ -59,21 +72,43 @@ public class App extends Application implements IContextProvider {
 			UmengUpdateAgent.setUpdateUIStyle(UpdateStatus.STYLE_DIALOG);
 			UmengUpdateAgent.setUpdateAutoPopup(false);
 		}
-		mJPushEnabled = AppUtil.getMetaData(this, JPUSH_APPKEY) != null;
+		mJPushEnabled = AppUtil.getMetaData(this, "JPUSH_APPKEY") != null;
 		if (mJPushEnabled) {
-			if (BuildConfig.DEBUG) {
+			if (mEdition == Edition.DEBUG) {
 				JPushInterface.setDebugMode(true);
 			}
 			JPushInterface.init(this);
 		}
-		mShareSDKEnabled = AppUtil.isAssetExists(this, SHARE_SDK_INFO);
+		mShareSDKEnabled = AppUtil.isAssetExists(this, "ShareSDK.xml");
 		if (mShareSDKEnabled) {
 			ShareSDK.initSDK(this);
 		}
 	}
 
-	public static App getApp() {
-		return sApp;
+	public Edition getEdition() {
+		if (mEdition == null) {
+			mEdition = detectEdition();
+		}
+		return mEdition;
+	}
+
+	protected Edition detectEdition() {
+		if (BuildConfig.DEBUG) {
+			return Edition.DEBUG;
+		} else {
+			String channel = AppUtil.getMetaData(this, "UMENG_CHANNEL");
+			if (channel == null) {
+				return Edition.RELEASE;
+			} else {
+				if (channel.equalsIgnoreCase("debug")) {
+					return Edition.DEBUG;
+				} else if (channel.equalsIgnoreCase("beta")) {
+					return Edition.BETA;
+				} else {
+					return Edition.RELEASE;
+				}
+			}
+		}
 	}
 
 	@Override
@@ -87,6 +122,10 @@ public class App extends Application implements IContextProvider {
 
 	public boolean isJPushEneabled() {
 		return mJPushEnabled;
+	}
+
+	public static App getApp() {
+		return sApp;
 	}
 
 	class AppExceptionHandler implements UncaughtExceptionHandler {

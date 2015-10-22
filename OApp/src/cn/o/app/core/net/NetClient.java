@@ -179,7 +179,7 @@ public class NetClient<REQUEST, RESPONSE> {
 	/** Value of HTTP head Refer */
 	protected String mReferer;
 
-	/** Whether to request by split array parameters: ids=1,2,3&name=lounien */
+	/** Whether to request by split array parameters: ids=1,2,3&name=wavinsun */
 	protected boolean mSplitArrayParams = true;
 
 	/**
@@ -187,10 +187,10 @@ public class NetClient<REQUEST, RESPONSE> {
 	 */
 	protected boolean mRestUrl;
 
-	/** Whether to request by post parameter:id=1&name=lounien */
+	/** Whether to request by post parameter:id=1&name=wavinsun */
 	protected boolean mPostParams;
 
-	/** Whether to request by post JSON: {"id":1,name:"lounien"} */
+	/** Whether to request by post JSON: {"id":1,name:"wavinsun"} */
 	protected boolean mPostJson;
 
 	/**
