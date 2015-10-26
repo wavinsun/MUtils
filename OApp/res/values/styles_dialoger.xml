@@ -15,5 +15,10 @@
         <item name="android:windowEnterAnimation">@anim/dialoger_fade_in</item>
         <item name="android:windowExitAnimation">@anim/dialoger_fade_out</item>
     </style>
+    
+    <style name="DialogerScaleAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialoger_scale_in</item>
+        <item name="android:windowExitAnimation">@anim/dialoger_scale_out</item>
+    </style>
 
 </resources>

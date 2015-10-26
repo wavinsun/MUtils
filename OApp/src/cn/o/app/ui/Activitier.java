@@ -598,7 +598,7 @@ public class Activitier extends FragmentActivity implements IActivity {
 		@Override
 		protected void init() {
 			super.init();
-			this.setWindowAnimations(R.style.DialogerFadeAnim);
+			this.setWindowAnimations(R.style.DialogerNoAnim);
 			this.clearBehind();
 			this.requestFill();
 			this.setCancelable(false);
