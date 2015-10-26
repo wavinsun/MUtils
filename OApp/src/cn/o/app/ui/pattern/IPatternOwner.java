@@ -10,7 +10,7 @@ public interface IPatternOwner {
 
 	public void doCheckPattern();
 
-	public IPatternView newPattern();
+	public PatternDialog newPatternDialog();
 
 	public void showPattern();
 

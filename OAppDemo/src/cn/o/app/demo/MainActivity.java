@@ -23,10 +23,12 @@ import cn.o.app.demo.ui.IndexViewDemoView;
 import cn.o.app.demo.ui.IntentExecutorDemoView;
 import cn.o.app.demo.ui.MediaDemoView;
 import cn.o.app.demo.ui.NetTaskDemoView;
+import cn.o.app.demo.ui.ProgressIconDemoView;
 import cn.o.app.demo.ui.ProgressViewDemoView;
 import cn.o.app.demo.ui.PromptDemoView;
 import cn.o.app.demo.ui.QRCodeDemoView;
 import cn.o.app.demo.ui.ShareDemoView;
+import cn.o.app.demo.ui.SurfaceViewerDemoView;
 import cn.o.app.demo.ui.TipViewDemoView;
 import cn.o.app.demo.ui.UIAdapterDemoView;
 import cn.o.app.demo.ui.UPPayDemoView;
@@ -57,7 +59,7 @@ public class MainActivity extends BasicActivity {
 	@OnClick({ R.id.ui_adapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir, R.id.anim_task, R.id.media, R.id.net_task,
 			R.id.pay, R.id.qrcode, R.id.share, R.id.action_sheet, R.id.amap, R.id.date_chooser, R.id.prompt,
 			R.id.progress_view, R.id.tip_view, R.id.busy, R.id.path_button, R.id.hlinear_adapter, R.id.index_view,
-			R.id.uppay, R.id.web_frame, R.id.intent_executor, R.id.umeng })
+			R.id.uppay, R.id.web_frame, R.id.intent_executor, R.id.umeng, R.id.surface_viewer, R.id.progress_icon })
 	protected void onClick(View v) {
 		Intent intent = new Intent(this, ShellActivity.class);
 		ShellExtra extra = new ShellExtra();
@@ -139,6 +141,12 @@ public class MainActivity extends BasicActivity {
 			break;
 		case R.id.umeng:
 			extra.setViewName(UmengDemoView.class.getName());
+			break;
+		case R.id.surface_viewer:
+			extra.setViewName(SurfaceViewerDemoView.class.getName());
+			break;
+		case R.id.progress_icon:
+			extra.setViewName(ProgressIconDemoView.class.getName());
 			break;
 		default:
 			break;

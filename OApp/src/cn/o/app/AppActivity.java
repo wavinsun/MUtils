@@ -12,12 +12,9 @@ import com.umeng.update.UpdateResponse;
 import com.umeng.update.UpdateStatus;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,7 +22,6 @@ import cn.jpush.android.api.JPushInterface;
 import cn.o.app.core.event.listener.VersionUpdateListener;
 import cn.o.app.ui.Activitier;
 import cn.o.app.ui.StatusBox;
-import cn.o.app.ui.Viewer;
 
 @SuppressLint("InflateParams")
 public class AppActivity extends Activitier {
@@ -195,11 +191,6 @@ public class AppActivity extends Activitier {
 		UmengUpdateAgent.forceUpdate(this);
 	}
 
-	@Override
-	protected View getWaitingViewLayout() {
-		return new WaitingView(this);
-	}
-
 	public void feedback() {
 		if (App.getApp() == null || !App.getApp().isUmengEnabled()) {
 			return;
@@ -216,33 +207,6 @@ public class AppActivity extends Activitier {
 		@Override
 		public void onClick(View v) {
 			onClickTitleBoxBackBtn();
-		}
-
-	}
-
-	static class WaitingView extends Viewer {
-
-		protected ImageView mWaitingProgressView;
-
-		protected Animation mWaitingProgressAnim;
-
-		public WaitingView(Context context) {
-			super(context);
-		}
-
-		@Override
-		protected void init() {
-			super.init();
-			this.setContentView(R.layout.view_waiting);
-
-			mWaitingProgressView = findViewById(R.id.waiting_progress, ImageView.class);
-			mWaitingProgressAnim = AnimationUtils.loadAnimation(getContext(), R.anim.waiting_progress);
-		}
-
-		@Override
-		protected void onAttachedToWindow() {
-			super.onAttachedToWindow();
-			mWaitingProgressView.startAnimation(mWaitingProgressAnim);
 		}
 
 	}

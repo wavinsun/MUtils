@@ -60,7 +60,7 @@ public class AlertDemoView extends StateView {
 	protected void onClickDialoger() {
 		Dialoger dialoger = new Dialoger(getContext());
 		dialoger.setContentView(R.layout.dialog_edit);
-		dialoger.requestHFill();
+		dialoger.requestFill();
 		dialoger.show();
 	}
 

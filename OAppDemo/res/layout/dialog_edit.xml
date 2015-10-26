@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/VLinearHFill"
-    android:layout_margin="@dimen/margin"
+    style="@style/VLinearFill"
     android:background="@drawable/round_rect_white"
     android:padding="16dp" >
 
     <EditText
-        style="@style/Fill"
+        style="@style/HFill"
         android:background="@drawable/round_rect_grey"
         android:inputType="number"
         android:maxLength="11"
@@ -15,7 +14,7 @@
         android:textSize="14sp" />
     
     <EditText
-        style="@style/Fill"
+        style="@style/HFill"
         android:background="@drawable/round_rect_grey"
         android:inputType="number"
         android:maxLength="11"
@@ -26,7 +25,7 @@
     
     
     <EditText
-        style="@style/Fill"
+        style="@style/HFill"
         android:background="@drawable/round_rect_grey"
         android:inputType="number"
         android:maxLength="11"
@@ -37,7 +36,7 @@
     
     
     <EditText
-        style="@style/Fill"
+        style="@style/HFill"
         android:background="@drawable/round_rect_grey"
         android:inputType="number"
         android:maxLength="11"
@@ -47,7 +46,7 @@
         android:layout_marginTop="@dimen/margin" />
     
     <EditText
-        style="@style/Fill"
+        style="@style/HFill"
         android:background="@drawable/round_rect_grey"
         android:inputType="number"
         android:maxLength="11"

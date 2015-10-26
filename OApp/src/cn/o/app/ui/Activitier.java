@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -21,13 +20,10 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import cn.o.app.AppUtil;
+import cn.o.app.R;
 import cn.o.app.core.event.Dispatcher;
 import cn.o.app.core.net.NetClient.CookieExpiredException;
 import cn.o.app.core.task.IStopable;
@@ -47,22 +43,23 @@ import cn.o.app.ui.core.IStateView;
 import cn.o.app.ui.core.IToastOwner;
 import cn.o.app.ui.core.UICore;
 import cn.o.app.ui.pattern.IPatternDataProvider;
-import cn.o.app.ui.pattern.IPatternView;
+import cn.o.app.ui.pattern.PatternDialog;
 
 @SuppressLint({ "ShowToast", "InlinedApi" })
+@SuppressWarnings("deprecation")
 public class Activitier extends FragmentActivity implements IActivity {
 
 	protected AsyncDataQueue mAsyncDataQueue;
 
 	protected NetQueue mNetQueue;
 
-	protected WaitingViewHelper mWaitingViewHelper;
+	protected PatternLayerHelper mPatternLayerHelper;
+
+	protected WaitingLayerHelper mWaitingLayerHelper;
 
 	protected boolean mBusy;
 
 	protected List<IStateView> mBindViews;
-
-	protected PatternViewHelper mPatternViewHelper;
 
 	protected List<IStopable> mBindStopables;
 
@@ -121,10 +118,10 @@ public class Activitier extends FragmentActivity implements IActivity {
 
 	public void setBusy(boolean busy) {
 		mBusy = busy;
-		if (mWaitingViewHelper == null) {
-			mWaitingViewHelper = new WaitingViewHelper(this);
+		if (mWaitingLayerHelper == null) {
+			mWaitingLayerHelper = new WaitingLayerHelper(this);
 		}
-		mWaitingViewHelper.postUpdateWaitingViewState();
+		mWaitingLayerHelper.postUpdateWaitingViewState();
 	}
 
 	@Override
@@ -134,15 +131,15 @@ public class Activitier extends FragmentActivity implements IActivity {
 
 	@Override
 	public void disablePattern(long duration) {
-		if (mPatternViewHelper != null) {
-			mPatternViewHelper.disable(duration);
+		if (mPatternLayerHelper != null) {
+			mPatternLayerHelper.disable(duration);
 		}
 	}
 
 	@Override
 	public void enablePattern() {
-		if (mPatternViewHelper != null) {
-			mPatternViewHelper.enable();
+		if (mPatternLayerHelper != null) {
+			mPatternLayerHelper.enable();
 		}
 	}
 
@@ -151,14 +148,14 @@ public class Activitier extends FragmentActivity implements IActivity {
 	}
 
 	public boolean isHeartbeatEnabled() {
-		return mPatternViewHelper != null && mPatternViewHelper.isHeartbeatEnabled();
+		return mPatternLayerHelper != null && mPatternLayerHelper.isHeartbeatEnabled();
 	}
 
 	public void setHeartbeatEnabled(boolean enabled) {
-		if (mPatternViewHelper == null) {
-			mPatternViewHelper = new PatternViewHelper(this);
+		if (mPatternLayerHelper == null) {
+			mPatternLayerHelper = new PatternLayerHelper(this);
 		}
-		mPatternViewHelper.setHeartbeatEnabled(enabled);
+		mPatternLayerHelper.setHeartbeatEnabled(enabled);
 	}
 
 	@Override
@@ -171,30 +168,30 @@ public class Activitier extends FragmentActivity implements IActivity {
 		if (!this.checkPattern()) {
 			return;
 		}
-		if (mPatternViewHelper != null) {
-			mPatternViewHelper.doCheck();
+		if (mPatternLayerHelper != null) {
+			mPatternLayerHelper.doCheck();
 		}
 	}
 
 	@Override
-	public IPatternView newPattern() {
+	public PatternDialog newPatternDialog() {
 		return null;
 	}
 
 	@Override
 	public void showPattern() {
-		if (mPatternViewHelper == null) {
-			mPatternViewHelper = new PatternViewHelper(this);
+		if (mPatternLayerHelper == null) {
+			mPatternLayerHelper = new PatternLayerHelper(this);
 		}
-		mPatternViewHelper.show();
+		mPatternLayerHelper.show();
 	}
 
 	@Override
 	public void hidePattern() {
-		if (mPatternViewHelper == null) {
+		if (mPatternLayerHelper == null) {
 			return;
 		}
-		mPatternViewHelper.hide();
+		mPatternLayerHelper.hide();
 	}
 
 	@Override
@@ -262,8 +259,8 @@ public class Activitier extends FragmentActivity implements IActivity {
 	protected void onStart() {
 		super.onStart();
 		UICore.dispatchStart(this);
-		if (mPatternViewHelper != null) {
-			mPatternViewHelper.onStart();
+		if (mPatternLayerHelper != null) {
+			mPatternLayerHelper.onStart();
 		}
 	}
 
@@ -271,8 +268,8 @@ public class Activitier extends FragmentActivity implements IActivity {
 	protected void onResume() {
 		super.onResume();
 		UICore.dispatchResume(this);
-		if (mPatternViewHelper != null) {
-			mPatternViewHelper.onResume();
+		if (mPatternLayerHelper != null) {
+			mPatternLayerHelper.onResume();
 		}
 		mRunning = true;
 	}
@@ -287,8 +284,8 @@ public class Activitier extends FragmentActivity implements IActivity {
 	@Override
 	protected void onStop() {
 		UICore.dispatchStop(this);
-		if (mPatternViewHelper != null) {
-			mPatternViewHelper.onStop();
+		if (mPatternLayerHelper != null) {
+			mPatternLayerHelper.onStop();
 		}
 		super.onStop();
 	}
@@ -320,11 +317,11 @@ public class Activitier extends FragmentActivity implements IActivity {
 		if (mAsyncDataQueue != null) {
 			mAsyncDataQueue.clear();
 		}
-		if (mWaitingViewHelper != null) {
-			mWaitingViewHelper.onDestroy();
+		if (mWaitingLayerHelper != null) {
+			mWaitingLayerHelper.onDestroy();
 		}
-		if (mPatternViewHelper != null) {
-			mPatternViewHelper.onDestroy();
+		if (mPatternLayerHelper != null) {
+			mPatternLayerHelper.onDestroy();
 		}
 		UICore.dispatchDestroy(this);
 		ActivityMgr.detach(this);
@@ -357,10 +354,10 @@ public class Activitier extends FragmentActivity implements IActivity {
 
 				@Override
 				public void onRunStateChanged(IQueue queue) {
-					if (mWaitingViewHelper == null) {
-						mWaitingViewHelper = new WaitingViewHelper(Activitier.this);
+					if (mWaitingLayerHelper == null) {
+						mWaitingLayerHelper = new WaitingLayerHelper(Activitier.this);
 					}
-					mWaitingViewHelper.postUpdateWaitingViewState();
+					mWaitingLayerHelper.postUpdateWaitingViewState();
 				}
 			});
 		}
@@ -375,17 +372,17 @@ public class Activitier extends FragmentActivity implements IActivity {
 
 				@Override
 				public void onRunStateChanged(IQueue queue) {
-					if (mWaitingViewHelper == null) {
-						mWaitingViewHelper = new WaitingViewHelper(Activitier.this);
+					if (mWaitingLayerHelper == null) {
+						mWaitingLayerHelper = new WaitingLayerHelper(Activitier.this);
 					}
-					mWaitingViewHelper.postUpdateWaitingViewState();
+					mWaitingLayerHelper.postUpdateWaitingViewState();
 				}
 			});
 		}
 		return mAsyncDataQueue;
 	}
 
-	protected void updateWaitingViewState() {
+	protected void updateWaitingLayerState() {
 		if (mNetQueue == null) {
 			if (mAsyncDataQueue == null) {
 				if (!mBusy) {
@@ -418,20 +415,20 @@ public class Activitier extends FragmentActivity implements IActivity {
 	}
 
 	protected void showWaiting() {
-		if (mWaitingViewHelper == null) {
-			mWaitingViewHelper = new WaitingViewHelper(this);
+		if (mWaitingLayerHelper == null) {
+			mWaitingLayerHelper = new WaitingLayerHelper(this);
 		}
-		mWaitingViewHelper.show();
+		mWaitingLayerHelper.show();
 	}
 
 	protected void hideWaiting() {
-		if (mWaitingViewHelper == null) {
+		if (mWaitingLayerHelper == null) {
 			return;
 		}
-		mWaitingViewHelper.hide();
+		mWaitingLayerHelper.hide();
 	}
 
-	protected View getWaitingViewLayout() {
+	protected Dialoger newWaitingDialog() {
 		return null;
 	}
 
@@ -538,138 +535,163 @@ public class Activitier extends FragmentActivity implements IActivity {
 		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE, listener);
 	}
 
-	/**
-	 * Helper class for waiting view
-	 */
-	protected static class WaitingViewHelper {
+	protected static class ActivityMgr {
 
-		protected boolean mShowing;
+		protected static List<Activity> sActivitys;
 
-		protected FrameLayout mView;
-
-		protected WindowManager.LayoutParams mViewParams;
-
-		protected Animation mFadeInAnim;
-
-		protected Animation mFadeOutAnim;
-
-		protected Handler mWaitingViewHandler;
-
-		protected Runnable mWaitingViewRunnable;
-
-		protected Activitier mContext;
-
-		public WaitingViewHelper(Activitier context) {
-			mContext = context;
-			mView = new FrameLayout(mContext);
-			mViewParams = new WindowManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.TYPE_APPLICATION,
-					WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-					PixelFormat.TRANSPARENT);
-			if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
-				mViewParams.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+		public static void redirectTo(Class<? extends Activity> activityCls) {
+			if (sActivitys == null) {
+				return;
 			}
-			// Used to implement animation
-			// The view added by WindowManager can not use animation.
-			View virtualWaitingView;
-			View waitingViewLayout = mContext.getWaitingViewLayout();
-			if (waitingViewLayout != null) {
-				virtualWaitingView = waitingViewLayout;
-			} else {
-				RelativeLayout defaultWaitingView = new RelativeLayout(mContext);
-				View makLayer = new View(mContext);
-				makLayer.setBackgroundColor(0x30000000);
-				defaultWaitingView.addView(makLayer, new RelativeLayout.LayoutParams(
-						RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
-				ProgressBar progressBar = new ProgressBar(mContext, null, android.R.attr.progressBarStyleLarge);
-				RelativeLayout.LayoutParams progressBarParams = new RelativeLayout.LayoutParams(
-						RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-				progressBarParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-				defaultWaitingView.addView(progressBar, progressBarParams);
-				virtualWaitingView = defaultWaitingView;
-			}
-			mView.addView(virtualWaitingView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-					FrameLayout.LayoutParams.MATCH_PARENT));
-			mFadeInAnim = new AlphaAnimation(0, 1);
-			mFadeInAnim.setDuration(200);
-			mFadeInAnim.setFillAfter(true);
-			mFadeOutAnim = new AlphaAnimation(1, 0);
-			mFadeOutAnim.setDuration(200);
-			mFadeOutAnim.setFillAfter(true);
-			mFadeOutAnim.setAnimationListener(new AnimationListener() {
-
-				@Override
-				public void onAnimationStart(Animation animation) {
-
-				}
-
-				@Override
-				public void onAnimationRepeat(Animation animation) {
-
-				}
-
-				@Override
-				public void onAnimationEnd(Animation animation) {
-					hideNow();
-				}
-			});
-		}
-
-		public void postUpdateWaitingViewState() {
-			if (mWaitingViewHandler == null) {
-				mWaitingViewHandler = new Handler();
-				mWaitingViewRunnable = new Runnable() {
-
-					@Override
-					public void run() {
-						mWaitingViewHandler.removeCallbacksAndMessages(null);
-						mContext.updateWaitingViewState();
+			boolean finishBehind = false;
+			for (int i = 0; i < sActivitys.size(); i++) {
+				Activity activity = sActivitys.get(i);
+				if (finishBehind) {
+					activity.finish();
+					i--;
+				} else {
+					if (activityCls.isInstance(activity)) {
+						finishBehind = true;
 					}
-				};
+				}
 			}
-			mWaitingViewHandler.postDelayed(mWaitingViewRunnable, 400);
 		}
 
-		public void show() {
-			if (mShowing) {
+		public static void finishAll() {
+			if (sActivitys == null) {
 				return;
 			}
-			View child = mView.getChildAt(0);
-			mContext.getWindowManager().addView(mView, mViewParams);
-			child.clearAnimation();
-			child.startAnimation(mFadeInAnim);
-			mShowing = true;
+			for (Activity activity : sActivitys) {
+				activity.finish();
+			}
+			sActivitys.clear();
 		}
 
-		public void hide() {
-			if (!mShowing) {
+		public static void attach(Activity activity) {
+			if (sActivitys == null) {
+				sActivitys = new CopyOnWriteArrayList<Activity>();
+			} else {
+				if (sActivitys.contains(activity)) {
+					return;
+				}
+			}
+			sActivitys.add(activity);
+		}
+
+		public static void detach(Activity activity) {
+			if (sActivitys == null) {
 				return;
 			}
-			View child = mView.getChildAt(0);
-			child.clearAnimation();
-			child.startAnimation(mFadeOutAnim);
-		}
-
-		public void hideNow() {
-			if (!mShowing) {
-				return;
-			}
-			mContext.getWindowManager().removeView(mView);
-			mShowing = false;
-		}
-
-		public void onDestroy() {
-			if (mWaitingViewHandler != null) {
-				mWaitingViewHandler.removeCallbacksAndMessages(null);
-			}
-			hideNow();
+			sActivitys.remove(activity);
 		}
 	}
 
 	/**
-	 * Helper class for pattern view of gestures password
+	 * Waiting Dialog
 	 */
-	protected static class PatternViewHelper {
+	public static class WaitingDialog extends Dialoger {
+
+		public WaitingDialog(Context context) {
+			super(context);
+		}
+
+		@Override
+		protected void init() {
+			super.init();
+			this.setWindowAnimations(R.style.DialogerFadeAnim);
+			this.clearBehind();
+			this.requestFill();
+			this.setCancelable(false);
+			this.setCanceledOnTouchOutside(false);
+
+			Context context = getContext();
+			RelativeLayout root = new RelativeLayout(context);
+			root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+					ViewGroup.LayoutParams.MATCH_PARENT));
+			RelativeLayout.LayoutParams iconParams = new RelativeLayout.LayoutParams(
+					RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+			iconParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+			ProgressIcon icon = new ProgressIcon(context);
+			icon.setDrawable(context.getResources().getDrawable(R.drawable.ic_waiting));
+			icon.setLayoutParams(iconParams);
+			root.addView(icon);
+			this.setContentView(root);
+		}
+
+		@Override
+		public void onBackPressed() {
+			Activity activity = AppUtil.toActivity(getContext());
+			if (activity != null) {
+				activity.onBackPressed();
+			} else {
+				super.onBackPressed();
+			}
+		}
+
+	}
+
+	/**
+	 * Helper class for waiting layer
+	 */
+	protected static class WaitingLayerHelper {
+
+		protected Handler mWaitingLayerHandler;
+
+		protected Runnable mWaitingLayerRunnable;
+
+		protected Activitier mContext;
+
+		protected Dialoger mWaitingDialog;
+
+		public WaitingLayerHelper(Activitier context) {
+			mContext = context;
+			mWaitingDialog = mContext.newWaitingDialog();
+			if (mWaitingDialog == null) {
+				mWaitingDialog = new WaitingDialog(mContext);
+			}
+		}
+
+		public void postUpdateWaitingViewState() {
+			if (mWaitingLayerHandler == null) {
+				mWaitingLayerHandler = new Handler();
+				mWaitingLayerRunnable = new Runnable() {
+
+					@Override
+					public void run() {
+						mWaitingLayerHandler.removeCallbacksAndMessages(null);
+						mContext.updateWaitingLayerState();
+					}
+				};
+			}
+			mWaitingLayerHandler.postDelayed(mWaitingLayerRunnable, 400);
+		}
+
+		public void show() {
+			if (mWaitingDialog.isShowing()) {
+				return;
+			}
+			mWaitingDialog.show();
+		}
+
+		public void hide() {
+			if (!mWaitingDialog.isShowing()) {
+				return;
+			}
+			mWaitingDialog.dismiss();
+		}
+
+		public void onDestroy() {
+			if (mWaitingLayerHandler != null) {
+				mWaitingLayerHandler.removeCallbacksAndMessages(null);
+			}
+			hide();
+		}
+	}
+
+	/**
+	 * Helper class for pattern layer of gestures password
+	 */
+	protected static class PatternLayerHelper {
 
 		/** No checking gestures password for three minutes */
 		public static final long PATTERN_DISABLE_SHORT = 180000L;
@@ -690,89 +712,41 @@ public class Activitier extends FragmentActivity implements IActivity {
 
 		protected Runnable mHeartbeatRunnable;
 
-		protected boolean mShowing;
-
-		protected FrameLayout mView;
-
-		protected WindowManager.LayoutParams mViewParams;
-
-		protected Animation mFadeInAnim;
-
-		protected Animation mFadeOutAnim;
-
 		protected Activitier mContext;
 
-		public PatternViewHelper(Activitier context) {
+		protected PatternDialog mPatternDialog;
+
+		public PatternLayerHelper(Activitier context) {
 			mContext = context;
-			mView = new FrameLayout(mContext);
-			mViewParams = new WindowManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.TYPE_APPLICATION,
-					WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, PixelFormat.TRANSPARENT);
-			if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
-				mViewParams.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-			}
-			View virtualPatternView = (View) mContext.newPattern();
-			mView.addView(virtualPatternView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-					FrameLayout.LayoutParams.MATCH_PARENT));
-			mFadeInAnim = new AlphaAnimation(0, 1);
-			mFadeInAnim.setDuration(200);
-			mFadeInAnim.setFillAfter(true);
-			mFadeOutAnim = new AlphaAnimation(1, 0);
-			mFadeOutAnim.setDuration(200);
-			mFadeOutAnim.setFillAfter(true);
-			mFadeOutAnim.setAnimationListener(new AnimationListener() {
-
-				@Override
-				public void onAnimationStart(Animation animation) {
-
-				}
-
-				@Override
-				public void onAnimationRepeat(Animation animation) {
-
-				}
-
-				@Override
-				public void onAnimationEnd(Animation animation) {
-					hideNow();
-				}
-			});
+			mPatternDialog = mContext.newPatternDialog();
 		}
 
 		public void show() {
-			if (mShowing) {
+			if (mPatternDialog == null) {
 				return;
 			}
-			View child = mView.getChildAt(0);
-			((IPatternView) child).refresh();
-			mContext.getWindowManager().addView(mView, mViewParams);
-			child.clearAnimation();
-			child.startAnimation(mFadeInAnim);
-			mShowing = true;
+			if (mPatternDialog.isShowing()) {
+				return;
+			}
+			mPatternDialog.refresh();
+			mPatternDialog.show();
 		}
 
 		public void hide() {
-			if (!mShowing) {
+			if (mPatternDialog == null) {
 				return;
 			}
-			View child = mView.getChildAt(0);
-			child.clearAnimation();
-			child.startAnimation(mFadeOutAnim);
-		}
-
-		public void hideNow() {
-			if (!mShowing) {
+			if (!mPatternDialog.isShowing()) {
 				return;
 			}
-			mContext.getWindowManager().removeView(mView);
-			mShowing = false;
+			mPatternDialog.dismiss();
 		}
 
 		public void onDestroy() {
 			if (mHeartbeatHandler != null) {
 				mHeartbeatHandler.removeCallbacksAndMessages(null);
 			}
-			hideNow();
+			hide();
 		}
 
 		public void onStart() {
@@ -857,57 +831,6 @@ public class Activitier extends FragmentActivity implements IActivity {
 					}
 				}
 			}
-		}
-	}
-
-	protected static class ActivityMgr {
-
-		protected static List<Activity> sActivitys;
-
-		public static void redirectTo(Class<? extends Activity> activityCls) {
-			if (sActivitys == null) {
-				return;
-			}
-			boolean finishBehind = false;
-			for (int i = 0; i < sActivitys.size(); i++) {
-				Activity activity = sActivitys.get(i);
-				if (finishBehind) {
-					activity.finish();
-					i--;
-				} else {
-					if (activityCls.isInstance(activity)) {
-						finishBehind = true;
-					}
-				}
-			}
-		}
-
-		public static void finishAll() {
-			if (sActivitys == null) {
-				return;
-			}
-			for (Activity activity : sActivitys) {
-				activity.finish();
-			}
-			sActivitys.clear();
-		}
-
-		public static void attach(Activity activity) {
-			if (sActivitys == null) {
-				sActivitys = new CopyOnWriteArrayList<Activity>();
-			} else {
-				if (sActivitys.contains(activity)) {
-					return;
-				}
-			}
-			sActivitys.add(activity);
-		}
-
-		public static void detach(Activity activity) {
-			if (sActivitys == null) {
-				return;
-			}
-			sActivitys.remove(activity);
 		}
 	}
 
