@@ -564,6 +564,21 @@ public class AppUtil {
 		return bitmap;
 	}
 
+	public static Bitmap toBitmap(Drawable drawable) {
+		int w = drawable.getMinimumWidth();
+		int h = drawable.getMinimumHeight();
+		if (w <= 0 || h <= 0) {
+			return null;
+		}
+		Rect bounds = drawable.getBounds();
+		Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(bitmap);
+		drawable.setBounds(0, 0, w, h);
+		drawable.draw(canvas);
+		drawable.setBounds(bounds);
+		return bitmap;
+	}
+
 	public static float getYOfDrawText(Paint p, float centerY) {
 		FontMetrics metrics = p.getFontMetrics();
 		return centerY - (metrics.top + (metrics.bottom - metrics.top) / 2);

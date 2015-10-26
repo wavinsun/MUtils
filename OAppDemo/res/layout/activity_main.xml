@@ -149,6 +149,14 @@
                 style="@style/MainBtn"
                 android:text="Umeng"/>
             
+            <TextView android:id="@+id/surface_viewer"
+                style="@style/MainBtn"
+                android:text="SurfaceViewer"/>
+            
+            <TextView android:id="@+id/progress_icon"
+                style="@style/MainBtn"
+                android:text="ProgressIcon"/>
+            
         </cn.o.app.ui.FlowLayout>
     </ScrollView>
 

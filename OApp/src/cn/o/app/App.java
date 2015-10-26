@@ -85,6 +85,11 @@ public class App extends Application implements IContextProvider {
 		}
 	}
 
+	/**
+	 * Get edition of application<br>
+	 * 
+	 * @return
+	 */
 	public Edition getEdition() {
 		if (mEdition == null) {
 			mEdition = detectEdition();
@@ -92,6 +97,11 @@ public class App extends Application implements IContextProvider {
 		return mEdition;
 	}
 
+	/**
+	 * Detect edition of application<br>
+	 * 
+	 * @return
+	 */
 	protected Edition detectEdition() {
 		if (BuildConfig.DEBUG) {
 			return Edition.DEBUG;

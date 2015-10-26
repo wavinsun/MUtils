@@ -10,5 +10,10 @@
         <item name="android:windowEnterAnimation">@anim/dialoger_bottom_to_top</item>
         <item name="android:windowExitAnimation">@anim/dialoger_top_to_bottom</item>
     </style>
+    
+    <style name="DialogerFadeAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialoger_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/dialoger_fade_out</item>
+    </style>
 
 </resources>
