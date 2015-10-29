@@ -25,25 +25,25 @@ public class AMapView extends MapView {
 
 	public AMapView(Context context) {
 		super(context);
-		init(context);
+		init(context, null);
 	}
 
 	public AMapView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init(context);
+		init(context, attrs);
 	}
 
 	public AMapView(Context context, AMapOptions options) {
 		super(context, options);
-		init(context);
+		init(context, null);
 	}
 
 	public AMapView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		init(context);
+		init(context, attrs);
 	}
 
-	protected void init(Context context) {
+	protected void init(Context context, AttributeSet attrs) {
 		this.onCreate(null);
 		AMap map = this.getMap();
 		UiSettings settings = map.getUiSettings();

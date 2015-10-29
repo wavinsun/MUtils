@@ -5,9 +5,9 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import cn.o.app.AppUtil;
 
 public class ShareQQ extends ShareBase {
 
@@ -29,7 +29,7 @@ public class ShareQQ extends ShareBase {
 		bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, mText);
 		bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, mUrl);
 		bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, mImageUrl);
-		Tencent.createInstance(sAppId, mContext).shareToQQ((Activity) mContext, bundle, new IUiListener() {
+		Tencent.createInstance(sAppId, mContext).shareToQQ(AppUtil.toActivity(mContext), bundle, new IUiListener() {
 
 			@Override
 			public void onError(UiError arg0) {

@@ -17,20 +17,20 @@ public class Viewer extends RelativeLayout implements IView, IViewFinder, IConte
 
 	public Viewer(Context context) {
 		super(context);
-		init();
+		init(context, null);
 	}
 
 	public Viewer(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init();
+		init(context, attrs);
 	}
 
 	public Viewer(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		init();
+		init(context, attrs);
 	}
 
-	protected void init() {
+	protected void init(Context context, AttributeSet attrs) {
 		UICore.injectContentView(this);
 	}
 

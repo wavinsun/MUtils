@@ -19,8 +19,8 @@ public class PatternDialog extends Dialoger {
 	}
 
 	@Override
-	protected void init() {
-		super.init();
+	protected void init(Context context) {
+		super.init(context);
 		this.setWindowAnimations(R.style.DialogerFadeAnim);
 		this.clearBehind();
 		this.requestFill();
