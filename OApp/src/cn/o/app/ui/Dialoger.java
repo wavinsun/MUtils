@@ -38,20 +38,20 @@ public class Dialoger extends Dialog implements IDialog {
 
 	public Dialoger(Context context) {
 		super(context);
-		init();
+		init(context);
 	}
 
 	public Dialoger(Context context, int theme) {
 		super(context, theme);
-		init();
+		init(context);
 	}
 
 	public Dialoger(Context context, boolean cancelable, OnCancelListener cancelListener) {
 		super(context, cancelable, cancelListener);
-		init();
+		init(context);
 	}
 
-	protected void init() {
+	protected void init(Context context) {
 		this.setCancelable(true);
 		this.setCanceledOnTouchOutside(true);
 		Window w = getWindow();

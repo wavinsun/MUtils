@@ -1,7 +1,6 @@
 package cn.o.app.ui;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -10,6 +9,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import cn.o.app.AppUtil;
 
 public class SwitchButton extends View {
 
@@ -43,22 +43,21 @@ public class SwitchButton extends View {
 
 	public SwitchButton(Context context) {
 		super(context);
-		init(context);
+		init(context, null);
 	}
 
 	public SwitchButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init(context);
+		init(context, attrs);
 	}
 
 	public SwitchButton(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		init(context);
+		init(context, attrs);
 	}
 
-	protected void init(Context context) {
-		Resources resources = context.getResources();
-		DisplayMetrics metrics = resources.getDisplayMetrics();
+	protected void init(Context context, AttributeSet attrs) {
+		DisplayMetrics metrics = AppUtil.getDisplayMetrics(context);
 		mWrapContentWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 46, metrics);
 		mWrapContentHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 26, metrics);
 		mPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, metrics);

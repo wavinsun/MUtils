@@ -596,15 +596,14 @@ public class Activitier extends FragmentActivity implements IActivity {
 		}
 
 		@Override
-		protected void init() {
-			super.init();
+		protected void init(Context context) {
+			super.init(context);
 			this.setWindowAnimations(R.style.DialogerNoAnim);
 			this.clearBehind();
 			this.requestFill();
 			this.setCancelable(false);
 			this.setCanceledOnTouchOutside(false);
 
-			Context context = getContext();
 			RelativeLayout root = new RelativeLayout(context);
 			root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.MATCH_PARENT));

@@ -28,20 +28,20 @@ public class InfoToast extends TextView {
 
 	public InfoToast(Context context) {
 		super(context);
-		this.onCreate();
+		this.init(context, null);
 	}
 
 	public InfoToast(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		this.onCreate();
+		this.init(context, attrs);
 	}
 
 	public InfoToast(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		this.onCreate();
+		this.init(context, attrs);
 	}
 
-	public void onCreate() {
+	public void init(Context context, AttributeSet attrs) {
 		this.setVisibility(View.INVISIBLE);
 		mFadeInAnim = new AlphaAnimation(0, 1);
 		mFadeInAnim.setDuration(300);

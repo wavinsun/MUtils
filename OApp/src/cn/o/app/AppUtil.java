@@ -43,6 +43,7 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.TextWatcher;
 import android.text.style.TextAppearanceSpan;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -340,6 +341,10 @@ public class AppUtil {
 
 	public static float px2sp(Context context, float size) {
 		return size / context.getResources().getDisplayMetrics().scaledDensity;
+	}
+
+	public static DisplayMetrics getDisplayMetrics(Context context) {
+		return context.getResources().getDisplayMetrics();
 	}
 	// ========================= End Size =========================
 

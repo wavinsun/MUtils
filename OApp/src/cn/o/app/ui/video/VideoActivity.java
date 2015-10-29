@@ -3,6 +3,7 @@ package cn.o.app.ui.video;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
@@ -69,8 +70,7 @@ public class VideoActivity extends Activitier {
 			super(context);
 		}
 
-		protected void init() {
-			Context context = getContext();
+		protected void init(Context context, AttributeSet attrs) {
 			mMediaController = new MediaController(context);
 			RelativeLayout.LayoutParams params = new LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 					RelativeLayout.LayoutParams.MATCH_PARENT);
@@ -80,7 +80,7 @@ public class VideoActivity extends Activitier {
 			mVideoView.setLayoutParams(params);
 			this.setContentView(mVideoView);
 			this.setBackgroundColor(0xFF000000);
-			super.init();
+			super.init(context, attrs);
 		}
 
 		public VideoView getVideoView() {
