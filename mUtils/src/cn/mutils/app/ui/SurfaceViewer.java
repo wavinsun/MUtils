@@ -98,10 +98,14 @@ public class SurfaceViewer extends SurfaceView implements SurfaceHolder.Callback
 				}
 			} finally {
 				if (c != null) {
-					if (saveCount != 0) {
-						c.restoreToCount(saveCount);
+					try {
+						if (saveCount != 0) {
+							c.restoreToCount(saveCount);
+						}
+						mSurfaceHolder.unlockCanvasAndPost(c);
+					} catch (Exception e) {
+						// java.lang.IllegalStateException
 					}
-					mSurfaceHolder.unlockCanvasAndPost(c);
 				}
 			}
 		}

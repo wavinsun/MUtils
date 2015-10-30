@@ -189,6 +189,15 @@ public class Dialoger extends Dialog implements IDialog {
 		}
 	}
 
+	@Override
+	public void dismiss() {
+		try {
+			super.dismiss();
+		} catch (Exception e) {
+			// java.lang.IllegalArgumentException
+		}
+	}
+
 	/**
 	 * Simulate PopupWindow
 	 * 
