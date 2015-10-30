@@ -59,7 +59,7 @@ public class CropPhotoTask extends MediaTask {
 
 	protected Uri generateExtraOutput(Uri uri, int width, int height) {
 		try {
-			String mediaStorageDir = AppUtil.getDiskCacheDir(mExecutor.getContext(), "mUtils");
+			String mediaStorageDir = AppUtil.getDiskCacheDir(mExecutor.getContext(), AppUtil.TAG);
 			if (mediaStorageDir == null) {
 				return null;
 			}

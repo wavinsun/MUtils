@@ -66,7 +66,10 @@ import cn.mutils.app.core.time.TimeUtil;
 public class AppUtil {
 
 	/** Framework internal data identity key */
-	public static final String KEY = "o";
+	public static final String KEY = "m";
+
+	/** Framework internal data tag */
+	public static final String TAG = "mUtils";
 
 	/** Transform for degress to radian */
 	public static final double TO_RADIAN = NumberUtil.TO_RADIAN;
@@ -631,7 +634,7 @@ public class AppUtil {
 	}
 
 	public static String getDiskCacheRandomFile(Context context, String prefix, String suffix) {
-		String cacheDir = getDiskCacheDir(context, "mUtils");
+		String cacheDir = getDiskCacheDir(context, AppUtil.TAG);
 		if (cacheDir == null) {
 			return null;
 		}
