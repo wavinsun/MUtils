@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DemoFeatureList" >
+
+    <TextView style="@style/GoBtn" />
+
+    <cn.mutils.app.qrcode.QRCodeView
+        android:id="@+id/code"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:text="http://www.baidu.com/" />
+
+</LinearLayout>

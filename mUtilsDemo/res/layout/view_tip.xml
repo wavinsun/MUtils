@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/cn.mutils.app.demo"
+    style="@style/DemoFeatureList" >
+
+    <LinearLayout
+        style="@style/HLinearHFill">
+
+        <TextView
+            style="@style/DemoFeatureItem"
+            android:id="@+id/top_1"
+            android:text="top_1" />
+
+        <TextView
+            android:id="@+id/top_2"
+            style="@style/DemoFeatureItem"
+            android:text="top_2" />
+
+        <TextView
+            android:id="@+id/top_3"
+            style="@style/DemoFeatureItem"
+            android:text="top_3" />
+
+        <TextView
+            android:id="@+id/top_4"
+            style="@style/DemoFeatureItem"
+            android:text="top_4" />
+    </LinearLayout>
+
+    <cn.mutils.app.ui.TipView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/tip"
+        android:radius="8dp"
+        app:strokeColor="#CCC"
+        app:strokeWidth="1dp"
+        app:triangleAlign="top_center"
+        app:triangleHeight="8dp" 
+        android:layout_margin="@dimen/margin"/>
+
+    <LinearLayout style="@style/HLinearHFill" >
+
+        <TextView
+            android:id="@+id/down_1"
+            style="@style/DemoFeatureItem"
+            android:text="down_1" />
+
+        <TextView
+            android:id="@+id/down_2"
+            style="@style/DemoFeatureItem"
+            android:text="down_2" />
+
+        <TextView
+            android:id="@+id/down_3"
+            style="@style/DemoFeatureItem"
+            android:text="down_3" />
+    </LinearLayout>
+    
+    <cn.mutils.app.ui.TipView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:radius="0dp"
+        app:strokeColor="#CCC"
+        app:strokeWidth="0dp"
+        app:triangleAlign="top_left"
+        app:triangleHeight="8dp" 
+        app:trianglePadding="20dp"
+        android:solidColor="#AAA"/>
+
+</LinearLayout>

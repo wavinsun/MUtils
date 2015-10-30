@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/cn.mutils.app.demo"
+    style="@style/Fill"
+    android:padding="@dimen/padding" >
+
+    <cn.mutils.app.ui.ProgressView
+        android:id="@+id/progress_view"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:progress="100"
+        android:shape="line"
+        android:textColor="#FFF"
+        android:textSize="12sp"
+        app:strokeColor="@color/title_box"
+        app:strokeWidth="20dp"
+        app:textVisible="visible" />
+
+    <TextView
+        android:id="@+id/shape_ring"
+        style="@style/MainBtn"
+        android:layout_alignParentBottom="true"
+        android:text="ring" />
+
+    <TextView
+        android:id="@+id/shape_line"
+        style="@style/MainBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="line" />
+
+</RelativeLayout>

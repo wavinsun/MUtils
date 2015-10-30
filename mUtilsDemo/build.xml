@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="mUtilsDemo" default="deploy">
+	
+    <!-- 引入AndroidManifest.xml -->
+    <xmlproperty file="AndroidManifest.xml" prefix="AndroidManifest" collapseAttributes="true"/>
+    <property name="app_version" value="${AndroidManifest.manifest.android:versionName}"/>
+    
+	<!-- 环境变量配置 -->
+	<property environment="env"/>
+	<property name="sdk.dir" value="${env.ANDROID_HOME}"/>
+	<property name="ant.dir" value="${env.ANT_HOME}"/>
+	
+    <property file="ant.properties" />
+    <loadproperties srcFile="project.properties" />
+   
+    <!-- Ant 批量打包调用循环jar   -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+  		<classpath>
+    		<pathelement location="ant-contrib-0.3.jar"/>
+  		</classpath>
+	</taskdef>
+	
+	<!-- ANT 替换XML -->
+	<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
+		<classpath>
+    		<pathelement location="ant-xmltask-1.16.jar"/>
+  		</classpath>
+	</taskdef>
+
+    <import file="${sdk.dir}/tools/ant/build.xml"/>
+    
+    <!-- 多渠道打包 -->
+    <target name="deploy">
+	    <foreach
+	        delimiter=","
+	        list="${market_channels}"
+	        param="channel"
+	        target="deploy_channel">
+	    </foreach>
+		<antcall target="clean"/>
+	</target>
+    
+    <target name="deploy_channel">
+		<!-- 备份 -->
+		<copy  file="AndroidManifest.xml" tofile="AndroidManifest.xml.bak"/>
+		<xmltask source="AndroidManifest.xml" dest="AndroidManifest.xml" encoding="UTF-8">
+			<!-- 友盟多渠道打包 -->
+			<attr path="//manifest/application/meta-data[@android:name='UMENG_CHANNEL']"
+				attr="android:value" value="${channel}"/>
+		</xmltask>
+		<antcall target="clean"/>
+    	<antcall target="release"/>
+		<copy tofile="${deploy.path}/v${app_version}/${ant.project.name}_v${app_version}_${channel}.apk"  file="bin/${ant.project.name}-release.apk"/>
+		<!-- 还原 -->
+		<copy file="AndroidManifest.xml.bak" tofile="AndroidManifest.xml" overwrite="true"/>
+		<delete file="AndroidManifest.xml.bak"/>
+	</target>
+    
+</project>
