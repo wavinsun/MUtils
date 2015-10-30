@@ -54,7 +54,7 @@ public class TakePhotoTask extends MediaTask {
 
 	protected Uri generateExtraOutput() {
 		try {
-			String mediaStorageDir = AppUtil.getDiskCacheDir(mExecutor.getContext(), "mUtils");
+			String mediaStorageDir = AppUtil.getDiskCacheDir(mExecutor.getContext(), AppUtil.TAG);
 			if (mediaStorageDir == null) {
 				return null;
 			}

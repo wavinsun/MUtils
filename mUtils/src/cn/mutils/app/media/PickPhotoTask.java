@@ -61,7 +61,7 @@ public class PickPhotoTask extends MediaTask {
 		if (path == null || path.isEmpty()) {
 			return;
 		}
-		String mediaStorageDir = AppUtil.getDiskCacheDir(mExecutor.getContext(), "mUtils");
+		String mediaStorageDir = AppUtil.getDiskCacheDir(mExecutor.getContext(), AppUtil.TAG);
 		if (mediaStorageDir == null) {
 			return;
 		}
