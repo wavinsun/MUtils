@@ -140,8 +140,7 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-  cn.mutils.app.demo.wxapi.WXEntryActivity-->
-
+  		<!-- 腾讯开放平台 END -->
 
         <!-- 微信API回调 BEGIN -->
         <activity
@@ -183,7 +182,7 @@
         <!-- JPush BEGIN -->
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="59629df554e1032134f2cdac" />
+            android:value="aaa6cb01904556deb22f4859" />
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="wavinsun" />
