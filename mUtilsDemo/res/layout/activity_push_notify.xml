@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/VLinearFill" >
+    
+    <cn.mutils.app.ui.StatusBox style="@style/StatusBox"/>
+
+    <RelativeLayout style="@style/TitleBox" >
+
+        <ImageView style="@style/TitleBoxBackButton" />
+
+        <TextView
+            style="@style/TitleBoxName"
+            android:text="Push Notify" />
+    </RelativeLayout>
+    
+    <ScrollView style="@style/Fill">
+        <TextView style="@style/LogText"/>
+    </ScrollView>
+
+</LinearLayout>

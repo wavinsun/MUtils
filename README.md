@@ -1,4 +1,4 @@
-# OApp
+# mUtils
 Rapid Development Framework For Android
-* The package of "cn.o.app" is the major package of OApp.
-* OAppDemo may bring the reference to you.
+* The package of "cn.mutils.app" is the major package of mUtils.
+* mUtilsDemo may bring the reference to you.

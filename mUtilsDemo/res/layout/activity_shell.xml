@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/shell_root"
+    style="@style/VLinearFill"
+    android:background="@color/background" >
+
+    <cn.mutils.app.ui.StatusBox style="@style/StatusBox" />
+
+    <RelativeLayout style="@style/TitleBox" >
+
+        <ImageView style="@style/TitleBoxBackButton" />
+
+        <TextView style="@style/TitleBoxName" />
+    </RelativeLayout>
+
+</LinearLayout>
