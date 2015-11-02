@@ -3,5 +3,13 @@
     style="@style/DemoFeatureList" >
     
     <TextView style="@style/GoBtn"/>
+    
+    <TextView android:id="@+id/target_version_download"
+        style="@style/DemoFeatureItem"
+        android:text="Download Target version"/>
+    
+    <TextView android:id="@+id/target_version_install"
+        style="@style/DemoFeatureItem"
+        android:text="Install target version"/>
 
 </LinearLayout>
