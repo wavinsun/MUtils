@@ -71,7 +71,6 @@ public class PickPhotoTask extends MediaTask {
 		}
 		StringBuilder sb = new StringBuilder();
 		sb.append(mediaStorageDir);
-		sb.append(File.separator);
 		sb.append("IMG_");
 		sb.append(md5);
 		sb.append(".jpg");

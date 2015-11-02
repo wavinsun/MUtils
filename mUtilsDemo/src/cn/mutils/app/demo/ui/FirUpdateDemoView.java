@@ -37,7 +37,7 @@ public class FirUpdateDemoView extends StateView {
 		FIRUpdateAgent agent = new FIRUpdateAgent();
 		agent.setContext(getContext());
 		agent.setBundleId("cn.mutils.app.demo");
-		agent.setApiToken("75d00450e48d4beee3d4a37fe663bc6e");
+		agent.setApiToken("4dce255bc03f5809f5e6f0463c2761c8");
 		agent.setDownloadCallBack(new RequestCallBack<File>() {
 
 			@Override
@@ -89,6 +89,28 @@ public class FirUpdateDemoView extends StateView {
 			}
 		});
 		agent.start();
+	}
+
+	@OnClick(R.id.target_version_download)
+	protected void onClickTargetVersionDownload() {
+		FIRUpdateAgent agent = new FIRUpdateAgent();
+		agent.setContext(getContext());
+		agent.setBundleId("cn.mutils.app.demo");
+		agent.setApiToken("4dce255bc03f5809f5e6f0463c2761c8");
+		agent.setTargetVersion("1.1");
+		agent.start();
+	}
+
+	@OnClick(R.id.target_version_install)
+	protected void onClickTargetVersionInstall() {
+		FIRUpdateAgent agent = new FIRUpdateAgent();
+		agent.setContext(getContext());
+		agent.setBundleId("cn.mutils.app.demo");
+		agent.setApiToken("4dce255bc03f5809f5e6f0463c2761c8");
+		agent.setTargetVersion("1.1");
+		if (!AppUtil.installApp(getContext(), agent.getTargetVersionFile())) {
+			toast("Install failed");
+		}
 	}
 
 }

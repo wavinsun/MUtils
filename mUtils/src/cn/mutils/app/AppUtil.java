@@ -34,6 +34,8 @@ import android.graphics.Paint.FontMetrics;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -83,6 +85,16 @@ public class AppUtil {
 					PackageManager.GET_META_DATA);
 			return info.versionName;
 		} catch (NameNotFoundException e) {
+			return "";
+		}
+	}
+
+	public static String getAppVersionName(Context context, String archiveFilePath) {
+		try {
+			PackageInfo info = context.getPackageManager().getPackageArchiveInfo(archiveFilePath,
+					PackageManager.GET_META_DATA);
+			return info.versionName;
+		} catch (Exception e) {
 			return "";
 		}
 	}
@@ -630,7 +642,7 @@ public class AppUtil {
 				return null;
 			}
 		}
-		return dir.getPath();
+		return dir.getPath() + File.separator;
 	}
 
 	public static String getDiskCacheRandomFile(Context context, String prefix, String suffix) {
@@ -640,7 +652,6 @@ public class AppUtil {
 		}
 		StringBuilder sb = new StringBuilder();
 		sb.append(cacheDir);
-		sb.append(File.separator);
 		if (prefix != null) {
 			sb.append(prefix);
 		}
@@ -832,6 +843,13 @@ public class AppUtil {
 		}
 		return null;
 	}
+
+	public static boolean isWifi(Context context) {
+		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo info = cm.getActiveNetworkInfo();
+		return info != null && info.getType() == ConnectivityManager.TYPE_WIFI;
+	}
+
 	// ========================= End Device =========================
 
 	// ========================= Begin Runtime =========================

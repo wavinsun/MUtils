@@ -62,7 +62,6 @@ public class TakePhotoTask extends MediaTask {
 			date.setFormat("yyyyMMdd_HHmmss");
 			StringBuilder sb = new StringBuilder();
 			sb.append(mediaStorageDir);
-			sb.append(File.separator);
 			sb.append("IMG_");
 			sb.append(date.toString());
 			sb.append(".jpg");
