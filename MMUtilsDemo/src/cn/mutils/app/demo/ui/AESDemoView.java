@@ -31,7 +31,7 @@ public class AESDemoView extends StateView {
 	public void onCreate() {
 		super.onCreate();
 
-		String text = "mUtils";
+		String text = "MUtils";
 		String password = "wavinsun";
 		String encryptText = AppUtil.toAES(text, password);
 		String decryptText = AppUtil.fromAES(encryptText, password);

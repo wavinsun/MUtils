@@ -7,7 +7,7 @@
     
     <RelativeLayout style="@style/TitleBox">
         <TextView style="@style/TitleBoxName"
-            android:text="mUtils Demo"/>
+            android:text="MUtils Demo"/>
     </RelativeLayout>
     
     <ScrollView style="@style/Fill">
