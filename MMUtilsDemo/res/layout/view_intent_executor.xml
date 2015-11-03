@@ -9,7 +9,7 @@
     <TextView
         style="@style/Wrap"
         android:layout_centerInParent="true"
-        android:text="mUtils Demo"
+        android:text="MUtils Demo"
         android:textColor="@color/title_box"
         android:textSize="45sp"
         android:textStyle="bold" />

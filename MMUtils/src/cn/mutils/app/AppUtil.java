@@ -68,10 +68,10 @@ import cn.mutils.app.core.time.TimeUtil;
 public class AppUtil {
 
 	/** Framework internal data identity key */
-	public static final String KEY = "m";
+	public static final String KEY = "M";
 
 	/** Framework internal data tag */
-	public static final String TAG = "mUtils";
+	public static final String TAG = "MUtils";
 
 	/** Transform for degress to radian */
 	public static final double TO_RADIAN = NumberUtil.TO_RADIAN;

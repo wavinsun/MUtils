@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="mUtilsDemo" default="deploy">
+<project name="MUtilsDemo" default="deploy">
 	
     <!-- 引入AndroidManifest.xml -->
     <xmlproperty file="AndroidManifest.xml" prefix="AndroidManifest" collapseAttributes="true"/>
