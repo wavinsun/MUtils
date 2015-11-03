@@ -38,6 +38,8 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 	/** Target version what you has known */
 	protected String mTargetVersion;
 
+	protected Alert mAlert;
+
 	protected VersionUpdateListener mVersionUpdateListener;
 
 	protected RequestCallBack<File> mDownloadCallBack;
@@ -111,6 +113,13 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 		}
 	}
 
+	public void setAlert(Alert alert) {
+		if (mStarted || mStoped) {
+			return;
+		}
+		mAlert = alert;
+	}
+
 	class FirUpdateTaskListener extends NetTaskListener<FIRUpdateTask.FIRUpdateReq, FIRUpdateTask.FIRUpdateRes> {
 
 		@Override
@@ -133,7 +142,13 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 					if (mVersionUpdateListener != null) {
 						mVersionUpdateListener.onNo();
 					}
+					return;
 				} else {
+					if (mVersionUpdateListener != null) {
+						if (mVersionUpdateListener.onYes(versionShort)) {
+							return;
+						}
+					}
 					listener.onOK(null);
 				}
 				return;
@@ -158,7 +173,7 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 			}
 			sb.append("\n更新内容:\n");
 			sb.append(response.changelog);
-			Alert alert = new Alert(mContext);
+			Alert alert = mAlert != null ? mAlert : new Alert(mContext);
 			alert.setTitle("发现新版本");
 			alert.setMessage(sb.toString());
 			alert.setOK("立即更新");

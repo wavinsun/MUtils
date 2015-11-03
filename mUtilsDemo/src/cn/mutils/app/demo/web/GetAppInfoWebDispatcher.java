@@ -44,7 +44,7 @@ public class GetAppInfoWebDispatcher extends BasicWebMessageDispatcher<GetAppInf
 			message.result = new GetAppInfoWebResult();
 			message.result.state = WebMessageState.complete;
 			message.result.name = AppUtil.getAppName(context);
-			message.result.packageName = AppUtil.getAppPackage(context);
+			message.result.packageName = AppUtil.getAppPackageName(context);
 			message.result.version = AppUtil.getAppVersionName(context);
 			this.notifyManager(message);
 		}

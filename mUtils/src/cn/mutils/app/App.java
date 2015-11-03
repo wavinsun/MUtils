@@ -58,7 +58,7 @@ public class App extends Application implements IContextProvider {
 		sApp = this;
 
 		mEdition = detectEdition();
-		mUmengEnabled = AppUtil.getMetaData(this, "UMENG_APPKEY") != null;
+		mUmengEnabled = AppUtil.getAppMetaData(this, "UMENG_APPKEY") != null;
 		if (mUmengEnabled) {
 			if (mEdition == Edition.DEBUG) {
 				MobclickAgent.setDebugMode(true);
@@ -72,7 +72,7 @@ public class App extends Application implements IContextProvider {
 			UmengUpdateAgent.setUpdateUIStyle(UpdateStatus.STYLE_DIALOG);
 			UmengUpdateAgent.setUpdateAutoPopup(false);
 		}
-		mJPushEnabled = AppUtil.getMetaData(this, "JPUSH_APPKEY") != null;
+		mJPushEnabled = AppUtil.getAppMetaData(this, "JPUSH_APPKEY") != null;
 		if (mJPushEnabled) {
 			if (mEdition == Edition.DEBUG) {
 				JPushInterface.setDebugMode(true);
@@ -106,7 +106,7 @@ public class App extends Application implements IContextProvider {
 		if (BuildConfig.DEBUG) {
 			return Edition.DEBUG;
 		} else {
-			String channel = AppUtil.getMetaData(this, "UMENG_CHANNEL");
+			String channel = AppUtil.getAppMetaData(this, "UMENG_CHANNEL");
 			if (channel == null) {
 				return Edition.RELEASE;
 			} else {

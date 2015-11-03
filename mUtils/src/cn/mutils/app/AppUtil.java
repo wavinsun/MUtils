@@ -99,7 +99,7 @@ public class AppUtil {
 		}
 	}
 
-	public static String getAppPackage(Context context) {
+	public static String getAppPackageName(Context context) {
 		return context.getPackageName();
 	}
 
@@ -122,6 +122,31 @@ public class AppUtil {
 			Class<?> drawableClass = Class.forName(context.getPackageName() + ".R$drawable");
 			Field f = drawableClass.getField("ic_launcher");
 			return BitmapFactory.decodeResource(context.getResources(), f.getInt(null));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Get meta data of named node: fix bug for integer values
+	 * 
+	 * @param context
+	 * @param name
+	 * @return
+	 */
+	public static String getAppMetaData(Context context, String name) {
+		try {
+			return context.getPackageManager().getApplicationInfo(context.getPackageName(),
+					PackageManager.GET_META_DATA).metaData.get(name).toString();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public static String getAppMetaData(Context context, String archiveFilePath, String name) {
+		try {
+			return context.getPackageManager().getPackageArchiveInfo(archiveFilePath,
+					PackageManager.GET_META_DATA).applicationInfo.metaData.get(name).toString();
 		} catch (Exception e) {
 			return null;
 		}
@@ -317,22 +342,6 @@ public class AppUtil {
 			return null;
 		} finally {
 			IOUtil.close(is);
-		}
-	}
-
-	/**
-	 * Get meta data of named node: fix bug for integer values
-	 * 
-	 * @param context
-	 * @param name
-	 * @return
-	 */
-	public static String getMetaData(Context context, String name) {
-		try {
-			return context.getPackageManager().getApplicationInfo(context.getPackageName(),
-					PackageManager.GET_META_DATA).metaData.get(name).toString();
-		} catch (Exception e) {
-			return null;
 		}
 	}
 	// ========================= End Settings =========================
@@ -682,7 +691,7 @@ public class AppUtil {
 		sb.append(File.separator);
 		sb.append("data");
 		sb.append(File.separator);
-		sb.append(AppUtil.getAppPackage(context));
+		sb.append(AppUtil.getAppPackageName(context));
 		sb.append(File.separator);
 		path = sb.toString();
 		File root = new File(path);
