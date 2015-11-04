@@ -519,6 +519,9 @@ public class PullLayout extends RelativeLayout {
 		}
 
 		protected boolean canPullDown(AdapterView<?> v) {
+			if (v == null) {
+				return false;
+			}
 			if (v.getCount() == 0) {
 				// 没有item的时候也可以下拉刷新
 				return true;
@@ -530,6 +533,9 @@ public class PullLayout extends RelativeLayout {
 		}
 
 		protected boolean canPullUp(AdapterView<?> v) {
+			if (v == null) {
+				return false;
+			}
 			if (v.getCount() == 0) {
 				// 没有item的时候也可以上拉加载
 				return true;
@@ -544,6 +550,9 @@ public class PullLayout extends RelativeLayout {
 		}
 
 		protected boolean canPullDown(ScrollView v) {
+			if (v == null) {
+				return false;
+			}
 			if (v.getScrollY() == 0)
 				return true;
 			else
@@ -551,6 +560,9 @@ public class PullLayout extends RelativeLayout {
 		}
 
 		protected boolean canPullUp(ScrollView v) {
+			if (v == null) {
+				return false;
+			}
 			if (v.getScrollY() >= (v.getChildAt(0).getHeight() - v.getMeasuredHeight()))
 				return true;
 			else
@@ -558,6 +570,9 @@ public class PullLayout extends RelativeLayout {
 		}
 
 		protected boolean canPullDown(WebView v) {
+			if (v == null) {
+				return false;
+			}
 			if (v.getScrollY() == 0)
 				return true;
 			else
@@ -565,6 +580,9 @@ public class PullLayout extends RelativeLayout {
 		}
 
 		protected boolean canPullUp(WebView v) {
+			if (v == null) {
+				return false;
+			}
 			if (v.getScrollY() >= Math.floor(v.getContentHeight() * v.getScale() - v.getMeasuredHeight()))
 				return true;
 			else
