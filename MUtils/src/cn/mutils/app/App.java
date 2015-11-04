@@ -11,6 +11,9 @@ import android.app.Application;
 import android.content.Context;
 import cn.jpush.android.api.JPushInterface;
 import cn.mutils.app.core.log.Logs;
+import cn.mutils.app.core.task.RepeatTask;
+import cn.mutils.app.core.task.RepeatTask.RepeatTaskListener;
+import cn.mutils.app.core.task.RepeatTaskManager;
 import cn.mutils.app.os.IContextProvider;
 import cn.sharesdk.framework.ShareSDK;
 
@@ -44,6 +47,8 @@ public class App extends Application implements IContextProvider {
 	protected boolean mShareSDKEnabled;
 
 	protected Edition mEdition;
+
+	protected RepeatTaskManager mRepeatTaskManager;
 
 	@Override
 	public void onCreate() {
@@ -132,6 +137,24 @@ public class App extends Application implements IContextProvider {
 
 	public boolean isJPushEneabled() {
 		return mJPushEnabled;
+	}
+
+	/**
+	 * Repeat task
+	 * 
+	 * @param name
+	 * @param times
+	 * @param listener
+	 */
+	public void repeat(String name, int count, RepeatTaskListener listener) {
+		RepeatTask task = new RepeatTask();
+		task.setName(name);
+		task.setCount(count);
+		task.addListener(listener);
+		if (mRepeatTaskManager == null) {
+			mRepeatTaskManager = new RepeatTaskManager();
+		}
+		mRepeatTaskManager.add(task);
 	}
 
 	public static App getApp() {
