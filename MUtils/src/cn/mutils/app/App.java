@@ -20,8 +20,7 @@ import cn.sharesdk.framework.ShareSDK;
 /**
  * Application of framework
  */
-@SuppressWarnings("unchecked")
-public class App<T extends App<T>> extends Application implements IContextProvider {
+public class App extends Application implements IContextProvider {
 
 	/**
 	 * Application Edition
@@ -39,7 +38,7 @@ public class App<T extends App<T>> extends Application implements IContextProvid
 
 	}
 
-	protected static App<?> sApp;
+	protected static App sApp;
 
 	protected boolean mUmengEnabled;
 
@@ -156,8 +155,8 @@ public class App<T extends App<T>> extends Application implements IContextProvid
 		mRepeatTaskManager.add(task);
 	}
 
-	public static <T extends App<T>> T getApp() {
-		return (T) sApp;
+	public static App getApp() {
+		return sApp;
 	}
 
 	class AppExceptionHandler implements UncaughtExceptionHandler {
