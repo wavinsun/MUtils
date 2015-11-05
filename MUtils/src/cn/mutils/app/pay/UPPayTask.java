@@ -21,7 +21,7 @@ public class UPPayTask extends AppPayTask {
 
 	protected OnActivityResultListener mOnActivityResultListener;
 
-	protected boolean mDebug = true;
+	protected boolean mDebug;
 
 	public boolean isDebug() {
 		return mDebug;

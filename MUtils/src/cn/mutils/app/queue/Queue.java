@@ -1,6 +1,5 @@
 package cn.mutils.app.queue;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,9 +12,9 @@ public class Queue extends ContextOwnerDispathcer implements IQueue, IQueueItemL
 
 	protected int mMaxRunningCount = 1;
 
-	protected List<IQueueItem<?>> mQueue = new LinkedList<IQueueItem<?>>();
+	protected List<IQueueItem<?>> mQueue;
 
-	protected List<IQueueItem<?>> mQueueToBe = new LinkedList<IQueueItem<?>>();
+	protected List<IQueueItem<?>> mQueueToBe;
 
 	protected void updateRunState() {
 		boolean runningBackground = isRunningBackground();
@@ -33,6 +32,9 @@ public class Queue extends ContextOwnerDispathcer implements IQueue, IQueueItemL
 	}
 
 	protected boolean isRunningBackground() {
+		if (mQueue == null || mQueueToBe == null) {
+			return true;
+		}
 		for (IQueueItem<?> task : mQueue) {
 			if (!task.isRunInBackground()) {
 				return false;
@@ -58,18 +60,28 @@ public class Queue extends ContextOwnerDispathcer implements IQueue, IQueueItemL
 
 	@Override
 	public void add(IQueueItem<?> task) {
+		synchronized (this) {
+			if (mQueueToBe == null) {
+				mQueueToBe = new LinkedList<IQueueItem<?>>();
+			}
+		}
 		mQueueToBe.add(task);
 		startOneItem();
 	}
 
 	protected void startOneItem() {
-		if (mQueue.size() >= mMaxRunningCount) {
+		if (mQueue != null && mQueue.size() >= mMaxRunningCount) {
 			return;
 		}
-		if (mQueueToBe.size() == 0) {
+		if (mQueueToBe != null && mQueueToBe.size() == 0) {
 			return;
 		}
 		IQueueItem<?> task = mQueueToBe.remove(0);
+		synchronized (this) {
+			if (mQueue == null) {
+				mQueue = new LinkedList<IQueueItem<?>>();
+			}
+		}
 		mQueue.add(task);
 		task.addListener(this);
 		task.setContext(mContext);
@@ -78,17 +90,19 @@ public class Queue extends ContextOwnerDispathcer implements IQueue, IQueueItemL
 
 	@Override
 	public void clear() {
-		List<IQueueItem<?>> queueCopy = new ArrayList<IQueueItem<?>>();
-		queueCopy.addAll(mQueue);
-		List<IQueueItem<?>> queueToBeCopy = new ArrayList<IQueueItem<?>>();
-		queueToBeCopy.addAll(mQueueToBe);
-		mQueue.clear();
-		mQueueToBe.clear();
-		for (IQueueItem<?> task : queueCopy) {
-			task.stop();
+		if (mQueue != null) {
+			for (IQueueItem<?> task : mQueue) {
+				task.removeListener(this);
+				task.stop();
+			}
+			mQueue.clear();
 		}
-		for (IQueueItem<?> task : queueToBeCopy) {
-			task.stop();
+		if (mQueueToBe != null) {
+			for (IQueueItem<?> task : mQueueToBe) {
+				task.removeListener(this);
+				task.stop();
+			}
+			mQueueToBe.clear();
 		}
 	}
 
@@ -99,6 +113,9 @@ public class Queue extends ContextOwnerDispathcer implements IQueue, IQueueItemL
 
 	@Override
 	public void onStart(IQueueItem task) {
+		if (mQueue == null) {
+			return;
+		}
 		if (!mQueue.contains(task)) {
 			return;
 		}
@@ -109,9 +126,9 @@ public class Queue extends ContextOwnerDispathcer implements IQueue, IQueueItemL
 	@Override
 	public void onStop(IQueueItem task) {
 		boolean isInQueueToBe = false;
-		boolean isInQueue = mQueue.contains(task);
+		boolean isInQueue = mQueue != null && mQueue.contains(task);
 		if (!isInQueue) {
-			isInQueueToBe = mQueueToBe.contains(task);
+			isInQueueToBe = mQueueToBe != null && mQueueToBe.contains(task);
 		}
 		if (!isInQueue && !isInQueueToBe) {
 			return;

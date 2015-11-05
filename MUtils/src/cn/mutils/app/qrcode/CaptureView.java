@@ -36,20 +36,20 @@ public class CaptureView extends StateView implements Callback {
 
 	public CaptureView(Context context) {
 		super(context);
-		init(context, null, 0);
+		init(context, null);
 	}
 
 	public CaptureView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init(context, attrs, 0);
+		init(context, attrs);
 	}
 
 	public CaptureView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		init(context, attrs, defStyle);
+		init(context, attrs);
 	}
 
-	protected void init(Context context, AttributeSet attrs, int defStyle) {
+	protected void init(Context context, AttributeSet attrs) {
 		if (attrs == null) {
 			return;
 		}

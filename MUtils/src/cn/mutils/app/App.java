@@ -20,7 +20,8 @@ import cn.sharesdk.framework.ShareSDK;
 /**
  * Application of framework
  */
-public class App extends Application implements IContextProvider {
+@SuppressWarnings("unchecked")
+public class App<T extends App<T>> extends Application implements IContextProvider {
 
 	/**
 	 * Application Edition
@@ -38,7 +39,7 @@ public class App extends Application implements IContextProvider {
 
 	}
 
-	protected static App sApp;
+	protected static App<?> sApp;
 
 	protected boolean mUmengEnabled;
 
@@ -56,11 +57,9 @@ public class App extends Application implements IContextProvider {
 		// Set exception handler to forbid system crash dialog
 		Thread.setDefaultUncaughtExceptionHandler(new AppExceptionHandler());
 
-		AppLocale.syncLocale(this);
-
-		AppUtil.fixAsyncTask();
-
 		sApp = this;
+		AppLocale.syncLocale(this);
+		AppUtil.fixAsyncTask();
 
 		mEdition = detectEdition();
 		mUmengEnabled = AppUtil.getAppMetaData(this, "UMENG_APPKEY") != null;
@@ -157,8 +156,8 @@ public class App extends Application implements IContextProvider {
 		mRepeatTaskManager.add(task);
 	}
 
-	public static App getApp() {
-		return sApp;
+	public static <T extends App<T>> T getApp() {
+		return (T) sApp;
 	}
 
 	class AppExceptionHandler implements UncaughtExceptionHandler {
