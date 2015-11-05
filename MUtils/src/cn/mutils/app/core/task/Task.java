@@ -12,10 +12,6 @@ public class Task extends Dispatcher implements IStopable {
 
 	protected boolean mRestartable = false;
 
-	public Task() {
-
-	}
-
 	@Override
 	public boolean isRunInBackground() {
 		return mRunInBackground;

@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.mutils.app.core.IClearable;
+
 /**
  * Bean cache of framework
  */
-public class BeanCache {
+public class BeanCache implements IClearable {
 
 	/**
 	 * Hash cache for object property
@@ -47,10 +49,6 @@ public class BeanCache {
 
 	protected Map<String, PropertyHash> mCache;
 	protected Object mTarget;
-
-	public BeanCache() {
-
-	}
 
 	public BeanCache(Object target) {
 		mTarget = target;
