@@ -98,10 +98,11 @@ public class NumberUtil {
 	}
 
 	/**
-	 * Make number to BigDecimal by minimum scale
+	 * Make number to BigDecimal by minimum scale<br>
+	 * Parameter maybe to be used to round
 	 * 
 	 * @param number
-	 * @param decimals
+	 * @param minScale
 	 * @return
 	 */
 	public static BigDecimal toBigDecimal(String number, int minScale) {
