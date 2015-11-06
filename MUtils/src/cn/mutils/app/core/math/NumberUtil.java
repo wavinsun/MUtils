@@ -1,7 +1,10 @@
 package cn.mutils.app.core.math;
 
+import java.math.BigDecimal;
+
 /**
- * Number utility of framework
+ * Number utility of framework<br>
+ * High precision feature
  */
 public class NumberUtil {
 
@@ -18,8 +21,10 @@ public class NumberUtil {
 	 * @return
 	 */
 	public static double toFixedRound(double number, int decimals) {
-		double scale = Math.pow(10, decimals > 0 ? decimals : 0);
-		return Math.round(number * scale) / scale;
+		String str = String.valueOf(number);
+		BigDecimal n = toBigDecimal(str, decimals);
+		n = n.setScale(decimals, BigDecimal.ROUND_HALF_UP);
+		return n.doubleValue();
 	}
 
 	/**
@@ -30,8 +35,10 @@ public class NumberUtil {
 	 * @return
 	 */
 	public static double toFixedCeil(double number, int decimals) {
-		double scale = Math.pow(10, decimals > 0 ? decimals : 0);
-		return Math.ceil(number * scale) / scale;
+		String str = String.valueOf(number);
+		BigDecimal n = toBigDecimal(str, decimals);
+		n = n.setScale(decimals, BigDecimal.ROUND_CEILING);
+		return n.doubleValue();
 	}
 
 	/**
@@ -42,8 +49,10 @@ public class NumberUtil {
 	 * @return
 	 */
 	public static double toFixedFloor(double number, int decimals) {
-		double scale = Math.pow(10, decimals > 0 ? decimals : 0);
-		return Math.floor(number * scale) / scale;
+		String str = String.valueOf(number);
+		BigDecimal n = toBigDecimal(str, decimals);
+		n = n.setScale(decimals, BigDecimal.ROUND_FLOOR);
+		return n.doubleValue();
 	}
 
 	/**
@@ -54,8 +63,10 @@ public class NumberUtil {
 	 * @return
 	 */
 	public static float toFixedRound(float number, int decimals) {
-		float scale = (float) Math.pow(10, decimals > 0 ? decimals : 0);
-		return Math.round(number * scale) / scale;
+		String str = String.valueOf(number);
+		BigDecimal n = toBigDecimal(str, decimals);
+		n = n.setScale(decimals, BigDecimal.ROUND_HALF_UP);
+		return n.floatValue();
 	}
 
 	/**
@@ -66,8 +77,10 @@ public class NumberUtil {
 	 * @return
 	 */
 	public static float toFixedCeil(float number, int decimals) {
-		float scale = (float) Math.pow(10, decimals > 0 ? decimals : 0);
-		return ((int) Math.ceil(number * scale)) / scale;
+		String str = String.valueOf(number);
+		BigDecimal n = toBigDecimal(str, decimals);
+		n = n.setScale(decimals, BigDecimal.ROUND_CEILING);
+		return n.floatValue();
 	}
 
 	/**
@@ -78,8 +91,26 @@ public class NumberUtil {
 	 * @return
 	 */
 	public static float toFixedFloor(float number, int decimals) {
-		float scale = (float) Math.pow(10, decimals > 0 ? decimals : 0);
-		return ((int) Math.floor(number * scale)) / scale;
+		String str = String.valueOf(number);
+		BigDecimal n = toBigDecimal(str, decimals);
+		n = n.setScale(decimals, BigDecimal.ROUND_FLOOR);
+		return n.floatValue();
+	}
+
+	/**
+	 * Make number to BigDecimal by minimum scale
+	 * 
+	 * @param number
+	 * @param decimals
+	 * @return
+	 */
+	public static BigDecimal toBigDecimal(String number, int minScale) {
+		BigDecimal n = new BigDecimal(number);
+		int s = n.scale() - 2;
+		if (s > minScale) {
+			n = n.setScale(s, BigDecimal.ROUND_HALF_UP);
+		}
+		return n;
 	}
 
 }
