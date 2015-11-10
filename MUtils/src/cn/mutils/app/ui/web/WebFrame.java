@@ -85,7 +85,7 @@ public class WebFrame extends StateView implements IWebFrame {
 		sb.append("javascript:");
 		sb.append(mWebJSInterface.name());
 		sb.append(".");
-		sb.append(mWebJSInterface.onMessage());
+		sb.append(mWebJSInterface.onMessageName());
 		sb.append("('");
 		sb.append(json);
 		sb.append("');");
@@ -151,7 +151,7 @@ public class WebFrame extends StateView implements IWebFrame {
 		}
 
 		@Override
-		public String onMessage() {
+		public String onMessageName() {
 			return "onMessage";
 		}
 

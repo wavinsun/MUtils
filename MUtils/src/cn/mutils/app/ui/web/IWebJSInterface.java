@@ -57,6 +57,6 @@ public interface IWebJSInterface extends INoProguard {
 	 * 
 	 * @return
 	 */
-	public String onMessage();
+	public String onMessageName();
 
 }
