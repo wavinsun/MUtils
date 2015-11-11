@@ -70,7 +70,8 @@ public class App extends Application implements IContextProvider {
 			} else {
 				UmengUpdateAgent.setUpdateCheckConfig(false);
 			}
-			UmengUpdateAgent.setDeltaUpdate(true);
+			// Fix bug for downloading always
+			UmengUpdateAgent.setDeltaUpdate(false);
 			UmengUpdateAgent.setUpdateOnlyWifi(false);
 			UmengUpdateAgent.setUpdateUIStyle(UpdateStatus.STYLE_DIALOG);
 			UmengUpdateAgent.setUpdateAutoPopup(false);
