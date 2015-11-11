@@ -293,6 +293,13 @@
         		<category android:name="android.intent.category.BROWSABLE"/>
         		<category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            
+            <intent-filter>
+				<data android:scheme="tencent100371282" />
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
         </activity>
         <!-- 调用新浪原生SDK，需要注册的activity -->
         <activity
