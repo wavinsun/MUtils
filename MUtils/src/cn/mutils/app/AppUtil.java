@@ -73,6 +73,9 @@ public class AppUtil {
 	/** Framework internal data tag */
 	public static final String TAG = "MUtils";
 
+	/** Framework internal log tag for android runtime */
+	public static final String TAG_ANDROID_RUNTIME = "AndroidRuntime";
+
 	/** Transform for degress to radian */
 	public static final double TO_RADIAN = NumberUtil.TO_RADIAN;
 	/** Transform for radian to degress */

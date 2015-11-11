@@ -77,10 +77,15 @@ public class App extends Application implements IContextProvider {
 		}
 		mJPushEnabled = AppUtil.getAppMetaData(this, "JPUSH_APPKEY") != null;
 		if (mJPushEnabled) {
-			if (mEdition == Edition.DEBUG) {
-				JPushInterface.setDebugMode(true);
+			try {
+				if (mEdition == Edition.DEBUG) {
+					JPushInterface.setDebugMode(true);
+				}
+				JPushInterface.init(this);
+			} catch (Throwable tr) {
+				// java.lang.UnsatisfiedLinkError
+				Logs.e(AppUtil.TAG_ANDROID_RUNTIME, tr);
 			}
-			JPushInterface.init(this);
 		}
 		mShareSDKEnabled = AppUtil.isAssetExists(this, "ShareSDK.xml");
 		if (mShareSDKEnabled) {
@@ -163,7 +168,7 @@ public class App extends Application implements IContextProvider {
 
 		@Override
 		public void uncaughtException(Thread thread, Throwable ex) {
-			Logs.e("AndroidRuntime", thread.getName(), ex);
+			Logs.e(AppUtil.TAG_ANDROID_RUNTIME, thread.getName(), ex);
 			try {
 				Thread.sleep(300L);
 			} catch (Exception e) {
