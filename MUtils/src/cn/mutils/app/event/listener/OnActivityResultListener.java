@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import cn.mutils.app.core.event.Listener;
-import cn.mutils.app.ui.Activitier;
+import cn.mutils.app.ui.AppActivity;
 import cn.mutils.app.ui.Fragmenter;
 import cn.mutils.app.ui.StateView;
 
@@ -12,8 +12,8 @@ import cn.mutils.app.ui.StateView;
  * Listener for startActivityForResult
  * 
  * @see Activity#onActivityResult(int, int, Intent)
- * @see Activitier#onActivityResult(int, int, Intent)
- * @see Activitier#startActivityForResult(Intent, int)
+ * @see AppActivity#onActivityResult(int, int, Intent)
+ * @see AppActivity#startActivityForResult(Intent, int)
  * @see StateView#startActivityForResult(Intent, int)
  * @see Fragmenter#startActivityForResult(Intent, int)
  */

@@ -50,6 +50,7 @@ import cn.mutils.app.R;
  * 
  * @author Yuri Kanivets
  */
+@SuppressWarnings("deprecation")
 @SuppressLint({ "FloatMath", "HandlerLeak" })
 public class WheelView extends View {
 	/** Scrolling duration */

@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.mutils.app.event.listener.OnSelectedChangeListener;
-import cn.mutils.app.ui.Activitier;
+import cn.mutils.app.ui.AppActivity;
 
-public class PhotoActivity extends Activitier {
+public class PhotoActivity extends AppActivity {
 
 	protected PhotoContainer mPhotoContainer;
 

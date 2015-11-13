@@ -8,11 +8,11 @@ import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 import cn.mutils.app.io.Extra;
-import cn.mutils.app.ui.Activitier;
+import cn.mutils.app.ui.AppActivity;
 import cn.mutils.app.ui.Viewer;
 
 @SuppressWarnings("serial")
-public class VideoActivity extends Activitier {
+public class VideoActivity extends AppActivity {
 
 	public static class VideoExtra extends Extra {
 
