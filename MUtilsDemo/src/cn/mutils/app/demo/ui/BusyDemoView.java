@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import cn.mutils.app.core.annotation.event.OnClick;
 import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.R;
-import cn.mutils.app.ui.Activitier;
+import cn.mutils.app.ui.AppActivity;
 import cn.mutils.app.ui.StateView;
 
 @SetContentView(R.layout.view_busy)
@@ -26,12 +26,12 @@ public class BusyDemoView extends StateView {
 
 	@OnClick(R.id.go)
 	protected void onClickGo() {
-		((Activitier) getContext()).setBusy(true);
+		((AppActivity) getContext()).setBusy(true);
 		new Handler().postDelayed(new Runnable() {
 
 			@Override
 			public void run() {
-				((Activitier) getContext()).setBusy(false);
+				((AppActivity) getContext()).setBusy(false);
 			}
 		}, 2000);
 	}

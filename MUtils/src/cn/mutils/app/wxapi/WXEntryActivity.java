@@ -10,9 +10,9 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import android.os.Bundle;
 import cn.mutils.app.share.Share;
 import cn.mutils.app.share.ShareWechat;
-import cn.mutils.app.ui.Activitier;
+import cn.mutils.app.ui.AppActivity;
 
-public class WXEntryActivity extends Activitier implements IWXAPIEventHandler {
+public class WXEntryActivity extends AppActivity implements IWXAPIEventHandler {
 
 	private IWXAPI api;
 

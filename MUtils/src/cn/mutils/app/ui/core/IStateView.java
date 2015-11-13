@@ -1,7 +1,7 @@
 package cn.mutils.app.ui.core;
 
 import android.app.Activity;
-import cn.mutils.app.ui.Activitier;
+import cn.mutils.app.ui.AppActivity;
 import cn.mutils.app.ui.StateView;
 import cn.mutils.app.ui.StateViewFrame;
 
@@ -59,7 +59,7 @@ public interface IStateView extends IViewFinder, IActivityExecutor {
 	/**
 	 * Intercept back press
 	 * 
-	 * @see Activitier#onInterceptBackPressed()
+	 * @see AppActivity#onInterceptBackPressed()
 	 * @see StateView#onInterceptBackPressed()
 	 * @see StateViewFrame#onInterceptBackPressed()
 	 * 

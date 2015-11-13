@@ -5,6 +5,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.madebycm.hellocordova.AndroidBug5497Workaround;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.fb.FeedbackAgent;
+import com.umeng.update.UmengDialogButtonListener;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -16,15 +25,21 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+import cn.jpush.android.api.JPushInterface;
+import cn.mutils.app.App;
 import cn.mutils.app.AppUtil;
 import cn.mutils.app.R;
 import cn.mutils.app.core.event.Dispatcher;
+import cn.mutils.app.core.event.listener.VersionUpdateListener;
 import cn.mutils.app.core.net.NetClient.CookieExpiredException;
 import cn.mutils.app.core.task.IStopable;
 import cn.mutils.app.data.AsyncDataQueue;
@@ -47,15 +62,15 @@ import cn.mutils.app.ui.pattern.PatternDialog;
 
 @SuppressLint({ "ShowToast", "InlinedApi" })
 @SuppressWarnings("deprecation")
-public class Activitier extends FragmentActivity implements IActivity {
-
-	protected AsyncDataQueue mAsyncDataQueue;
-
-	protected NetQueue mNetQueue;
+public class AppActivity extends FragmentActivity implements IActivity {
 
 	protected PatternLayerHelper mPatternLayerHelper;
-
 	protected WaitingLayerHelper mWaitingLayerHelper;
+	protected UmengHelper mUmengHelper;
+	protected JPushHelper mJHelper;
+
+	protected AsyncDataQueue mAsyncDataQueue;
+	protected NetQueue mNetQueue;
 
 	protected boolean mBusy;
 
@@ -74,6 +89,15 @@ public class Activitier extends FragmentActivity implements IActivity {
 	protected boolean mStatusBarTranslucent;
 
 	protected Dispatcher mDispatcher;
+
+	protected StatusBox mStatusBox;
+	protected RelativeLayout mTitleBox;
+	protected TextView mTitleBoxName;
+	protected ImageView mTitleBoxBackButton;
+
+	protected void onClickTitleBoxBackBtn() {
+		finish();
+	}
 
 	public static void redirectTo(Class<? extends Activity> activityCls) {
 		ActivityMgr.redirectTo(activityCls);
@@ -206,29 +230,46 @@ public class Activitier extends FragmentActivity implements IActivity {
 	@Override
 	public void setContentView(int layoutResID) {
 		super.setContentView(layoutResID);
-		this.bindStateViews();
-		UICore.injectResources(this);
-		UICore.injectEvents(this);
+		onSetContentView();
 	}
 
 	@Override
 	public void setContentView(View view) {
 		super.setContentView(view);
-		this.bindStateViews();
-		UICore.injectResources(this);
-		UICore.injectEvents(this);
+		onSetContentView();
 	}
 
 	@Override
 	public void setContentView(View view, LayoutParams params) {
 		super.setContentView(view, params);
-		bindStateViews();
-		UICore.injectResources(this);
-		UICore.injectEvents(this);
+		onSetContentView();
 	}
 
 	protected void bindStateViews() {
 		UICore.bindStateViews(this, this.getWindow().getDecorView());
+	}
+
+	protected void onSetContentView() {
+		UICore.bindStateViews(this, this.getWindow().getDecorView());
+		UICore.injectResources(this);
+		UICore.injectEvents(this);
+		fixAndroidBug5497();
+
+		if (mStatusBox == null) {
+			mStatusBox = findViewById(R.id.status_box, StatusBox.class);
+		}
+		if (mTitleBox == null) {
+			mTitleBox = findViewById(R.id.title_box, RelativeLayout.class);
+		}
+		if (mTitleBoxName == null) {
+			mTitleBoxName = findViewById(R.id.title_box_name, TextView.class);
+		}
+		if (mTitleBoxBackButton == null) {
+			mTitleBoxBackButton = findViewById(R.id.title_box_back, ImageView.class);
+			if (mTitleBoxBackButton != null) {
+				mTitleBoxBackButton.setOnClickListener(new OnClickTitleBoxBackButtonListener());
+			}
+		}
 	}
 
 	@Override
@@ -236,11 +277,33 @@ public class Activitier extends FragmentActivity implements IActivity {
 		return mStatusBarTranslucent;
 	}
 
+	public boolean onInterceptSetSoftInputMode() {
+		return false;
+	}
+
+	/**
+	 * Fix bug for android bug 5497<br>
+	 * Keyboard open but content view size is not changed while
+	 * SOFT_INPUT_ADJUST_RESIZE
+	 */
+	protected void fixAndroidBug5497() {
+		if (mStatusBarTranslucent && (getWindow().getAttributes().softInputMode
+				& WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE) == WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE) {
+			try {
+				AndroidBug5497Workaround.assistActivity(this);
+			} catch (Exception e) {
+
+			}
+		}
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Window w = this.getWindow();
 		w.requestFeature(Window.FEATURE_NO_TITLE);
-		w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+		if (!this.onInterceptSetSoftInputMode()) {
+			w.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+		}
 		if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
 			w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 			mStatusBarTranslucent = true;
@@ -253,6 +316,8 @@ public class Activitier extends FragmentActivity implements IActivity {
 		UICore.injectContentView(this);
 
 		mRunning = true;
+		mUmengHelper = new UmengHelper(this);
+		mJHelper = new JPushHelper(this);
 	}
 
 	@Override
@@ -272,10 +337,14 @@ public class Activitier extends FragmentActivity implements IActivity {
 			mPatternLayerHelper.onResume();
 		}
 		mRunning = true;
+		mUmengHelper.onResume();
+		mJHelper.onResume();
 	}
 
 	@Override
 	protected void onPause() {
+		mUmengHelper.onPause();
+		mJHelper.onPause();
 		mRunning = false;
 		UICore.dispatchPause(this);
 		super.onPause();
@@ -292,12 +361,14 @@ public class Activitier extends FragmentActivity implements IActivity {
 
 	@Override
 	protected void onDestroy() {
+		mUmengHelper.onDestroy();
 		doFinish();
 		super.onDestroy();
 	}
 
 	@Override
 	public void finish() {
+		mUmengHelper.finish();
 		doFinish();
 		super.finish();
 	}
@@ -355,7 +426,7 @@ public class Activitier extends FragmentActivity implements IActivity {
 				@Override
 				public void onRunStateChanged(IQueue queue) {
 					if (mWaitingLayerHelper == null) {
-						mWaitingLayerHelper = new WaitingLayerHelper(Activitier.this);
+						mWaitingLayerHelper = new WaitingLayerHelper(AppActivity.this);
 					}
 					mWaitingLayerHelper.postUpdateWaitingViewState();
 				}
@@ -373,7 +444,7 @@ public class Activitier extends FragmentActivity implements IActivity {
 				@Override
 				public void onRunStateChanged(IQueue queue) {
 					if (mWaitingLayerHelper == null) {
-						mWaitingLayerHelper = new WaitingLayerHelper(Activitier.this);
+						mWaitingLayerHelper = new WaitingLayerHelper(AppActivity.this);
 					}
 					mWaitingLayerHelper.postUpdateWaitingViewState();
 				}
@@ -535,6 +606,192 @@ public class Activitier extends FragmentActivity implements IActivity {
 		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE, listener);
 	}
 
+	public boolean hasNewVersion() {
+		return mUmengHelper.hasNewVersion();
+	}
+
+	public void checkNewVersion(VersionUpdateListener listener) {
+		mUmengHelper.checkNewVersion(listener);
+	}
+
+	public void feedback() {
+		mUmengHelper.feedback();
+	}
+
+	class OnClickTitleBoxBackButtonListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			onClickTitleBoxBackBtn();
+		}
+
+	}
+
+	protected static class UmengHelper {
+
+		private static final int NEW_VERSION_STATE_UNKNOWN = -1;
+		private static final int NEW_VERSION_STATE_NO = 0;
+		private static final int NEW_VERSION_STATE_YES = 1;
+
+		protected static Object sSync = new Object();
+		protected static int sNewVersionState = NEW_VERSION_STATE_UNKNOWN;
+
+		protected FeedbackAgent mFeedbackAgent;
+		protected UmengUpdateListener mUmengUpdateListener;
+		protected UmengDialogButtonListener mUmengDialogButtonListener;
+		protected List<VersionUpdateListener> mVersionUpdateListeners;
+
+		protected AppActivity mContext;
+
+		public UmengHelper(AppActivity context) {
+			mContext = context;
+		}
+
+		public void onResume() {
+			if (App.getApp() == null || !App.getApp().isUmengEnabled()) {
+				return;
+			}
+			MobclickAgent.onResume(mContext);
+		}
+
+		public void onPause() {
+			if (App.getApp() == null || !App.getApp().isUmengEnabled()) {
+				return;
+			}
+			MobclickAgent.onPause(mContext);
+		}
+
+		public void onDestroy() {
+			if (!mContext.mFinished) {
+				if (mVersionUpdateListeners != null) {
+					mVersionUpdateListeners.clear();
+				}
+			}
+		}
+
+		public void finish() {
+			if (mVersionUpdateListeners != null) {
+				mVersionUpdateListeners.clear();
+			}
+		}
+
+		public boolean hasNewVersion() {
+			if (sNewVersionState == NEW_VERSION_STATE_UNKNOWN) {
+				checkNewVersion(null);
+			}
+			return sNewVersionState == NEW_VERSION_STATE_YES;
+		}
+
+		public void checkNewVersion(VersionUpdateListener listener) {
+			if (App.getApp() == null || !App.getApp().isUmengEnabled()) {
+				return;
+			}
+			if (listener != null) {
+				if (mVersionUpdateListeners == null) {
+					mVersionUpdateListeners = new ArrayList<VersionUpdateListener>();
+				}
+				mVersionUpdateListeners.add(listener);
+			}
+			UmengUpdateAgent.setDialogListener(null);
+			if (this.mUmengUpdateListener == null) {
+				this.mUmengUpdateListener = new UmengUpdateListener() {
+
+					@Override
+					public void onUpdateReturned(int statusCode, final UpdateResponse updateInfo) {
+						boolean hasNewVersion = statusCode == UpdateStatus.Yes;
+						synchronized (sSync) {
+							if (hasNewVersion) {
+								sNewVersionState = NEW_VERSION_STATE_YES;
+							} else {
+								sNewVersionState = NEW_VERSION_STATE_NO;
+							}
+						}
+						if (mContext.mFinished) {
+							return;
+						}
+						if (mVersionUpdateListeners != null) {
+							if (mVersionUpdateListeners.size() != 0) {
+								boolean interceptDialog = false;
+								for (VersionUpdateListener listener : mVersionUpdateListeners) {
+									if (hasNewVersion) {
+										boolean intercept = listener.onYes(updateInfo.version);
+										interceptDialog = interceptDialog ? true : intercept;
+									} else {
+										listener.onNo();
+									}
+								}
+								if (hasNewVersion && !interceptDialog) {
+									if (mUmengDialogButtonListener == null) {
+										mUmengDialogButtonListener = new UmengDialogButtonListener() {
+
+											@Override
+											public void onClick(int status) {
+												if (mVersionUpdateListeners != null) {
+													for (VersionUpdateListener listener : mVersionUpdateListeners) {
+														switch (status) {
+														case UpdateStatus.Update:
+															listener.onUpdate(updateInfo.version);
+															break;
+														case UpdateStatus.Ignore:
+														case UpdateStatus.NotNow:
+															listener.onUpdateCancel(updateInfo.version);
+															break;
+														}
+													}
+													mVersionUpdateListeners.clear();
+												}
+											}
+										};
+									}
+									UmengUpdateAgent.setDialogListener(mUmengDialogButtonListener);
+									UmengUpdateAgent.showUpdateDialog(mContext, updateInfo);
+								}
+							}
+						}
+					}
+				};
+			}
+			UmengUpdateAgent.setUpdateListener(this.mUmengUpdateListener);
+			UmengUpdateAgent.forceUpdate(mContext);
+		}
+
+		public void feedback() {
+			if (App.getApp() == null || !App.getApp().isUmengEnabled()) {
+				return;
+			}
+			if (mFeedbackAgent == null) {
+				mFeedbackAgent = new FeedbackAgent(mContext);
+				mFeedbackAgent.sync();
+			}
+			mFeedbackAgent.startFeedbackActivity();
+		}
+
+	}
+
+	protected static class JPushHelper {
+
+		protected AppActivity mContext;
+
+		public JPushHelper(AppActivity context) {
+			mContext = context;
+		}
+
+		public void onResume() {
+			if (App.getApp() == null || !App.getApp().isJPushEneabled()) {
+				return;
+			}
+			JPushInterface.onResume(mContext);
+		}
+
+		public void onPause() {
+			if (App.getApp() == null || !App.getApp().isJPushEneabled()) {
+				return;
+			}
+			JPushInterface.onPause(mContext);
+		}
+
+	}
+
 	protected static class ActivityMgr {
 
 		protected static List<Activity> sActivitys;
@@ -638,11 +895,11 @@ public class Activitier extends FragmentActivity implements IActivity {
 
 		protected Runnable mWaitingLayerRunnable;
 
-		protected Activitier mContext;
+		protected AppActivity mContext;
 
 		protected Dialoger mWaitingDialog;
 
-		public WaitingLayerHelper(Activitier context) {
+		public WaitingLayerHelper(AppActivity context) {
 			mContext = context;
 			mWaitingDialog = mContext.newWaitingDialog();
 			if (mWaitingDialog == null) {
@@ -711,11 +968,11 @@ public class Activitier extends FragmentActivity implements IActivity {
 
 		protected Runnable mHeartbeatRunnable;
 
-		protected Activitier mContext;
+		protected AppActivity mContext;
 
 		protected PatternDialog mPatternDialog;
 
-		public PatternLayerHelper(Activitier context) {
+		public PatternLayerHelper(AppActivity context) {
 			mContext = context;
 			mPatternDialog = mContext.newPatternDialog();
 		}
