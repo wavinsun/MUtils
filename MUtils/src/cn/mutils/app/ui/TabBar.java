@@ -11,10 +11,10 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
 
 	/** Handler for fluent experience */
 	protected Handler mSelectedDispatcher;
+	protected OnSelectedChangeListener mOnSelectedChangeListener;
 
 	protected int mSelectedIndex = -1;
-
-	protected OnSelectedChangeListener mOnSelectedChangeListener;
+	protected int mSelectedIndexTryAgain = -1;
 
 	public TabBar(Context context) {
 		super(context);
@@ -48,6 +48,20 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
 		}
 	}
 
+	public void tryAgain() {
+		if (mSelectedIndexTryAgain == -1) {
+			return;
+		}
+		if (mOnSelectedChangeListener != null) {
+			if (mOnSelectedChangeListener.onInterceptTryAgain(this, mSelectedIndexTryAgain)) {
+				mSelectedIndexTryAgain = -1;
+				return;
+			}
+		}
+		this.setSelectedIndex(mSelectedIndexTryAgain);
+		mSelectedIndexTryAgain = -1;
+	}
+
 	public int getSelectedIndex() {
 		return mSelectedIndex;
 	}
@@ -65,6 +79,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
 		}
 		if (mOnSelectedChangeListener != null) {
 			if (mOnSelectedChangeListener.onInterceptChange(this, selectedIndex)) {
+				mSelectedIndexTryAgain = selectedIndex;
 				return;
 			}
 		}
@@ -72,6 +87,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
 			this.getChildAt(mSelectedIndex).setSelected(false);
 		}
 		mSelectedIndex = selectedIndex;
+		mSelectedIndexTryAgain = -1;
 		this.getChildAt(mSelectedIndex).setSelected(true);
 		if (mOnSelectedChangeListener != null) {
 			if (mSelectedDispatcher == null) {

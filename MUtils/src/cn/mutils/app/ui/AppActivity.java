@@ -43,7 +43,7 @@ import cn.mutils.app.open.UmengHelper;
 import cn.mutils.app.os.AppActivityManager;
 import cn.mutils.app.queue.IQueue;
 import cn.mutils.app.ui.core.IActivity;
-import cn.mutils.app.ui.core.IPrivateActivity;
+import cn.mutils.app.ui.core.ISessionHolder;
 import cn.mutils.app.ui.core.IStateView;
 import cn.mutils.app.ui.core.IToastOwner;
 import cn.mutils.app.ui.core.UICore;
@@ -51,7 +51,7 @@ import cn.mutils.app.ui.pattern.PatternDialog;
 import cn.mutils.app.ui.pattern.PatternLayerHelper;
 
 @SuppressLint({ "ShowToast", "InlinedApi" })
-public class AppActivity extends FragmentActivity implements IActivity {
+public class AppActivity extends FragmentActivity implements IActivity, ISessionHolder {
 
 	protected PatternLayerHelper mPatternLayerHelper;
 	protected WaitingLayerHelper mWaitingLayerHelper;
@@ -63,6 +63,7 @@ public class AppActivity extends FragmentActivity implements IActivity {
 	protected boolean mBusy;
 	protected boolean mRunning;
 	protected boolean mFinished;
+	protected boolean mSessionHolder;
 
 	protected List<IStateView> mBindViews;
 	protected List<IStopable> mBindStopables;
@@ -280,6 +281,16 @@ public class AppActivity extends FragmentActivity implements IActivity {
 	}
 
 	@Override
+	public boolean isSessionHolder() {
+		return mSessionHolder;
+	}
+
+	@Override
+	public void validateSession() {
+
+	}
+
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Window w = this.getWindow();
 		w.requestFeature(Window.FEATURE_NO_TITLE);
@@ -306,6 +317,10 @@ public class AppActivity extends FragmentActivity implements IActivity {
 		UICore.dispatchStart(this);
 		if (mPatternLayerHelper != null) {
 			mPatternLayerHelper.onStart();
+		}
+		// Validate session or user login state
+		if (mSessionHolder) {
+			this.validateSession();
 		}
 	}
 
@@ -515,8 +530,8 @@ public class AppActivity extends FragmentActivity implements IActivity {
 			return;
 		}
 		if (message instanceof CookieExpiredException) {
-			if (this instanceof IPrivateActivity) {
-				((IPrivateActivity) this).refresh();
+			if (mSessionHolder) {
+				this.validateSession();
 			}
 		}
 	}
