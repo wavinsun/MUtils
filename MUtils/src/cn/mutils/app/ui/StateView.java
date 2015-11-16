@@ -25,7 +25,7 @@ import cn.mutils.app.net.INetQueueOwner;
 import cn.mutils.app.net.INetTask;
 import cn.mutils.app.task.DelayTask;
 import cn.mutils.app.ui.core.IContentViewOwner;
-import cn.mutils.app.ui.core.IPrivateView;
+import cn.mutils.app.ui.core.ISessionHolder;
 import cn.mutils.app.ui.core.IStateView;
 import cn.mutils.app.ui.core.IStateViewManager;
 import cn.mutils.app.ui.core.IToastOwner;
@@ -33,31 +33,36 @@ import cn.mutils.app.ui.core.UICore;
 
 @SuppressLint("ShowToast")
 public class StateView extends RelativeLayout
-		implements IStateView, IStateViewManager, IStopableManager, IToastOwner, IContentViewOwner {
+		implements IStateView, ISessionHolder, IStateViewManager, IStopableManager, IToastOwner, IContentViewOwner {
 
+	protected IStateViewManager mManager;
 	protected List<IStateView> mBindViews;
 	protected List<IStopable> mBindStopables;
+	protected Dispatcher mDispatcher;
 
 	protected InfoToast mInfoToast;
-
 	protected Toast mToast;
 
 	protected boolean mCreateDispatched;
-
-	protected IStateViewManager mManager;
-
-	protected Dispatcher mDispatcher;
+	protected boolean mSessionHolder;
 
 	public StateView(Context context) {
 		super(context);
+		init(context, null);
 	}
 
 	public StateView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		init(context, attrs);
 	}
 
 	public StateView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		init(context, attrs);
+	}
+
+	protected void init(Context context, AttributeSet attrs) {
+
 	}
 
 	@Override
@@ -90,6 +95,16 @@ public class StateView extends RelativeLayout
 	}
 
 	@Override
+	public boolean isSessionHolder() {
+		return mSessionHolder;
+	}
+
+	@Override
+	public void validateSession() {
+
+	}
+
+	@Override
 	public void onCreate() {
 		UICore.injectContentView(this);
 	}
@@ -97,6 +112,10 @@ public class StateView extends RelativeLayout
 	@Override
 	public void onStart() {
 		UICore.dispatchStart(this);
+		// Validate session or user login state
+		if (mSessionHolder) {
+			this.validateSession();
+		}
 	}
 
 	@Override
@@ -202,8 +221,8 @@ public class StateView extends RelativeLayout
 			return;
 		}
 		if (message instanceof CookieExpiredException) {
-			if (this instanceof IPrivateView) {
-				((IPrivateView) this).refresh();
+			if (mSessionHolder) {
+				this.validateSession();
 			}
 		}
 		if (mManager != null) {

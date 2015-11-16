@@ -14,6 +14,18 @@ import cn.mutils.app.ui.TabBar;
 public abstract class OnSelectedChangeListener implements Listener {
 
 	/**
+	 * Override this method if you want to intercept try again for that {
+	 * {@link #onInterceptChange(View, int)} return false.
+	 * 
+	 * @param v
+	 * @param index
+	 * @return Return true to intercept try again
+	 */
+	public boolean onInterceptTryAgain(View v, int index) {
+		return true;
+	}
+
+	/**
 	 * Override this method if you want to intercept selected state change
 	 * 
 	 * @param v
