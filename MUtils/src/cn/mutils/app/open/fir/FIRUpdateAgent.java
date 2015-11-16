@@ -1,4 +1,4 @@
-package cn.mutils.app.fir;
+package cn.mutils.app.open.fir;
 
 import java.io.File;
 
@@ -13,10 +13,10 @@ import cn.mutils.app.core.event.listener.VersionUpdateListener;
 import cn.mutils.app.core.log.Logs;
 import cn.mutils.app.core.text.MBFormat;
 import cn.mutils.app.core.text.StringUtil;
-import cn.mutils.app.fir.FIRUpdateTask.FIRUpdateReq;
-import cn.mutils.app.fir.FIRUpdateTask.FIRUpdateRes;
 import cn.mutils.app.net.INetTask;
 import cn.mutils.app.net.NetTaskListener;
+import cn.mutils.app.open.fir.FIRUpdateTask.FIRUpdateReq;
+import cn.mutils.app.open.fir.FIRUpdateTask.FIRUpdateRes;
 import cn.mutils.app.task.ContextOwnerTask;
 import cn.mutils.app.ui.Alert;
 import cn.mutils.app.ui.Alert.AlertListener;

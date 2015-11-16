@@ -3,40 +3,24 @@ package cn.mutils.app;
 import java.lang.Thread.UncaughtExceptionHandler;
 
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.update.UmengUpdateAgent;
-import com.umeng.update.UpdateConfig;
-import com.umeng.update.UpdateStatus;
 
 import android.app.Application;
 import android.content.Context;
 import cn.jpush.android.api.JPushInterface;
+import cn.mutils.app.core.build.Edition;
 import cn.mutils.app.core.log.Logs;
 import cn.mutils.app.core.task.RepeatTask;
 import cn.mutils.app.core.task.RepeatTask.RepeatTaskListener;
 import cn.mutils.app.core.task.RepeatTaskManager;
+import cn.mutils.app.open.JPushHelper;
+import cn.mutils.app.open.ShareSDKHelper;
+import cn.mutils.app.open.UmengHelper;
 import cn.mutils.app.os.IContextProvider;
-import cn.sharesdk.framework.ShareSDK;
 
 /**
  * Application of framework
  */
 public class App extends Application implements IContextProvider {
-
-	/**
-	 * Application Edition
-	 */
-	public static enum Edition {
-
-		/** Debug edition */
-		DEBUG,
-
-		/** Beta edition */
-		BETA,
-
-		/** Release edition */
-		RELEASE
-
-	}
 
 	protected static App sApp;
 
@@ -61,36 +45,17 @@ public class App extends Application implements IContextProvider {
 		AppUtil.fixAsyncTask();
 
 		mEdition = detectEdition();
-		mUmengEnabled = AppUtil.getAppMetaData(this, "UMENG_APPKEY") != null;
+		mUmengEnabled = UmengHelper.isUmengEnabled(this);
 		if (mUmengEnabled) {
-			if (mEdition == Edition.DEBUG) {
-				MobclickAgent.setDebugMode(true);
-				MobclickAgent.setCatchUncaughtExceptions(false);
-				UpdateConfig.setDebug(true);
-			} else {
-				UmengUpdateAgent.setUpdateCheckConfig(false);
-			}
-			// Fix bug for downloading always
-			UmengUpdateAgent.setDeltaUpdate(false);
-			UmengUpdateAgent.setUpdateOnlyWifi(false);
-			UmengUpdateAgent.setUpdateUIStyle(UpdateStatus.STYLE_DIALOG);
-			UmengUpdateAgent.setUpdateAutoPopup(false);
+			UmengHelper.initUmeng(this);
 		}
-		mJPushEnabled = AppUtil.getAppMetaData(this, "JPUSH_APPKEY") != null;
+		mJPushEnabled = JPushHelper.isJPushEnabled(this);
 		if (mJPushEnabled) {
-			try {
-				if (mEdition == Edition.DEBUG) {
-					JPushInterface.setDebugMode(true);
-				}
-				JPushInterface.init(this);
-			} catch (Throwable tr) {
-				// java.lang.UnsatisfiedLinkError
-				Logs.e(AppUtil.TAG_ANDROID_RUNTIME, tr);
-			}
+			JPushHelper.initJPush(this);
 		}
-		mShareSDKEnabled = AppUtil.isAssetExists(this, "ShareSDK.xml");
+		mShareSDKEnabled = ShareSDKHelper.isShareSDKEnabled(this);
 		if (mShareSDKEnabled) {
-			ShareSDK.initSDK(this);
+			ShareSDKHelper.initShareSDK(this);
 		}
 	}
 
