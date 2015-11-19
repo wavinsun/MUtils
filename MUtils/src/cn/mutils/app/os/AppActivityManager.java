@@ -9,6 +9,18 @@ public class AppActivityManager {
 
 	protected static List<Activity> sActivitys;
 
+	public static boolean exists(Class<? extends Activity> activityCls) {
+		if (sActivitys == null) {
+			return false;
+		}
+		for (Activity activity : sActivitys) {
+			if (activityCls.isInstance(activity)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public static void redirectTo(Class<? extends Activity> activityCls) {
 		if (sActivitys == null) {
 			return;
