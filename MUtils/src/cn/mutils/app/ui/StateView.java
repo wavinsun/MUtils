@@ -112,15 +112,15 @@ public class StateView extends RelativeLayout
 	@Override
 	public void onStart() {
 		UICore.dispatchStart(this);
-		// Validate session or user login state
-		if (mSessionHolder) {
-			this.validateSession();
-		}
 	}
 
 	@Override
 	public void onResume() {
 		UICore.dispatchResume(this);
+		// Validate session or user login state
+		if (mSessionHolder) {
+			this.validateSession();
+		}
 	}
 
 	@Override

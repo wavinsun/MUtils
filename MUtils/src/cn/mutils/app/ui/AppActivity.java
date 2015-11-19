@@ -82,6 +82,10 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		finish();
 	}
 
+	public static boolean exists(Class<? extends Activity> activityCls) {
+		return AppActivityManager.exists(activityCls);
+	}
+
 	public static void redirectTo(Class<? extends Activity> activityCls) {
 		AppActivityManager.redirectTo(activityCls);
 	}
@@ -318,10 +322,6 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		if (mPatternLayerHelper != null) {
 			mPatternLayerHelper.onStart();
 		}
-		// Validate session or user login state
-		if (mSessionHolder) {
-			this.validateSession();
-		}
 	}
 
 	@Override
@@ -334,6 +334,10 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		mRunning = true;
 		mUmengHelper.onResume();
 		mJHelper.onResume();
+		// Validate session or user login state
+		if (mSessionHolder) {
+			this.validateSession();
+		}
 	}
 
 	@Override
