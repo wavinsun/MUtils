@@ -46,6 +46,8 @@ public class StateView extends RelativeLayout
 	protected boolean mCreateDispatched;
 	protected boolean mSessionHolder;
 
+	protected List<Runnable> mRunOnceOnResumeList;
+
 	public StateView(Context context) {
 		super(context);
 		init(context, null);
@@ -104,6 +106,13 @@ public class StateView extends RelativeLayout
 
 	}
 
+	public void runOnceOnResume(Runnable r) {
+		if (mRunOnceOnResumeList == null) {
+			mRunOnceOnResumeList = new ArrayList<Runnable>();
+		}
+		mRunOnceOnResumeList.add(r);
+	}
+
 	@Override
 	public void onCreate() {
 		UICore.injectContentView(this);
@@ -120,6 +129,12 @@ public class StateView extends RelativeLayout
 		// Validate session or user login state
 		if (mSessionHolder) {
 			this.validateSession();
+		}
+		if (mRunOnceOnResumeList != null) {
+			for (Runnable r : mRunOnceOnResumeList) {
+				r.run();
+			}
+			mRunOnceOnResumeList.clear();
 		}
 	}
 
