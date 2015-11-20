@@ -65,6 +65,8 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 	protected boolean mFinished;
 	protected boolean mSessionHolder;
 
+	protected List<Runnable> mRunOnceOnResumeList;
+
 	protected List<IStateView> mBindViews;
 	protected List<IStopable> mBindStopables;
 	protected Dispatcher mDispatcher;
@@ -294,6 +296,13 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 
 	}
 
+	public void runOnceOnResume(Runnable r) {
+		if (mRunOnceOnResumeList == null) {
+			mRunOnceOnResumeList = new ArrayList<Runnable>();
+		}
+		mRunOnceOnResumeList.add(r);
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Window w = this.getWindow();
@@ -337,6 +346,12 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		// Validate session or user login state
 		if (mSessionHolder) {
 			this.validateSession();
+		}
+		if (mRunOnceOnResumeList != null) {
+			for (Runnable r : mRunOnceOnResumeList) {
+				r.run();
+			}
+			mRunOnceOnResumeList.clear();
 		}
 	}
 
