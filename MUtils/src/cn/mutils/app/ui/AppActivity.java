@@ -408,6 +408,9 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		if (mPatternLayerHelper != null) {
 			mPatternLayerHelper.onDestroy();
 		}
+		if (mRunOnceOnResumeList != null) {
+			mRunOnceOnResumeList.clear();
+		}
 		UICore.dispatchDestroy(this);
 		AppActivityManager.detach(this);
 	}

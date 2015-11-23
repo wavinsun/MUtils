@@ -9,6 +9,15 @@ import cn.mutils.app.core.reflect.ReflectUtil;
 
 public class CollectionUtil {
 
+	public static void clear(Object[] array) {
+		if (array == null) {
+			return;
+		}
+		for (int i = 0, size = array.length; i < size; i++) {
+			array[i] = null;
+		}
+	}
+
 	public static <T> ArrayList<T> asArrayList(T[] array) {
 		ArrayList<T> arrayList = new ArrayList<T>();
 		if (array == null) {

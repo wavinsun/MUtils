@@ -6,7 +6,7 @@ import cn.mutils.app.net.INetQueueOwner;
 import cn.mutils.app.ui.pattern.IPatternOwner;
 
 public interface IActivity extends IFragmenterManager, INetQueueOwner, IPatternOwner, IAsyncDataQueueOwner, IToastOwner,
-		IStopableManager, IActivityExecutor, IContentViewOwner, IWindowProvider, IStatusBarOwner {
+		IStopableManager, IActivityExecutor, IContentViewOwner, IWindowProvider, IStatusBarOwner, IRunOnceHolder {
 
 	public boolean isBusy();
 
