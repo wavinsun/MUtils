@@ -25,6 +25,7 @@ import cn.mutils.app.net.INetQueueOwner;
 import cn.mutils.app.net.INetTask;
 import cn.mutils.app.task.DelayTask;
 import cn.mutils.app.ui.core.IContentViewOwner;
+import cn.mutils.app.ui.core.IRunOnceHolder;
 import cn.mutils.app.ui.core.ISessionHolder;
 import cn.mutils.app.ui.core.IStateView;
 import cn.mutils.app.ui.core.IStateViewManager;
@@ -32,8 +33,8 @@ import cn.mutils.app.ui.core.IToastOwner;
 import cn.mutils.app.ui.core.UICore;
 
 @SuppressLint("ShowToast")
-public class StateView extends RelativeLayout
-		implements IStateView, ISessionHolder, IStateViewManager, IStopableManager, IToastOwner, IContentViewOwner {
+public class StateView extends RelativeLayout implements IStateView, ISessionHolder, IRunOnceHolder, IStateViewManager,
+		IStopableManager, IToastOwner, IContentViewOwner {
 
 	protected IStateViewManager mManager;
 	protected List<IStateView> mBindViews;
@@ -150,6 +151,9 @@ public class StateView extends RelativeLayout
 
 	@Override
 	public void onDestroy() {
+		if (mRunOnceOnResumeList != null) {
+			mRunOnceOnResumeList.clear();
+		}
 		UICore.dispatchDestroy(this);
 	}
 
