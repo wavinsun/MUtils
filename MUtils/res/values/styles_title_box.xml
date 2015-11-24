@@ -17,8 +17,10 @@
     </style>
     
     <style name="TitleBoxName" parent="Wrap">
-        <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_marginLeft">@dimen/title_box_size</item>
+        <item name="android:layout_marginRight">@dimen/title_box_size</item>
+        <item name="android:singleLine">true</item>
         <item name="android:textColor">#FFF</item>
         <item name="android:textSize">@dimen/title_box_text_size</item>
         <item name="android:id">@id/title_box_name</item>
