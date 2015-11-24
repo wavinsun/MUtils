@@ -2,23 +2,23 @@ package cn.mutils.app.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.GridView;
+import android.widget.ListView;
 
-public class GridViewer extends GridView {
+public class ListViewer extends ListView {
 
 	/** 设置是否高度全部显示 */
-	protected boolean mShowAll = false;
+	protected boolean mShowAll;
 
-	public GridViewer(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
-
-	public GridViewer(Context context) {
+	public ListViewer(Context context) {
 		super(context);
 	}
 
-	public GridViewer(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
+	public ListViewer(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
+
+	public ListViewer(Context context, AttributeSet attrs, int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
 	}
 
 	public boolean isShowAll() {
@@ -34,7 +34,7 @@ public class GridViewer extends GridView {
 	}
 
 	@Override
-	public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		if (mShowAll) {
 			heightMeasureSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
 		}
