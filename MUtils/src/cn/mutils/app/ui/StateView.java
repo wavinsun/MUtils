@@ -7,6 +7,8 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,6 +25,7 @@ import cn.mutils.app.data.IAsyncDataTask;
 import cn.mutils.app.event.listener.OnActivityResultListener;
 import cn.mutils.app.net.INetQueueOwner;
 import cn.mutils.app.net.INetTask;
+import cn.mutils.app.os.IHandlerProvider;
 import cn.mutils.app.task.DelayTask;
 import cn.mutils.app.ui.core.IContentViewOwner;
 import cn.mutils.app.ui.core.IRunOnceHolder;
@@ -33,8 +36,8 @@ import cn.mutils.app.ui.core.IToastOwner;
 import cn.mutils.app.ui.core.UICore;
 
 @SuppressLint("ShowToast")
-public class StateView extends RelativeLayout implements IStateView, ISessionHolder, IRunOnceHolder, IStateViewManager,
-		IStopableManager, IToastOwner, IContentViewOwner {
+public class StateView extends RelativeLayout implements IStateView, ISessionHolder, IRunOnceHolder, IHandlerProvider,
+		IStateViewManager, IStopableManager, IToastOwner, IContentViewOwner {
 
 	protected IStateViewManager mManager;
 	protected List<IStateView> mBindViews;
@@ -45,9 +48,9 @@ public class StateView extends RelativeLayout implements IStateView, ISessionHol
 	protected Toast mToast;
 
 	protected boolean mCreateDispatched;
-	protected boolean mSessionHolder;
 
 	protected List<Runnable> mRunOnceOnResumeList;
+	protected Handler mHandler;
 
 	public StateView(Context context) {
 		super(context);
@@ -99,11 +102,26 @@ public class StateView extends RelativeLayout implements IStateView, ISessionHol
 
 	@Override
 	public boolean isSessionHolder() {
-		return mSessionHolder;
+		return false;
 	}
 
 	@Override
 	public void validateSession() {
+
+	}
+
+	@Override
+	public boolean hasSession() {
+		return false;
+	}
+
+	@Override
+	public boolean isSessionChanged() {
+		return false;
+	}
+
+	@Override
+	public void onSessionChanged() {
 
 	}
 
@@ -128,8 +146,11 @@ public class StateView extends RelativeLayout implements IStateView, ISessionHol
 	public void onResume() {
 		UICore.dispatchResume(this);
 		// Validate session or user login state
-		if (mSessionHolder) {
+		if (this.isSessionHolder()) {
 			this.validateSession();
+			if (this.isSessionChanged()) {
+				getHandler().post(new OnSessionChangedRunnable());
+			}
 		}
 		if (mRunOnceOnResumeList != null) {
 			for (Runnable r : mRunOnceOnResumeList) {
@@ -153,6 +174,9 @@ public class StateView extends RelativeLayout implements IStateView, ISessionHol
 	public void onDestroy() {
 		if (mRunOnceOnResumeList != null) {
 			mRunOnceOnResumeList.clear();
+		}
+		if (mHandler != null) {
+			mHandler.removeCallbacksAndMessages(null);
 		}
 		UICore.dispatchDestroy(this);
 	}
@@ -240,7 +264,7 @@ public class StateView extends RelativeLayout implements IStateView, ISessionHol
 			return;
 		}
 		if (message instanceof CookieExpiredException) {
-			if (mSessionHolder) {
+			if (this.isSessionHolder()) {
 				this.validateSession();
 			}
 		}
@@ -300,6 +324,14 @@ public class StateView extends RelativeLayout implements IStateView, ISessionHol
 		mCreateDispatched = dispatched;
 	}
 
+	@Override
+	public Handler getHandler() {
+		if (mHandler == null) {
+			mHandler = new Handler(Looper.getMainLooper());
+		}
+		return mHandler;
+	}
+
 	public InfoToast getInfoToast() {
 		return mInfoToast;
 	}
@@ -352,6 +384,15 @@ public class StateView extends RelativeLayout implements IStateView, ISessionHol
 			return;
 		}
 		mDispatcher.removeListener(OnActivityResultListener.EVENT_TYPE, listener);
+	}
+
+	class OnSessionChangedRunnable implements Runnable {
+
+		@Override
+		public void run() {
+			onSessionChanged();
+		}
+
 	}
 
 }

@@ -7,7 +7,18 @@ import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.beans.BeanField;
 import cn.mutils.app.core.reflect.ReflectUtil;
 
+@SuppressWarnings("unchecked")
 public class CollectionUtil {
+
+	public static <T extends List<E>, E> T truncate(T list, int maxSize) {
+		if (list == null) {
+			return list;
+		}
+		if (list.size() <= maxSize) {
+			return list;
+		}
+		return (T) list.subList(0, maxSize);
+	}
 
 	public static void clear(Object[] array) {
 		if (array == null) {
