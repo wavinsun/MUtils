@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -63,9 +65,9 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 	protected boolean mBusy;
 	protected boolean mRunning;
 	protected boolean mFinished;
-	protected boolean mSessionHolder;
 
 	protected List<Runnable> mRunOnceOnResumeList;
+	protected Handler mHandler;
 
 	protected List<IStateView> mBindViews;
 	protected List<IStopable> mBindStopables;
@@ -98,6 +100,14 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 
 	public Context getContext() {
 		return this;
+	}
+
+	@Override
+	public Handler getHandler() {
+		if (mHandler == null) {
+			mHandler = new Handler(Looper.getMainLooper());
+		}
+		return mHandler;
 	}
 
 	@Override
@@ -288,11 +298,26 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 
 	@Override
 	public boolean isSessionHolder() {
-		return mSessionHolder;
+		return false;
 	}
 
 	@Override
 	public void validateSession() {
+
+	}
+
+	@Override
+	public boolean hasSession() {
+		return false;
+	}
+
+	@Override
+	public boolean isSessionChanged() {
+		return false;
+	}
+
+	@Override
+	public void onSessionChanged() {
 
 	}
 
@@ -344,8 +369,11 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		mUmengHelper.onResume();
 		mJHelper.onResume();
 		// Validate session or user login state
-		if (mSessionHolder) {
+		if (this.isSessionHolder()) {
 			this.validateSession();
+			if (this.isSessionChanged()) {
+				getHandler().post(new OnSessionChangedRunnable());
+			}
 		}
 		if (mRunOnceOnResumeList != null) {
 			for (Runnable r : mRunOnceOnResumeList) {
@@ -410,6 +438,9 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		}
 		if (mRunOnceOnResumeList != null) {
 			mRunOnceOnResumeList.clear();
+		}
+		if (mHandler != null) {
+			mHandler.removeCallbacksAndMessages(null);
 		}
 		UICore.dispatchDestroy(this);
 		AppActivityManager.detach(this);
@@ -552,7 +583,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 			return;
 		}
 		if (message instanceof CookieExpiredException) {
-			if (mSessionHolder) {
+			if (this.isSessionHolder()) {
 				this.validateSession();
 			}
 		}
@@ -640,6 +671,15 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		@Override
 		public void onClick(View v) {
 			onClickTitleBoxBackBtn();
+		}
+
+	}
+
+	class OnSessionChangedRunnable implements Runnable {
+
+		@Override
+		public void run() {
+			onSessionChanged();
 		}
 
 	}

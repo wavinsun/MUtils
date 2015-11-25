@@ -18,4 +18,21 @@ public interface ISessionHolder {
 	 */
 	public void validateSession();
 
+	/**
+	 * Whether has session
+	 */
+	public boolean hasSession();
+
+	/**
+	 * Whether session is changed
+	 * 
+	 * @return
+	 */
+	public boolean isSessionChanged();
+
+	/**
+	 * Happens on session changed
+	 */
+	public void onSessionChanged();
+
 }
