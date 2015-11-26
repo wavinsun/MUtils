@@ -9,6 +9,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 
 import android.view.Gravity;
 import cn.mutils.app.AppUtil;
+import cn.mutils.app.core.IClearable;
 import cn.mutils.app.core.event.listener.VersionUpdateListener;
 import cn.mutils.app.core.log.Logs;
 import cn.mutils.app.core.text.MBFormat;
@@ -24,7 +25,7 @@ import cn.mutils.app.ui.Alert.AlertListener;
 /**
  * Fly It Remotely Update Agent
  */
-public class FIRUpdateAgent extends ContextOwnerTask {
+public class FIRUpdateAgent extends ContextOwnerTask implements IClearable {
 
 	/** FIR download APK directory name */
 	public static final String FIR_DIR = "FIR";
@@ -62,6 +63,7 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 	@Override
 	protected void onStop() {
 		mUpdateTask.stop();
+		clear();
 	}
 
 	public void setListener(VersionUpdateListener listener) {
@@ -120,6 +122,13 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 		mAlert = alert;
 	}
 
+	public void clear() {
+		mContext = null;
+		mAlert = null;
+		mVersionUpdateListener = null;
+		mDownloadCallBack = null;
+	}
+
 	class FirUpdateTaskListener extends NetTaskListener<FIRUpdateTask.FIRUpdateReq, FIRUpdateTask.FIRUpdateRes> {
 
 		@Override
@@ -142,10 +151,12 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 					if (mVersionUpdateListener != null) {
 						mVersionUpdateListener.onNo();
 					}
+					clear();
 					return;
 				} else {
 					if (mVersionUpdateListener != null) {
 						if (mVersionUpdateListener.onYes(versionShort)) {
+							clear();
 							return;
 						}
 					}
@@ -157,10 +168,12 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 				if (mVersionUpdateListener != null) {
 					mVersionUpdateListener.onNo();
 				}
+				clear();
 				return;
 			}
 			if (mVersionUpdateListener != null) {
 				if (mVersionUpdateListener.onYes(versionShort)) {
+					clear();
 					return;
 				}
 			}
@@ -209,6 +222,9 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 			sb.append(".apk");
 			if (mTargetVersion == null) {
 				new HttpUtils().download(mInstallUrl, sb.toString(), mDownloadCallBack);
+				if (mDownloadCallBack == null) {
+					clear();
+				}
 			} else {
 				if (sTargetVersionDownloading == null) {
 					sTargetVersionDownloading = new Object();
@@ -223,6 +239,7 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 			if (mVersionUpdateListener != null) {
 				mVersionUpdateListener.onUpdateCancel(mVersionShort);
 			}
+			clear();
 			return false;
 		}
 	}
@@ -238,6 +255,7 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 				renameTo.delete();
 			}
 			responseInfo.result.renameTo(renameTo);
+			clear();
 		}
 
 		@Override
@@ -248,6 +266,7 @@ public class FIRUpdateAgent extends ContextOwnerTask {
 			if (file.exists()) {
 				file.delete();
 			}
+			clear();
 		}
 
 	}
