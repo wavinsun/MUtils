@@ -77,6 +77,31 @@ public class Bounds {
 	}
 
 	/**
+	 * Get center crop bounds for moving source graphics object into target
+	 * graphics object
+	 * 
+	 * @param targetWidth
+	 *            target graphics object width
+	 * @param targetHeight
+	 *            target graphics object height
+	 * @param srcWidth
+	 *            source graphics object width
+	 * @param srcHeight
+	 *            source graphics object height
+	 * @return
+	 */
+	public static Bounds getCenterCropBounds(double targetWidth, double targetHeight, double srcWidth,
+			double srcHeight) {
+		Bounds b = getFillBounds(srcWidth, srcHeight, targetWidth, targetHeight);
+		double ratio = targetWidth / b.width;
+		b.width = srcWidth * ratio;
+		b.height = srcHeight * ratio;
+		b.x = -b.x * ratio;
+		b.y = -b.y * ratio;
+		return b;
+	}
+
+	/**
 	 * Get fit bounds for moving source graphics object into target graphics
 	 * object
 	 * 

@@ -7,7 +7,7 @@ import com.umeng.analytics.MobclickAgent;
 import android.app.Application;
 import android.content.Context;
 import cn.jpush.android.api.JPushInterface;
-import cn.mutils.app.core.build.Edition;
+import cn.mutils.app.core.compile.Edition;
 import cn.mutils.app.core.log.Logs;
 import cn.mutils.app.core.task.RepeatTask;
 import cn.mutils.app.core.task.RepeatTask.RepeatTaskListener;
