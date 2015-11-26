@@ -49,6 +49,7 @@ import cn.mutils.app.ui.core.ISessionHolder;
 import cn.mutils.app.ui.core.IStateView;
 import cn.mutils.app.ui.core.IToastOwner;
 import cn.mutils.app.ui.core.UICore;
+import cn.mutils.app.ui.motion.DoubleBackClickHelper;
 import cn.mutils.app.ui.pattern.PatternDialog;
 import cn.mutils.app.ui.pattern.PatternLayerHelper;
 
@@ -81,6 +82,19 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 	protected RelativeLayout mTitleBox;
 	protected TextView mTitleBoxName;
 	protected ImageView mTitleBoxBackButton;
+
+	protected DoubleBackClickHelper mDoubleBackClickHelper;
+
+	public boolean isDoubleBackClickEnabled() {
+		return mDoubleBackClickHelper == null ? false : mDoubleBackClickHelper.isEnabled();
+	}
+
+	public void setDoubleBackClickEnabled(boolean enabled) {
+		if (mDoubleBackClickHelper == null) {
+			mDoubleBackClickHelper = new DoubleBackClickHelper(this);
+		}
+		mDoubleBackClickHelper.setEnabled(enabled);
+	}
 
 	protected void onClickTitleBoxBackBtn() {
 		finish();
@@ -461,6 +475,11 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		if (mBusy) {
 			this.setBusy(false);
 			return true;
+		}
+		if (this.isDoubleBackClickEnabled()) {
+			if (mDoubleBackClickHelper.onInterceptBackPressed()) {
+				return true;
+			}
 		}
 		return false;
 	}
