@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.WindowManager;
 import cn.mutils.app.AppUtil;
+import cn.mutils.app.core.codec.FlagUtil;
 import cn.mutils.app.ui.core.IStatusBarOwner;
 
 @SuppressLint("DrawAllocation")
@@ -43,8 +44,7 @@ public class StatusBox extends View {
 					if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
 						if (context instanceof Activity) {
 							int flags = ((Activity) context).getWindow().getAttributes().flags;
-							if ((WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-									& flags) == WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) {
+							if (FlagUtil.hasFlags(flags, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)) {
 								mMeasuredHeight = AppUtil.getStatusBarHeight(context);
 							} else {
 								mMeasuredHeight = 0;

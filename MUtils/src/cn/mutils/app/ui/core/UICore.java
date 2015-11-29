@@ -618,7 +618,7 @@ public class UICore {
 		if (resId == 0) {
 			t.cancel();
 		} else {
-			if (args != null & args.length != 0) {
+			if (args != null && args.length != 0) {
 				Context context = owner.getContext();
 				t.setText(context.getString(resId, args));
 			} else {

@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.security.MessageDigest;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -438,6 +439,22 @@ public class StringUtil {
 
 	public static boolean isEmpty(String str) {
 		return str == null ? true : str.isEmpty();
+	}
+
+	public static String zeroPadding(String str, int length) {
+		if (str == null) {
+			return str;
+		}
+		int paddingLength = length - str.length();
+		if (paddingLength <= 0) {
+			return str;
+		}
+		char[] padding = new char[paddingLength];
+		Arrays.fill(padding, '0');
+		StringBuilder sb = new StringBuilder();
+		sb.append(padding);
+		sb.append(str);
+		return sb.toString();
 	}
 
 }
