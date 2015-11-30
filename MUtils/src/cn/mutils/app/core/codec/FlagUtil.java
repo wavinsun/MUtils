@@ -51,7 +51,7 @@ public class FlagUtil {
 	 *            [1,32]
 	 * @return Flag value
 	 */
-	public static boolean getFlag(int flags, int bit) {
+	public static boolean getValue(int flags, int bit) {
 		if (bit <= 0 || bit > 32) {
 			return false;
 		}
@@ -70,7 +70,7 @@ public class FlagUtil {
 	 * @param value
 	 * @return Flags assigned
 	 */
-	public static int setFlag(int flags, int bit, boolean value) {
+	public static int setValue(int flags, int bit, boolean value) {
 		if (bit <= 0 || bit > 32) {
 			return flags;
 		}
@@ -88,7 +88,7 @@ public class FlagUtil {
 	 * @return
 	 */
 	public static int obtainFlag(int bit) {
-		return FlagUtil.setFlag(FlagUtil.FLAGS_FALSE, bit, true);
+		return FlagUtil.setValue(FlagUtil.FLAGS_FALSE, bit, true);
 	}
 
 	/**
@@ -124,6 +124,18 @@ public class FlagUtil {
 	 */
 	public static int clearFlags(int flags, int mask) {
 		return flags & (~mask);
+	}
+
+	/**
+	 * Set mask flags for source flags
+	 * 
+	 * @param flags
+	 * @param mask
+	 * @param value
+	 * @return
+	 */
+	public static int setFlags(int flags, int mask, boolean value) {
+		return value ? (flags | mask) : (flags & (~mask));
 	}
 
 	/**

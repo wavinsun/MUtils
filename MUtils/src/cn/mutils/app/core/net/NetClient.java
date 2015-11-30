@@ -33,6 +33,7 @@ import org.apache.http.util.EntityUtils;
 import cn.mutils.app.core.IClearable;
 import cn.mutils.app.core.annotation.net.Head;
 import cn.mutils.app.core.beans.BeanField;
+import cn.mutils.app.core.codec.FlagUtil;
 import cn.mutils.app.core.event.Listener;
 import cn.mutils.app.core.json.JsonUtil;
 import cn.mutils.app.core.reflect.ReflectUtil;
@@ -157,13 +158,66 @@ public class NetClient<REQUEST, RESPONSE> {
 	public static final String EVENT_ELASE_TIME = "event.elapse.time";
 	public static final String EVENT_REQUEST_HEADERS = "event.request.headers";
 
+	/**
+	 * Flag of request convertible<br>
+	 * Whether request is convertible
+	 */
+	public static final int FLAG_REQUEST_CONVERTIBLE = FlagUtil.FLAG_01;
+
+	/**
+	 * Flag of response convertible<br>
+	 * Whether response is convertible
+	 */
+	public static final int FLAG_RESPONSE_CONVERTIBLE = FlagUtil.FLAG_02;
+
+	/**
+	 * Flag of split array parameters<br>
+	 * Whether to request by split array parameters: ids=1,2,3&name=wavinsun
+	 */
+	public static final int FLAG_SPLIT_ARRAY_PARAMS = FlagUtil.FLAG_03;
+
+	/**
+	 * Flag of rest URL<br>
+	 * Whether to request by restful URL: http://www.xxx.cn/detail/{id}/{name}/
+	 */
+	public static final int FLAG_REST_URL = FlagUtil.FLAG_04;
+
+	/**
+	 * Flag of post parameters<br>
+	 * Whether to request by post parameter:id=1&name=wavinsun
+	 */
+	public static final int FLAG_POST_PARAMS = FlagUtil.FLAG_05;
+
+	/**
+	 * Flag of post JSON<br>
+	 * Whether to request by post JSON: {"id":1,name:"wavinsun"}
+	 */
+	public static final int FLAG_POST_JSON = FlagUtil.FLAG_06;
+
+	/**
+	 * Flag of post JSON signed<br>
+	 * Whether to request by signed JSON:<br>
+	 * {"key":"key","sign_type":"MD5","sign":"sign_result","data":"data"}
+	 */
+	public static final int FLAG_POST_JSON_SIGNED = FlagUtil.FLAG_07;
+
+	/**
+	 * Flag of cookie with request<br>
+	 * Whether to use cookie cached to make request
+	 */
+	public static final int FLAG_COOKIE_WITH_REQUEST = FlagUtil.FLAG_08;
+
+	/**
+	 * Flag of cookie with response<br>
+	 * Whether to cache cookie responded
+	 */
+	public static final int FLAG_COOKIE_WITH_RESPONSE = FlagUtil.FLAG_09;
+
 	protected REQUEST mRequest;
 
 	protected RESPONSE mResponse;
 
-	protected boolean mRequestConvertible;
-
-	protected boolean mResponseConvertible;
+	protected int mFlags = FlagUtil.FLAGS_FALSE;
 
 	/**
 	 * Response object converted by {@link #convertFromResponse(Object)}
@@ -178,32 +232,6 @@ public class NetClient<REQUEST, RESPONSE> {
 
 	/** Value of HTTP head Refer */
 	protected String mReferer;
-
-	/** Whether to request by split array parameters: ids=1,2,3&name=wavinsun */
-	protected boolean mSplitArrayParams = true;
-
-	/**
-	 * Whether to request by restful URL: http://www.xxx.cn/detail/{id}/{name}/
-	 */
-	protected boolean mRestUrl;
-
-	/** Whether to request by post parameter:id=1&name=wavinsun */
-	protected boolean mPostParams;
-
-	/** Whether to request by post JSON: {"id":1,name:"wavinsun"} */
-	protected boolean mPostJson;
-
-	/**
-	 * Whether to request by signed JSON:
-	 * {"key":"key","sign_type":"MD5","sign":"sign_result","data":"data"}
-	 */
-	protected boolean mPostJsonSigned;
-
-	/** Whether to use cookie cached to make request */
-	protected boolean mCookieWithRequest;
-
-	/** Whether to cache cookie responded */
-	protected boolean mCookieWithResponse;
 
 	/** Cookie identity */
 	protected String mCookieCacheId = "JSESSIONID";
@@ -226,6 +254,10 @@ public class NetClient<REQUEST, RESPONSE> {
 
 	protected NetClientListener<REQUEST, RESPONSE> mListener;
 
+	public NetClient() {
+		setSplitArrayParams(true);
+	}
+
 	public NetClientListener<REQUEST, RESPONSE> getListener() {
 		return mListener;
 	}
@@ -243,67 +275,75 @@ public class NetClient<REQUEST, RESPONSE> {
 	}
 
 	public boolean isSplitArrayParams() {
-		return mSplitArrayParams;
+		return FlagUtil.hasFlags(mFlags, FLAG_SPLIT_ARRAY_PARAMS);
 	}
 
-	public void setSplitArrayParams(boolean splitArrayParams) {
-		mSplitArrayParams = splitArrayParams;
+	public void setSplitArrayParams(boolean value) {
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_SPLIT_ARRAY_PARAMS, value);
 	}
 
 	public boolean isRestUrl() {
-		return mRestUrl;
+		return FlagUtil.hasFlags(mFlags, FLAG_REST_URL);
 	}
 
-	public void setRestUrl(boolean restUrl) {
-		mRestUrl = restUrl;
+	public void setRestUrl(boolean value) {
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_REST_URL, value);
 	}
 
 	public boolean isPostParams() {
-		return mPostParams;
+		return FlagUtil.hasFlags(mFlags, FLAG_POST_PARAMS);
 	}
 
-	public void setPostParams(boolean postParams) {
-		mPostParams = postParams;
+	public void setPostParams(boolean value) {
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_POST_PARAMS, value);
 	}
 
 	public boolean isPostJson() {
-		return mPostJson;
+		return FlagUtil.hasFlags(mFlags, FLAG_POST_JSON);
 	}
 
-	public void setPostJson(boolean postJson) {
-		mPostJson = postJson;
+	public void setPostJson(boolean value) {
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_POST_JSON, value);
 	}
 
-	public void setPostJsonSigned(boolean postJsonSigned) {
-		mPostJsonSigned = postJsonSigned;
+	public boolean isPostJsonSigned() {
+		return FlagUtil.hasFlags(mFlags, FLAG_POST_JSON_SIGNED);
 	}
 
-	public void setCookieWithRequest(boolean cookieWithRequest) {
-		mCookieWithRequest = cookieWithRequest;
+	public void setPostJsonSigned(boolean value) {
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_POST_JSON_SIGNED, value);
 	}
 
-	public void setCookieWithResponse(boolean cookieWithResponse) {
-		mCookieWithResponse = cookieWithResponse;
+	public boolean isCookieWithRequest() {
+		return FlagUtil.hasFlags(mFlags, FLAG_COOKIE_WITH_REQUEST);
 	}
 
-	public void setCookieCachedId(String cookieCachedId) {
-		mCookieCacheId = cookieCachedId;
+	public void setCookieWithRequest(boolean value) {
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_COOKIE_WITH_REQUEST, value);
+	}
+
+	public boolean isCookieWithResponse() {
+		return FlagUtil.hasFlags(mFlags, FLAG_COOKIE_WITH_RESPONSE);
+	}
+
+	public void setCookieWithResponse(boolean value) {
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_COOKIE_WITH_RESPONSE, value);
 	}
 
 	public boolean isRequestConvertible() {
-		return mRequestConvertible;
+		return FlagUtil.hasFlags(mFlags, FLAG_REQUEST_CONVERTIBLE);
 	}
 
-	public void setRequestConvertible(boolean requestConvertible) {
-		mRequestConvertible = requestConvertible;
+	public void setRequestConvertible(boolean value) {
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_REQUEST_CONVERTIBLE, value);
 	}
 
 	public boolean isResponseConvertible() {
-		return mResponseConvertible;
+		return FlagUtil.hasFlags(mFlags, FLAG_RESPONSE_CONVERTIBLE);
 	}
 
-	public void setResponseConvertible(boolean responseConvertible) {
-		mResponseConvertible = responseConvertible;
+	public void setResponseConvertible(boolean value) {
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_RESPONSE_CONVERTIBLE, value);
 	}
 
 	public Object getResponseConverted() {
@@ -312,6 +352,10 @@ public class NetClient<REQUEST, RESPONSE> {
 
 	public void setResponseConverted(Object responseConverted) {
 		mResponseConverted = responseConverted;
+	}
+
+	public void setCookieCachedId(String cookieCachedId) {
+		mCookieCacheId = cookieCachedId;
 	}
 
 	public String getUrl() {
@@ -360,29 +404,29 @@ public class NetClient<REQUEST, RESPONSE> {
 		clientParams.setParameter(CoreConnectionPNames.SO_TIMEOUT, 60000);
 		clientParams.setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10000);
 		try {
-			if (mRequestConvertible && mListener != null) {
+			if (isRequestConvertible() && mListener != null) {
 				mRequest = mListener.convertToRequest();
 			}
-			String params = null, spec = mRestUrl ? convertToRestUrl(mRequest, mUrl) : mUrl;
+			String params = null, spec = isRestUrl() ? convertToRestUrl(mRequest, mUrl) : mUrl;
 			URL url = new URL(spec);
 			HttpUriRequest httpRequest = null;
 			if (REQUEST_METHOD_POST.equals(mRequestMethod)) {
 				httpRequest = new HttpPost(url.toURI());
-				params = mPostParams ? convertToParameters(mRequest, mSplitArrayParams) : null;
-				if (mPostJson) {
-					if (mPostJsonSigned && mListener != null) {
+				params = isPostParams() ? convertToParameters(mRequest, isSplitArrayParams()) : null;
+				if (isPostJson()) {
+					if (isPostJsonSigned() && mListener != null) {
 						params = JsonUtil.convert(mListener.signPostJson(mRequest));
 					} else {
 						params = JsonUtil.convert(mRequest);
 					}
 				}
 				HttpEntity entity = convertToEntity(params != null ? params : mRequest);
-				if (mPostJson && entity != null) {
+				if (isPostJson() && entity != null) {
 					((StringEntity) entity).setContentType("application/json");
 				}
 				((HttpPost) httpRequest).setEntity(entity);
 			} else {
-				params = convertToParameters(mRequest, mSplitArrayParams);
+				params = convertToParameters(mRequest, isSplitArrayParams());
 				httpRequest = new HttpGet(spec + (spec.contains("?") ? "&" : "?") + params);
 			}
 			String headers = convertToHeaders(mRequest, httpRequest);
@@ -396,9 +440,8 @@ public class NetClient<REQUEST, RESPONSE> {
 					mListener.debugging(EVENT_REQUEST_HEADERS, headers);
 				}
 			}
-			if (mCookieWithRequest) {
-				String cookie = (mCookieWithRequest && mListener != null) ? mListener.requestCookie(url)
-						: (mCookieCacheId + "=Cookie");
+			if (isCookieWithRequest()) {
+				String cookie = mListener != null ? mListener.requestCookie(url) : (mCookieCacheId + "=Cookie");
 				httpRequest.setHeader("Cookie", cookie);
 				if (mListener != null) {
 					mListener.debugging(EVENT_REQUEST_COOKIE, cookie);
@@ -423,7 +466,7 @@ public class NetClient<REQUEST, RESPONSE> {
 				throw new HttpStatusException(statusCode,
 						getStackTrace(response, mHttp500HtmlRegex, mHttp500HtmlRegexGroup));
 			}
-			if (mCookieWithResponse) {
+			if (isCookieWithResponse()) {
 				List<Cookie> cookies = client.getCookieStore().getCookies();
 				if (cookies != null) {
 					for (Cookie c : cookies) {
@@ -451,7 +494,7 @@ public class NetClient<REQUEST, RESPONSE> {
 				mListener.errorCodeVerify(resJson);
 			}
 			mResponse = resJson;
-			if (mResponseConvertible && mListener != null) {
+			if (isResponseConvertible() && mListener != null) {
 				mResponseConverted = mListener.convertFromResponse(mResponse);
 			}
 			return resJson;

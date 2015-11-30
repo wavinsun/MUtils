@@ -1,22 +1,33 @@
 package cn.mutils.app.ui.web;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
+import cn.mutils.app.event.listener.OnActivityResultListener;
 import cn.mutils.app.ui.StateView;
 
 /**
  * Implements {@link IWebFrame}
  */
-@SuppressLint("SetJavaScriptEnabled")
+@SuppressLint({ "NewApi", "SetJavaScriptEnabled" })
 @SuppressWarnings("serial")
 public class WebFrame extends StateView implements IWebFrame {
 
 	protected WebView mWebView;
+
+	protected WebFrameChromeClient mWebFrameChromeClient;
 
 	protected IWebJSInterface mWebJSInterface;
 
@@ -40,15 +51,32 @@ public class WebFrame extends StateView implements IWebFrame {
 	}
 
 	protected void init(Context context, AttributeSet attrs) {
+		mWebFrameChromeClient = new WebFrameChromeClient();
+		mWebFrameChromeClient.setContext(context);
 		mWebView = new WebView(context);
 		mWebView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT));
 		mWebView.setWebViewClient(new WebFrameClient());
-		mWebView.setWebChromeClient(new WebFrameChromeClient());
-		mWebView.getSettings().setJavaScriptEnabled(true);
+		mWebView.setWebChromeClient(mWebFrameChromeClient);
+		WebSettings settings = mWebView.getSettings();
+		settings.setJavaScriptEnabled(true);
+		settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 		this.addView(mWebView);
 		this.setWebJSInterface(new WebJSInterface());
 		this.setWebMessageManager(new WebMessageManager());
+		this.addOnActivityResultListener(new OnWebActivityResultListener());
+	}
+
+	public String getLogs() {
+		return mWebFrameChromeClient.getLogs();
+	}
+
+	public void setDebug(boolean debug) {
+		mWebFrameChromeClient.setDebug(debug);
+	}
+
+	public void setFileChooserRequestCode(int requestCode) {
+		mWebFrameChromeClient.setFileChooserRequestCode(requestCode);
 	}
 
 	@Override
@@ -198,6 +226,50 @@ public class WebFrame extends StateView implements IWebFrame {
 		public void run() {
 			if (mWebMessageManager != null) {
 				mWebMessageManager.dispatchMessage(mMesssage);
+			}
+		}
+
+	}
+
+	class OnWebActivityResultListener implements OnActivityResultListener {
+
+		@Override
+		public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
+			if (requestCode == mWebFrameChromeClient.getFileChooserRequestCode()) {
+				if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+					ValueCallback<Uri[]> msgs = mWebFrameChromeClient.getUploadMessages();
+					if (msgs == null) {
+						return;
+					}
+					Uri[] results = null;
+					if (resultCode == Activity.RESULT_OK) {
+						ClipData clipData = null;
+						String dataString = data.getDataString();
+						if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
+							clipData = data.getClipData();
+						}
+						if (clipData != null) {
+							results = new Uri[clipData.getItemCount()];
+							for (int i = 0; i < clipData.getItemCount(); i++) {
+								ClipData.Item item = clipData.getItemAt(i);
+								results[i] = item.getUri();
+							}
+						}
+						if (dataString != null) {
+							results = new Uri[] { Uri.parse(dataString) };
+						}
+					}
+					msgs.onReceiveValue(results);
+					mWebFrameChromeClient.setUploadMessages(null);
+				} else {
+					ValueCallback<Uri> msg = mWebFrameChromeClient.getUploadMessage();
+					if (msg == null) {
+						return;
+					}
+					Uri result = (data == null || resultCode != Activity.RESULT_OK) ? null : data.getData();
+					msg.onReceiveValue(result);
+					mWebFrameChromeClient.setUploadMessage(null);
+				}
 			}
 		}
 
