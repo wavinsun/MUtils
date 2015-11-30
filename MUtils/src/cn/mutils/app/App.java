@@ -7,6 +7,7 @@ import com.umeng.analytics.MobclickAgent;
 import android.app.Application;
 import android.content.Context;
 import cn.jpush.android.api.JPushInterface;
+import cn.mutils.app.core.codec.FlagUtil;
 import cn.mutils.app.core.compile.Edition;
 import cn.mutils.app.core.log.Logs;
 import cn.mutils.app.core.task.RepeatTask;
@@ -22,13 +23,13 @@ import cn.mutils.app.os.IContextProvider;
  */
 public class App extends Application implements IContextProvider {
 
+	public static final int FLAG_UMENG = FlagUtil.FLAG_01;
+	public static final int FLAG_JPUSH = FlagUtil.FLAG_02;
+	public static final int FLAG_SHARE_SDK = FlagUtil.FLAG_03;
+
 	protected static App sApp;
 
-	protected boolean mUmengEnabled;
-
-	protected boolean mJPushEnabled;
-
-	protected boolean mShareSDKEnabled;
+	protected int mFlags = FlagUtil.FLAGS_FALSE;
 
 	protected Edition mEdition;
 
@@ -45,16 +46,16 @@ public class App extends Application implements IContextProvider {
 		AppUtil.fixAsyncTask();
 
 		mEdition = detectEdition();
-		mUmengEnabled = UmengHelper.isUmengEnabled(this);
-		if (mUmengEnabled) {
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_UMENG, UmengHelper.isUmengEnabled(this));
+		if (isUmengEnabled()) {
 			UmengHelper.initUmeng(this);
 		}
-		mJPushEnabled = JPushHelper.isJPushEnabled(this);
-		if (mJPushEnabled) {
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_JPUSH, JPushHelper.isJPushEnabled(this));
+		if (isJPushEneabled()) {
 			JPushHelper.initJPush(this);
 		}
-		mShareSDKEnabled = ShareSDKHelper.isShareSDKEnabled(this);
-		if (mShareSDKEnabled) {
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_SHARE_SDK, ShareSDKHelper.isShareSDKEnabled(this));
+		if (isShareSDKEnabled()) {
 			ShareSDKHelper.initShareSDK(this);
 		}
 	}
@@ -101,11 +102,15 @@ public class App extends Application implements IContextProvider {
 	}
 
 	public boolean isUmengEnabled() {
-		return mUmengEnabled;
+		return FlagUtil.hasFlags(mFlags, FLAG_UMENG);
 	}
 
 	public boolean isJPushEneabled() {
-		return mJPushEnabled;
+		return FlagUtil.hasFlags(mFlags, FLAG_JPUSH);
+	}
+
+	public boolean isShareSDKEnabled() {
+		return FlagUtil.hasFlags(mFlags, FLAG_SHARE_SDK);
 	}
 
 	/**
@@ -140,10 +145,10 @@ public class App extends Application implements IContextProvider {
 			} catch (Exception e) {
 				// crash again
 			} finally {
-				if (mUmengEnabled) {
+				if (isUmengEnabled()) {
 					MobclickAgent.onKillProcess(App.this);
 				}
-				if (mJPushEnabled) {
+				if (isJPushEneabled()) {
 					JPushInterface.onKillProcess(App.this);
 				}
 				AppUtil.exit(10);
