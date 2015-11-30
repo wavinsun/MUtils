@@ -465,7 +465,11 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		if (this.onInterceptBackPressed()) {
 			return;
 		}
-		super.onBackPressed();
+		try {
+			super.onBackPressed();
+		} catch (Exception e) {
+			// java.lang.IllegalStateException
+		}
 	}
 
 	public boolean onInterceptBackPressed() {
