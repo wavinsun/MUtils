@@ -1,6 +1,8 @@
-package cn.mutils.app.ui;
+package cn.mutils.app.ui.util;
 
 import android.os.Handler;
+import cn.mutils.app.ui.AppActivity;
+import cn.mutils.app.ui.Dialoger;
 
 /**
  * Helper class for waiting layer
@@ -54,7 +56,7 @@ public class WaitingLayerHelper {
 		if (mWaitingLayerHandler != null) {
 			mWaitingLayerHandler.removeCallbacksAndMessages(null);
 		}
-		hide();
+		mWaitingDialog.dismiss();
 	}
 
 }
