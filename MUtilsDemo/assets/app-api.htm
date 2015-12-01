@@ -35,6 +35,10 @@
 			function onClickGotoButton(){
 				window.location.href="./app-api-goto.htm";
 			}
+			function onClickAlertButton(){
+				alert("alert message");
+				alert(this);
+			}
 			window.onload=function(){
 				app.invoke("window.onload");
 			}
@@ -53,6 +57,17 @@
 		<br>
 		<br>
 		<button type="button" onclick="onClickGotoButton()" >Goto</button>
+		<br>
+		<br>
+		<button type="button" onclick="onClickAlertButton()" >Alert</button>
+		<br>
+		<br>
+		<p>image</p>
+		<input type="file" accept="image/*"></input>
+		<br>
+		<br>
+		<p>*</p>
+		<input type="file"></input>
 		<br>
 		<br>
 	</body>
