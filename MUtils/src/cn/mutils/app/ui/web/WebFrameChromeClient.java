@@ -1,19 +1,25 @@
 package cn.mutils.app.ui.web;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import cn.mutils.app.core.INoProguard;
 import cn.mutils.app.core.log.Logs;
+import cn.mutils.app.core.text.StringUtil;
 import cn.mutils.app.core.time.DateTime;
 
 /**
  * WebFrame chrome client of framework
  */
-public class WebFrameChromeClient extends WebChromeClient {
+@SuppressLint("NewApi")
+@SuppressWarnings("serial")
+public class WebFrameChromeClient extends WebChromeClient implements INoProguard {
 
 	public static final int REQUEST_CODE_FILE_CHOOSER_DEFAULT = 10000;
 
@@ -86,8 +92,8 @@ public class WebFrameChromeClient extends WebChromeClient {
 	}
 
 	/**
-	 * JS上传文件的<input type="file" name="fileField" id="fileField" />事件捕获<br>
-	 * 5.0 + 调用这个方法
+	 * Support <input type="file" accept="image/*"/><br>
+	 * 5.0 +
 	 */
 	@Override
 	public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> uploadMsg,
@@ -95,7 +101,20 @@ public class WebFrameChromeClient extends WebChromeClient {
 		mUploadMessages = uploadMsg;
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.addCategory(Intent.CATEGORY_OPENABLE);
-		intent.setType("image/*");
+		String[] acceptTypes = null;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			acceptTypes = fileChooserParams.getAcceptTypes();
+		}
+		if (acceptTypes == null || acceptTypes.length == 0) {
+			intent.setType("*/*");
+		} else {
+			String acceptType = acceptTypes[0];
+			if (StringUtil.isEmpty(acceptType)) {
+				intent.setType("*/*");
+			} else {
+				intent.setType(acceptType);
+			}
+		}
 		if (mContext instanceof Activity) {
 			((Activity) mContext).startActivityForResult(Intent.createChooser(intent, "文件上传"), mFileChooserRequestCode);
 		}
@@ -103,8 +122,8 @@ public class WebFrameChromeClient extends WebChromeClient {
 	}
 
 	/**
-	 * JS上传文件的<input type="file" name="fileField" id="fileField" />事件捕获<br>
-	 * 4.1.1 + 调用这个方法
+	 * Support <input type="file" accept="image/*"/><br>
+	 * 4.1.1 +
 	 * 
 	 * @param uploadMsg
 	 * @param acceptType
@@ -114,15 +133,19 @@ public class WebFrameChromeClient extends WebChromeClient {
 		mUploadMessage = uploadMsg;
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.addCategory(Intent.CATEGORY_OPENABLE);
-		intent.setType("image/*");
+		if (StringUtil.isEmpty(acceptType)) {
+			intent.setType("*/*");
+		} else {
+			intent.setType(acceptType);
+		}
 		if (mContext instanceof Activity) {
 			((Activity) mContext).startActivityForResult(Intent.createChooser(intent, "文件上传"), mFileChooserRequestCode);
 		}
 	}
 
 	/**
-	 * JS上传文件的<input type="file" name="fileField" id="fileField" />事件捕获<br>
-	 * 3.0 + 调用这个方法
+	 * Support <input type="file" accept="image/*"/><br>
+	 * 3.0 +
 	 * 
 	 * @param uploadMsg
 	 * @param acceptType
@@ -131,15 +154,19 @@ public class WebFrameChromeClient extends WebChromeClient {
 		mUploadMessage = uploadMsg;
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.addCategory(Intent.CATEGORY_OPENABLE);
-		intent.setType("image/*");
+		if (StringUtil.isEmpty(acceptType)) {
+			intent.setType("*/*");
+		} else {
+			intent.setType(acceptType);
+		}
 		if (mContext instanceof Activity) {
 			((Activity) mContext).startActivityForResult(Intent.createChooser(intent, "文件上传"), mFileChooserRequestCode);
 		}
 	}
 
 	/**
-	 * JS上传文件的<input type="file" name="fileField" id="fileField" />事件捕获<br>
-	 * Android < 3.0 调用这个方法
+	 * Support <input type="file" accept="image/*"/><br>
+	 * 3.0 -
 	 * 
 	 * @param uploadMsg
 	 */
@@ -147,7 +174,7 @@ public class WebFrameChromeClient extends WebChromeClient {
 		mUploadMessage = uploadMsg;
 		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.addCategory(Intent.CATEGORY_OPENABLE);
-		intent.setType("image/*");
+		intent.setType("*/*");
 		if (mContext instanceof Activity) {
 			((Activity) mContext).startActivityForResult(Intent.createChooser(intent, "文件上传"), mFileChooserRequestCode);
 		}

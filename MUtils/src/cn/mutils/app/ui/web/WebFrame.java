@@ -244,17 +244,18 @@ public class WebFrame extends StateView implements IWebFrame {
 					Uri[] results = null;
 					if (resultCode == Activity.RESULT_OK) {
 						ClipData clipData = null;
-						String dataString = data.getDataString();
 						if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
 							clipData = data.getClipData();
 						}
 						if (clipData != null) {
-							results = new Uri[clipData.getItemCount()];
-							for (int i = 0; i < clipData.getItemCount(); i++) {
+							int size = clipData.getItemCount();
+							results = new Uri[size];
+							for (int i = 0; i < size; i++) {
 								ClipData.Item item = clipData.getItemAt(i);
 								results[i] = item.getUri();
 							}
 						}
+						String dataString = data.getDataString();
 						if (dataString != null) {
 							results = new Uri[] { Uri.parse(dataString) };
 						}
