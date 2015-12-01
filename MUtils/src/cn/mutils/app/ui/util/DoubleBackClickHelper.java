@@ -1,4 +1,4 @@
-package cn.mutils.app.ui.motion;
+package cn.mutils.app.ui.util;
 
 import android.content.Context;
 import cn.mutils.app.ui.core.IToastOwner;

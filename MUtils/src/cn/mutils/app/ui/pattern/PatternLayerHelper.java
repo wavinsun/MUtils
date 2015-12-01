@@ -58,7 +58,9 @@ public class PatternLayerHelper {
 		if (mHeartbeatHandler != null) {
 			mHeartbeatHandler.removeCallbacksAndMessages(null);
 		}
-		hide();
+		if (mPatternDialog != null) {
+			mPatternDialog.dismiss();
+		}
 	}
 
 	public void onStart() {

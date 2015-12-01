@@ -49,9 +49,10 @@ import cn.mutils.app.ui.core.ISessionHolder;
 import cn.mutils.app.ui.core.IStateView;
 import cn.mutils.app.ui.core.IToastOwner;
 import cn.mutils.app.ui.core.UICore;
-import cn.mutils.app.ui.motion.DoubleBackClickHelper;
 import cn.mutils.app.ui.pattern.PatternDialog;
 import cn.mutils.app.ui.pattern.PatternLayerHelper;
+import cn.mutils.app.ui.util.DoubleBackClickHelper;
+import cn.mutils.app.ui.util.WaitingLayerHelper;
 
 @SuppressLint({ "ShowToast", "InlinedApi" })
 public class AppActivity extends FragmentActivity implements IActivity, ISessionHolder {
@@ -417,14 +418,12 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 
 	@Override
 	protected void onDestroy() {
-		mUmengHelper.onDestroy();
 		doFinish();
 		super.onDestroy();
 	}
 
 	@Override
 	public void finish() {
-		mUmengHelper.finish();
 		doFinish();
 		super.finish();
 	}
@@ -444,17 +443,18 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		if (mAsyncDataQueue != null) {
 			mAsyncDataQueue.clear();
 		}
-		if (mWaitingLayerHelper != null) {
-			mWaitingLayerHelper.onDestroy();
-		}
-		if (mPatternLayerHelper != null) {
-			mPatternLayerHelper.onDestroy();
-		}
 		if (mRunOnceOnResumeList != null) {
 			mRunOnceOnResumeList.clear();
 		}
 		if (mHandler != null) {
 			mHandler.removeCallbacksAndMessages(null);
+		}
+		mUmengHelper.onDestroy();
+		if (mWaitingLayerHelper != null) {
+			mWaitingLayerHelper.onDestroy();
+		}
+		if (mPatternLayerHelper != null) {
+			mPatternLayerHelper.onDestroy();
 		}
 		UICore.dispatchDestroy(this);
 		AppActivityManager.detach(this);
@@ -524,7 +524,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		return mAsyncDataQueue;
 	}
 
-	protected void updateWaitingLayerState() {
+	public void updateWaitingLayerState() {
 		if (mNetQueue == null) {
 			if (mAsyncDataQueue == null) {
 				if (!mBusy) {
@@ -570,7 +570,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		mWaitingLayerHelper.hide();
 	}
 
-	protected Dialoger newWaitingDialog() {
+	public Dialoger newWaitingDialog() {
 		return null;
 	}
 
