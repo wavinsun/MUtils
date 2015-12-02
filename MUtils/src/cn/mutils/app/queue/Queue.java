@@ -60,12 +60,16 @@ public class Queue extends ContextOwnerDispathcer implements IQueue, IQueueItemL
 
 	@Override
 	public void add(IQueueItem<?> task) {
+		if (task.isStoped()) {
+			return;
+		}
 		synchronized (this) {
 			if (mQueueToBe == null) {
 				mQueueToBe = new LinkedList<IQueueItem<?>>();
 			}
 		}
 		mQueueToBe.add(task);
+		task.addListener(this);
 		startOneItem();
 	}
 
@@ -83,7 +87,6 @@ public class Queue extends ContextOwnerDispathcer implements IQueue, IQueueItemL
 			}
 		}
 		mQueue.add(task);
-		task.addListener(this);
 		task.setContext(mContext);
 		task.start();
 	}
