@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.IClearable;
 import cn.mutils.app.core.task.RepeatTask.IRepeatTaskListener;
+import cn.mutils.app.core.text.StringUtil;
 
 public class RepeatTaskManager implements IClearable, IRepeatTaskListener {
 
@@ -20,7 +20,7 @@ public class RepeatTaskManager implements IClearable, IRepeatTaskListener {
 			}
 		}
 		String name = task.getName();
-		if (AppUtil.isEmpty(name)) {
+		if (StringUtil.isEmpty(name)) {
 			throw new UnsupportedOperationException();
 		}
 		List<RepeatTask> tasks = mMap.get(name);

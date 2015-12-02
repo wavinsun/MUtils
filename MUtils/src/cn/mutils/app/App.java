@@ -8,15 +8,16 @@ import android.app.Application;
 import android.content.Context;
 import cn.jpush.android.api.JPushInterface;
 import cn.mutils.app.core.codec.FlagUtil;
-import cn.mutils.app.core.compile.Edition;
 import cn.mutils.app.core.log.Logs;
 import cn.mutils.app.core.task.RepeatTask;
 import cn.mutils.app.core.task.RepeatTask.RepeatTaskListener;
+import cn.mutils.app.core.util.Edition;
 import cn.mutils.app.core.task.RepeatTaskManager;
-import cn.mutils.app.open.JPushHelper;
-import cn.mutils.app.open.ShareSDKHelper;
-import cn.mutils.app.open.UmengHelper;
 import cn.mutils.app.os.IContextProvider;
+import cn.mutils.app.util.AppUtil;
+import cn.mutils.app.util.JPushHelper;
+import cn.mutils.app.util.ShareSDKHelper;
+import cn.mutils.app.util.UmengHelper;
 
 /**
  * Application of framework

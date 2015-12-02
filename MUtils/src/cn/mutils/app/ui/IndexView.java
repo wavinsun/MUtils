@@ -6,9 +6,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.R;
 import cn.mutils.app.event.listener.OnSelectedChangeListener;
+import cn.mutils.app.util.AppUtil;
 
 public class IndexView extends View {
 

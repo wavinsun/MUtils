@@ -1,4 +1,4 @@
-package cn.mutils.app;
+package cn.mutils.app.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -52,6 +52,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
+import cn.mutils.app.AppLocale;
 import cn.mutils.app.core.archive.ZipUtil;
 import cn.mutils.app.core.beans.ObjectUtil;
 import cn.mutils.app.core.collection.CollectionUtil;

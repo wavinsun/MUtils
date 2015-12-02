@@ -7,7 +7,7 @@ import com.tencent.tauth.UiError;
 
 import android.content.Context;
 import android.os.Bundle;
-import cn.mutils.app.AppUtil;
+import cn.mutils.app.util.AppUtil;
 
 public class ShareQQ extends ShareBase {
 

@@ -40,8 +40,6 @@ import cn.mutils.app.net.INetQueue;
 import cn.mutils.app.net.INetQueueListener;
 import cn.mutils.app.net.INetTask;
 import cn.mutils.app.net.NetQueue;
-import cn.mutils.app.open.JPushHelper;
-import cn.mutils.app.open.UmengHelper;
 import cn.mutils.app.os.AppActivityManager;
 import cn.mutils.app.queue.IQueue;
 import cn.mutils.app.ui.core.IActivity;
@@ -53,6 +51,8 @@ import cn.mutils.app.ui.pattern.PatternDialog;
 import cn.mutils.app.ui.pattern.PatternLayerHelper;
 import cn.mutils.app.ui.util.DoubleBackClickHelper;
 import cn.mutils.app.ui.util.WaitingLayerHelper;
+import cn.mutils.app.util.JPushHelper;
+import cn.mutils.app.util.UmengHelper;
 
 @SuppressLint({ "ShowToast", "InlinedApi" })
 public class AppActivity extends FragmentActivity implements IActivity, ISessionHolder {

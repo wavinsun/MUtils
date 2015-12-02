@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import cn.jpush.android.api.JPushInterface;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.push.PushManager;
+import cn.mutils.app.util.AppUtil;
 
 /**
  * JPush BroadcastReceiver of framework

@@ -7,13 +7,13 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.annotation.Ignore;
 import cn.mutils.app.core.annotation.Primitive;
 import cn.mutils.app.core.annotation.Primitive.PrimitiveType;
 import cn.mutils.app.core.beans.BeanCache;
 import cn.mutils.app.core.beans.BeanField;
 import cn.mutils.app.core.json.JsonUtil;
+import cn.mutils.app.util.AppUtil;
 
 /**
  * JOSN or XML serializer for shared preferences

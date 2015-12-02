@@ -8,9 +8,9 @@ import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.WindowManager;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.codec.FlagUtil;
 import cn.mutils.app.ui.core.IStatusBarOwner;
+import cn.mutils.app.util.AppUtil;
 
 @SuppressLint("DrawAllocation")
 public class StatusBox extends View {

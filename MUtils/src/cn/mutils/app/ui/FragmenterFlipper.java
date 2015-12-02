@@ -18,7 +18,6 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ViewFlipper;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.event.Dispatcher;
 import cn.mutils.app.event.listener.OnActivityResultListener;
 import cn.mutils.app.event.listener.OnSelectedChangeListener;
@@ -27,6 +26,7 @@ import cn.mutils.app.ui.core.IFragmenter;
 import cn.mutils.app.ui.core.IStateView;
 import cn.mutils.app.ui.core.IStateViewManager;
 import cn.mutils.app.ui.core.UICore;
+import cn.mutils.app.util.AppUtil;
 
 @SuppressLint("ClickableViewAccessibility")
 public class FragmenterFlipper extends ViewFlipper implements IStateView, IStateViewManager, ICachedViewManager {

@@ -3,11 +3,11 @@ package cn.mutils.app.demo.ui;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.annotation.res.FindViewById;
 import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.ui.StateView;
+import cn.mutils.app.util.AppUtil;
 
 @SetContentView(R.layout.view_zip)
 public class ZipDemoView extends StateView {

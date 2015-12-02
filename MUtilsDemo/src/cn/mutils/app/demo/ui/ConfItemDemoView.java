@@ -3,7 +3,6 @@ package cn.mutils.app.demo.ui;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.annotation.Format;
 import cn.mutils.app.core.annotation.Name;
 import cn.mutils.app.core.annotation.Primitive;
@@ -15,6 +14,7 @@ import cn.mutils.app.demo.R;
 import cn.mutils.app.settings.ConfItem;
 import cn.mutils.app.ui.Alert;
 import cn.mutils.app.ui.StateView;
+import cn.mutils.app.util.AppUtil;
 
 @SetContentView(R.layout.view_conf_item)
 public class ConfItemDemoView extends StateView {

@@ -1,4 +1,4 @@
-package cn.mutils.app.core.compile;
+package cn.mutils.app.core.util;
 
 /**
  * Application Edition

@@ -1,4 +1,4 @@
-package cn.mutils.app.open.fir;
+package cn.mutils.app.util.fir;
 
 import java.io.File;
 
@@ -8,7 +8,6 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 
 import android.view.Gravity;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.IClearable;
 import cn.mutils.app.core.event.listener.VersionUpdateListener;
 import cn.mutils.app.core.log.Logs;
@@ -16,11 +15,12 @@ import cn.mutils.app.core.text.MBFormat;
 import cn.mutils.app.core.text.StringUtil;
 import cn.mutils.app.net.INetTask;
 import cn.mutils.app.net.NetTaskListener;
-import cn.mutils.app.open.fir.FIRUpdateTask.FIRUpdateReq;
-import cn.mutils.app.open.fir.FIRUpdateTask.FIRUpdateRes;
 import cn.mutils.app.task.ContextOwnerTask;
 import cn.mutils.app.ui.Alert;
 import cn.mutils.app.ui.Alert.AlertListener;
+import cn.mutils.app.util.AppUtil;
+import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateReq;
+import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateRes;
 
 /**
  * Fly It Remotely Update Agent

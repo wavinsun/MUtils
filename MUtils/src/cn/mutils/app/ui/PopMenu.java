@@ -16,9 +16,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.ui.adapter.PopMenuAdapter;
 import cn.mutils.app.ui.core.IStatusBarOwner;
+import cn.mutils.app.util.AppUtil;
 
 @SuppressWarnings("deprecation")
 public class PopMenu<DATA_ITEM> {

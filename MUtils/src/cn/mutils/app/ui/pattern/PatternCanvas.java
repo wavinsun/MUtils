@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import cn.mutils.app.AppUtil;
+import cn.mutils.app.util.AppUtil;
 
 @SuppressLint("ClickableViewAccessibility")
 public class PatternCanvas extends View {

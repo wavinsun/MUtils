@@ -2,9 +2,9 @@ package cn.mutils.app.io;
 
 import android.content.Intent;
 import android.os.Bundle;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.INoProguard;
 import cn.mutils.app.core.json.JsonUtil;
+import cn.mutils.app.util.AppUtil;
 
 /**
  * Extra of framework.<br>

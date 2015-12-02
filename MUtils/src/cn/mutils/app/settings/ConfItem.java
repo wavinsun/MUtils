@@ -1,11 +1,11 @@
 package cn.mutils.app.settings;
 
 import android.content.Context;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.annotation.Ignore;
 import cn.mutils.app.core.beans.BeanCache;
 import cn.mutils.app.core.json.JsonUtil;
 import cn.mutils.app.core.xml.XmlUtil;
+import cn.mutils.app.util.AppUtil;
 
 /**
  * JOSN or XML serializer for assets file and shared preferences

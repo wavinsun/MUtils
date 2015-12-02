@@ -9,8 +9,8 @@ import android.graphics.Paint.Cap;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.R;
+import cn.mutils.app.util.AppUtil;
 
 public class ProgressView extends View {
 

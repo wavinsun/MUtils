@@ -3,9 +3,10 @@ package cn.mutils.app.core.collection;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.beans.BeanField;
+import cn.mutils.app.core.beans.ObjectUtil;
 import cn.mutils.app.core.reflect.ReflectUtil;
+import cn.mutils.app.util.AppUtil;
 
 @SuppressWarnings("unchecked")
 public class CollectionUtil {
@@ -52,7 +53,7 @@ public class CollectionUtil {
 			return null;
 		}
 		for (T element : list) {
-			if (AppUtil.equals(propertyValue, ReflectUtil.get(element, propertyField))) {
+			if (ObjectUtil.equals(propertyValue, ReflectUtil.get(element, propertyField))) {
 				return element;
 			}
 		}

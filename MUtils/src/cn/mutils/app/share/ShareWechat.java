@@ -7,7 +7,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import android.content.Context;
-import cn.mutils.app.AppUtil;
+import cn.mutils.app.util.AppUtil;
 
 public class ShareWechat extends ShareBase {
 
