@@ -20,7 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView.ScaleType;
 import cn.mutils.app.core.event.Dispatcher;
-import cn.mutils.app.core.event.Listener;
+import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.event.listener.AppBitmapLoadCallBack;
 import cn.mutils.app.event.listener.OnSelectedChangeListener;
 import android.widget.ProgressBar;
@@ -171,7 +171,7 @@ public class PhotoContainer extends RelativeLayout {
 						return;
 					}
 					Integer position = (Integer) o;
-					Listener listener = mDispatcher.getListener();
+					IListener listener = mDispatcher.getListener();
 					if (listener == null) {
 						return;
 					}

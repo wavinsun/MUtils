@@ -7,7 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import cn.mutils.app.core.event.Listener;
+import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.event.listener.OnActivityResultListener;
 import cn.mutils.app.ui.core.IActivityExecutor;
 
@@ -52,7 +52,7 @@ public class UPPayTask extends AppPayTask {
 	}
 
 	@Override
-	public void addListener(Listener listener) {
+	public void addListener(IListener listener) {
 		super.addListener(listener);
 		attachToContext();
 	}

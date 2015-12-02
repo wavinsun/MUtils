@@ -1,10 +1,10 @@
 package cn.mutils.app.core.task;
 
-import cn.mutils.app.core.event.Listener;
+import cn.mutils.app.core.event.IListener;
 
 public class RepeatTask extends Task {
 
-	public static interface IRepeatTaskListener extends Listener {
+	public static interface IRepeatTaskListener extends IListener {
 
 		public void onStart(RepeatTask task);
 

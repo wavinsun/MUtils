@@ -10,12 +10,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
-import cn.mutils.app.core.event.Listener;
+import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.ui.core.IActivityExecutor;
 
 public class PickContactTask extends MediaTask {
 
-	public static interface PickContactListener extends Listener {
+	public static interface PickContactListener extends IListener {
 
 		public void onComplete(String name, List<String> phones);
 

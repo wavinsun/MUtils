@@ -12,23 +12,23 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @SuppressWarnings("unchecked")
 public class Dispatcher implements IDispatcher {
 
-	protected Map<String, List<Listener>> mListenersMap;
+	protected Map<String, List<IListener>> mListenersMap;
 
-	protected Map<String, List<Listener>> allocMap() {
-		return new ConcurrentHashMap<String, List<Listener>>();
+	protected Map<String, List<IListener>> allocMap() {
+		return new ConcurrentHashMap<String, List<IListener>>();
 	}
 
-	protected List<Listener> allocList() {
-		return new CopyOnWriteArrayList<Listener>();
+	protected List<IListener> allocList() {
+		return new CopyOnWriteArrayList<IListener>();
 	}
 
 	@Override
-	public void addListener(Listener listener) {
+	public void addListener(IListener listener) {
 		addListener("", listener);
 	}
 
 	@Override
-	public void removeListener(Listener listener) {
+	public void removeListener(IListener listener) {
 		removeListener("", listener);
 	}
 
@@ -38,14 +38,14 @@ public class Dispatcher implements IDispatcher {
 	}
 
 	@Override
-	public void addListener(String type, Listener listener) {
+	public void addListener(String type, IListener listener) {
 		if (listener == null) {
 			return;
 		}
 		if (mListenersMap == null) {
 			mListenersMap = allocMap();
 		}
-		List<Listener> listeners = mListenersMap.get(type);
+		List<IListener> listeners = mListenersMap.get(type);
 		if (listeners == null) {
 			listeners = allocList();
 			mListenersMap.put(type, listeners);
@@ -58,14 +58,14 @@ public class Dispatcher implements IDispatcher {
 	}
 
 	@Override
-	public void removeListener(String type, Listener listener) {
+	public void removeListener(String type, IListener listener) {
 		if (listener == null) {
 			return;
 		}
 		if (mListenersMap == null) {
 			return;
 		}
-		List<Listener> listeners = mListenersMap.get(type);
+		List<IListener> listeners = mListenersMap.get(type);
 		if (listeners == null) {
 			return;
 		}
@@ -77,7 +77,7 @@ public class Dispatcher implements IDispatcher {
 		if (mListenersMap == null) {
 			return;
 		}
-		List<Listener> listeners = mListenersMap.get(type);
+		List<IListener> listeners = mListenersMap.get(type);
 		if (listeners == null) {
 			return;
 		}
@@ -85,16 +85,16 @@ public class Dispatcher implements IDispatcher {
 	}
 
 	@Override
-	public List<Listener> getListeners() {
+	public List<IListener> getListeners() {
 		return getListeners("");
 	}
 
 	@Override
-	public List<Listener> getListeners(String type) {
+	public List<IListener> getListeners(String type) {
 		if (mListenersMap == null) {
 			mListenersMap = allocMap();
 		}
-		List<Listener> listeners = mListenersMap.get(type);
+		List<IListener> listeners = mListenersMap.get(type);
 		if (listeners == null) {
 			listeners = allocList();
 			mListenersMap.put(type, listeners);
@@ -103,21 +103,21 @@ public class Dispatcher implements IDispatcher {
 	}
 
 	@Override
-	public Listener getListener() {
+	public IListener getListener() {
 		return getListener("");
 	}
 
 	@Override
-	public void setListener(Listener listener) {
+	public void setListener(IListener listener) {
 		setListener("", listener);
 	}
 
 	@Override
-	public Listener getListener(String type) {
+	public IListener getListener(String type) {
 		if (mListenersMap == null) {
 			return null;
 		}
-		List<Listener> listeners = mListenersMap.get(type);
+		List<IListener> listeners = mListenersMap.get(type);
 		if (listeners == null) {
 			return null;
 		}
@@ -128,14 +128,14 @@ public class Dispatcher implements IDispatcher {
 	}
 
 	@Override
-	public void setListener(String type, Listener listener) {
+	public void setListener(String type, IListener listener) {
 		if (mListenersMap == null) {
 			if (listener == null) {
 				return;
 			}
 			mListenersMap = allocMap();
 		}
-		List<Listener> listeners = mListenersMap.get(type);
+		List<IListener> listeners = mListenersMap.get(type);
 		if (listeners == null) {
 			if (listener == null) {
 				return;
@@ -157,16 +157,16 @@ public class Dispatcher implements IDispatcher {
 	}
 
 	@Override
-	public boolean hasListener(Listener listener) {
+	public boolean hasListener(IListener listener) {
 		return hasListener("", listener);
 	}
 
 	@Override
-	public boolean hasListener(String type, Listener listener) {
+	public boolean hasListener(String type, IListener listener) {
 		if (mListenersMap == null) {
 			return false;
 		}
-		List<Listener> listeners = mListenersMap.get(type);
+		List<IListener> listeners = mListenersMap.get(type);
 		if (listeners == null) {
 			return false;
 		}
@@ -177,19 +177,19 @@ public class Dispatcher implements IDispatcher {
 	}
 
 	@Override
-	public <T extends Listener> T getListener(Class<T> listenerClass) {
+	public <T extends IListener> T getListener(Class<T> listenerClass) {
 		return getListener("", listenerClass);
 	}
 
 	@Override
-	public <T extends Listener> List<T> getListeners(Class<T> listenerClass) {
+	public <T extends IListener> List<T> getListeners(Class<T> listenerClass) {
 		return getListeners("", listenerClass);
 	}
 
 	@Override
-	public <T extends Listener> List<T> getListeners(String type, Class<T> listenerClass) {
+	public <T extends IListener> List<T> getListeners(String type, Class<T> listenerClass) {
 		List<T> retListeners = new ArrayList<T>();
-		for (Listener listener : getListeners(type)) {
+		for (IListener listener : getListeners(type)) {
 			if (listenerClass.isInstance(listener)) {
 				retListeners.add((T) listener);
 			}
@@ -198,18 +198,18 @@ public class Dispatcher implements IDispatcher {
 	}
 
 	@Override
-	public <T extends Listener> T getListener(String type, Class<T> listenerClass) {
+	public <T extends IListener> T getListener(String type, Class<T> listenerClass) {
 		if (mListenersMap == null) {
 			return null;
 		}
-		List<Listener> listeners = mListenersMap.get(type);
+		List<IListener> listeners = mListenersMap.get(type);
 		if (listeners == null) {
 			return null;
 		}
 		if (listeners.size() == 0) {
 			return null;
 		}
-		Listener listener = listeners.get(0);
+		IListener listener = listeners.get(0);
 		return listenerClass.isInstance(listener) ? ((T) listener) : null;
 	}
 

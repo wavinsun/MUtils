@@ -6,7 +6,7 @@ import com.lidroid.xutils.bitmap.callback.DefaultBitmapLoadCallBack;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import cn.mutils.app.core.event.Listener;
+import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.ui.core.IDefaultDrawableView;
 
 /**
@@ -14,7 +14,7 @@ import cn.mutils.app.ui.core.IDefaultDrawableView;
  * 
  * @see BitmapUtils#display(View, String, BitmapLoadCallBack)
  */
-public class AppBitmapLoadCallBack<T extends View> extends DefaultBitmapLoadCallBack<T>implements Listener {
+public class AppBitmapLoadCallBack<T extends View> extends DefaultBitmapLoadCallBack<T>implements IListener {
 
 	/**
 	 * Subclass need to override this method

@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
-import cn.mutils.app.core.event.Listener;
+import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.ui.core.IActivityExecutor;
 import cn.mutils.app.util.AppUtil;
 
@@ -17,7 +17,7 @@ import cn.mutils.app.util.AppUtil;
  */
 public class CropPhotoTask extends MediaTask {
 
-	public static interface CropPhotoListener extends Listener {
+	public static interface CropPhotoListener extends IListener {
 
 		public void onComplete(Uri uri);
 

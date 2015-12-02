@@ -9,12 +9,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Video.VideoColumns;
-import cn.mutils.app.core.event.Listener;
+import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.ui.core.IActivityExecutor;
 
 public class MakeVideoTask extends MediaTask {
 
-	public static interface MakeVideoListener extends Listener {
+	public static interface MakeVideoListener extends IListener {
 
 		public void onComplete(Uri uri);
 

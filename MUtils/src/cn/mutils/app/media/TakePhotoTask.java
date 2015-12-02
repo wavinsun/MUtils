@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
-import cn.mutils.app.core.event.Listener;
+import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.core.time.DateTime;
 import cn.mutils.app.ui.core.IActivityExecutor;
 import cn.mutils.app.util.AppUtil;
@@ -17,7 +17,7 @@ import cn.mutils.app.util.AppUtil;
  */
 public class TakePhotoTask extends MediaTask {
 
-	public static interface TakePhotoListener extends Listener {
+	public static interface TakePhotoListener extends IListener {
 
 		public void onComplete(Uri uri);
 

@@ -13,21 +13,21 @@ public interface IDispatcher {
 	 * @param listener
 	 * @return
 	 */
-	public boolean hasListener(Listener listener);
+	public boolean hasListener(IListener listener);
 
 	/**
 	 * Add listener for default event type
 	 * 
 	 * @param listener
 	 */
-	public void addListener(Listener listener);
+	public void addListener(IListener listener);
 
 	/**
 	 * Remove listener for default event type
 	 * 
 	 * @param listener
 	 */
-	public void removeListener(Listener listener);
+	public void removeListener(IListener listener);
 
 	/**
 	 * Remove all listeners for default event type
@@ -41,7 +41,7 @@ public interface IDispatcher {
 	 * @param listener
 	 * @return
 	 */
-	public boolean hasListener(String type, Listener listener);
+	public boolean hasListener(String type, IListener listener);
 
 	/**
 	 * Add listener for specify event type
@@ -49,7 +49,7 @@ public interface IDispatcher {
 	 * @param type
 	 * @param listener
 	 */
-	public void addListener(String type, Listener listener);
+	public void addListener(String type, IListener listener);
 
 	/**
 	 * Remove listener for specify event type
@@ -57,7 +57,7 @@ public interface IDispatcher {
 	 * @param type
 	 * @param listener
 	 */
-	public void removeListener(String type, Listener listener);
+	public void removeListener(String type, IListener listener);
 
 	/**
 	 * Remove all listeners for specify event type
@@ -72,7 +72,7 @@ public interface IDispatcher {
 	 * @param listenerClass
 	 * @return
 	 */
-	public <T extends Listener> List<T> getListeners(Class<T> listenerClass);
+	public <T extends IListener> List<T> getListeners(Class<T> listenerClass);
 
 	/**
 	 * Get specify type listeners for specify event type
@@ -81,14 +81,14 @@ public interface IDispatcher {
 	 * @param listenerClass
 	 * @return
 	 */
-	public <T extends Listener> List<T> getListeners(String type, Class<T> listenerClass);
+	public <T extends IListener> List<T> getListeners(String type, Class<T> listenerClass);
 
 	/**
 	 * Get listeners for default event type
 	 * 
 	 * @return
 	 */
-	public List<Listener> getListeners();
+	public List<IListener> getListeners();
 
 	/**
 	 * Get listeners for specify event type
@@ -96,21 +96,21 @@ public interface IDispatcher {
 	 * @param type
 	 * @return
 	 */
-	public List<Listener> getListeners(String type);
+	public List<IListener> getListeners(String type);
 
 	/**
 	 * Get first listener for default event type
 	 * 
 	 * @return
 	 */
-	public Listener getListener();
+	public IListener getListener();
 
 	/**
 	 * Set first listener for default event type
 	 * 
 	 * @param listener
 	 */
-	public void setListener(Listener listener);
+	public void setListener(IListener listener);
 
 	/**
 	 * Get first listener for specify event type
@@ -118,7 +118,7 @@ public interface IDispatcher {
 	 * @param type
 	 * @return
 	 */
-	public Listener getListener(String type);
+	public IListener getListener(String type);
 
 	/**
 	 * Set first listener for specify event type
@@ -126,7 +126,7 @@ public interface IDispatcher {
 	 * @param type
 	 * @param listener
 	 */
-	public void setListener(String type, Listener listener);
+	public void setListener(String type, IListener listener);
 
 	/**
 	 * Get first listener for default event type
@@ -134,7 +134,7 @@ public interface IDispatcher {
 	 * @param listenerClass
 	 * @return
 	 */
-	public <T extends Listener> T getListener(Class<T> listenerClass);
+	public <T extends IListener> T getListener(Class<T> listenerClass);
 
 	/**
 	 * Get first listener for specify event type
@@ -143,6 +143,6 @@ public interface IDispatcher {
 	 * @param listenerClass
 	 * @return
 	 */
-	public <T extends Listener> T getListener(String type, Class<T> listenerClass);
+	public <T extends IListener> T getListener(String type, Class<T> listenerClass);
 
 }
