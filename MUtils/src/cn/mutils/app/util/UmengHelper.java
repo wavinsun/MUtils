@@ -1,4 +1,4 @@
-package cn.mutils.app.open;
+package cn.mutils.app.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +14,8 @@ import com.umeng.update.UpdateStatus;
 
 import android.content.Context;
 import cn.mutils.app.App;
-import cn.mutils.app.AppUtil;
-import cn.mutils.app.core.compile.Edition;
 import cn.mutils.app.core.event.listener.VersionUpdateListener;
+import cn.mutils.app.core.util.Edition;
 import cn.mutils.app.ui.AppActivity;
 import cn.mutils.app.ui.core.IActivity;
 

@@ -1,11 +1,10 @@
-package cn.mutils.app.open;
+package cn.mutils.app.util;
 
 import android.content.Context;
 import cn.jpush.android.api.JPushInterface;
 import cn.mutils.app.App;
-import cn.mutils.app.AppUtil;
-import cn.mutils.app.core.compile.Edition;
 import cn.mutils.app.core.log.Logs;
+import cn.mutils.app.core.util.Edition;
 
 public class JPushHelper {
 

@@ -7,10 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.event.Listener;
 import cn.mutils.app.core.time.DateTime;
 import cn.mutils.app.ui.core.IActivityExecutor;
+import cn.mutils.app.util.AppUtil;
 
 /**
  * Take photo by system call

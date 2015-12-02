@@ -4,7 +4,6 @@ import java.util.Date;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.annotation.event.OnClick;
 import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.core.time.DateTime;
@@ -12,6 +11,7 @@ import cn.mutils.app.demo.R;
 import cn.mutils.app.ui.DateChooser;
 import cn.mutils.app.ui.DateChooser.OnChooseDateListener;
 import cn.mutils.app.ui.StateView;
+import cn.mutils.app.util.AppUtil;
 
 @SetContentView(R.layout.view_date_chooser)
 public class DateChooserDemoView extends StateView {

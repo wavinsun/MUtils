@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
-import cn.mutils.app.AppUtil;
+import cn.mutils.app.util.AppUtil;
 
 /**
  * Cookie cache

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.AttributeSet;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.annotation.event.OnClick;
 import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.R;
@@ -26,6 +25,7 @@ import cn.mutils.app.ui.photo.PhotoActivity;
 import cn.mutils.app.ui.photo.PhotoExtra;
 import cn.mutils.app.ui.video.VideoActivity;
 import cn.mutils.app.ui.video.VideoActivity.VideoExtra;
+import cn.mutils.app.util.AppUtil;
 
 @SetContentView(R.layout.view_media)
 public class MediaDemoView extends StateView {

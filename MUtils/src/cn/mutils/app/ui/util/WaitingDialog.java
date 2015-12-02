@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.R;
 import cn.mutils.app.ui.Dialoger;
 import cn.mutils.app.ui.ProgressIcon;
+import cn.mutils.app.util.AppUtil;
 
 @SuppressWarnings("deprecation")
 public class WaitingDialog extends Dialoger {

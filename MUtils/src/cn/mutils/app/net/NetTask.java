@@ -7,7 +7,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.BuildConfig;
 import cn.mutils.app.core.log.Logs;
 import cn.mutils.app.core.net.NetClient;
@@ -15,6 +14,7 @@ import cn.mutils.app.core.net.NetClient.ConnectNotFoundException;
 import cn.mutils.app.core.net.NetClient.NetClientListener;
 import cn.mutils.app.core.reflect.ReflectUtil;
 import cn.mutils.app.queue.QueueItem;
+import cn.mutils.app.util.AppUtil;
 
 /**
  * Template of request and response for net API at Android application level

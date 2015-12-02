@@ -8,9 +8,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.event.Listener;
 import cn.mutils.app.ui.core.IActivityExecutor;
+import cn.mutils.app.util.AppUtil;
 
 /**
  * Crop photo by system call

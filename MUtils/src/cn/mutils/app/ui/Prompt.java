@@ -5,7 +5,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import cn.mutils.app.AppUtil;
+import cn.mutils.app.util.AppUtil;
 
 @SuppressWarnings("deprecation")
 public class Prompt extends Alert {

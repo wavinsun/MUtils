@@ -1,13 +1,13 @@
 package cn.mutils.app.demo.web;
 
 import android.content.Context;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.annotation.Name;
 import cn.mutils.app.demo.web.BasicWebMessage.BasicWebMessageData;
 import cn.mutils.app.demo.web.BasicWebMessage.BasicWebMessageResult;
 import cn.mutils.app.demo.web.GetAppInfoWebDispatcher.GetAppInfoWebData;
 import cn.mutils.app.demo.web.GetAppInfoWebDispatcher.GetAppInfoWebResult;
 import cn.mutils.app.ui.web.WebMessageState;
+import cn.mutils.app.util.AppUtil;
 
 @SuppressWarnings("serial")
 public class GetAppInfoWebDispatcher extends BasicWebMessageDispatcher<GetAppInfoWebData, GetAppInfoWebResult> {

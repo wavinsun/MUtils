@@ -5,8 +5,8 @@ import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
 import android.util.AttributeSet;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.R;
+import cn.mutils.app.util.AppUtil;
 import kankan.wheel.widget.WheelView;
 
 @SuppressWarnings("deprecation")

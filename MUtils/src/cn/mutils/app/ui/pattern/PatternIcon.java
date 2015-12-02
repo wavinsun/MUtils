@@ -7,7 +7,7 @@ import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
-import cn.mutils.app.AppUtil;
+import cn.mutils.app.util.AppUtil;
 
 public class PatternIcon extends View {
 

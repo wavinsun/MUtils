@@ -8,8 +8,8 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.R;
+import cn.mutils.app.util.AppUtil;
 
 /**
  * Progress icon

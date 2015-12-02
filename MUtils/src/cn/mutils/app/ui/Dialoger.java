@@ -19,11 +19,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.R;
 import cn.mutils.app.ui.core.IDialog;
 import cn.mutils.app.ui.core.IToastOwner;
 import cn.mutils.app.ui.core.UICore;
+import cn.mutils.app.util.AppUtil;
 
 /**
  * Dialog of framework

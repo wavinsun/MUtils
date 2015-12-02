@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import cn.mutils.app.core.text.StringUtil;
+import cn.mutils.app.util.AppUtil;
 
 /**
  * Language configuration for application

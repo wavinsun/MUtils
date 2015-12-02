@@ -1,9 +1,9 @@
 package cn.mutils.app.ui.pattern;
 
 import android.content.Context;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.annotation.Ignore;
 import cn.mutils.app.core.json.JsonUtil;
+import cn.mutils.app.util.AppUtil;
 
 @SuppressWarnings("serial")
 public class PatternSettings implements IPatternSettings {

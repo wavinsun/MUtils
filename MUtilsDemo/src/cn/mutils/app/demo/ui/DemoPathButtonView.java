@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.TextView;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.annotation.event.OnClick;
 import cn.mutils.app.core.annotation.res.FindViewById;
 import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.ui.ImageIcon;
 import cn.mutils.app.ui.StateView;
+import cn.mutils.app.util.AppUtil;
 
 @SetContentView(R.layout.view_path_button)
 public class DemoPathButtonView extends StateView {

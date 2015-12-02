@@ -10,8 +10,8 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.R;
+import cn.mutils.app.util.AppUtil;
 
 /**
  * Round rectangle tip view width triangle

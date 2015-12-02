@@ -8,14 +8,14 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.core.annotation.event.OnClick;
 import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.core.event.listener.VersionUpdateListener;
 import cn.mutils.app.core.text.MBFormat;
 import cn.mutils.app.demo.R;
-import cn.mutils.app.open.fir.FIRUpdateAgent;
 import cn.mutils.app.ui.StateView;
+import cn.mutils.app.util.AppUtil;
+import cn.mutils.app.util.fir.FIRUpdateAgent;
 
 @SetContentView(R.layout.view_fir_update)
 public class FirUpdateDemoView extends StateView {

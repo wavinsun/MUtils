@@ -7,8 +7,8 @@ import android.os.Build;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-import cn.mutils.app.AppUtil;
 import cn.mutils.app.ui.core.IStatusBarOwner;
+import cn.mutils.app.util.AppUtil;
 
 @SuppressLint("NewApi")
 public class AndroidBug5497Workaround {

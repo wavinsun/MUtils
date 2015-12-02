@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
-import cn.mutils.app.AppUtil;
+import cn.mutils.app.util.AppUtil;
 
 public class SwitchButton extends View {
 

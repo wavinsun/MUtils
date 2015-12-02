@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import cn.mutils.app.core.codec.FlagUtil;
 import cn.mutils.app.ui.core.IViewFinder;
 import cn.mutils.app.ui.core.UICore;
 
@@ -62,17 +63,20 @@ public class Alert implements IViewFinder {
 		}
 	}
 
+	public static final int FLAG_CANCEL_VISIBLE = FlagUtil.FLAG_01;
+	public static final int FLAG_CANCELABLE = FlagUtil.FLAG_02;
+	public static final int FLAG_ACTION_BAR_VISIBLE = FlagUtil.FLAG_03;
+	public static final int FLAG_OK_ENABLED = FlagUtil.FLAG_04;
+
+	protected int mFlags = FlagUtil.FLAGS_FALSE;
+
 	protected CharSequence mOK;
 
 	protected CharSequence mCancel;
 
-	protected boolean mCancelVisible;
-
 	protected Dialoger mDialog;
 
 	protected Context mContext;
-
-	protected boolean mCancelable = true;
 
 	protected int mTitleIconResId;
 
@@ -85,8 +89,6 @@ public class Alert implements IViewFinder {
 	protected AlertListener mListener;
 
 	protected View mContentView;
-
-	protected boolean mActionBarVisible = true;
 
 	protected int mBackgroundColor = 0xFFEDEDED;
 
@@ -112,8 +114,6 @@ public class Alert implements IViewFinder {
 
 	protected int mCancelId = View.NO_ID;
 
-	protected boolean mOKEnabled = true;
-
 	protected View mOKView;
 
 	protected int mMessageGravity = Gravity.CENTER;
@@ -123,21 +123,22 @@ public class Alert implements IViewFinder {
 
 	public Alert(Context context) {
 		mContext = context;
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_CANCELABLE | FLAG_ACTION_BAR_VISIBLE | FLAG_OK_ENABLED, true);
 	}
 
 	public boolean isCancelVisible() {
-		return mCancelVisible;
+		return FlagUtil.hasFlags(mFlags, FLAG_CANCEL_VISIBLE);
 	}
 
-	public void setCancelVisible(boolean visible) {
+	public void setCancelVisible(boolean value) {
 		if (mDialog != null) {
 			return;
 		}
-		if (mCancelVisible == visible) {
+		if (isCancelVisible() == value) {
 			return;
 		}
-		mCancelVisible = visible;
-		if (mCancelVisible && mCancel == null) {
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_CANCEL_VISIBLE, value);
+		if (value && mCancel == null) {
 			String country = mContext.getResources().getConfiguration().locale.getCountry();
 			if (country.equals("CN")) {
 				mOK = "取消";
@@ -161,16 +162,16 @@ public class Alert implements IViewFinder {
 	}
 
 	public boolean isOKEnabled() {
-		return mOKEnabled;
+		return FlagUtil.hasFlags(mFlags, FLAG_OK_ENABLED);
 	}
 
-	public void setOKEnabled(boolean enabled) {
-		if (mOKEnabled == enabled) {
+	public void setOKEnabled(boolean value) {
+		if (isOKEnabled() == value) {
 			return;
 		}
-		mOKEnabled = enabled;
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_OK_ENABLED, value);
 		if (mOKView != null) {
-			mOKView.setEnabled(enabled);
+			mOKView.setEnabled(value);
 		}
 	}
 
@@ -277,14 +278,14 @@ public class Alert implements IViewFinder {
 	}
 
 	public boolean isActionBarVisible() {
-		return mActionBarVisible;
+		return FlagUtil.hasFlags(mFlags, FLAG_ACTION_BAR_VISIBLE);
 	}
 
-	public void setActionBarVisible(boolean actionBarVisible) {
+	public void setActionBarVisible(boolean value) {
 		if (mDialog != null) {
 			return;
 		}
-		mActionBarVisible = actionBarVisible;
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_ACTION_BAR_VISIBLE, value);
 	}
 
 	public void setOK(CharSequence OK) {
@@ -310,7 +311,7 @@ public class Alert implements IViewFinder {
 			return;
 		}
 		mCancel = cancel;
-		mCancelVisible = mCancel != null;
+		setCancelVisible(mCancel != null);
 	}
 
 	public void setCancel(int cancelStringId) {
@@ -322,7 +323,7 @@ public class Alert implements IViewFinder {
 		} else {
 			mCancel = mContext.getText(cancelStringId);
 		}
-		mCancelVisible = mCancel != null;
+		setCancelVisible(mCancel != null);
 	}
 
 	public void setTitle(CharSequence title) {
@@ -404,11 +405,15 @@ public class Alert implements IViewFinder {
 		}
 	}
 
-	public void setCancelable(boolean cancelable) {
+	public boolean isCancelable() {
+		return FlagUtil.hasFlags(mFlags, FLAG_CANCELABLE);
+	}
+
+	public void setCancelable(boolean value) {
 		if (mDialog != null) {
 			return;
 		}
-		mCancelable = cancelable;
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_CANCELABLE, value);
 	}
 
 	public void setListener(AlertListener listener) {
@@ -564,14 +569,14 @@ public class Alert implements IViewFinder {
 		scrollView.addView(scrollContent, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.WRAP_CONTENT));
 		alertView.addView(scrollView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1));
-		if (mActionBarVisible) {
+		if (isActionBarVisible()) {
 			if (mActionBar == null) {
 				View hLine = new View(mContext);
 				hLine.setBackgroundDrawable(new ColorDrawable(0xFFB3B3B3));
 				alertView.addView(hLine, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1));
 				LinearLayout buttonArea = new LinearLayout(mContext);
 				buttonArea.setOrientation(LinearLayout.HORIZONTAL);
-				if (mCancelVisible && mCancel != null) {
+				if (isCancelVisible() && mCancel != null) {
 					TextView cancelButton = new TextView(mContext);
 					StateListDrawable cancelButtonDrawable = new StateListDrawable();
 					GradientDrawable cancelButtonPressedDrawable = new GradientDrawable();
@@ -624,7 +629,7 @@ public class Alert implements IViewFinder {
 				okButton.setOnClickListener(new OKClickListener());
 				okButton.getPaint().setFakeBoldText(true);
 				mOKView = okButton;
-				mOKView.setEnabled(mOKEnabled);
+				mOKView.setEnabled(isOKEnabled());
 				buttonArea.addView(okButton,
 						new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 				alertView.addView(buttonArea, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -633,7 +638,7 @@ public class Alert implements IViewFinder {
 				if (mCancelId != View.NO_ID) {
 					View cancelView = mActionBar.findViewById(mCancelId);
 					if (cancelView != null) {
-						if (mCancelVisible && mCancel != null) {
+						if (isCancelVisible() && mCancel != null) {
 							if (cancelView instanceof TextView) {
 								TextView cancelButton = (TextView) cancelView;
 								cancelButton.setText(mCancel);
@@ -654,7 +659,7 @@ public class Alert implements IViewFinder {
 						okView.setOnClickListener(new OKClickListener());
 					}
 					mOKView = okView;
-					mOKView.setEnabled(mOKEnabled);
+					mOKView.setEnabled(isOKEnabled());
 				}
 				if (mActionBar.getLayoutParams() == null) {
 					mActionBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -670,8 +675,8 @@ public class Alert implements IViewFinder {
 				new FrameLayout.LayoutParams(mFixedWidth != 0 ? mFixedWidth : FrameLayout.LayoutParams.MATCH_PARENT,
 						FrameLayout.LayoutParams.WRAP_CONTENT));
 		mDialog = new Dialoger(mContext);
-		mDialog.setCancelable(mCancelable);
-		mDialog.setCanceledOnTouchOutside(mCancelable);
+		mDialog.setCancelable(isCancelable());
+		mDialog.setCanceledOnTouchOutside(isCancelable());
 		mDialog.setContentView(realContentView,
 				new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		mDialog.setOnCancelListener(new DialogCancelListener());

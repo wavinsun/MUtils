@@ -1,7 +1,6 @@
-package cn.mutils.app.open;
+package cn.mutils.app.util;
 
 import android.content.Context;
-import cn.mutils.app.AppUtil;
 import cn.sharesdk.framework.ShareSDK;
 
 public class ShareSDKHelper {
