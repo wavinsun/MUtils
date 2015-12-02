@@ -1,7 +1,7 @@
 package cn.mutils.app.event.listener;
 
 import android.view.View;
-import cn.mutils.app.core.event.Listener;
+import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.ui.StateViewFrame;
 import cn.mutils.app.ui.TabBar;
 
@@ -11,7 +11,7 @@ import cn.mutils.app.ui.TabBar;
  * @see StateViewFrame#setOnSelectedChangeListener(OnSelectedChangeListener)
  * @see TabBar#setOnSelectedChangeListener(OnSelectedChangeListener)
  */
-public abstract class OnSelectedChangeListener implements Listener {
+public abstract class OnSelectedChangeListener implements IListener {
 
 	/**
 	 * Override this method if you want to intercept try again for that {

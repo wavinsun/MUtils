@@ -9,7 +9,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.content.CursorLoader;
-import cn.mutils.app.core.event.Listener;
+import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.ui.core.IActivityExecutor;
 import cn.mutils.app.util.AppUtil;
 
@@ -18,7 +18,7 @@ import cn.mutils.app.util.AppUtil;
  */
 public class PickPhotoTask extends MediaTask {
 
-	public static interface PickPhotoListener extends Listener {
+	public static interface PickPhotoListener extends IListener {
 
 		public void onComplete(Uri uri);
 

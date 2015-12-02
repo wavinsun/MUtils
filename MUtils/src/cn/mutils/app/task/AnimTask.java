@@ -2,12 +2,12 @@ package cn.mutils.app.task;
 
 import android.os.Handler;
 import cn.mutils.app.core.ILockable;
-import cn.mutils.app.core.event.Listener;
+import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.core.task.Task;
 
 public class AnimTask extends Task implements ILockable {
 
-	public static abstract class AnimTaskListener implements Listener {
+	public static abstract class AnimTaskListener implements IListener {
 
 		public abstract void onUpdate(AnimTask task, double progress);
 

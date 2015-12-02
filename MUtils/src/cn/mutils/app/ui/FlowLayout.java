@@ -6,11 +6,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import cn.mutils.app.R;
-import cn.mutils.app.core.event.Listener;
+import cn.mutils.app.core.event.IListener;
 
 public class FlowLayout extends ViewGroup {
 
-	public static interface OnLinesChangeListener extends Listener {
+	public static interface OnLinesChangeListener extends IListener {
 
 		public void onChanged(FlowLayout v, int lines);
 

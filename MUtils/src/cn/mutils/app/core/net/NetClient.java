@@ -34,7 +34,7 @@ import cn.mutils.app.core.IClearable;
 import cn.mutils.app.core.annotation.net.Head;
 import cn.mutils.app.core.beans.BeanField;
 import cn.mutils.app.core.codec.FlagUtil;
-import cn.mutils.app.core.event.Listener;
+import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.core.json.JsonUtil;
 import cn.mutils.app.core.reflect.ReflectUtil;
 import cn.mutils.app.core.text.StringUtil;
@@ -49,7 +49,7 @@ public class NetClient<REQUEST, RESPONSE> {
 	/**
 	 * Listener for {@link NetClient}
 	 */
-	public static abstract class NetClientListener<REQUEST, RESPONSE> implements Listener {
+	public static abstract class NetClientListener<REQUEST, RESPONSE> implements IListener {
 
 		/**
 		 * Get request entity class
