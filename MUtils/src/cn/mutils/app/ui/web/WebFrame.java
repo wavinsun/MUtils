@@ -51,12 +51,15 @@ public class WebFrame extends StateView implements IWebFrame {
 	}
 
 	protected void init(Context context, AttributeSet attrs) {
+		WebFrameDownloadListener dListener = new WebFrameDownloadListener();
+		dListener.setContext(context);
 		mWebFrameChromeClient = new WebFrameChromeClient();
 		mWebFrameChromeClient.setContext(context);
 		mWebView = new WebView(context);
 		mWebView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT));
 		mWebView.setWebViewClient(new WebFrameClient());
+		mWebView.setDownloadListener(dListener);
 		mWebView.setWebChromeClient(mWebFrameChromeClient);
 		WebSettings settings = mWebView.getSettings();
 		settings.setJavaScriptEnabled(true);
