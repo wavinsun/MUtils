@@ -162,6 +162,15 @@ public class WebFrame extends StateView implements IWebFrame {
 		mWebView.addJavascriptInterface(mWebJSInterface, mWebJSInterface.name());
 	}
 
+	@Override
+	public boolean onInterceptBackPressed() {
+		if (mWebView.canGoBack()) {
+			mWebView.goBack();
+			return true;
+		}
+		return super.onInterceptBackPressed();
+	}
+
 	class WebJSInterface implements IWebJSInterface {
 
 		@Override
