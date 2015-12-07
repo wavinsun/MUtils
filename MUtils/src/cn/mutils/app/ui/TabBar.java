@@ -2,6 +2,7 @@ package cn.mutils.app.ui;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -91,7 +92,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener {
 		this.getChildAt(mSelectedIndex).setSelected(true);
 		if (mOnSelectedChangeListener != null) {
 			if (mSelectedDispatcher == null) {
-				mSelectedDispatcher = new Handler();
+				mSelectedDispatcher = new Handler(Looper.getMainLooper());
 			} else {
 				mSelectedDispatcher.removeCallbacksAndMessages(null);
 			}

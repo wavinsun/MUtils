@@ -149,7 +149,7 @@ public class StateView extends RelativeLayout implements IStateView, ISessionHol
 		if (this.isSessionHolder()) {
 			this.validateSession();
 			if (this.isSessionChanged()) {
-				getHandler().post(new OnSessionChangedRunnable());
+				getMainHandler().post(new OnSessionChangedRunnable());
 			}
 		}
 		if (mRunOnceOnResumeList != null) {
@@ -325,7 +325,7 @@ public class StateView extends RelativeLayout implements IStateView, ISessionHol
 	}
 
 	@Override
-	public Handler getHandler() {
+	public Handler getMainHandler() {
 		if (mHandler == null) {
 			mHandler = new Handler(Looper.getMainLooper());
 		}

@@ -1,6 +1,7 @@
 package cn.mutils.app.task;
 
 import android.os.Handler;
+import android.os.Looper;
 import cn.mutils.app.core.task.IStopable;
 
 public class DelayTask implements IStopable {
@@ -16,7 +17,7 @@ public class DelayTask implements IStopable {
 	protected long mDelay;
 
 	public DelayTask(Runnable runnable, long delay) {
-		mHandler = new Handler();
+		mHandler = new Handler(Looper.getMainLooper());
 		mRunnable = runnable;
 		mRunnableWrapper = new DelayRunnable();
 		mDelay = delay;

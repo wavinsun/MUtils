@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -114,7 +115,7 @@ public class PullLayout extends RelativeLayout {
 	protected PullPolicy mPolicy = new PullPolicy();
 
 	/** Hander for back-rolling */
-	Handler updateHandler = new Handler() {
+	Handler updateHandler = new Handler(Looper.getMainLooper()) {
 
 		@Override
 		public void handleMessage(Message msg) {

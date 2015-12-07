@@ -1,6 +1,7 @@
 package cn.mutils.app.ui.util;
 
 import android.os.Handler;
+import android.os.Looper;
 import cn.mutils.app.ui.AppActivity;
 import cn.mutils.app.ui.Dialoger;
 
@@ -25,7 +26,7 @@ public class WaitingLayerHelper {
 
 	public void postUpdateWaitingViewState() {
 		if (mWaitingLayerHandler == null) {
-			mWaitingLayerHandler = new Handler();
+			mWaitingLayerHandler = new Handler(Looper.getMainLooper());
 			mWaitingLayerRunnable = new Runnable() {
 
 				@Override

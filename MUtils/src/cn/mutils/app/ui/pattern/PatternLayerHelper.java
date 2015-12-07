@@ -1,6 +1,7 @@
 package cn.mutils.app.ui.pattern;
 
 import android.os.Handler;
+import android.os.Looper;
 import cn.mutils.app.ui.AppActivity;
 
 /**
@@ -115,7 +116,7 @@ public class PatternLayerHelper {
 		mHeartbeatEnable = enabled;
 		if (mHeartbeatEnable) {
 			if (mHeartbeatHandler == null) {
-				mHeartbeatHandler = new Handler();
+				mHeartbeatHandler = new Handler(Looper.getMainLooper());
 				mHeartbeatRunnable = new Runnable() {
 
 					@Override

@@ -2,6 +2,7 @@ package cn.mutils.app.ui;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -17,9 +18,7 @@ public class InfoToast extends TextView {
 	protected CharSequence mText;
 	protected int mDuration;
 
-	protected Handler mDurationHandler;
-	protected Handler mShowDelayHandler;
-	protected Handler mHideDelayHandler;
+	protected Handler mHandler;
 
 	protected Runnable mShowRunable;
 	protected Runnable mHideRunable;
@@ -89,10 +88,7 @@ public class InfoToast extends TextView {
 			}
 		});
 
-		mDurationHandler = new Handler();
-		mShowDelayHandler = new Handler();
-		mHideDelayHandler = new Handler();
-
+		mHandler = new Handler(Looper.getMainLooper());
 		mShowRunable = new Runnable() {
 			public void run() {
 				show(mText, mDuration);
@@ -107,21 +103,23 @@ public class InfoToast extends TextView {
 
 	public void show(CharSequence text, int duration, int delay) {
 		mVisibleInvalidate = true;
-		clearScheduledTask();
+		mHandler.removeCallbacksAndMessages(null);
 
-		if (isEnabled() == false)
+		if (!isEnabled()) {
 			return;
+		}
 
 		if (delay > 0) {
 			mText = text;
 			mDuration = duration;
-			mShowDelayHandler.postDelayed(mShowRunable, delay);
+			mHandler.postDelayed(mShowRunable, delay);
 		} else {
 			setText(text);
 			startAnimation(mFadeInAnim);
 
-			if (duration > 0)
-				mHideDelayHandler.postDelayed(mHideRunable, duration);
+			if (duration > 0) {
+				mHandler.postDelayed(mHideRunable, duration);
+			}
 		}
 	}
 
@@ -147,10 +145,10 @@ public class InfoToast extends TextView {
 
 	public void hide(int delay) {
 		mVisibleInvalidate = true;
-		clearScheduledTask();
+		mHandler.removeCallbacksAndMessages(null);
 
 		if (delay > 0) {
-			mHideDelayHandler.postDelayed(mHideRunable, delay);
+			mHandler.postDelayed(mHideRunable, delay);
 		} else if (getVisibility() == View.VISIBLE) {
 			startAnimation(mFadeOutAnim);
 		}
@@ -162,17 +160,11 @@ public class InfoToast extends TextView {
 
 	public void hideNow() {
 		mVisibleInvalidate = false;
-		clearScheduledTask();
+		mHandler.removeCallbacksAndMessages(null);
 		if (getVisibility() == View.VISIBLE) {
 			clearAnimation();
 			setVisibility(View.INVISIBLE);
 		}
-	}
-
-	private void clearScheduledTask() {
-		mDurationHandler.removeCallbacksAndMessages(null);
-		mHideDelayHandler.removeCallbacksAndMessages(null);
-		mShowDelayHandler.removeCallbacksAndMessages(null);
 	}
 
 }
