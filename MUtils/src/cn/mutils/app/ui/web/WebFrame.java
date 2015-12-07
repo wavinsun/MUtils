@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
@@ -32,8 +31,6 @@ public class WebFrame extends StateView implements IWebFrame {
 	protected IWebJSInterface mWebJSInterface;
 
 	protected IWebMessageManager mWebMessageManager;
-
-	protected Handler mHandler = new Handler();
 
 	public WebFrame(Context context) {
 		super(context);
@@ -84,7 +81,6 @@ public class WebFrame extends StateView implements IWebFrame {
 
 	@Override
 	public void onDestroy() {
-		mHandler.removeCallbacksAndMessages(null);
 		if (mWebMessageManager != null) {
 			mWebMessageManager.clear();
 		}
@@ -99,12 +95,12 @@ public class WebFrame extends StateView implements IWebFrame {
 
 	@Override
 	public void sendMessage(String json) {
-		mHandler.post(new DispatchMessageRunnable(json));
+		getMainHandler().post(new DispatchMessageRunnable(json));
 	}
 
 	@Override
 	public void postMessage(String json) {
-		mHandler.post(new DispatchMessageRunnable(json));
+		getMainHandler().post(new DispatchMessageRunnable(json));
 	}
 
 	@Override
@@ -120,7 +116,7 @@ public class WebFrame extends StateView implements IWebFrame {
 		sb.append("('");
 		sb.append(json);
 		sb.append("');");
-		mHandler.post(new LoadUrlRunnable(sb.toString()));
+		getMainHandler().post(new LoadUrlRunnable(sb.toString()));
 	}
 
 	public WebView getWebView() {

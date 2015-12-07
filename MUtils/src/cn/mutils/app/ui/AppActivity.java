@@ -118,7 +118,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 	}
 
 	@Override
-	public Handler getHandler() {
+	public Handler getMainHandler() {
 		if (mHandler == null) {
 			mHandler = new Handler(Looper.getMainLooper());
 		}
@@ -387,7 +387,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		if (this.isSessionHolder()) {
 			this.validateSession();
 			if (this.isSessionChanged()) {
-				getHandler().post(new OnSessionChangedRunnable());
+				getMainHandler().post(new OnSessionChangedRunnable());
 			}
 		}
 		if (mRunOnceOnResumeList != null) {

@@ -1,6 +1,7 @@
 package cn.mutils.app.task;
 
 import android.os.Handler;
+import android.os.Looper;
 import cn.mutils.app.core.ILockable;
 import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.core.task.Task;
@@ -29,7 +30,7 @@ public class AnimTask extends Task implements ILockable {
 	protected long mSteps = 40;
 	protected long mStepMillis = 30;
 
-	protected Handler mHandler = new Handler();
+	protected Handler mHandler = new Handler(Looper.getMainLooper());
 	protected Runnable mRunnable = new AnimRunnable();
 
 	protected boolean mPaused = false;

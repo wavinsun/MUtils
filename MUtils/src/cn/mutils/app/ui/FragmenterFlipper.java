@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.GestureDetector;
@@ -137,7 +138,7 @@ public class FragmenterFlipper extends ViewFlipper implements IStateView, IState
 				@Override
 				public void onAnimationEnd(Animation animation) {
 					if (mAnimHandler == null) {
-						mAnimHandler = new Handler();
+						mAnimHandler = new Handler(Looper.getMainLooper());
 					}
 					mAnimHandler.post(new Runnable() {
 

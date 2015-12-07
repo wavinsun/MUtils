@@ -881,8 +881,7 @@ public class AppUtil {
 	 * OnCreate of Application.
 	 */
 	public static void fixAsyncTask() {
-		Looper looper = Looper.getMainLooper();
-		Handler handler = new Handler(looper);
+		Handler handler = new Handler(Looper.getMainLooper());
 		handler.post(new AsyncTaskLoaderRunnable());
 	}
 
