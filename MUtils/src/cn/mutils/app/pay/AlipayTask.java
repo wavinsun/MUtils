@@ -32,6 +32,16 @@ public class AlipayTask extends AppPayTask {
 
 	protected AlipayAsyncTask mTask;
 
+	protected String mTimeout;
+
+	public String getTimeout() {
+		return mTimeout;
+	}
+
+	public void setTimeout(String timeout) {
+		mTimeout = timeout;
+	}
+
 	public String getPartner() {
 		return mPartner;
 	}
@@ -137,7 +147,7 @@ public class AlipayTask extends AppPayTask {
 	 * create the order info. 创建订单信息
 	 */
 	protected static String getOrderInfo(String partner, String seller, String outTradeNo, String subject, String body,
-			String totalFee, String notifyUrl) {
+			String totalFee, String notifyUrl, String timeout) {
 		// 合作者身份ID
 		String orderInfo = "partner=" + "\"" + partner + "\"";
 
@@ -173,7 +183,7 @@ public class AlipayTask extends AppPayTask {
 		// 取值范围：1m～15d。
 		// m-分钟，h-小时，d-天，1c-当天（无论交易何时创建，都在0点关闭）。
 		// 该参数数值不接受小数点，如1.5h，可转换为90m。
-		orderInfo += "&it_b_pay=\"30m\"";
+		orderInfo += "&it_b_pay=\"" + (timeout != null ? timeout : "30m") + "\"";
 
 		// 支付宝处理完请求后，当前页面跳转到商户指定页面的路径，可空
 		orderInfo += "&return_url=\"m.alipay.com\"";
@@ -216,7 +226,8 @@ public class AlipayTask extends AppPayTask {
 				if (mNotifyUrl == null) {
 					throw new NullPointerException();
 				}
-				String orderInfo = getOrderInfo(mPartner, mSeller, mOutTradeNo, mSubject, mBody, mTotalFee, mNotifyUrl);
+				String orderInfo = getOrderInfo(mPartner, mSeller, mOutTradeNo, mSubject, mBody, mTotalFee, mNotifyUrl,
+						mTimeout);
 				String sign = SignUtils.sign(orderInfo, mRsaPrivate);
 				sign = URLEncoder.encode(sign, "UTF-8");
 				String payInfo = orderInfo + "&sign=\"" + sign + "\"&" + "sign_type=\"RSA\"";
