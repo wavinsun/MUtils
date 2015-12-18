@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "cn.mutils.app.demo"
+        minSdkVersion 11
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+
+    //签名
+    signingConfigs{
+        keystore{
+            storeFile file("keystore")
+            storePassword "keystore"
+            keyAlias "keystore"
+            keyPassword "keystore"
+        }
+    }
+
+    //多渠道打包
+    productFlavors{
+        DEBUG{
+            manifestPlaceholders=[UMENG_CHANNEL_VALUE:"debug"]
+        }
+        BETA{
+            manifestPlaceholders=[UMENG_CHANNEL_VALUE:"beta"]
+        }
+        RELEASE{
+            manifestPlaceholders=[UMENG_CHANNEL_VALUE:"release"]
+        }
+    }
+
+    //编译警告
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+
+    buildTypes {
+        debug{
+            signingConfig signingConfigs.keystore
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.keystore
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        def fileName = "v${defaultConfig.versionName}/${project.name}_v${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile project(':MUtils')
+}
