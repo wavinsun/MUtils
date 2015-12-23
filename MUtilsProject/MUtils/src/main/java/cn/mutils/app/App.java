@@ -1,18 +1,18 @@
 package cn.mutils.app;
 
-import java.lang.Thread.UncaughtExceptionHandler;
+import android.app.Application;
+import android.content.Context;
 
 import com.umeng.analytics.MobclickAgent;
 
-import android.app.Application;
-import android.content.Context;
-import cn.jpush.android.api.JPushInterface;
+import java.lang.Thread.UncaughtExceptionHandler;
+
 import cn.mutils.app.core.codec.FlagUtil;
 import cn.mutils.app.core.log.Logs;
 import cn.mutils.app.core.task.RepeatTask;
 import cn.mutils.app.core.task.RepeatTask.RepeatTaskListener;
-import cn.mutils.app.core.util.Edition;
 import cn.mutils.app.core.task.RepeatTaskManager;
+import cn.mutils.app.core.util.Edition;
 import cn.mutils.app.os.IContextProvider;
 import cn.mutils.app.util.AppUtil;
 import cn.mutils.app.util.JPushHelper;
@@ -36,6 +36,8 @@ public class App extends Application implements IContextProvider {
 
 	protected RepeatTaskManager mRepeatTaskManager;
 
+	protected JPushHelper mJPushHelper;
+
 	@Override
 	public void onCreate() {
 
@@ -51,9 +53,10 @@ public class App extends Application implements IContextProvider {
 		if (isUmengEnabled()) {
 			UmengHelper.initUmeng(this);
 		}
-		mFlags = FlagUtil.setFlags(mFlags, FLAG_JPUSH, JPushHelper.isJPushEnabled(this));
+		mJPushHelper=new JPushHelper();
+		mFlags = FlagUtil.setFlags(mFlags, FLAG_JPUSH, mJPushHelper.delegate().isJPushEnabled(this));
 		if (isJPushEneabled()) {
-			JPushHelper.initJPush(this);
+			mJPushHelper.delegate().initJPush(this);
 		}
 		mFlags = FlagUtil.setFlags(mFlags, FLAG_SHARE_SDK, ShareSDKHelper.isShareSDKEnabled(this));
 		if (isShareSDKEnabled()) {
@@ -150,7 +153,7 @@ public class App extends Application implements IContextProvider {
 					MobclickAgent.onKillProcess(App.this);
 				}
 				if (isJPushEneabled()) {
-					JPushInterface.onKillProcess(App.this);
+					mJPushHelper.delegate().onKillProcess(App.this);
 				}
 				AppUtil.exit(10);
 			}

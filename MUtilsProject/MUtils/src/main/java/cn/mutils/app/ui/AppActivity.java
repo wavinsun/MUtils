@@ -361,7 +361,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 
 		mRunning = true;
 		mUmengHelper = new UmengHelper(this);
-		mJHelper = new JPushHelper(this);
+		mJHelper = new JPushHelper();
 	}
 
 	@Override
@@ -382,7 +382,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		}
 		mRunning = true;
 		mUmengHelper.onResume();
-		mJHelper.onResume();
+		mJHelper.delegate().onResume(this);
 		// Validate session or user login state
 		if (this.isSessionHolder()) {
 			this.validateSession();
@@ -401,7 +401,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 	@Override
 	protected void onPause() {
 		mUmengHelper.onPause();
-		mJHelper.onPause();
+		mJHelper.delegate().onPause(this);
 		mRunning = false;
 		UICore.dispatchPause(this);
 		super.onPause();
