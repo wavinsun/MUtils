@@ -1,47 +1,36 @@
 package cn.mutils.app.util;
 
 import android.content.Context;
-import cn.jpush.android.api.JPushInterface;
-import cn.mutils.app.App;
-import cn.mutils.app.core.log.Logs;
-import cn.mutils.app.core.util.Edition;
 
-public class JPushHelper {
+import cn.mutils.app.core.runtime.Delegate;
 
-	protected Context mContext;
+public class JPushHelper extends Delegate<JPushHelper> {
 
-	public JPushHelper(Context context) {
-		mContext = context;
-	}
+    public static final String CLASS_DELEGATE = "cn.mutils.app.jpush.JPushHelperDelegate";
 
-	public void onResume() {
-		if (App.getApp() == null || !App.getApp().isJPushEneabled()) {
-			return;
-		}
-		JPushInterface.onResume(mContext);
-	}
+    @Override
+    public String classDelegate() {
+        return CLASS_DELEGATE;
+    }
 
-	public void onPause() {
-		if (App.getApp() == null || !App.getApp().isJPushEneabled()) {
-			return;
-		}
-		JPushInterface.onPause(mContext);
-	}
+    public void onResume(Context context) {
 
-	public static boolean isJPushEnabled(Context context) {
-		return AppUtil.getAppMetaData(context, "JPUSH_APPKEY") != null;
-	}
+    }
 
-	public static void initJPush(Context context) {
-		try {
-			if (App.getApp() != null && App.getApp().getEdition() == Edition.DEBUG) {
-				JPushInterface.setDebugMode(true);
-			}
-			JPushInterface.init(context);
-		} catch (Throwable tr) {
-			// java.lang.UnsatisfiedLinkError
-			Logs.e(AppUtil.TAG_ANDROID_RUNTIME, tr);
-		}
-	}
+    public void onPause(Context context){
+
+    }
+
+    public boolean isJPushEnabled(Context context){
+        return false;
+    }
+
+    public void initJPush(Context context){
+
+    }
+
+    public void onKillProcess(Context context){
+
+    }
 
 }
