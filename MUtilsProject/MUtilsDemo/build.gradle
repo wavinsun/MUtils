@@ -75,4 +75,5 @@ dependencies {
     compile project(':MUtils')
     compile project(':JPush')
     compile project(':Umeng')
+    compile project(':ShareSDK')
 }
