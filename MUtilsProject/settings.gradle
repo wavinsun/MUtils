@@ -1,1 +1,1 @@
-include ':MUtils', ':JPush', ':Umeng', ':MUtilsDemo'
+include ':MUtils', ':JPush', ':Umeng', ':ShareSDK', ':MUtilsDemo'

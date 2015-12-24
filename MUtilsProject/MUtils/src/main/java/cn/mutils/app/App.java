@@ -59,9 +59,10 @@ public class App extends Application implements IContextProvider {
         if (isJPushEneabled()) {
             mJPushHelper.delegate().initJPush(this);
         }
-        mFlags = FlagUtil.setFlags(mFlags, FLAG_SHARE_SDK, ShareSDKHelper.isShareSDKEnabled(this));
+        ShareSDKHelper shareSDKHelper = new ShareSDKHelper();
+        mFlags = FlagUtil.setFlags(mFlags, FLAG_SHARE_SDK, shareSDKHelper.delegate().isShareSDKEnabled(this));
         if (isShareSDKEnabled()) {
-            ShareSDKHelper.initShareSDK(this);
+            shareSDKHelper.delegate().initShareSDK(this);
         }
     }
 

@@ -1,16 +1,24 @@
 package cn.mutils.app.util;
 
 import android.content.Context;
-import cn.sharesdk.framework.ShareSDK;
 
-public class ShareSDKHelper {
+import cn.mutils.app.core.runtime.Delegate;
 
-	public static boolean isShareSDKEnabled(Context context) {
-		return AppUtil.isAssetExists(context, "ShareSDK.xml");
-	}
+public class ShareSDKHelper extends Delegate<ShareSDKHelper> {
 
-	public static void initShareSDK(Context context) {
-		ShareSDK.initSDK(context);
-	}
+    public static final String CLASS_DELEGATE = "cn.mutils.app.ssdk.ShareSDKHelperDelegate";
+
+    @Override
+    public String classDelegate() {
+        return CLASS_DELEGATE;
+    }
+
+    public boolean isShareSDKEnabled(Context context) {
+        return false;
+    }
+
+    public void initShareSDK(Context context) {
+
+    }
 
 }
