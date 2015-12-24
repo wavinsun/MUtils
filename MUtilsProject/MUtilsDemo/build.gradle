@@ -76,4 +76,5 @@ dependencies {
     compile project(':JPush')
     compile project(':Umeng')
     compile project(':ShareSDK')
+    compile project(':UPPay')
 }
