@@ -78,4 +78,5 @@ dependencies {
     compile project(':ShareSDK')
     compile project(':UPPay')
     compile project(':AMap')
+    compile project(':Alipay')
 }
