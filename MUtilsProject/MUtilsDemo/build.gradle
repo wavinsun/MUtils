@@ -74,4 +74,5 @@ dependencies {
     compile 'com.android.support:support-v4:22.2.1'
     compile project(':MUtils')
     compile project(':JPush')
+    compile project(':Umeng')
 }
