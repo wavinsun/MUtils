@@ -360,7 +360,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		UICore.injectContentView(this);
 
 		mRunning = true;
-		mUmengHelper = new UmengHelper(this);
+		mUmengHelper = new UmengHelper();
 		mJHelper = new JPushHelper();
 	}
 
@@ -381,7 +381,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 			mPatternLayerHelper.onResume();
 		}
 		mRunning = true;
-		mUmengHelper.onResume();
+		mUmengHelper.delegate().onResume(this);
 		mJHelper.delegate().onResume(this);
 		// Validate session or user login state
 		if (this.isSessionHolder()) {
@@ -400,7 +400,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 
 	@Override
 	protected void onPause() {
-		mUmengHelper.onPause();
+		mUmengHelper.delegate().onPause(this);
 		mJHelper.delegate().onPause(this);
 		mRunning = false;
 		UICore.dispatchPause(this);
@@ -449,7 +449,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 		if (mHandler != null) {
 			mHandler.removeCallbacksAndMessages(null);
 		}
-		mUmengHelper.onDestroy();
+		mUmengHelper.delegate().onDestroy(this);
 		if (mWaitingLayerHelper != null) {
 			mWaitingLayerHelper.onDestroy();
 		}
@@ -678,15 +678,15 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 	}
 
 	public boolean hasNewVersion() {
-		return mUmengHelper.hasNewVersion();
+		return mUmengHelper.delegate().hasNewVersion(this);
 	}
 
 	public void checkNewVersion(VersionUpdateListener listener) {
-		mUmengHelper.checkNewVersion(listener);
+		mUmengHelper.delegate().checkNewVersion(this,listener);
 	}
 
 	public void feedback() {
-		mUmengHelper.feedback();
+		mUmengHelper.delegate().feedback(this);
 	}
 
 	class OnClickTitleBoxBackButtonListener implements OnClickListener {

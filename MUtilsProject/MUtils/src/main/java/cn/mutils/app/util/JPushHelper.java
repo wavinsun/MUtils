@@ -17,19 +17,19 @@ public class JPushHelper extends Delegate<JPushHelper> {
 
     }
 
-    public void onPause(Context context){
+    public void onPause(Context context) {
 
     }
 
-    public boolean isJPushEnabled(Context context){
+    public boolean isJPushEnabled(Context context) {
         return false;
     }
 
-    public void initJPush(Context context){
+    public void initJPush(Context context) {
 
     }
 
-    public void onKillProcess(Context context){
+    public void onKillProcess(Context context) {
 
     }
 
