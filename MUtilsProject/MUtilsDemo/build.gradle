@@ -88,4 +88,5 @@ dependencies {
     compile project(':UPPay')
     compile project(':AMap')
     compile project(':Alipay')
+    compile project(':ZXing')
 }
