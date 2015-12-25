@@ -66,12 +66,21 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_6
         targetCompatibility JavaVersion.VERSION_1_6
     }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:support-v4:22.2.1'
+
+    //将MUtils.aar放入libs目录引用配置
+    //compile(name: 'MUtils', ext: 'aar')
+
     compile project(':MUtils')
     compile project(':JPush')
     compile project(':Umeng')

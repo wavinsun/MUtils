@@ -1,260 +1,216 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+<resources xmlns:android="http://schemas.android.com/apk/res/android" 
     xmlns:tools="http://schemas.android.com/tools">
 
     <!--
-        MUtils styles to export for other project.
-        Please make a copy of this in application project to fix rendering problems by android studio.
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-
-    <!-- Application theme -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
     </style>
+
+    <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
+
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar" tools:targetApi="22">false</item>
+        
         <item name="android:windowTranslucentStatus" tools:targetApi="22">true</item>
+    	
     </style>
-    <!-- Application theme -->
 
-    <!-- Colors -->
-    <color name="stroke">#D0D0D0</color>
-    <color name="hint">#E5E5E5</color>
-    <color name="background">#F5F5F5</color>
-    <color name="pressed">#20000000</color>
-    <color name="title_box">#8EC43E</color>
-    <color name="line">#E1E1E1</color>
-    <!-- Colors -->
-
-    <!-- Dimens -->
-    <dimen name="padding">8dp</dimen>
-    <dimen name="margin">8dp</dimen>
-    <dimen name="paddingLeft">12dp</dimen>
-    <dimen name="paddingRight">12dp</dimen>
-    <dimen name="paddingTop">8dp</dimen>
-    <dimen name="paddingBottom">8dp</dimen>
-    <dimen name="paddingLeftOfButton">24dp</dimen>
-    <dimen name="paddingRightOfButton">24dp</dimen>
-    <dimen name="paddingTopOfButton">8dp</dimen>
-    <dimen name="paddingBottomOfButton">8dp</dimen>
-    <dimen name="marginLeft">16dp</dimen>
-    <dimen name="marginRight">16dp</dimen>
-    <dimen name="marginTop">8dp</dimen>
-    <dimen name="marginBottom">8dp</dimen>
-    <dimen name="title_box_size">48dp</dimen>
-    <dimen name="title_box_text_size">18sp</dimen>
-    <dimen name="main_tab_size">56dp</dimen>
-    <!-- Dimens -->
-
-    <!-- Ids -->
-    <item name="ok" type="id"></item>
-    <item name="cancel" type="id"></item>
-    <item name="status_box" type="id"></item>
-    <item name="title_box" type="id"></item>
-    <item name="title_box_back" type="id"></item>
-    <item name="title_box_name" type="id"></item>
-    <item name="center_mark" type="id"></item>
-    <item name="empty_info" type="id"></item>
-    <item name="info_toast" type="id"></item>
-    <!-- Ids -->
-
-    <!-- Layout -->
     <style name="Wrap">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="Fill">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
+
     <style name="HFill">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="VFill">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
     </style>
+
     <style name="VItemFill">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
     </style>
+
     <style name="HItemFill">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
     </style>
+
     <style name="VItemWrap">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
     </style>
+
     <style name="HItemWrap">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
     </style>
+
     <style name="VLinearFill" parent="Fill">
         <item name="android:orientation">vertical</item>
     </style>
+
     <style name="HLinearFill" parent="Fill">
         <item name="android:orientation">horizontal</item>
     </style>
+
     <style name="VLinearVFill" parent="VFill">
         <item name="android:orientation">vertical</item>
     </style>
+
     <style name="HLinearVFill" parent="VFill">
         <item name="android:orientation">horizontal</item>
     </style>
+
     <style name="VLinearHFill" parent="HFill">
         <item name="android:orientation">vertical</item>
     </style>
+
     <style name="HLinearHFill" parent="HFill">
         <item name="android:orientation">horizontal</item>
     </style>
+    
     <style name="HLinearWrap" parent="Wrap">
         <item name="android:orientation">horizontal</item>
     </style>
+
     <style name="VLinearWrap" parent="Wrap">
         <item name="android:orientation">vertical</item>
     </style>
+
     <style name="HLinearHItemFill" parent="HItemFill">
         <item name="android:orientation">horizontal</item>
     </style>
+
     <style name="HLinearVItemFill" parent="VItemFill">
         <item name="android:orientation">horizontal</item>
     </style>
+
     <style name="VLinearHItemFill" parent="HItemFill">
         <item name="android:orientation">vertical</item>
     </style>
+
     <style name="VLinearVItemFill" parent="VItemFill">
         <item name="android:orientation">vertical</item>
     </style>
+
     <style name="HLinearHItemWrap" parent="HItemWrap">
         <item name="android:orientation">horizontal</item>
     </style>
+
     <style name="HLinearVItemWrap" parent="VItemWrap">
         <item name="android:orientation">horizontal</item>
     </style>
+
     <style name="VLinearHItemWrap" parent="HItemWrap">
         <item name="android:orientation">vertical</item>
     </style>
+
     <style name="VLinearVItemWrap" parent="VItemWrap">
         <item name="android:orientation">vertical</item>
     </style>
+
     <style name="HLineGap">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>
     </style>
+
     <style name="VLineGap">
         <item name="android:layout_width">1px</item>
         <item name="android:layout_height">match_parent</item>
     </style>
+
     <style name="Null">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
     </style>
+
     <style name="CenterMark" parent="Null">
         <item name="android:id">@id/center_mark</item>
         <item name="android:layout_centerInParent">true</item>
     </style>
+
     <style name="HCenterMark" parent="Null">
         <item name="android:id">@id/center_mark</item>
         <item name="android:layout_centerHorizontal">true</item>
     </style>
+
     <style name="VCenterMark" parent="Null">
         <item name="android:id">@id/center_mark</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
+    
     <style name="List">
         <item name="android:cacheColorHint">#00000000</item>
         <item name="android:divider">@null</item>
         <item name="android:listSelector">#00000000</item>
     </style>
+    
     <style name="ListWrap" parent="List">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="ListFill" parent="List">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
+
     <style name="ListHFill" parent="List">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="ListVFill" parent="List">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
     </style>
+
     <style name="ListVItemFill" parent="List">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
     </style>
+
     <style name="ListHItemFill" parent="List">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
     </style>
+
     <style name="ListVItemWrap" parent="List">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
     </style>
+
     <style name="ListHItemWrap" parent="List">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
     </style>
-    <!-- Layout -->
-
-    <!-- StatusBox -->
-    <style name="StatusBox" parent="HFill">
-        <item name="android:id">@id/status_box</item>
-        <item name="android:background">@color/title_box</item>
-    </style>
-    <!-- StatusBox -->
-
-    <!-- TitleBox -->
-    <style name="TitleBox">
-        <item name="android:id">@id/title_box</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/title_box_size</item>
-        <item name="android:background">@color/title_box</item>
-    </style>
-    <style name="TitleBoxButton">
-        <item name="android:clickable">true</item>
-        <item name="android:layout_width">@dimen/title_box_size</item>
-        <item name="android:layout_height">@dimen/title_box_size</item>
-        <item name="android:background">@drawable/bg_clickable</item>
-        <item name="android:padding">@dimen/padding</item>
-    </style>
-    <style name="TitleBoxName" parent="Wrap">
-        <item name="android:layout_centerInParent">true</item>
-        <item name="android:layout_marginLeft">@dimen/title_box_size</item>
-        <item name="android:layout_marginRight">@dimen/title_box_size</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:textColor">#FFF</item>
-        <item name="android:textSize">@dimen/title_box_text_size</item>
-        <item name="android:id">@id/title_box_name</item>
-    </style>
-    <style name="TitleBoxText">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/title_box_size</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:paddingLeft">@dimen/paddingLeft</item>
-        <item name="android:paddingRight">@dimen/paddingRight</item>
-        <item name="android:textColor">#FFF</item>
-        <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/bg_clickable</item>
-        <item name="android:clickable">true</item>
-    </style>
-    <style name="TitleBoxBackButton" parent="TitleBoxButton">
-        <item name="android:id">@id/title_box_back</item>
-        <item name="android:src">@drawable/ic_title_box_back</item>
-    </style>
-    <!-- TitleBox -->
 
 </resources>
