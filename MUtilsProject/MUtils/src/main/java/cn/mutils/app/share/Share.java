@@ -2,6 +2,10 @@ package cn.mutils.app.share;
 
 import android.content.Context;
 
+import cn.mutils.app.share.api.ShareQQ;
+import cn.mutils.app.share.api.ShareQzone;
+import cn.mutils.app.share.api.ShareWechat;
+import cn.mutils.app.share.api.ShareWechatMoments;
 import cn.mutils.app.share.intent.IntentShareQzone;
 import cn.mutils.app.share.intent.IntentShareTencentWeibo;
 import cn.mutils.app.share.intent.IntentShareWeibo;
@@ -9,6 +13,9 @@ import cn.mutils.app.share.mob.MobShareTencentWeibo;
 import cn.mutils.app.share.mob.MobShareWeibo;
 
 public class Share extends ShareBase {
+
+    protected static String sTencentAppId;
+    protected static String sWechatAppId;
 
     public Share(Context context) {
         setContext(context);
@@ -22,7 +29,7 @@ public class Share extends ShareBase {
             case PLATFORM_QQ:
                 switch (mMethod) {
                     case METHOD_API:
-                        wrapper = new ShareQQ(mContext);
+                        wrapper = new ShareQQ(mContext).delegate();
                         break;
                     case METHOD_INTENT:
                         wrapper = null;
@@ -37,7 +44,7 @@ public class Share extends ShareBase {
             case PLATFORM_QZONE:
                 switch (mMethod) {
                     case METHOD_API:
-                        wrapper = new ShareQzone(mContext);
+                        wrapper = new ShareQzone(mContext).delegate();
                         break;
                     case METHOD_INTENT:
                         wrapper = new IntentShareQzone(mContext);
@@ -67,7 +74,7 @@ public class Share extends ShareBase {
             case PLATFORM_WECHAT:
                 switch (mMethod) {
                     case METHOD_API:
-                        wrapper = new ShareWechat(mContext);
+                        wrapper = new ShareWechat(mContext).delegate();
                         break;
                     case METHOD_INTENT:
                         wrapper = null;
@@ -82,15 +89,17 @@ public class Share extends ShareBase {
             case PLATFORM_WECHAT_MOMENTS:
                 switch (mMethod) {
                     case METHOD_API:
+                        wrapper = new ShareWechatMoments(mContext).delegate();
                         break;
                     case METHOD_INTENT:
+                        wrapper = null;
                         break;
                     case METHOD_SHARE_SDK:
+                        wrapper = null;
                         break;
                     default:
                         break;
                 }
-                wrapper = mMethod == METHOD_INTENT ? null : new ShareWechatMoments(mContext);
                 break;
             case PLATFORM_TENCENT_WEIBO:
                 switch (mMethod) {
@@ -125,20 +134,19 @@ public class Share extends ShareBase {
     }
 
     public static void setTencentAppId(String appId) {
-        ShareQQ.setAppId(appId);
-        ShareQzone.setAppId(appId);
+        sTencentAppId = appId;
     }
 
     public static String getTencentAppId() {
-        return ShareQQ.getAppId();
+        return sTencentAppId;
     }
 
     public static void setWechatAppId(String appId) {
-        ShareWechat.setAppId(appId);
+        sWechatAppId = appId;
     }
 
     public static String getWechatAppId() {
-        return ShareWechat.getAppId();
+        return sWechatAppId;
     }
 
 }

@@ -1,1 +1,1 @@
-include ':MUtils', ':JPush', ':Umeng', ':ShareSDK', ':UPPay', ':AMap', ':Alipay', ':MUtilsDemo', ':ZXing', ':Archive'
+include ':MUtils', ':JPush', ':Umeng', ':ShareSDK', ':UPPay', ':AMap', ':Alipay', ':MUtilsDemo', ':ZXing', ':Archive', ':MM', ':QQ'
