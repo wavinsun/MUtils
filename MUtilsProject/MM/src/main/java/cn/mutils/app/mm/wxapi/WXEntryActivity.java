@@ -9,7 +9,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import cn.mutils.app.share.Share;
+import cn.mutils.app.App;
 import cn.mutils.app.share.api.ShareWechatDelegate;
 import cn.mutils.app.ui.AppActivity;
 
@@ -20,8 +20,8 @@ public class WXEntryActivity extends AppActivity implements IWXAPIEventHandler {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Share.getWechatAppId() != null) {
-            api = WXAPIFactory.createWXAPI(this, Share.getWechatAppId(), false);
+        if (App.getWechatAppId() != null) {
+            api = WXAPIFactory.createWXAPI(this, App.getWechatAppId(), false);
             api.handleIntent(getIntent(), this);
         }
     }

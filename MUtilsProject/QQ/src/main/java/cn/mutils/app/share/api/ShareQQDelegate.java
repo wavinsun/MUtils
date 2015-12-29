@@ -8,7 +8,7 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
-import cn.mutils.app.share.Share;
+import cn.mutils.app.App;
 import cn.mutils.app.share.ShareBase;
 import cn.mutils.app.util.AppUtil;
 
@@ -16,7 +16,7 @@ public class ShareQQDelegate extends ShareBase {
 
     @Override
     public void share() {
-        if (Share.getTencentAppId() == null) {
+        if (App.getTencentAppId() == null) {
             if (mListener != null) {
                 mListener.onError(this);
             }
@@ -26,7 +26,7 @@ public class ShareQQDelegate extends ShareBase {
         bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, mText);
         bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, mUrl);
         bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, mImageUrl);
-        Tencent.createInstance(Share.getTencentAppId(), mContext).shareToQQ(AppUtil.toActivity(mContext), bundle, new IUiListener() {
+        Tencent.createInstance(App.getTencentAppId(), mContext).shareToQQ(AppUtil.toActivity(mContext), bundle, new IUiListener() {
 
             @Override
             public void onError(UiError err) {

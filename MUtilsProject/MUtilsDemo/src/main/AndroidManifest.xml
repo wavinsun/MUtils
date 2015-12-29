@@ -146,6 +146,15 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- 微信API回调 END -->
 
+        <!-- 微信支付API回调 BEGIN -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 微信支付API回调 END -->
+
         <!-- UnionPay BEGIN -->
         <activity
             android:name="com.unionpay.uppay.PayActivity"

@@ -130,11 +130,6 @@
                 style="@style/MainBtn"
                 android:text="IndexView"/>
             
-            <TextView
-                android:id="@+id/uppay"
-                style="@style/MainBtn"
-                android:text="UPPay"/>
-            
             <TextView 
                 android:id="@+id/web_frame"
                 style="@style/MainBtn"
