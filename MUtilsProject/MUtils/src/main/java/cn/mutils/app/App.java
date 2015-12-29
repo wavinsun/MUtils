@@ -28,6 +28,9 @@ public class App extends Application implements IContextProvider {
 
     protected static App sApp;
 
+    protected static String sTencentAppId;
+    protected static String sWechatAppId;
+
     protected int mFlags = FlagUtil.FLAGS_FALSE;
 
     protected Edition mEdition;
@@ -139,6 +142,22 @@ public class App extends Application implements IContextProvider {
 
     public static App getApp() {
         return sApp;
+    }
+
+    public static void setTencentAppId(String appId) {
+        sTencentAppId = appId;
+    }
+
+    public static String getTencentAppId() {
+        return sTencentAppId;
+    }
+
+    public static void setWechatAppId(String appId) {
+        sWechatAppId = appId;
+    }
+
+    public static String getWechatAppId() {
+        return sWechatAppId;
     }
 
     class AppExceptionHandler implements UncaughtExceptionHandler {

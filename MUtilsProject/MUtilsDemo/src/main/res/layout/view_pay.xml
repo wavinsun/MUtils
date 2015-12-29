@@ -9,6 +9,10 @@
     <TextView style="@style/DemoFeatureItem"
         android:id="@+id/ali_pay"
         android:text="Ali Pay"/>
+
+    <TextView style="@style/DemoFeatureItem"
+        android:id="@+id/wx_pay"
+        android:text="Wechat Pay"/>
     
     <TextView style="@style/LogText"/>
 

@@ -14,9 +14,6 @@ import cn.mutils.app.share.mob.MobShareWeibo;
 
 public class Share extends ShareBase {
 
-    protected static String sTencentAppId;
-    protected static String sWechatAppId;
-
     public Share(Context context) {
         setContext(context);
         mMethod = METHOD_INTENT;
@@ -131,22 +128,6 @@ public class Share extends ShareBase {
         wrapper.setUrl(mUrl);
         wrapper.setListener(mListener);
         wrapper.share();
-    }
-
-    public static void setTencentAppId(String appId) {
-        sTencentAppId = appId;
-    }
-
-    public static String getTencentAppId() {
-        return sTencentAppId;
-    }
-
-    public static void setWechatAppId(String appId) {
-        sWechatAppId = appId;
-    }
-
-    public static String getWechatAppId() {
-        return sWechatAppId;
     }
 
 }

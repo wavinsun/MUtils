@@ -6,7 +6,7 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import cn.mutils.app.share.Share;
+import cn.mutils.app.App;
 import cn.mutils.app.share.ShareBase;
 import cn.mutils.app.util.AppUtil;
 
@@ -16,12 +16,12 @@ public class ShareWechatDelegate extends ShareBase {
 
     @Override
     public void share() {
-        if (Share.getWechatAppId() == null) {
+        if (App.getWechatAppId() == null) {
             if (mListener != null) {
                 mListener.onError(this);
             }
         }
-        IWXAPI api = WXAPIFactory.createWXAPI(mContext, Share.getWechatAppId(), false);
+        IWXAPI api = WXAPIFactory.createWXAPI(mContext, App.getWechatAppId(), false);
         if (!api.isWXAppInstalled()) {
             if (mListener != null) {
                 mListener.onError(this);

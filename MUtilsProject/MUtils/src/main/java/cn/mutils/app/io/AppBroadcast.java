@@ -23,7 +23,7 @@ public class AppBroadcast<EXTRA extends Extra> implements IBroadcast {
 
 	protected OnReceiveListener<EXTRA> mOnReceiveListener;
 
-	protected OBroadcastReceiver mReceiver;
+	protected AppBroadcastReceiver mReceiver;
 
 	public AppBroadcast(Context context) {
 		mContext = context;
@@ -79,7 +79,7 @@ public class AppBroadcast<EXTRA extends Extra> implements IBroadcast {
 	public AppBroadcast<EXTRA> start() {
 		this.stop();
 		if (mReceiver == null) {
-			mReceiver = new OBroadcastReceiver();
+			mReceiver = new AppBroadcastReceiver();
 		}
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(mAction);
@@ -110,7 +110,7 @@ public class AppBroadcast<EXTRA extends Extra> implements IBroadcast {
 		mOnReceiveListener = listener;
 	}
 
-	class OBroadcastReceiver extends BroadcastReceiver {
+	class AppBroadcastReceiver extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
