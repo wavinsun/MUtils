@@ -892,7 +892,7 @@ public class AppUtil {
      */
     public static void fixAsyncTask() {
         Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new AsyncTaskLoaderRunnable());
+        handler.post(new AsyncTaskClassLoader());
     }
 
     public static Locale getLocale(Context context) {
@@ -1008,15 +1008,4 @@ public class AppUtil {
         }
     }
 
-    public static class AsyncTaskLoaderRunnable implements Runnable {
-
-        public void run() {
-            try {
-                Class.forName("android.os.AsyncTask");
-            } catch (Exception e) {
-
-            }
-        }
-
-    }
 }
