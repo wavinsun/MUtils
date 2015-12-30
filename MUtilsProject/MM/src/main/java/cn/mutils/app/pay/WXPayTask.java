@@ -6,10 +6,12 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import cn.mutils.app.App;
-import cn.mutils.app.core.net.NetClient;
+import cn.mutils.app.core.ILockable;
+import cn.mutils.app.core.err.ErrorCodeException;
+import cn.mutils.app.core.task.IStopableManager;
 import cn.mutils.app.io.AppBroadcast;
 
-public class WXPayTask extends AppPayTask {
+public class WXPayTask extends AppPayTask implements ILockable {
 
     protected String mAppId;
 
@@ -26,6 +28,16 @@ public class WXPayTask extends AppPayTask {
     protected String mSign;
 
     protected String mExtData;
+
+    @Override
+    public boolean isLocked() {
+        return true;
+    }
+
+    @Override
+    public void setLocked(boolean locked) {
+
+    }
 
     public String getAppId() {
         return mAppId;
@@ -125,6 +137,9 @@ public class WXPayTask extends AppPayTask {
         api.sendReq(req);
         WXPayBroadcast broadcast = new WXPayBroadcast(mContext);
         broadcast.setOnReceiveListener(new WXPayBroadcastReceiverListener());
+        if (mContext instanceof IStopableManager) {
+            ((IStopableManager) mContext).bind(this);
+        }
         broadcast.start();
     }
 
@@ -146,7 +161,7 @@ public class WXPayTask extends AppPayTask {
                 }
             } else {
                 for (AppPayListener listener : getListeners(AppPayListener.class)) {
-                    NetClient.ErrorCodeException e = new NetClient.ErrorCodeException(extra.errCode, extra.errStr);
+                    ErrorCodeException e = new ErrorCodeException(extra.errCode, extra.errStr);
                     listener.onError(WXPayTask.this, e);
                 }
             }
