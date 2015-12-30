@@ -13,7 +13,7 @@
             android:text="Capture" />
     </RelativeLayout>
 
-    <cn.mutils.app.qrcode.CaptureView
+    <cn.mutils.app.zxing.CaptureView
         android:id="@+id/capture"
         style="@style/Fill" />
 

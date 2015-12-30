@@ -213,6 +213,23 @@ public class AppUtil {
             return false;
         }
     }
+
+    /**
+     * Get BuildConfig.DEBUG value for application
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isAppDebugType(Context context) {
+        String id = AppUtil.getAppPackageName(context);
+        try {
+            Class<?> buildConfig = Class.forName(id + ".BuildConfig");
+            Field debug = buildConfig.getField("DEBUG");
+            return debug.getBoolean(null);
+        } catch (Exception e) {
+            return true;
+        }
+    }
     // ========================= End Application =========================
 
     // ========================= Begin Settings =========================

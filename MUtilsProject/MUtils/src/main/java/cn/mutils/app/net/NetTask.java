@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import java.lang.reflect.Type;
 import java.net.URL;
 
+import cn.mutils.app.App;
 import cn.mutils.app.BuildConfig;
 import cn.mutils.app.core.err.ConnectNotFoundException;
 import cn.mutils.app.core.log.Logs;
@@ -276,7 +277,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
     }
 
     protected void debugging(String event, String message) {
-        if (!BuildConfig.DEBUG) {
+        if (!App.isDebugType()) {
             return;
         }
         if (NetClient.EVENT_EXCEPTION.equals(event)) {

@@ -1,4 +1,4 @@
-package cn.mutils.app.qrcode;
+package cn.mutils.app.zxing;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -16,10 +16,9 @@ import android.widget.RelativeLayout;
 
 import com.google.zxing.Result;
 
-import cn.mutils.app.qrcode.camera.CameraManager;
-import cn.mutils.app.qrcode.decode.CaptureHandler;
 import cn.mutils.app.ui.StateView;
-import cn.mutils.app.zxing.R;
+import cn.mutils.app.zxing.camera.CameraManager;
+import cn.mutils.app.zxing.decode.CaptureHandler;
 
 @SuppressWarnings("deprecation")
 public class CaptureView extends StateView implements Callback {

@@ -1,4 +1,4 @@
-package cn.mutils.app.qrcode;
+package cn.mutils.app.zxing;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,8 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.view.View;
-
-import cn.mutils.app.zxing.R;
 
 public class QRCodeView extends View {
 
