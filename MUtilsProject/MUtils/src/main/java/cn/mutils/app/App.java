@@ -26,6 +26,7 @@ public class App extends Application implements IContextProvider {
     public static final int FLAG_JPUSH = FlagUtil.FLAG_02;
     public static final int FLAG_SHARE_SDK = FlagUtil.FLAG_03;
 
+    protected static Boolean sDebugType;
     protected static App sApp;
 
     protected static String sTencentAppId;
@@ -48,6 +49,7 @@ public class App extends Application implements IContextProvider {
         Thread.setDefaultUncaughtExceptionHandler(new AppExceptionHandler());
 
         sApp = this;
+        isDebugType();//BuildConfig.DEBUG
         AppLocale.syncLocale(this);
         AppUtil.fixAsyncTask();
 
@@ -87,7 +89,7 @@ public class App extends Application implements IContextProvider {
      * @return
      */
     protected Edition detectEdition() {
-        if (BuildConfig.DEBUG) {
+        if (App.isDebugType()) {
             return Edition.DEBUG;
         } else {
             String channel = AppUtil.getAppMetaData(this, "UMENG_CHANNEL");
@@ -138,6 +140,22 @@ public class App extends Application implements IContextProvider {
             mRepeatTaskManager = new RepeatTaskManager();
         }
         mRepeatTaskManager.add(task);
+    }
+
+    /**
+     * Get BuildConfig.DEBUG value for application
+     *
+     * @return
+     */
+    public static boolean isDebugType() {
+        if (sDebugType != null) {
+            return sDebugType.booleanValue();
+        }
+        if (sApp == null) {
+            return true;
+        }
+        sDebugType = Boolean.valueOf(AppUtil.isAppDebugType(sApp));
+        return sDebugType.booleanValue();
     }
 
     public static App getApp() {

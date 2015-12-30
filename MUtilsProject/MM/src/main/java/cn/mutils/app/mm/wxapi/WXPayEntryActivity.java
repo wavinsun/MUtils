@@ -41,14 +41,7 @@ public class WXPayEntryActivity extends AppActivity implements IWXAPIEventHandle
     @Override
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-            switch (resp.errCode) {
-                case 0://成功
-                    break;
-                case -1://失败
-                    break;
-                case -2://取消
-                    break;
-            }
+            // BaseResp#errCode 0:成功 -1:失败 -2:取消
             WXPayBroadcast.WXPayExtra extra = new WXPayBroadcast.WXPayExtra();
             extra.errCode = resp.errCode;
             extra.errStr = resp.errStr;

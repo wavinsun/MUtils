@@ -4,7 +4,7 @@
 
     <TextView style="@style/GoBtn" />
 
-    <cn.mutils.app.qrcode.QRCodeView
+    <cn.mutils.app.zxing.QRCodeView
         android:id="@+id/code"
         android:layout_width="150dp"
         android:layout_height="150dp"
