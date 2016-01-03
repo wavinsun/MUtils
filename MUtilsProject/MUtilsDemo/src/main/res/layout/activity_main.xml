@@ -14,6 +14,11 @@
         <cn.mutils.app.ui.FlowLayout 
             style="@style/HFill"
             android:padding="@dimen/padding">
+
+            <TextView
+                android:id="@+id/test"
+                style="@style/MainBtn"
+                android:text="Test"/>
             
             <TextView 
                 android:id="@+id/alert_by_activity"

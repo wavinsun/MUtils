@@ -12,7 +12,7 @@ import cn.mutils.app.core.IClearable;
  */
 public class BeanCache implements IClearable {
 
-    protected Map<String, PropertyHash> mCache;
+    protected Map<String, PropertyMD5> mCache;
     protected Object mTarget;
 
     public BeanCache(Object target) {
@@ -40,32 +40,32 @@ public class BeanCache implements IClearable {
             return null;
         }
         if (mCache == null) {
-            mCache = new HashMap<String, PropertyHash>();
+            mCache = new HashMap<String, PropertyMD5>();
         }
         ArrayList<String> changed = new ArrayList<String>();
         for (BeanField f : BeanField.getFields(mTarget.getClass())) {
             try {
                 String name = f.getName();
                 Object fValue = f.get(mTarget);
-                long fHashCode = HashCode.hashCode(fValue);
+                ObjectMD5 md5 = new ObjectMD5(fValue);
                 boolean isChanged = false;
-                PropertyHash propertyHash = mCache.get(name);
-                if (propertyHash == null) {
+                PropertyMD5 propertyMD5 = mCache.get(name);
+                if (propertyMD5 == null) {
                     isChanged = true;
-                    propertyHash = new PropertyHash();
-                    mCache.put(name, propertyHash);
+                    propertyMD5 = new PropertyMD5();
+                    mCache.put(name, propertyMD5);
                 } else {
-                    if (!propertyHash.isValid()) {
+                    if (!propertyMD5.isValid()) {
                         isChanged = true;
                     } else {
-                        if (propertyHash.mHash != fHashCode) {
+                        if (!md5.equals(propertyMD5.mMD5)) {
                             isChanged = true;
                         }
                     }
                 }
                 if (isChanged) {
-                    propertyHash.mHash = fHashCode;
-                    propertyHash.mPorperty = fValue;
+                    propertyMD5.mMD5 = md5;
+                    propertyMD5.mProperty = fValue;
                     changed.add(name);
                 }
             } catch (Exception e) {
@@ -85,26 +85,26 @@ public class BeanCache implements IClearable {
             return null;
         }
         if (mCache == null) {
-            mCache = new HashMap<String, PropertyHash>();
+            mCache = new HashMap<String, PropertyMD5>();
         }
         ArrayList<String> changed = new ArrayList<String>();
         for (BeanField f : BeanField.getFields(mTarget.getClass())) {
             try {
                 String name = f.getName();
                 Object fValue = f.get(mTarget);
-                long fHashCode = HashCode.hashCode(fValue);
+                ObjectMD5 md5 = new ObjectMD5(fValue);
                 boolean isChanged = false;
-                PropertyHash propertyHash = mCache.get(name);
-                if (propertyHash == null) {
+                PropertyMD5 propertyMD5 = mCache.get(name);
+                if (propertyMD5 == null) {
                     isChanged = true;
                 } else {
-                    if (!propertyHash.isValid()) {
+                    if (!propertyMD5.isValid()) {
                         isChanged = true;
-                        propertyHash.mPorperty = null;
+                        propertyMD5.mProperty = null;
                     } else {
-                        if (propertyHash.mHash != fHashCode) {
+                        if (!md5.equals(propertyMD5.mMD5)) {
                             isChanged = true;
-                            f.set(mTarget, propertyHash.mPorperty);
+                            f.set(mTarget, propertyMD5.mProperty);
                         }
                     }
                 }

@@ -31,6 +31,7 @@ import cn.mutils.app.demo.ui.PromptDemoView;
 import cn.mutils.app.demo.ui.QRCodeDemoView;
 import cn.mutils.app.demo.ui.ShareDemoView;
 import cn.mutils.app.demo.ui.SurfaceViewerDemoView;
+import cn.mutils.app.demo.ui.TestDemoView;
 import cn.mutils.app.demo.ui.TipViewDemoView;
 import cn.mutils.app.demo.ui.UIAdapterDemoView;
 import cn.mutils.app.demo.ui.UmengDemoView;
@@ -57,7 +58,7 @@ public class MainActivity extends BasicActivity {
         startActivity(intent);
     }
 
-    @OnClick({R.id.ui_adapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir, R.id.anim_task, R.id.media, R.id.net_task,
+    @OnClick({R.id.test, R.id.ui_adapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir, R.id.anim_task, R.id.media, R.id.net_task,
             R.id.pay, R.id.qrcode, R.id.share, R.id.action_sheet, R.id.amap, R.id.date_chooser, R.id.prompt,
             R.id.progress_view, R.id.tip_view, R.id.busy, R.id.path_button, R.id.hlinear_adapter, R.id.index_view,
             R.id.web_frame, R.id.intent_executor, R.id.umeng, R.id.surface_viewer, R.id.progress_icon, R.id.channel})
@@ -68,6 +69,9 @@ public class MainActivity extends BasicActivity {
             extra.setTitle(((TextView) v).getText().toString());
         }
         switch (v.getId()) {
+            case R.id.test:
+                extra.setViewName(TestDemoView.class.getName());
+                break;
             case R.id.ui_adapter:
                 extra.setViewName(UIAdapterDemoView.class.getName());
                 break;
