@@ -1,5 +1,10 @@
 package cn.mutils.app.core.runtime;
 
+/**
+ * Reference value
+ *
+ * @param <T>
+ */
 public class RefValue<T> {
 
     protected T mValue;

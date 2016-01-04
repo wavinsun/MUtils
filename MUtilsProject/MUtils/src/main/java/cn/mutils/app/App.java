@@ -1,5 +1,6 @@
 package cn.mutils.app;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
@@ -20,6 +21,7 @@ import cn.mutils.app.util.UmengHelper;
 /**
  * Application of framework
  */
+@SuppressLint("MissingSuperCall")
 public class App extends Application implements IContextProvider {
 
     public static final int FLAG_UMENG = FlagUtil.FLAG_01;

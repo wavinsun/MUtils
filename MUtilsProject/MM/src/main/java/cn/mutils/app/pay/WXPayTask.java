@@ -11,6 +11,9 @@ import cn.mutils.app.core.err.ErrorCodeException;
 import cn.mutils.app.core.task.IStopableManager;
 import cn.mutils.app.io.AppBroadcast;
 
+/**
+ * WeChat pay task
+ */
 public class WXPayTask extends AppPayTask implements ILockable {
 
     protected String mAppId;

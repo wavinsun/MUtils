@@ -2,8 +2,17 @@ package cn.mutils.app.core.codec;
 
 import cn.mutils.app.core.text.StringUtil;
 
+/**
+ * Byte utility of framework
+ */
 public class ByteUtil {
 
+    /**
+     * Convert integer to bytes
+     *
+     * @param value
+     * @return
+     */
     public static byte[] toBytes(int value) {
         byte[] bytes = new byte[4];
         bytes[0] = (byte) ((value >> 24) & 0xFF);
@@ -13,6 +22,12 @@ public class ByteUtil {
         return bytes;
     }
 
+    /**
+     * Convert bytes to integer
+     *
+     * @param bytes
+     * @return
+     */
     public static int toInt(byte[] bytes) {
         if (bytes == null) {
             return 0;
@@ -20,6 +35,13 @@ public class ByteUtil {
         return toInt(bytes, 0);
     }
 
+    /**
+     * Convert bytes to integer from offset position
+     *
+     * @param bytes
+     * @param offset
+     * @return
+     */
     public static int toInt(byte[] bytes, int offset) {
         if (bytes == null) {
             return 0;
@@ -34,6 +56,12 @@ public class ByteUtil {
         return value;
     }
 
+    /**
+     * Convert bytes to binary string
+     *
+     * @param bytes
+     * @return
+     */
     public static String toString(byte[] bytes) {
         if (bytes == null) {
             return null;
@@ -41,6 +69,12 @@ public class ByteUtil {
         return StringUtil.toBinary(bytes);
     }
 
+    /**
+     * Convert bytes to hex string
+     *
+     * @param bytes
+     * @return
+     */
     public static String toHexString(byte[] bytes) {
         if (bytes == null) {
             return null;

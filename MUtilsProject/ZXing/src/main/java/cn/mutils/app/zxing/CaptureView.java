@@ -20,6 +20,10 @@ import cn.mutils.app.ui.StateView;
 import cn.mutils.app.zxing.camera.CameraManager;
 import cn.mutils.app.zxing.decode.CaptureHandler;
 
+/**
+ * Capture view of framework<br>
+ * It is used to capture data from QRCode image.
+ */
 @SuppressWarnings("deprecation")
 public class CaptureView extends StateView implements Callback {
 

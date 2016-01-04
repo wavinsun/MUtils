@@ -14,6 +14,10 @@ import cn.mutils.app.App;
 import cn.mutils.app.pay.WXPayBroadcast;
 import cn.mutils.app.ui.AppActivity;
 
+/**
+ * WeChat entry activity<br>
+ * Please make a subclass in your application like "xxx.xxx.xxx.wxapi.WXPayEntryActivity"
+ */
 public class WXPayEntryActivity extends AppActivity implements IWXAPIEventHandler {
 
     protected IWXAPI mApi;

@@ -23,12 +23,7 @@ import cn.mutils.app.util.UmengHelper;
 
 public class UmengHelperDelegate extends UmengHelper {
 
-    private static final int NEW_VERSION_STATE_UNKNOWN = -1;
-    private static final int NEW_VERSION_STATE_NO = 0;
-    private static final int NEW_VERSION_STATE_YES = 1;
-
-    protected static Object sSync = new Object();
-    protected static int sNewVersionState = NEW_VERSION_STATE_UNKNOWN;
+    protected static Boolean sHasNewVersion;
 
     protected FeedbackAgent mFeedbackAgent;
     protected UmengUpdateListener mUmengUpdateListener;
@@ -72,10 +67,11 @@ public class UmengHelperDelegate extends UmengHelper {
 
     @Override
     public boolean hasNewVersion(Context context) {
-        if (sNewVersionState == NEW_VERSION_STATE_UNKNOWN) {
+        if (sHasNewVersion == null) {
             checkNewVersion(context, null);
+            return false;
         }
-        return sNewVersionState == NEW_VERSION_STATE_YES;
+        return sHasNewVersion.booleanValue();
     }
 
     @Override
@@ -97,12 +93,8 @@ public class UmengHelperDelegate extends UmengHelper {
                 @Override
                 public void onUpdateReturned(int statusCode, final UpdateResponse updateInfo) {
                     boolean hasNewVersion = statusCode == UpdateStatus.Yes;
-                    synchronized (sSync) {
-                        if (hasNewVersion) {
-                            sNewVersionState = NEW_VERSION_STATE_YES;
-                        } else {
-                            sNewVersionState = NEW_VERSION_STATE_NO;
-                        }
+                    synchronized (UmengHelperDelegate.class) {
+                        sHasNewVersion = Boolean.valueOf(hasNewVersion);
                     }
                     if (c instanceof IActivity) {
                         if (((IActivity) c).isFinished()) {

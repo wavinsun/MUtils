@@ -9,6 +9,10 @@ import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.view.View;
 
+/**
+ * QRCode view <br>
+ * It is used to show data by QRCode
+ */
 public class QRCodeView extends View {
 
     protected Bitmap mLogoBitmap;
