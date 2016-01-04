@@ -1,5 +1,8 @@
 package cn.mutils.app.core.err;
 
+/**
+ * Http status exception of framework
+ */
 public class HttpStatusException extends CodeException {
 
     public HttpStatusException() {

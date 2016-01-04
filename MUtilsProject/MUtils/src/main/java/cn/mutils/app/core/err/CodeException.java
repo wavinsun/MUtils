@@ -1,5 +1,8 @@
 package cn.mutils.app.core.err;
 
+/**
+ * Code exception of framework
+ */
 public class CodeException extends Exception {
 
     protected int mCode;

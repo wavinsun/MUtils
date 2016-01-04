@@ -8,8 +8,14 @@ import java.util.Map;
 import cn.mutils.app.core.codec.ByteUtil;
 import cn.mutils.app.core.text.StringUtil;
 
+/**
+ * MD5 for object
+ */
 public class ObjectMD5 {
 
+    /**
+     * MD5 binary data
+     */
     protected byte[] mMD5;
 
     public ObjectMD5(Object obj) {
@@ -23,7 +29,6 @@ public class ObjectMD5 {
     public String toString() {
         return StringUtil.toHex(mMD5);
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -40,6 +45,12 @@ public class ObjectMD5 {
         }
     }
 
+    /**
+     * Get MD5 for object
+     *
+     * @param obj
+     * @return
+     */
     protected static byte[] getMD5(Object obj) {
         try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
@@ -50,6 +61,12 @@ public class ObjectMD5 {
         }
     }
 
+    /**
+     * Update MD5 info data for object
+     *
+     * @param obj
+     * @param md5
+     */
     protected static void updateMD5(Object obj, MessageDigest md5) {
         if (obj == null) {
             md5.update(ByteUtil.toBytes(0));

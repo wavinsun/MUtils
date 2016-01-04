@@ -1,9 +1,18 @@
 package cn.mutils.app.core.beans;
 
+/**
+ * Property MD5 info data
+ */
 public class PropertyMD5 {
 
+    /**
+     * MD5 info data for property
+     */
     protected ObjectMD5 mMD5;
 
+    /**
+     * Property of object
+     */
     protected Object mProperty;
 
     public ObjectMD5 getMD5() {

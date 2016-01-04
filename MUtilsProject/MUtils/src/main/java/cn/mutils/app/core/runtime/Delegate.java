@@ -2,8 +2,16 @@ package cn.mutils.app.core.runtime;
 
 import cn.mutils.app.core.INoProguard;
 
+/**
+ * Delegate of framework
+ *
+ * @param <T>
+ */
 public class Delegate<T extends Delegate> implements INoProguard {
 
+    /**
+     * Delegate object
+     */
     protected T mDelegate;
 
     public Delegate() {
