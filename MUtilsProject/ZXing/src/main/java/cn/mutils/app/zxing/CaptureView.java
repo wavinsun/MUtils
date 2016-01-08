@@ -24,8 +24,12 @@ import cn.mutils.app.zxing.decode.CaptureHandler;
  * Capture view of framework<br>
  * It is used to capture data from QRCode image.
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"UnnecessaryInterfaceModifier", "deprecation"})
 public class CaptureView extends StateView implements Callback {
+
+    public static interface CaptureListener {
+        void onCapture(String data);
+    }
 
     protected CaptureHandler mHandler;
     protected SurfaceView mSurfaceView;
@@ -203,16 +207,12 @@ public class CaptureView extends StateView implements Callback {
         try {
             this.setChromeColor(Color.parseColor(chromeColor));
         } catch (Exception e) {
-
+            // IllegalArgumentException
         }
     }
 
     public void setListener(CaptureListener listener) {
         mListener = listener;
-    }
-
-    public static interface CaptureListener {
-        public void onCapture(String data);
     }
 
 }

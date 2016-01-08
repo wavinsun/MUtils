@@ -10,7 +10,7 @@ public class AsyncTaskClassLoader implements Runnable {
         try {
             Class.forName("android.os.AsyncTask");
         } catch (Exception e) {
-
+            // ClassNotFoundException
         }
     }
 

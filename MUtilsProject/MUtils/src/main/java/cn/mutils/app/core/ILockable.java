@@ -2,8 +2,8 @@ package cn.mutils.app.core;
 
 public interface ILockable {
 
-	public boolean isLocked();
+    boolean isLocked();
 
-	public void setLocked(boolean locked);
+    void setLocked(boolean locked);
 
 }

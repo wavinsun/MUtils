@@ -4,16 +4,16 @@ import android.graphics.drawable.Drawable;
 
 public interface IDefaultDrawableView {
 
-	public Drawable getDefault();
+    Drawable getDefault();
 
-	public void setDefault(Drawable drawable);
+    void setDefault(Drawable drawable);
 
-	public void setDefault(int resId);
+    void setDefault(int resId);
 
-	public void showDefault();
+    void showDefault();
 
-	public void showDefault(Drawable drawable);
+    void showDefault(Drawable drawable);
 
-	public void showDefault(int resId);
+    void showDefault(int resId);
 
 }

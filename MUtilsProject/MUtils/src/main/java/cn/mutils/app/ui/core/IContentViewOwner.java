@@ -4,8 +4,8 @@ import android.view.View;
 
 public interface IContentViewOwner {
 
-	public void setContentView(int layoutResID);
+    void setContentView(int layoutResID);
 
-	public void setContentView(View view);
+    void setContentView(View view);
 
 }

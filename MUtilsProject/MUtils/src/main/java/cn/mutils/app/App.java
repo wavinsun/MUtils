@@ -21,6 +21,7 @@ import cn.mutils.app.util.UmengHelper;
 /**
  * Application of framework
  */
+@SuppressWarnings({"UnnecessaryUnboxing", "UnnecessaryBoxing"})
 @SuppressLint("MissingSuperCall")
 public class App extends Application implements IContextProvider {
 
@@ -75,8 +76,6 @@ public class App extends Application implements IContextProvider {
 
     /**
      * Get edition of application<br>
-     *
-     * @return
      */
     public Edition getEdition() {
         if (mEdition == null) {
@@ -87,8 +86,6 @@ public class App extends Application implements IContextProvider {
 
     /**
      * Detect edition of application<br>
-     *
-     * @return
      */
     protected Edition detectEdition() {
         if (App.isDebugType()) {
@@ -128,10 +125,6 @@ public class App extends Application implements IContextProvider {
 
     /**
      * Repeat task
-     *
-     * @param name
-     * @param times
-     * @param listener
      */
     public void repeat(String name, int count, RepeatTaskListener listener) {
         RepeatTask task = new RepeatTask();
@@ -146,8 +139,6 @@ public class App extends Application implements IContextProvider {
 
     /**
      * Get BuildConfig.DEBUG value for application
-     *
-     * @return
      */
     public static boolean isDebugType() {
         if (sDebugType != null) {

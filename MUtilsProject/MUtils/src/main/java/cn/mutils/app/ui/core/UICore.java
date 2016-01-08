@@ -32,8 +32,8 @@ import cn.mutils.app.core.annotation.res.GetStringArray;
 import cn.mutils.app.core.annotation.res.LoadAnimation;
 import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.core.reflect.ReflectUtil;
-import cn.mutils.app.core.task.IStopable;
-import cn.mutils.app.core.task.IStopableManager;
+import cn.mutils.app.core.task.IStoppable;
+import cn.mutils.app.core.task.IStoppableManager;
 import cn.mutils.app.event.listener.OnActivityResultListener;
 import cn.mutils.app.event.listener.OnClickListener;
 import cn.mutils.app.os.IContextProvider;
@@ -47,9 +47,6 @@ public class UICore {
 
     /**
      * Hide keyboard when touch view who is not EditText and not focused
-     *
-     * @param ev
-     * @param dispatcher
      */
     public static void dispatchTouchEvent(MotionEvent ev, IWindowProvider dispatcher) {
         if (ev.getAction() != MotionEvent.ACTION_DOWN) {
@@ -78,9 +75,6 @@ public class UICore {
 
     /**
      * Get content view
-     *
-     * @param finder
-     * @return
      */
     public static View getContentView(IViewFinder finder) {
         View v = null;
@@ -107,8 +101,6 @@ public class UICore {
 
     /**
      * IOC for content view
-     *
-     * @param owner
      */
     public static void injectContentView(IContentViewOwner owner) {
         Class<?> c = owner.getClass();
@@ -124,8 +116,6 @@ public class UICore {
 
     /**
      * IOC for events
-     *
-     * @param finder
      */
     public static void injectEvents(IViewFinder finder) {
         Class<?> c = finder.getClass();
@@ -159,8 +149,6 @@ public class UICore {
 
     /**
      * IOC for resources
-     *
-     * @param finder
      */
     public static void injectResources(IViewFinder finder) {
         Context context = (finder instanceof IContextProvider) ? ((IContextProvider) finder).getContext() : null;
@@ -325,10 +313,10 @@ public class UICore {
         views.add(v);
     }
 
-    public static void bind(IStopableManager manager, IStopable s) {
-        List<IStopable> stopables = manager.getBindStopables();
-        List<IStopable> stopedList = null;
-        for (IStopable stopable : stopables) {
+    public static void bind(IStoppableManager manager, IStoppable s) {
+        List<IStoppable> stopables = manager.getBindStoppables();
+        List<IStoppable> stopedList = null;
+        for (IStoppable stopable : stopables) {
             if (stopable.equals(s)) {
                 if (stopedList != null) {
                     stopables.removeAll(stopedList);
@@ -336,9 +324,9 @@ public class UICore {
                 }
                 return;
             }
-            if (stopable.isStoped()) {
+            if (stopable.isStopped()) {
                 if (stopedList == null) {
-                    stopedList = new ArrayList<IStopable>();
+                    stopedList = new ArrayList<IStoppable>();
                 }
                 stopedList.add(stopable);
             }
@@ -405,8 +393,8 @@ public class UICore {
                 dispatchCreate(v);
             }
         }
-        if (manager instanceof IStopableManager) {
-            ((IStopableManager) manager).stopAll();
+        if (manager instanceof IStoppableManager) {
+            ((IStoppableManager) manager).stopAll();
         }
         if (manager.redirectToSelectedView()) {
             IStateView v = manager.getSelectedView();
@@ -454,8 +442,8 @@ public class UICore {
                 return;
             }
         }
-        if (manager instanceof IStopableManager) {
-            ((IStopableManager) manager).stopAll(true);
+        if (manager instanceof IStoppableManager) {
+            ((IStoppableManager) manager).stopAll(true);
         }
         List<IStateView> views = manager.getBindStateViews();
         for (IStateView stateView : views) {
@@ -464,14 +452,14 @@ public class UICore {
         views.clear();
     }
 
-    public static void stopAll(IStopableManager manager) {
+    public static void stopAll(IStoppableManager manager) {
         stopAll(manager, false);
     }
 
-    public static void stopAll(IStopableManager manager, boolean includeLockable) {
-        List<IStopable> stopables = manager.getBindStopables();
-        List<IStopable> stopedList = null;
-        for (IStopable stopable : stopables) {
+    public static void stopAll(IStoppableManager manager, boolean includeLockable) {
+        List<IStoppable> stopables = manager.getBindStoppables();
+        List<IStoppable> stopedList = null;
+        for (IStoppable stopable : stopables) {
             if (!includeLockable) {
                 if (stopable instanceof ILockable) {
                     continue;
@@ -479,7 +467,7 @@ public class UICore {
             }
             stopable.stop();
             if (stopedList == null) {
-                stopedList = new ArrayList<IStopable>();
+                stopedList = new ArrayList<IStoppable>();
             }
             stopedList.add(stopable);
         }
@@ -490,26 +478,26 @@ public class UICore {
     }
 
     public static boolean interceptBackPressed(IStateViewManager manager) {
-        if (manager instanceof IStopableManager) {
-            List<IStopable> stopables = ((IStopableManager) manager).getBindStopables();
+        if (manager instanceof IStoppableManager) {
+            List<IStoppable> stopables = ((IStoppableManager) manager).getBindStoppables();
             boolean catchStopableed = false;
-            List<IStopable> stopedList = null;
-            for (IStopable stopable : stopables) {
+            List<IStoppable> stopedList = null;
+            for (IStoppable stopable : stopables) {
                 if (stopable instanceof ILockable) {
                     continue;
                 }
-                if (stopable.isStoped()) {
+                if (stopable.isStopped()) {
                     if (stopedList == null) {
-                        stopedList = new ArrayList<IStopable>();
+                        stopedList = new ArrayList<IStoppable>();
                     }
                     stopedList.add(stopable);
                     continue;
                 }
-                if (!stopable.isRunInBackground() && !stopable.isStoped()) {
+                if (!stopable.isRunInBackground() && !stopable.isStopped()) {
                     catchStopableed = true;
                     stopable.stop();
                     if (stopedList == null) {
-                        stopedList = new ArrayList<IStopable>();
+                        stopedList = new ArrayList<IStoppable>();
                     }
                     stopedList.add(stopable);
                 }

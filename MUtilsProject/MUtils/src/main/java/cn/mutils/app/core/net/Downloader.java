@@ -8,6 +8,7 @@ import java.net.URL;
 import cn.mutils.app.core.err.CodeException;
 import cn.mutils.app.core.err.ErrorCodeException;
 import cn.mutils.app.core.err.HttpStatusException;
+import cn.mutils.app.core.io.FileUtil;
 import cn.mutils.app.core.io.IOUtil;
 
 /**
@@ -100,8 +101,8 @@ public class Downloader {
                 throw new ErrorCodeException(CODE_EMPTY_RESPONSE);
             }
             File file = new File(mFileName);
-            if (!IOUtil.equals(file, bytes)) {
-                if (!IOUtil.putBytes(file, bytes)) {
+            if (!FileUtil.equals(file, bytes)) {
+                if (!FileUtil.putBytes(file, bytes)) {
                     throw new ErrorCodeException(CODE_SAVE_ERROR);
                 }
             }
@@ -115,7 +116,7 @@ public class Downloader {
                     http.disconnect();
                 }
             } catch (Exception e) {
-
+                // Exception
             }
         }
     }

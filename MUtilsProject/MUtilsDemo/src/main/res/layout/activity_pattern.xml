@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/VLinearFill"
+    android:background="#2f82c8"
+    android:gravity="center"
+    android:padding="@dimen/padding">
+
+    <cn.mutils.app.ui.StatusBox
+        style="@style/HFill"/>
+
+    <TextView
+        style="@style/Wrap"
+        android:text="Please draw pattern as follow :"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"/>
+
+    <cn.mutils.app.ui.pattern.PatternIcon
+        android:id="@+id/icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+    <cn.mutils.app.ui.pattern.PatternCanvas
+        android:id="@+id/canvas"
+        style="@style/VItemFill" />
+
+</LinearLayout>

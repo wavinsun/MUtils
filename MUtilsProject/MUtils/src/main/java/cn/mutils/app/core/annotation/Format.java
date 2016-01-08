@@ -9,13 +9,13 @@ import cn.mutils.app.core.time.DateTime;
 
 /**
  * IOC for format of property of entity
- * 
+ *
  * @see DateTime
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.TYPE })
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
 public @interface Format {
 
-	public String value() default "";
+    String value() default "";
 
 }

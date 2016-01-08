@@ -3,6 +3,7 @@ package cn.mutils.app.event.listener;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
 import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.ui.AppActivity;
 import cn.mutils.app.ui.Fragmenter;
@@ -10,7 +11,7 @@ import cn.mutils.app.ui.StateView;
 
 /**
  * Listener for startActivityForResult
- * 
+ *
  * @see Activity#onActivityResult(int, int, Intent)
  * @see AppActivity#onActivityResult(int, int, Intent)
  * @see AppActivity#startActivityForResult(Intent, int)
@@ -19,17 +20,14 @@ import cn.mutils.app.ui.StateView;
  */
 public interface OnActivityResultListener extends IListener {
 
-	/** Event type for onActivityResult */
-	public static final String EVENT_TYPE = "onActivityResult";
+    /**
+     * Event type for onActivityResult
+     */
+    public static final String EVENT_TYPE = "onActivityResult";
 
-	/**
-	 * Call back
-	 * 
-	 * @param context
-	 * @param requestCode
-	 * @param resultCode
-	 * @param data
-	 */
-	public void onActivityResult(Context context, int requestCode, int resultCode, Intent data);
+    /**
+     * Call back
+     */
+    public void onActivityResult(Context context, int requestCode, int resultCode, Intent data);
 
 }

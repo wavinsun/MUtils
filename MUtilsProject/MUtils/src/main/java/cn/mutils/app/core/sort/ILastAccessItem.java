@@ -5,6 +5,6 @@ package cn.mutils.app.core.sort;
  */
 public interface ILastAccessItem {
 
-	public long lastAccess();
+    long lastAccess();
 
 }

@@ -58,6 +58,11 @@ public class MainActivity extends BasicActivity {
         startActivity(intent);
     }
 
+    @OnClick(R.id.pattern)
+    protected void onClickPattern() {
+        startActivity(new Intent(this, PatternDemoActivity.class));
+    }
+
     @OnClick({R.id.test, R.id.ui_adapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir, R.id.anim_task, R.id.media, R.id.net_task,
             R.id.pay, R.id.qrcode, R.id.share, R.id.action_sheet, R.id.amap, R.id.date_chooser, R.id.prompt,
             R.id.progress_view, R.id.tip_view, R.id.busy, R.id.path_button, R.id.hlinear_adapter, R.id.index_view,

@@ -10,15 +10,14 @@ import cn.mutils.app.core.xml.XmlUtil;
 
 /**
  * IOC for name property of entity
- * 
+ *
  * @see JsonUtil
  * @see XmlUtil
- * 
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.TYPE })
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
 public @interface Name {
 
-	public String value() default "";
+    String value() default "";
 
 }

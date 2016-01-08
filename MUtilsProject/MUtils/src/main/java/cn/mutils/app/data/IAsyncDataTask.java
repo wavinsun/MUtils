@@ -4,8 +4,8 @@ import cn.mutils.app.queue.IQueueItem;
 
 public interface IAsyncDataTask<DATA> extends IQueueItem<IAsyncDataTask<DATA>> {
 
-	public DATA getData();
+    DATA getData();
 
-	public void setData(DATA data);
+    void setData(DATA data);
 
 }

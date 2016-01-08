@@ -6,12 +6,12 @@ import cn.mutils.app.os.IContextOwner;
 
 public interface IQueue extends IClearable, IContextOwner, IDispatcher {
 
-	public boolean isRunInBackground();
+    boolean isRunInBackground();
 
-	public int getMaxRunningCount();
+    int getMaxRunningCount();
 
-	public void setMaxRunningCount(int maxRunningCount);
+    void setMaxRunningCount(int maxRunningCount);
 
-	public void add(IQueueItem<?> task);
+    void add(IQueueItem<?> task);
 
 }

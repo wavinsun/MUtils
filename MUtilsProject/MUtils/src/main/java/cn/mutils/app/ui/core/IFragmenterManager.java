@@ -4,6 +4,6 @@ import android.support.v4.app.FragmentManager;
 
 public interface IFragmenterManager extends IStateViewManager {
 
-	public FragmentManager getSupportFragmentManager();
+    FragmentManager getSupportFragmentManager();
 
 }

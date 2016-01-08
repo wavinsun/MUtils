@@ -7,7 +7,7 @@ import cn.mutils.app.core.INoProguard;
 /**
  * String ArrayList
  */
-@SuppressWarnings("serial")
-public class StringArrayList extends ArrayList<String>implements INoProguard {
+@SuppressWarnings({"serial", "unused"})
+public class StringArrayList extends ArrayList<String> implements INoProguard {
 
 }

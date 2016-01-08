@@ -1,6 +1,7 @@
 package cn.mutils.app.ui.web;
 
 import android.webkit.JavascriptInterface;
+
 import cn.mutils.app.core.INoProguard;
 
 /**
@@ -8,55 +9,43 @@ import cn.mutils.app.core.INoProguard;
  */
 public interface IWebJSInterface extends INoProguard {
 
-	/**
-	 * Get WebFrame
-	 * 
-	 * @return
-	 */
-	public IWebFrame getWebFrame();
+    /**
+     * Get WebFrame
+     */
+    IWebFrame getWebFrame();
 
-	/**
-	 * Set WebFrame
-	 * 
-	 * @param webFrame
-	 */
-	public void setWebFrame(IWebFrame webFrame);
+    /**
+     * Set WebFrame
+     */
+    void setWebFrame(IWebFrame webFrame);
 
-	/**
-	 * JavaSctipt node name what is injected into window object of WebView<br>
-	 * By default:window.app
-	 * 
-	 * @return
-	 */
-	public String name();
+    /**
+     * JavaScript node name what is injected into window object of WebView<br>
+     * By default:window.app
+     */
+    String name();
 
-	/**
-	 * JavaScript function injected into object of window[{{@link #name()}}] to
-	 * send message to native application<br>
-	 * By default:window.app.sendMessage(jsonString)
-	 * 
-	 * @param json
-	 */
-	@JavascriptInterface
-	public void sendMessage(String json);
+    /**
+     * JavaScript function injected into object of window[{{@link #name()}}] to
+     * send message to native application<br>
+     * By default:window.app.sendMessage(jsonString)
+     */
+    @JavascriptInterface
+    void sendMessage(String json);
 
-	/**
-	 * JavaScript function injected into object of window[{@link #name()}}] to
-	 * post message to native application<br>
-	 * By default:windw.app.postMessage(jsonString)
-	 * 
-	 * @param json
-	 */
-	@JavascriptInterface
-	public void postMessage(String json);
+    /**
+     * JavaScript function injected into object of window[{@link #name()}}] to
+     * post message to native application<br>
+     * By default:window.app.postMessage(jsonString)
+     */
+    @JavascriptInterface
+    void postMessage(String json);
 
-	/**
-	 * JavaScript function name what is provided to send message to web
-	 * application<br>
-	 * By default:window.app.onMessage(jsonString)
-	 * 
-	 * @return
-	 */
-	public String onMessageName();
+    /**
+     * JavaScript function name what is provided to send message to web
+     * application<br>
+     * By default:window.app.onMessage(jsonString)
+     */
+    String onMessageName();
 
 }

@@ -13,10 +13,10 @@ import java.net.UnknownHostException;
 import javax.net.ssl.SSLException;
 
 import cn.mutils.app.R;
-import cn.mutils.app.core.err.ConnectNotFoundException;
 import cn.mutils.app.core.err.CookieExpiredException;
 import cn.mutils.app.core.err.ErrorCodeException;
 import cn.mutils.app.core.err.HttpStatusException;
+import cn.mutils.app.core.err.NoConnectionException;
 import cn.mutils.app.ui.core.IToastOwner;
 
 /**
@@ -48,8 +48,8 @@ public class NetExceptionUtil {
     }
 
     protected static int resOf(Exception e) {
-        if (e instanceof ConnectNotFoundException || e instanceof ConnectException) {
-            return R.string.exception_connection_not_found;
+        if (e instanceof NoConnectionException || e instanceof ConnectException) {
+            return R.string.exception_no_connection;
         }
         if (e instanceof ConnectTimeoutException || e instanceof SocketException
                 || e instanceof SocketTimeoutException) {

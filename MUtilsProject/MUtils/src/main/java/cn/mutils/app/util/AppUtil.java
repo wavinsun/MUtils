@@ -66,7 +66,7 @@ import cn.mutils.app.core.time.TimeUtil;
 /**
  * Utility of framework for Android runtime
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "StringBufferReplaceableByString"})
 public class AppUtil {
 
     /**
@@ -85,13 +85,13 @@ public class AppUtil {
     public static final String TAG_ANDROID_RUNTIME = "AndroidRuntime";
 
     /**
-     * Transform for degress to radian
+     * Transform for degree to radian
      */
     public static final double TO_RADIAN = NumberUtil.TO_RADIAN;
     /**
-     * Transform for radian to degress
+     * Transform for radian to degree
      */
-    public static final double TO_DEGRESS = NumberUtil.TO_DEGRESS;
+    public static final double TO_DEGREE = NumberUtil.TO_DEGREE;
 
     // ========================= Begin Application =========================
     public static String getAppVersionName(Context context) {
@@ -144,10 +144,6 @@ public class AppUtil {
 
     /**
      * Get meta data of named node: fix bug for integer values
-     *
-     * @param context
-     * @param name
-     * @return
      */
     public static String getAppMetaData(Context context, String name) {
         try {
@@ -216,9 +212,6 @@ public class AppUtil {
 
     /**
      * Get BuildConfig.DEBUG value for application
-     *
-     * @param context
-     * @return
      */
     public static boolean isAppDebugType(Context context) {
         String id = AppUtil.getAppPackageName(context);
@@ -318,10 +311,6 @@ public class AppUtil {
 
     /**
      * Get string content of assets file
-     *
-     * @param context
-     * @param fileName
-     * @return
      */
     public static String getAssetString(Context context, String fileName) {
         AssetManager am = context.getAssets();
@@ -338,11 +327,6 @@ public class AppUtil {
 
     /**
      * Get string content of assets zip file
-     *
-     * @param context
-     * @param fileName
-     * @param entryName
-     * @return
      */
     public static String getAssetZipString(Context context, String fileName, String entryName) {
         byte[] bytes = getAssetZipBytes(context, fileName, entryName);
@@ -358,11 +342,6 @@ public class AppUtil {
 
     /**
      * Get byte array of assets zip file
-     *
-     * @param context
-     * @param fileName
-     * @param entryName
-     * @return
      */
     public static byte[] getAssetZipBytes(Context context, String fileName, String entryName) {
         AssetManager am = context.getAssets();
@@ -411,10 +390,6 @@ public class AppUtil {
 
     /**
      * AES encrypt
-     *
-     * @param text
-     * @param pwd
-     * @return
      */
     public static String toAES(String text, String pwd) {
         return AESUtil.encrypt(text, pwd);
@@ -422,10 +397,6 @@ public class AppUtil {
 
     /**
      * AES decrypt
-     *
-     * @param hex
-     * @param pwd
-     * @return
      */
     public static String fromAES(String hex, String pwd) {
         return AESUtil.decrypt(hex, pwd);
@@ -433,9 +404,6 @@ public class AppUtil {
 
     /**
      * toStirng of JSON
-     *
-     * @param obj
-     * @return
      */
     public static String toStringJSON(Object obj) {
         return StringUtil.toJSON(obj);
@@ -443,8 +411,6 @@ public class AppUtil {
 
     /**
      * toString of XML
-     *
-     * @return
      */
     public static String toStringXML(Object obj) {
         return StringUtil.toXML(obj);
@@ -650,9 +616,6 @@ public class AppUtil {
 
     /**
      * Get disk cache root directory
-     *
-     * @param context
-     * @return
      */
     public static String getDiskCacheRoot(Context context) {
         String cachePath = null;
@@ -710,9 +673,6 @@ public class AppUtil {
 
     /**
      * Get data directory to share data to other applications
-     *
-     * @param context
-     * @return
      */
     public static String getDiskDataRoot(Context context) {
         if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
@@ -739,12 +699,6 @@ public class AppUtil {
 
     /**
      * Calculate distance for two points by given latitude and longitude
-     *
-     * @param latitudeA
-     * @param longitudeA
-     * @param latitudeB
-     * @param longitudeB
-     * @return
      */
     public static double getDistance(double latitudeA, double longitudeA, double latitudeB, double longitudeB) {
         double radianLatitudeA = latitudeA * TO_RADIAN;
@@ -771,9 +725,6 @@ public class AppUtil {
 
     /**
      * Whether is leap year 闰年
-     *
-     * @param date
-     * @return
      */
     public static boolean isLeap(Date date) {
         return TimeUtil.isLeap(date);
@@ -781,9 +732,6 @@ public class AppUtil {
 
     /**
      * Whether is leap year 闰年
-     *
-     * @param date
-     * @return
      */
     public static boolean isLeap(int year) {
         return TimeUtil.isLeap(year);
@@ -824,7 +772,7 @@ public class AppUtil {
      * @param isOpen Is open for button
      * @param button Path button
      * @param anchor Control button
-     * @return
+     * @return Animation
      */
     public static Animation animOfPathButton(boolean isOpen, View button, View anchor) {
         int[] anchorL = new int[2];
@@ -863,7 +811,7 @@ public class AppUtil {
     /**
      * Get phone service provider
      *
-     * @param context
+     * @param context Context
      * @return 10086 10010 10000
      */
     public static String getPhoneServiceProvider(Context context) {

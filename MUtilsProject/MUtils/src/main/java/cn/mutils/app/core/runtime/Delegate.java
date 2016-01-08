@@ -7,6 +7,7 @@ import cn.mutils.app.core.INoProguard;
  *
  * @param <T>
  */
+@SuppressWarnings("unchecked")
 public class Delegate<T extends Delegate> implements INoProguard {
 
     /**

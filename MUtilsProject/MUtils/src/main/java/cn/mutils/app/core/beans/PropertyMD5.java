@@ -3,6 +3,7 @@ package cn.mutils.app.core.beans;
 /**
  * Property MD5 info data
  */
+@SuppressWarnings("unused")
 public class PropertyMD5 {
 
     /**

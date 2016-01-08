@@ -48,8 +48,8 @@ public class ObjectMD5 {
     /**
      * Get MD5 for object
      *
-     * @param obj
-     * @return
+     * @param obj Object
+     * @return Object binary data
      */
     protected static byte[] getMD5(Object obj) {
         try {
@@ -64,8 +64,8 @@ public class ObjectMD5 {
     /**
      * Update MD5 info data for object
      *
-     * @param obj
-     * @param md5
+     * @param obj Object
+     * @param md5 MD5
      */
     protected static void updateMD5(Object obj, MessageDigest md5) {
         if (obj == null) {

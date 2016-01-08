@@ -21,6 +21,7 @@ import cn.mutils.app.ui.core.IActivity;
 import cn.mutils.app.util.AppUtil;
 import cn.mutils.app.util.UmengHelper;
 
+@SuppressWarnings({"UnnecessaryUnboxing", "UnnecessaryBoxing"})
 public class UmengHelperDelegate extends UmengHelper {
 
     protected static Boolean sHasNewVersion;

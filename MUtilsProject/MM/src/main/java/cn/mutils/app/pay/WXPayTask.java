@@ -8,7 +8,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import cn.mutils.app.App;
 import cn.mutils.app.core.ILockable;
 import cn.mutils.app.core.err.ErrorCodeException;
-import cn.mutils.app.core.task.IStopableManager;
+import cn.mutils.app.core.task.IStoppableManager;
 import cn.mutils.app.io.AppBroadcast;
 
 /**
@@ -140,8 +140,8 @@ public class WXPayTask extends AppPayTask implements ILockable {
         api.sendReq(req);
         WXPayBroadcast broadcast = new WXPayBroadcast(mContext);
         broadcast.setOnReceiveListener(new WXPayBroadcastReceiverListener());
-        if (mContext instanceof IStopableManager) {
-            ((IStopableManager) mContext).bind(this);
+        if (mContext instanceof IStoppableManager) {
+            ((IStoppableManager) mContext).bind(this);
         }
         broadcast.start();
     }

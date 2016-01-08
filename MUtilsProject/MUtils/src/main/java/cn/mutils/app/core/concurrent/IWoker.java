@@ -4,75 +4,60 @@ import java.util.List;
 
 /**
  * Concurrent worker of framework
- * 
+ *
  * @see Worker
  */
+@SuppressWarnings("SpellCheckingInspection")
 public interface IWoker<JOB> {
 
-	/**
-	 * Delegate jobs
-	 * 
-	 * @param jobs
-	 */
-	public void delegate(List<JOB> jobs);
+    /**
+     * Delegate jobs
+     */
+    void delegate(List<JOB> jobs);
 
-	/**
-	 * Start working
-	 * 
-	 * @return
-	 */
-	public boolean start();
+    /**
+     * Start working
+     */
+    boolean start();
 
-	/**
-	 * Stop working
-	 * 
-	 * @return
-	 */
-	public boolean stop();
+    /**
+     * Stop working
+     */
+    boolean stop();
 
-	/**
-	 * Working job<br>
-	 * It is execute by concurrent threads
-	 * 
-	 * @param job
-	 */
-	public void work(JOB job);
+    /**
+     * Working job<br>
+     * It is execute by concurrent threads
+     */
+    void work(JOB job);
 
-	/**
-	 * Done all jobs<br>
-	 * It is called when all jobs are done
-	 */
-	public void done();
+    /**
+     * Done all jobs<br>
+     * It is called when all jobs are done
+     */
+    void done();
 
-	/**
-	 * Get count of concurrent threads
-	 * 
-	 * @return
-	 */
-	public int getConcurrentCount();
+    /**
+     * Get count of concurrent threads
+     */
+    int getConcurrentCount();
 
-	/**
-	 * Prepare jobs<br>
-	 * It is called before all job to be doing
-	 * 
-	 * @param jobs
-	 * @return
-	 */
-	public boolean prepare(List<JOB> jobs);
+    /**
+     * Prepare jobs<br>
+     * It is called before all job to be doing
+     */
+    boolean prepare(List<JOB> jobs);
 
-	/**
-	 * Get progress
-	 * 
-	 * @return [0,1]
-	 */
-	public double getProgress();
+    /**
+     * Get progress
+     *
+     * @return [0, 1]
+     */
+    double getProgress();
 
-	/**
-	 * Get ID for job
-	 * 
-	 * @param job
-	 * @return
-	 */
-	public int getId(JOB job);
+    /**
+     * Get ID for job
+     */
+    int getId(JOB job);
 
 }

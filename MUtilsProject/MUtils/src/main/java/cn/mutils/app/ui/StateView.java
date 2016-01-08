@@ -19,8 +19,8 @@ import java.util.List;
 
 import cn.mutils.app.core.err.CookieExpiredException;
 import cn.mutils.app.core.event.Dispatcher;
-import cn.mutils.app.core.task.IStopable;
-import cn.mutils.app.core.task.IStopableManager;
+import cn.mutils.app.core.task.IStoppable;
+import cn.mutils.app.core.task.IStoppableManager;
 import cn.mutils.app.data.IAsyncDataQueueOwner;
 import cn.mutils.app.data.IAsyncDataTask;
 import cn.mutils.app.event.listener.OnActivityResultListener;
@@ -38,11 +38,11 @@ import cn.mutils.app.ui.core.UICore;
 
 @SuppressLint("ShowToast")
 public class StateView extends RelativeLayout implements IStateView, ISessionHolder, IRunOnceHolder, IHandlerProvider,
-        IStateViewManager, IStopableManager, IToastOwner, IContentViewOwner {
+        IStateViewManager, IStoppableManager, IToastOwner, IContentViewOwner {
 
     protected IStateViewManager mManager;
     protected List<IStateView> mBindViews;
-    protected List<IStopable> mBindStopables;
+    protected List<IStoppable> mBindStoppables;
     protected Dispatcher mDispatcher;
 
     protected InfoToast mInfoToast;
@@ -97,8 +97,8 @@ public class StateView extends RelativeLayout implements IStateView, ISessionHol
         UICore.bind(this, stateView);
     }
 
-    public void bind(IStopable stopable) {
-        UICore.bind(this, stopable);
+    public void bind(IStoppable stoppable) {
+        UICore.bind(this, stoppable);
     }
 
     @Override
@@ -298,11 +298,11 @@ public class StateView extends RelativeLayout implements IStateView, ISessionHol
     }
 
     @Override
-    public List<IStopable> getBindStopables() {
-        if (mBindStopables == null) {
-            mBindStopables = new LinkedList<IStopable>();
+    public List<IStoppable> getBindStoppables() {
+        if (mBindStoppables == null) {
+            mBindStoppables = new LinkedList<IStoppable>();
         }
-        return mBindStopables;
+        return mBindStoppables;
     }
 
     @Override

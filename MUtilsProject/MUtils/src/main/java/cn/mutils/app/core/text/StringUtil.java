@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.UUID;
 
+import cn.mutils.app.core.io.FileUtil;
 import cn.mutils.app.core.io.IOUtil;
 import cn.mutils.app.core.json.JsonUtil;
 import cn.mutils.app.core.xml.XmlUtil;
@@ -88,7 +89,7 @@ public class StringUtil {
     /**
      * MD5 of file
      *
-     * @param text
+     * @param file
      * @return Capital letter of MD5
      */
     public static String MD5(File file) {
@@ -190,7 +191,7 @@ public class StringUtil {
     public static boolean put(File file, String str) {
         try {
             byte[] bytes = str.getBytes("UTF-8");
-            return IOUtil.putBytes(file, bytes);
+            return FileUtil.putBytes(file, bytes);
         } catch (Exception e) {
             return false;
         }
@@ -324,7 +325,6 @@ public class StringUtil {
     /**
      * UUID
      *
-     * @param text
      * @return Capital letter of UUID
      */
     public static String UUID() {
