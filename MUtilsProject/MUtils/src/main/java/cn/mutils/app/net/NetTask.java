@@ -10,7 +10,7 @@ import java.net.URL;
 
 import cn.mutils.app.App;
 import cn.mutils.app.BuildConfig;
-import cn.mutils.app.core.err.ConnectNotFoundException;
+import cn.mutils.app.core.err.NoConnectionException;
 import cn.mutils.app.core.log.Logs;
 import cn.mutils.app.core.net.NetClient;
 import cn.mutils.app.core.net.NetClient.NetClientListener;
@@ -123,7 +123,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
     }
 
     public void setSplitArrayParams(boolean splitArrayParams) {
-        if (mStarted || mStoped) {
+        if (mStarted || mStopped) {
             return;
         }
         mClient.setSplitArrayParams(splitArrayParams);
@@ -134,7 +134,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
     }
 
     public void setRestUrl(boolean restUrl) {
-        if (mStarted || mStoped) {
+        if (mStarted || mStopped) {
             return;
         }
         mClient.setRestUrl(restUrl);
@@ -145,7 +145,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
     }
 
     public void setPostParams(boolean postParams) {
-        if (mStarted || mStoped) {
+        if (mStarted || mStopped) {
             return;
         }
         mClient.setPostParams(postParams);
@@ -156,14 +156,14 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
     }
 
     public void setPostJson(boolean postJson) {
-        if (mStarted || mStoped) {
+        if (mStarted || mStopped) {
             return;
         }
         mClient.setPostJson(postJson);
     }
 
     public void setPostJsonSigned(boolean postJsonSigned) {
-        if (mStarted || mStoped) {
+        if (mStarted || mStopped) {
             return;
         }
         mClient.setPostJsonSigned(postJsonSigned);
@@ -174,7 +174,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
     }
 
     public void setRequestConvertible(boolean requestConvertible) {
-        if (mStarted || mStoped) {
+        if (mStarted || mStopped) {
             return;
         }
         mClient.setRequestConvertible(requestConvertible);
@@ -185,7 +185,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
     }
 
     public void setResponseConvertible(boolean responseConvertible) {
-        if (mStarted || mStoped) {
+        if (mStarted || mStopped) {
             return;
         }
         mClient.setResponseConvertible(responseConvertible);
@@ -202,7 +202,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 
     @Override
     public void setUrl(String url) {
-        if (this.mStarted || this.mStoped) {
+        if (this.mStarted || this.mStopped) {
             return;
         }
         mClient.setUrl(url);
@@ -215,7 +215,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 
     @Override
     public void setRequestMethod(String requestMethod) {
-        if (this.mStarted || this.mStoped) {
+        if (this.mStarted || this.mStopped) {
             return;
         }
         mClient.setRequestMethod(requestMethod);
@@ -228,7 +228,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 
     @Override
     public void setRequest(REQUEST request) {
-        if (this.mStarted || this.mStoped) {
+        if (this.mStarted || this.mStopped) {
             return;
         }
         mClient.setRequest(request);
@@ -241,28 +241,28 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
 
     @Override
     public void setResponse(RESPONSE response) {
-        if (this.mStoped) {
+        if (this.mStopped) {
             return;
         }
         mClient.setResponse(response);
     }
 
     public void setCookieId(String cookieId) {
-        if (this.mStarted || this.mStoped) {
+        if (this.mStarted || this.mStopped) {
             return;
         }
         mClient.setCookieCachedId(cookieId);
     }
 
     public void setCookieWithRequest(boolean cookieWithRequest) {
-        if (this.mStarted || this.mStoped) {
+        if (this.mStarted || this.mStopped) {
             return;
         }
         mClient.setCookieWithRequest(cookieWithRequest);
     }
 
     public void setCookieWithResponse(boolean cookieWithResponse) {
-        if (this.mStarted || this.mStoped) {
+        if (this.mStarted || this.mStopped) {
             return;
         }
         mClient.setCookieWithResponse(cookieWithResponse);
@@ -331,7 +331,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
                         .getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                 if (networkInfo == null || !networkInfo.isConnected()) {
-                    return new ConnectNotFoundException();
+                    return new NoConnectionException();
                 }
                 return mClient.execute();
             } catch (Exception e) {

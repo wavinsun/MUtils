@@ -10,46 +10,36 @@ import cn.mutils.app.os.IContextProvider;
  */
 public interface IWebMessageDispatcher<MESSAGE> extends IContextProvider, INoProguard {
 
-	/**
-	 * Whether to intercept translate message
-	 * 
-	 * @return Return true to intercept dispatching
-	 */
-	public boolean preTranslateMessage();
+    /**
+     * Whether to intercept translate message
+     *
+     * @return Return true to intercept dispatching
+     */
+    boolean preTranslateMessage();
 
-	/**
-	 * Translate dispatcher to MESSAGE
-	 * 
-	 * @return
-	 */
-	public MESSAGE translateMessage();
+    /**
+     * Translate dispatcher to MESSAGE
+     */
+    MESSAGE translateMessage();
 
-	/**
-	 * Dispatch message
-	 * 
-	 * @param message
-	 */
-	public void onMessage(MESSAGE message);
+    /**
+     * Dispatch message
+     */
+    void onMessage(MESSAGE message);
 
-	/**
-	 * Give result of dispatched message to web message manager
-	 * 
-	 * @param message
-	 */
-	public void notifyManager(MESSAGE message);
+    /**
+     * Give result of dispatched message to web message manager
+     */
+    void notifyManager(MESSAGE message);
 
-	/**
-	 * Get web message manager
-	 * 
-	 * @return
-	 */
-	public IWebMessageManager getManager();
+    /**
+     * Get web message manager
+     */
+    IWebMessageManager getManager();
 
-	/**
-	 * Set web message manager
-	 * 
-	 * @param manager
-	 */
-	public void setManager(IWebMessageManager manager);
+    /**
+     * Set web message manager
+     */
+    void setManager(IWebMessageManager manager);
 
 }

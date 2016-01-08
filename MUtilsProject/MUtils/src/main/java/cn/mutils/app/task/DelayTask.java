@@ -2,78 +2,77 @@ package cn.mutils.app.task;
 
 import android.os.Handler;
 import android.os.Looper;
-import cn.mutils.app.core.task.IStopable;
 
-public class DelayTask implements IStopable {
+import cn.mutils.app.core.task.IStoppable;
 
-	protected boolean mStoped;
+public class DelayTask implements IStoppable {
 
-	protected Handler mHandler;
+    protected boolean mStopped;
 
-	protected Runnable mRunnable;
+    protected Handler mHandler;
 
-	protected Runnable mRunnableWrapper;
+    protected Runnable mRunnable;
 
-	protected long mDelay;
+    protected Runnable mRunnableWrapper;
 
-	public DelayTask(Runnable runnable, long delay) {
-		mHandler = new Handler(Looper.getMainLooper());
-		mRunnable = runnable;
-		mRunnableWrapper = new DelayRunnable();
-		mDelay = delay;
-		mStoped = true;
-	}
+    protected long mDelay;
 
-	@Override
-	public boolean isRunInBackground() {
-		return true;
-	}
+    public DelayTask(Runnable runnable, long delay) {
+        mHandler = new Handler(Looper.getMainLooper());
+        mRunnable = runnable;
+        mRunnableWrapper = new DelayRunnable();
+        mDelay = delay;
+        mStopped = true;
+    }
 
-	@Override
-	public void setRunInBackground(boolean runInBackground) {
+    @Override
+    public boolean isRunInBackground() {
+        return true;
+    }
 
-	}
+    @Override
+    public void setRunInBackground(boolean runInBackground) {
 
-	@Override
-	public boolean isStoped() {
-		return mStoped;
-	}
+    }
 
-	@Override
-	public boolean stop() {
-		if (mStoped) {
-			return false;
-		}
-		mHandler.removeCallbacksAndMessages(null);
-		mStoped = true;
-		return true;
-	}
+    @Override
+    public boolean isStopped() {
+        return mStopped;
+    }
 
-	/**
-	 * You can call start more than once
-	 * 
-	 * @return
-	 */
-	public DelayTask start() {
-		stop();
-		mHandler.postDelayed(mRunnableWrapper, mDelay);
-		mStoped = false;
-		return this;
-	}
+    @Override
+    public boolean stop() {
+        if (mStopped) {
+            return false;
+        }
+        mHandler.removeCallbacksAndMessages(null);
+        mStopped = true;
+        return true;
+    }
 
-	public DelayTask start(long delay) {
-		mDelay = delay;
-		return start();
-	}
+    /**
+     * You can call start more than once
+     */
+    public DelayTask start() {
+        stop();
+        mHandler.postDelayed(mRunnableWrapper, mDelay);
+        mStopped = false;
+        return this;
+    }
 
-	class DelayRunnable implements Runnable {
+    public DelayTask start(long delay) {
+        mDelay = delay;
+        return start();
+    }
 
-		@Override
-		public void run() {
-			mStoped = true;
-			mRunnable.run();
-		}
+    class DelayRunnable implements Runnable {
 
-	}
+        @Override
+        public void run() {
+            mStopped = true;
+            mRunnable.run();
+        }
+
+    }
 
 }

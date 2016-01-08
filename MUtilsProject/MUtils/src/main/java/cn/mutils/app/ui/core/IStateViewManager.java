@@ -4,19 +4,17 @@ import java.util.List;
 
 public interface IStateViewManager extends IViewFinder {
 
-	public void bind(IStateView stateView);
+    void bind(IStateView stateView);
 
-	public void notify(Object message);
+    void notify(Object message);
 
-	public List<IStateView> getBindStateViews();
+    List<IStateView> getBindStateViews();
 
-	/**
-	 * Whether only forward life cycle message to selected view
-	 * 
-	 * @return
-	 */
-	public boolean redirectToSelectedView();
+    /**
+     * Whether only forward life cycle message to selected view
+     */
+    boolean redirectToSelectedView();
 
-	public IStateView getSelectedView();
+    IStateView getSelectedView();
 
 }

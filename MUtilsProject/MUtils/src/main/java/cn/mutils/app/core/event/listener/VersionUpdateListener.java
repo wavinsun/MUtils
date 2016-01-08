@@ -5,17 +5,16 @@ package cn.mutils.app.core.event.listener;
  */
 public interface VersionUpdateListener {
 
-	/**
-	 * 
-	 * @param version
-	 * @return Return true to intercept
-	 */
-	public boolean onYes(String version);
+    /**
+     * @param version Version
+     * @return Return true to intercept
+     */
+    boolean onYes(String version);
 
-	public void onNo();
+    void onNo();
 
-	public void onUpdate(String version);
+    void onUpdate(String version);
 
-	public void onUpdateCancel(String version);
+    void onUpdateCancel(String version);
 
 }

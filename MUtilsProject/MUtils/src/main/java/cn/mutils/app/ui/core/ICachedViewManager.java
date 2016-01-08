@@ -1,11 +1,11 @@
 package cn.mutils.app.ui.core;
 
-import java.util.List;
-
 import android.view.View;
+
+import java.util.List;
 
 public interface ICachedViewManager {
 
-	public List<View> getCachedViews();
+    List<View> getCachedViews();
 
 }

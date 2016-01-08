@@ -69,7 +69,7 @@ public class BeanCache implements IClearable {
                     changed.add(name);
                 }
             } catch (Exception e) {
-
+                // IllegalAccessException
             }
         }
         return changed.size() != 0 ? changed : null;
@@ -112,7 +112,7 @@ public class BeanCache implements IClearable {
                     changed.add(name);
                 }
             } catch (Exception e) {
-
+                // IllegalAccessException
             }
         }
         return changed.size() != 0 ? changed : null;

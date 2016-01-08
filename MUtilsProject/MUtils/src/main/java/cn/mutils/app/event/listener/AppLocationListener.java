@@ -5,6 +5,6 @@ import cn.mutils.app.lbs.AppLocation;
 
 public interface AppLocationListener extends IListener {
 
-	public void onLocationChanged(AppLocation location);
+    void onLocationChanged(AppLocation location);
 
 }

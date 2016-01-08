@@ -42,7 +42,7 @@ import cn.mutils.app.core.time.MillisFormat;
 /**
  * Template of request and response for net API at Java application level
  */
-@SuppressWarnings({"deprecation", "serial", "unchecked"})
+@SuppressWarnings({"serial", "unchecked", "deprecation"})
 public class NetClient<REQUEST, RESPONSE> {
 
     /**
@@ -52,15 +52,11 @@ public class NetClient<REQUEST, RESPONSE> {
 
         /**
          * Get request entity class
-         *
-         * @return
          */
         public abstract Class<?> requestRawType();
 
         /**
          * Get generic type info of request
-         *
-         * @return
          */
         public Type requestGenericType() {
             return null;
@@ -68,15 +64,11 @@ public class NetClient<REQUEST, RESPONSE> {
 
         /**
          * Get response entity class
-         *
-         * @return
          */
         public abstract Class<?> responseRawType();
 
         /**
          * Get generic type info of response
-         *
-         * @return
          */
         public Type responseGenericType() {
             return null;
@@ -84,8 +76,6 @@ public class NetClient<REQUEST, RESPONSE> {
 
         /**
          * Convert some properties who are come form UI to REQUEST
-         *
-         * @return
          */
         public REQUEST convertToRequest() {
             return null;
@@ -93,9 +83,6 @@ public class NetClient<REQUEST, RESPONSE> {
 
         /**
          * Convert RESPONSE to object who are defined by UI
-         *
-         * @param response
-         * @return
          */
         public Object convertFromResponse(RESPONSE response) {
             return null;
@@ -103,10 +90,6 @@ public class NetClient<REQUEST, RESPONSE> {
 
         /**
          * Sign post JSON request content
-         *
-         * @param request
-         * @return
-         * @throws Exception
          */
         public Object signPostJson(REQUEST request) throws Exception {
             return request;
@@ -114,8 +97,6 @@ public class NetClient<REQUEST, RESPONSE> {
 
         /**
          * Give cookie to request
-         *
-         * @return cookie
          */
         public abstract String requestCookie(URL url);
 
@@ -126,9 +107,6 @@ public class NetClient<REQUEST, RESPONSE> {
 
         /**
          * Verify error code of RESPONSE
-         *
-         * @param response
-         * @throws Exception
          */
         public void errorCodeVerify(RESPONSE response) throws Exception {
             debugging(EVENT_ERROR_CODE, "errorCodeVerify");
@@ -136,9 +114,6 @@ public class NetClient<REQUEST, RESPONSE> {
 
         /**
          * Debugging
-         *
-         * @param event
-         * @param message
          */
         public abstract void debugging(String event, String message);
     }
@@ -219,7 +194,7 @@ public class NetClient<REQUEST, RESPONSE> {
     protected int mFlags = FlagUtil.FLAGS_FALSE;
 
     /**
-     * Response object converted by {@link #convertFromResponse(Object)}
+     * Response object converted by {@link NetClientListener#convertFromResponse(Object)}
      * <p>
      * It will be null if {@link #mResponseConverted} is null.
      */
@@ -517,7 +492,7 @@ public class NetClient<REQUEST, RESPONSE> {
     /**
      * Convert object whose properties have {@link Head} to headers
      *
-     * @param object
+     * @param object Object
      * @return log message
      */
     public static String convertToHeaders(Object object, HttpUriRequest httpRequest) {
@@ -547,7 +522,7 @@ public class NetClient<REQUEST, RESPONSE> {
                     sb.append(":");
                     sb.append(hValue);
                 } catch (Exception e) {
-
+                    // IllegalAccessException
                 }
             }
         }
@@ -556,17 +531,13 @@ public class NetClient<REQUEST, RESPONSE> {
 
     /**
      * Convert restful URL expression to exactly URL
-     *
-     * @param object
-     * @param url
-     * @return
      */
     public static String convertToRestUrl(Object object, String url) {
         if (url == null) {
-            return url;
+            return null;
         }
         if (object == null) {
-            return url;
+            return null;
         }
         if (object instanceof Map) {
             for (Entry<?, ?> entry : ((Map<?, ?>) object).entrySet()) {
@@ -583,7 +554,7 @@ public class NetClient<REQUEST, RESPONSE> {
                     String restValue = URLEncoder.encode(JsonUtil.convert(value), "UTF-8");
                     url = url.replace(restKey, restValue);
                 } catch (Exception e) {
-
+                    // UnsupportedEncodingException
                 }
             }
         } else {
@@ -600,7 +571,7 @@ public class NetClient<REQUEST, RESPONSE> {
                     String restValue = URLEncoder.encode(JsonUtil.convert(value), "UTF-8");
                     url = url.replace(restKey, restValue);
                 } catch (Exception e) {
-
+                    // UnsupportedEncodingException
                 }
             }
         }
@@ -609,10 +580,6 @@ public class NetClient<REQUEST, RESPONSE> {
 
     /**
      * Convert object to URL parameters like "key=value"
-     *
-     * @param object
-     * @param splitArrayParams
-     * @return
      */
     public static String convertToParameters(Object object, boolean splitArrayParams) {
         if (object == null) {
@@ -644,7 +611,7 @@ public class NetClient<REQUEST, RESPONSE> {
                         sb.append(URLEncoder.encode(JsonUtil.convert(value), "UTF-8"));
                     }
                 } catch (Exception e) {
-
+                    // UnsupportedEncodingException
                 }
             }
         } else {
@@ -667,7 +634,7 @@ public class NetClient<REQUEST, RESPONSE> {
                         sb.append(URLEncoder.encode(JsonUtil.convert(value), "UTF-8"));
                     }
                 } catch (Exception e) {
-
+                    // UnsupportedEncodingException
                 }
             }
         }
@@ -676,9 +643,6 @@ public class NetClient<REQUEST, RESPONSE> {
 
     /**
      * Convert array to URL parameter
-     *
-     * @param value
-     * @return
      */
     public static String convertToSplitArrayParam(List<?> value) {
         StringBuilder sb = new StringBuilder();
@@ -689,7 +653,7 @@ public class NetClient<REQUEST, RESPONSE> {
                 }
                 sb.append(URLEncoder.encode(JsonUtil.convert(value.get(i)), "UTF-8"));
             } catch (Exception e) {
-
+                // UnsupportedEncodingException
             }
         }
         return sb.toString();
@@ -697,9 +661,6 @@ public class NetClient<REQUEST, RESPONSE> {
 
     /**
      * Convert object to HttpEntity
-     *
-     * @param object
-     * @return
      */
     public static HttpEntity convertToEntity(Object object) {
         if (object == null) {
@@ -727,7 +688,7 @@ public class NetClient<REQUEST, RESPONSE> {
                             entity.addPart(key.toString(),
                                     new StringBody(JsonUtil.convert(value), Charset.forName("UTF-8")));
                         } catch (Exception e) {
-
+                            // UnsupportedCharsetException
                         }
                     }
                 }
@@ -745,7 +706,7 @@ public class NetClient<REQUEST, RESPONSE> {
                                     new StringBody(JsonUtil.convert(value), Charset.forName("UTF-8")));
                         }
                     } catch (Exception e) {
-
+                        // IllegalAccessException
                     }
                 }
             }
@@ -755,11 +716,6 @@ public class NetClient<REQUEST, RESPONSE> {
 
     /**
      * Parse response of HTTP 500 to get server stack trace
-     *
-     * @param html500
-     * @param regex
-     * @param regexGroup
-     * @return
      */
     public static String getStackTrace(String html500, String regex, int regexGroup) {
         try {

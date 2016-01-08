@@ -7,18 +7,14 @@ import cn.mutils.app.os.IContextOwner;
  */
 public interface IPushManager extends IContextOwner {
 
-	/**
-	 * Add push dispatch template to manager
-	 * 
-	 * @param dispatcherClass
-	 */
-	public void add(Class<? extends IPushDispatcher<?>> dispatcherClass);
+    /**
+     * Add push dispatch template to manager
+     */
+    void add(Class<? extends IPushDispatcher<?>> dispatcherClass);
 
-	/**
-	 * Dispatch message
-	 * 
-	 * @param message
-	 */
-	public void onMessage(String message);
+    /**
+     * Dispatch message
+     */
+    void onMessage(String message);
 
 }

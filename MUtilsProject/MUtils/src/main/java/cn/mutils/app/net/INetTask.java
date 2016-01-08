@@ -3,24 +3,24 @@ package cn.mutils.app.net;
 import cn.mutils.app.queue.IQueueItem;
 
 public interface INetTask<REQUEST, RESPONSE> extends
-		IQueueItem<INetTask<REQUEST, RESPONSE>> {
+        IQueueItem<INetTask<REQUEST, RESPONSE>> {
 
-	public String getUrl();
+    String getUrl();
 
-	public void setUrl(String url);
+    void setUrl(String url);
 
-	public String getRequestMethod();
+    String getRequestMethod();
 
-	public void setRequestMethod(String requestMethod);
+    void setRequestMethod(String requestMethod);
 
-	public REQUEST getRequest();
+    REQUEST getRequest();
 
-	public void setRequest(REQUEST request);
+    void setRequest(REQUEST request);
 
-	public RESPONSE getResponse();
+    RESPONSE getResponse();
 
-	public void setResponse(RESPONSE response);
+    void setResponse(RESPONSE response);
 
-	public long getResponseTime();
+    long getResponseTime();
 
 }

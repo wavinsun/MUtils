@@ -108,7 +108,7 @@ public final class ViewfinderView extends View {
         try {
             this.setFrameColor(Color.parseColor(frameColor));
         } catch (Exception e) {
-
+            // IllegalArgumentException
         }
     }
 
@@ -121,7 +121,7 @@ public final class ViewfinderView extends View {
         try {
             this.setLaserColor(Color.parseColor(laserColor));
         } catch (Exception e) {
-
+            // IllegalArgumentException
         }
     }
 

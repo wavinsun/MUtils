@@ -14,7 +14,7 @@ import cn.mutils.app.core.time.DateTime;
 
 /**
  * IOC for primitive type of property of entity
- * 
+ *
  * @see IntItem
  * @see LongItem
  * @see DoubleItem
@@ -23,38 +23,57 @@ import cn.mutils.app.core.time.DateTime;
  * @see StringJson
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.TYPE })
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
+@SuppressWarnings({"UnnecessaryInterfaceModifier", "UnnecessaryEnumModifier"})
 public @interface Primitive {
 
-	public static enum PrimitiveType {
+    public static enum PrimitiveType {
 
-		/** String */
-		STRING,
+        /**
+         * String
+         */
+        STRING,
 
-		/** Integer of string */
-		STRING_INT,
+        /**
+         * Integer of string
+         */
+        STRING_INT,
 
-		/** Long of string */
-		STRING_LONG,
+        /**
+         * Long of string
+         */
+        STRING_LONG,
 
-		/** Double of string */
-		STRING_DOUBLE,
+        /**
+         * Double of string
+         */
+        STRING_DOUBLE,
 
-		/** Boolean of string */
-		STRING_BOOL,
+        /**
+         * Boolean of string
+         */
+        STRING_BOOL,
 
-		/** Integer */
-		INT,
+        /**
+         * Integer
+         */
+        INT,
 
-		/** Long */
-		LONG,
+        /**
+         * Long
+         */
+        LONG,
 
-		/** Double */
-		DOUBLE,
+        /**
+         * Double
+         */
+        DOUBLE,
 
-		/** Boolean */
-		BOOL
-	}
+        /**
+         * Boolean
+         */
+        BOOL
+    }
 
-	public PrimitiveType value() default PrimitiveType.STRING;
+    PrimitiveType value() default PrimitiveType.STRING;
 }

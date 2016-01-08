@@ -5,6 +5,6 @@ package cn.mutils.app.core.sort;
  */
 public interface IIndexItem {
 
-	public int index();
+    int index();
 
 }

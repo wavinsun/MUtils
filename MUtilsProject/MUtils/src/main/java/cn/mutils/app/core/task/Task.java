@@ -2,70 +2,70 @@ package cn.mutils.app.core.task;
 
 import cn.mutils.app.core.event.Dispatcher;
 
-public class Task extends Dispatcher implements IStopable {
+public class Task extends Dispatcher implements IStoppable {
 
-	protected boolean mStarted;
+    protected boolean mStarted;
 
-	protected boolean mStoped;
+    protected boolean mStopped;
 
-	protected boolean mRunInBackground = true;
+    protected boolean mRunInBackground = true;
 
-	protected boolean mRestartable = false;
+    protected boolean mRestartable = false;
 
-	@Override
-	public boolean isRunInBackground() {
-		return mRunInBackground;
-	}
+    @Override
+    public boolean isRunInBackground() {
+        return mRunInBackground;
+    }
 
-	@Override
-	public void setRunInBackground(boolean runInBackground) {
-		if (mStarted || mStoped) {
-			return;
-		}
-		mRunInBackground = runInBackground;
-	}
+    @Override
+    public void setRunInBackground(boolean runInBackground) {
+        if (mStarted || mStopped) {
+            return;
+        }
+        mRunInBackground = runInBackground;
+    }
 
-	@Override
-	public boolean isStoped() {
-		return mStoped;
-	}
+    @Override
+    public boolean isStopped() {
+        return mStopped;
+    }
 
-	@Override
-	public boolean stop() {
-		if (mStoped) {
-			return false;
-		}
-		mStoped = true;
-		onStop();
-		if (!mRestartable) {
-			removeAllListeners();
-		}
-		return true;
-	}
+    @Override
+    public boolean stop() {
+        if (mStopped) {
+            return false;
+        }
+        mStopped = true;
+        onStop();
+        if (!mRestartable) {
+            removeAllListeners();
+        }
+        return true;
+    }
 
-	protected void onStop() {
+    protected void onStop() {
 
-	}
+    }
 
-	public boolean isStarted() {
-		return mStarted;
-	}
+    public boolean isStarted() {
+        return mStarted;
+    }
 
-	public boolean start() {
-		if (mStarted || mStoped) {
-			return false;
-		}
-		mStarted = true;
-		onStart();
-		return true;
-	}
+    public boolean start() {
+        if (mStarted || mStopped) {
+            return false;
+        }
+        mStarted = true;
+        onStart();
+        return true;
+    }
 
-	protected void onStart() {
+    protected void onStart() {
 
-	}
+    }
 
-	public boolean isRunning() {
-		return mStarted && !mStoped;
-	}
+    public boolean isRunning() {
+        return mStarted && !mStopped;
+    }
 
 }

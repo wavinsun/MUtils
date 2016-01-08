@@ -5,6 +5,6 @@ package cn.mutils.app.core.sort;
  */
 public interface ICreationItem {
 
-	public long creation();
+    long creation();
 
 }

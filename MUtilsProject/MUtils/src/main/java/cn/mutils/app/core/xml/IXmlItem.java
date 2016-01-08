@@ -8,8 +8,8 @@ import cn.mutils.app.core.beans.BeanField;
 
 public interface IXmlItem extends INoProguard {
 
-	public IXmlItem fromXml(Node xml, BeanField itemField);
+    IXmlItem fromXml(Node xml, BeanField itemField);
 
-	public Node toXml(Document doc, BeanField itemField);
+    Node toXml(Document doc, BeanField itemField);
 
 }

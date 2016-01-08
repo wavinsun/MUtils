@@ -4,6 +4,6 @@ import android.os.Handler;
 
 public interface IHandlerProvider {
 
-	public Handler getMainHandler();
+    Handler getMainHandler();
 
 }

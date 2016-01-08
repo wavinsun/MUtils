@@ -31,7 +31,7 @@ import cn.mutils.app.R;
 import cn.mutils.app.core.err.CookieExpiredException;
 import cn.mutils.app.core.event.Dispatcher;
 import cn.mutils.app.core.event.listener.VersionUpdateListener;
-import cn.mutils.app.core.task.IStopable;
+import cn.mutils.app.core.task.IStoppable;
 import cn.mutils.app.data.AsyncDataQueue;
 import cn.mutils.app.data.IAsyncDataQueue;
 import cn.mutils.app.data.IAsyncDataQueueListener;
@@ -48,7 +48,6 @@ import cn.mutils.app.ui.core.ISessionHolder;
 import cn.mutils.app.ui.core.IStateView;
 import cn.mutils.app.ui.core.IToastOwner;
 import cn.mutils.app.ui.core.UICore;
-import cn.mutils.app.ui.pattern.PatternDialog;
 import cn.mutils.app.ui.pattern.PatternLayerHelper;
 import cn.mutils.app.ui.util.DoubleBackClickHelper;
 import cn.mutils.app.ui.util.WaitingLayerHelper;
@@ -73,7 +72,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
     protected Handler mHandler;
 
     protected List<IStateView> mBindViews;
-    protected List<IStopable> mBindStopables;
+    protected List<IStoppable> mBindStoppables;
     protected Dispatcher mDispatcher;
 
     protected InfoToast mInfoToast;
@@ -163,25 +162,6 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
         mWaitingLayerHelper.postUpdateWaitingViewState();
     }
 
-    @Override
-    public void bind(IStopable stopable) {
-        UICore.bind(this, stopable);
-    }
-
-    @Override
-    public void disablePattern(long duration) {
-        if (mPatternLayerHelper != null) {
-            mPatternLayerHelper.disable(duration);
-        }
-    }
-
-    @Override
-    public void enablePattern() {
-        if (mPatternLayerHelper != null) {
-            mPatternLayerHelper.enable();
-        }
-    }
-
     public boolean isRunning() {
         return mRunning;
     }
@@ -197,40 +177,29 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
         mPatternLayerHelper.setHeartbeatEnabled(enabled);
     }
 
-    @Override
+    public void disablePattern(long duration) {
+        if (mPatternLayerHelper != null) {
+            mPatternLayerHelper.disable(duration);
+        }
+    }
+
+    public void enablePattern() {
+        if (mPatternLayerHelper != null) {
+            mPatternLayerHelper.enable();
+        }
+    }
+
     public boolean checkPattern() {
         return false;
     }
 
-    @Override
-    public void doCheckPattern() {
-        if (!this.checkPattern()) {
-            return;
-        }
-        if (mPatternLayerHelper != null) {
-            mPatternLayerHelper.doCheck();
-        }
+    public void startPatternActivity() {
+
     }
 
     @Override
-    public PatternDialog newPatternDialog() {
-        return null;
-    }
-
-    @Override
-    public void showPattern() {
-        if (mPatternLayerHelper == null) {
-            mPatternLayerHelper = new PatternLayerHelper(this);
-        }
-        mPatternLayerHelper.show();
-    }
-
-    @Override
-    public void hidePattern() {
-        if (mPatternLayerHelper == null) {
-            return;
-        }
-        mPatternLayerHelper.hide();
+    public void bind(IStoppable stoppable) {
+        UICore.bind(this, stoppable);
     }
 
     @Override
@@ -307,7 +276,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
             try {
                 AndroidBug5497Workaround.assistActivity(this);
             } catch (Exception e) {
-
+                // Exception
             }
         }
     }
@@ -378,12 +347,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
     protected void onResume() {
         super.onResume();
         UICore.dispatchResume(this);
-        if (mPatternLayerHelper != null) {
-            mPatternLayerHelper.onResume();
-        }
         mRunning = true;
-        mUmengHelper.delegate().onResume(this);
-        mJHelper.delegate().onResume(this);
         // Validate session or user login state
         if (this.isSessionHolder()) {
             this.validateSession();
@@ -391,6 +355,11 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
                 getMainHandler().post(new OnSessionChangedRunnable());
             }
         }
+        if (mPatternLayerHelper != null) {
+            mPatternLayerHelper.onResume();
+        }
+        mUmengHelper.delegate().onResume(this);
+        mJHelper.delegate().onResume(this);
         if (mRunOnceOnResumeList != null) {
             for (Runnable r : mRunOnceOnResumeList) {
                 r.run();
@@ -571,7 +540,7 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
         mWaitingLayerHelper.hide();
     }
 
-    public Dialoger newWaitingDialog() {
+    public Dialoger createWaitingDialog(Context context) {
         return null;
     }
 
@@ -637,11 +606,11 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
     }
 
     @Override
-    public List<IStopable> getBindStopables() {
-        if (mBindStopables == null) {
-            mBindStopables = new LinkedList<IStopable>();
+    public List<IStoppable> getBindStoppables() {
+        if (mBindStoppables == null) {
+            mBindStoppables = new LinkedList<IStoppable>();
         }
-        return mBindStopables;
+        return mBindStoppables;
     }
 
     @Override

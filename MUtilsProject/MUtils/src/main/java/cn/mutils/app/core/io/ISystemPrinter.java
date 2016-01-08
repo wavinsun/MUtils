@@ -6,8 +6,8 @@ package cn.mutils.app.core.io;
  */
 public interface ISystemPrinter {
 
-	public void sysout(String str);
+    void systemOut(String str);
 
-	public void syserr(String str);
+    void systemErr(String str);
 
 }
