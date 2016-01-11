@@ -11,7 +11,7 @@ import cn.mutils.app.core.log.Logs;
 /**
  * Implements {@link IWebMessageManager}
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({"rawtypes", "unchecked", "UnusedAssignment"})
 public class WebMessageManager implements IWebMessageManager {
 
     protected List<Class<? extends IWebMessageDispatcher<?>>> mDispatchers;

@@ -15,6 +15,7 @@ import cn.mutils.app.ui.core.IViewFinder;
  * @see UIAdapter#getItemView()
  * @see UIAdapter#getView(int, View, android.view.ViewGroup)
  */
+@SuppressWarnings("unused")
 public interface IItemView<DATA_ITEM> extends IView, IViewFinder, IContentViewOwner, IContextProvider {
 
     /**
@@ -26,7 +27,7 @@ public interface IItemView<DATA_ITEM> extends IView, IViewFinder, IContentViewOw
 
     /**
      * Set Adapter for IItemView.
-     * <p>
+     * <p/>
      * It called by framework.
      *
      * @param adapter Adapter

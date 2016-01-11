@@ -15,7 +15,7 @@ import cn.mutils.app.core.xml.XmlUtil;
 /**
  * Support two data types:{"n":"0"} {"n":0}
  */
-@SuppressWarnings({"serial", "UnnecessaryBoxing"})
+@SuppressWarnings({"serial", "UnnecessaryBoxing", "unused", "UnnecessaryUnboxing"})
 public class IntItem extends Serial<Integer> {
 
     public IntItem() {

@@ -11,6 +11,7 @@ import cn.mutils.app.core.text.StringUtil;
 /**
  * MD5 for object
  */
+@SuppressWarnings("unused")
 public class ObjectMD5 {
 
     /**

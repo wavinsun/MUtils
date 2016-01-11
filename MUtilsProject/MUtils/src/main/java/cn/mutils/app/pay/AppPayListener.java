@@ -7,11 +7,11 @@ public interface AppPayListener extends IListener {
     /**
      * Pay success
      */
-    public void onComplete(AppPayTask task);
+    void onComplete(AppPayTask task);
 
     /**
      * Pay error
      */
-    public void onError(AppPayTask task, Exception e);
+    void onError(AppPayTask task, Exception e);
 
 }

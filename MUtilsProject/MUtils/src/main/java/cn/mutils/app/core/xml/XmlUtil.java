@@ -30,7 +30,7 @@ import cn.mutils.app.core.reflect.ReflectUtil;
 /**
  * XML serializer of framework
  */
-@SuppressWarnings({"rawtypes", "unchecked", "CaughtExceptionImmediatelyRethrown"})
+@SuppressWarnings({"rawtypes", "unchecked", "CaughtExceptionImmediatelyRethrown", "unused"})
 public class XmlUtil {
 
     /**

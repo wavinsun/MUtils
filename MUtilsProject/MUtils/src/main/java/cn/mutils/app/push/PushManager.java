@@ -9,7 +9,7 @@ import cn.mutils.app.os.ContextOwner;
 /**
  * Implements {@link IPushManager}
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({"rawtypes", "unchecked", "UnusedAssignment"})
 public class PushManager extends ContextOwner implements IPushManager {
 
     protected List<Class<? extends IPushDispatcher<?>>> mDispatchers;

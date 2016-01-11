@@ -24,7 +24,7 @@ import cn.mutils.app.zxing.decode.CaptureHandler;
  * Capture view of framework<br>
  * It is used to capture data from QRCode image.
  */
-@SuppressWarnings({"UnnecessaryInterfaceModifier", "deprecation"})
+@SuppressWarnings({"UnnecessaryInterfaceModifier", "deprecation", "UnusedParameters", "unused"})
 public class CaptureView extends StateView implements Callback {
 
     public static interface CaptureListener {

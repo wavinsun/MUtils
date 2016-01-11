@@ -5,6 +5,7 @@ package cn.mutils.app.core.runtime;
  *
  * @param <T>
  */
+@SuppressWarnings("unused")
 public class RefValue<T> {
 
     protected T mValue;

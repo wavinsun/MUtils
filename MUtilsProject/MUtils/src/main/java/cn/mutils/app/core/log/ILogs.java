@@ -3,116 +3,117 @@ package cn.mutils.app.core.log;
 /**
  * Logs of framework for top level
  */
+@SuppressWarnings("unused")
 public interface ILogs {
 
     /**
      * Whether logs is enabled
      */
-    public boolean isEnabled();
+    boolean isEnabled();
 
     /**
      * Set logs enabled state
      */
-    public void setEnabled(boolean enabled);
+    void setEnabled(boolean enabled);
 
     /**
      * Print log of verbose level
      */
-    public int verbose(String tag, String msg);
+    int verbose(String tag, String msg);
 
     /**
      * Print log of verbose level
      */
-    public int verbose(String tag, String msg, Throwable tr);
+    int verbose(String tag, String msg, Throwable tr);
 
     /**
      * Print log of debug level
      */
-    public int debug(String tag, String msg);
+    int debug(String tag, String msg);
 
     /**
      * Print log of debug level
      */
-    public int debug(String tag, String msg, Throwable tr);
+    int debug(String tag, String msg, Throwable tr);
 
     /**
      * Print log of info level
      */
-    public int info(String tag, String msg);
+    int info(String tag, String msg);
 
     /**
      * Print log of info level
      */
-    public int info(String tag, String msg, Throwable tr);
+    int info(String tag, String msg, Throwable tr);
 
     /**
      * Print log of warn level
      */
-    public int warn(String tag, String msg);
+    int warn(String tag, String msg);
 
     /**
      * Print log of warn level
      */
-    public int warn(String tag, String msg, Throwable tr);
+    int warn(String tag, String msg, Throwable tr);
 
     /**
      * Print log of error level
      */
-    public int error(String tag, String msg);
+    int error(String tag, String msg);
 
     /**
      * Print log of error level
      */
-    public int error(String tag, String msg, Throwable tr);
+    int error(String tag, String msg, Throwable tr);
 
     /**
      * Print log of verbose level
      */
-    public int verbose(String msg);
+    int verbose(String msg);
 
     /**
      * Print log of verbose level
      */
-    public int verbose(String msg, Throwable tr);
+    int verbose(String msg, Throwable tr);
 
     /**
      * Print log of debug level
      */
-    public int debug(String msg);
+    int debug(String msg);
 
     /**
      * Print log of debug level
      */
-    public int debug(String msg, Throwable tr);
+    int debug(String msg, Throwable tr);
 
     /**
      * Print log of info level
      */
-    public int info(String msg);
+    int info(String msg);
 
     /**
      * Print log of info level
      */
-    public int info(String msg, Throwable tr);
+    int info(String msg, Throwable tr);
 
     /**
      * Print log of warn level
      */
-    public int warn(String msg);
+    int warn(String msg);
 
     /**
      * Print log of warn level
      */
-    public int warn(String msg, Throwable tr);
+    int warn(String msg, Throwable tr);
 
     /**
      * Print log of error level
      */
-    public int error(String msg);
+    int error(String msg);
 
     /**
      * Print log of error level
      */
-    public int error(String msg, Throwable tr);
+    int error(String msg, Throwable tr);
 
 }

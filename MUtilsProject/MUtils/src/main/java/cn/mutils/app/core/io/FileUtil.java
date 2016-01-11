@@ -10,6 +10,7 @@ import cn.mutils.app.core.runtime.OSRuntime;
 /**
  * File utility
  */
+@SuppressWarnings("unused")
 public class FileUtil {
 
     public static boolean setHidden(File file, boolean isHidden) {

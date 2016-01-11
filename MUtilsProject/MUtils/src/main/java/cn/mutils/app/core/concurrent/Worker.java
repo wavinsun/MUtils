@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Concurrent Worker
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "UnusedAssignment", "SimplifiableIfStatement", "unused"})
 public abstract class Worker<JOB> implements IWoker<JOB> {
 
     /**

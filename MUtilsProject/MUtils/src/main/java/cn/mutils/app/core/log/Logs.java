@@ -40,10 +40,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of verbose level
-     *
-     * @param tag
-     * @param msg
-     * @return
      */
     public static int v(String tag, String msg) {
         return getLogs().verbose(tag, msg);
@@ -51,11 +47,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of verbose level
-     *
-     * @param tag
-     * @param msg
-     * @param tr
-     * @return
      */
     public static int v(String tag, String msg, Throwable tr) {
         return getLogs().verbose(tag, msg, tr);
@@ -63,10 +54,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of debug level
-     *
-     * @param tag
-     * @param msg
-     * @return
      */
     public static int d(String tag, String msg) {
         return getLogs().debug(tag, msg);
@@ -74,11 +61,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of debug level
-     *
-     * @param tag
-     * @param msg
-     * @param tr
-     * @return
      */
     public static int d(String tag, String msg, Throwable tr) {
         return getLogs().debug(tag, msg, tr);
@@ -86,10 +68,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of info level
-     *
-     * @param tag
-     * @param msg
-     * @return
      */
     public static int i(String tag, String msg) {
         return getLogs().info(tag, msg);
@@ -97,11 +75,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of info level
-     *
-     * @param tag
-     * @param msg
-     * @param tr
-     * @return
      */
     public static int i(String tag, String msg, Throwable tr) {
         return getLogs().info(tag, msg, tr);
@@ -109,10 +82,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of warn level
-     *
-     * @param tag
-     * @param msg
-     * @return
      */
     public static int w(String tag, String msg) {
         return getLogs().warn(tag, msg);
@@ -120,11 +89,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of warn level
-     *
-     * @param tag
-     * @param msg
-     * @param tr
-     * @return
      */
     public static int w(String tag, String msg, Throwable tr) {
         return getLogs().warn(tag, msg, tr);
@@ -132,10 +96,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of error level
-     *
-     * @param tag
-     * @param msg
-     * @return
      */
     public static int e(String tag, String msg) {
         return getLogs().error(tag, msg);
@@ -143,11 +103,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of error level
-     *
-     * @param tag
-     * @param msg
-     * @param tr
-     * @return
      */
     public static int e(String tag, String msg, Throwable tr) {
         return getLogs().error(tag, msg, tr);
@@ -155,9 +110,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of verbose level
-     *
-     * @param msg
-     * @return
      */
     public static int v(String msg) {
         ILogs logs = getLogs();
@@ -169,10 +121,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of verbose level
-     *
-     * @param msg
-     * @param tr
-     * @return
      */
     public static int v(String msg, Throwable tr) {
         ILogs logs = getLogs();
@@ -184,9 +132,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of debug level
-     *
-     * @param msg
-     * @return
      */
     public static int d(String msg) {
         ILogs logs = getLogs();
@@ -198,10 +143,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of debug level
-     *
-     * @param msg
-     * @param tr
-     * @return
      */
     public static int d(String msg, Throwable tr) {
         ILogs logs = getLogs();
@@ -213,9 +154,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of info level
-     *
-     * @param msg
-     * @return
      */
     public static int i(String msg) {
         ILogs logs = getLogs();
@@ -227,10 +165,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of info level
-     *
-     * @param msg
-     * @param tr
-     * @return
      */
     public static int i(String msg, Throwable tr) {
         ILogs logs = getLogs();
@@ -242,9 +176,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of warn level
-     *
-     * @param msg
-     * @return
      */
     public static int w(String msg) {
         ILogs logs = getLogs();
@@ -256,10 +187,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of warn level
-     *
-     * @param msg
-     * @param tr
-     * @return
      */
     public static int w(String msg, Throwable tr) {
         ILogs logs = getLogs();
@@ -271,9 +198,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of error level
-     *
-     * @param msg
-     * @return
      */
     public static int e(String msg) {
         ILogs logs = getLogs();
@@ -285,10 +209,6 @@ public class Logs implements ILogs {
 
     /**
      * Print logs of error level
-     *
-     * @param msg
-     * @param tr
-     * @return
      */
     public static int e(String msg, Throwable tr) {
         ILogs logs = getLogs();

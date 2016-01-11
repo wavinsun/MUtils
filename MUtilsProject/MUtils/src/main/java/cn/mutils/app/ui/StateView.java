@@ -36,6 +36,7 @@ import cn.mutils.app.ui.core.IStateViewManager;
 import cn.mutils.app.ui.core.IToastOwner;
 import cn.mutils.app.ui.core.UICore;
 
+@SuppressWarnings({"RedundantIfStatement", "unused"})
 @SuppressLint("ShowToast")
 public class StateView extends RelativeLayout implements IStateView, ISessionHolder, IRunOnceHolder, IHandlerProvider,
         IStateViewManager, IStoppableManager, IToastOwner, IContentViewOwner {

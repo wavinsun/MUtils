@@ -19,7 +19,7 @@ import kankan.wheel.widget.WheelView;
  * Date chooser like iOS
  */
 @SuppressLint("InflateParams")
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "unused"})
 public class DateChooser {
 
     /**

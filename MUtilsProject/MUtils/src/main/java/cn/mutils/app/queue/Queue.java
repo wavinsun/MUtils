@@ -5,7 +5,7 @@ import java.util.List;
 
 import cn.mutils.app.event.ContextOwnerDispathcer;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({"rawtypes", "UnusedParameters", "ConstantConditions"})
 public class Queue extends ContextOwnerDispathcer implements IQueue, IQueueItemListener {
 
     protected boolean mRunInBackground = true;

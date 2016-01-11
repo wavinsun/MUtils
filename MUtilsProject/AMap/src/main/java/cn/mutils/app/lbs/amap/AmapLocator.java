@@ -17,6 +17,7 @@ import cn.mutils.app.lbs.AppLocation;
 /**
  * AMap Location
  */
+@SuppressWarnings("unused")
 public class AmapLocator implements IStoppable {
 
     protected boolean mStoped = true;

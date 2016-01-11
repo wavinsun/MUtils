@@ -26,6 +26,7 @@ import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateRes;
 /**
  * Fly It Remotely Update Agent
  */
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class FIRUpdateAgent extends ContextOwnerTask implements IClearable {
 
     /**

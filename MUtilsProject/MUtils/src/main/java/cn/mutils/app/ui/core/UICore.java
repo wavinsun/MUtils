@@ -42,7 +42,7 @@ import cn.mutils.app.ui.InfoToast;
 /**
  * UI core implementation of framework
  */
-@SuppressWarnings({"deprecation", "unchecked"})
+@SuppressWarnings({"deprecation", "unchecked", "UnnecessaryLocalVariable", "SimplifiableIfStatement"})
 public class UICore {
 
     /**

@@ -13,6 +13,7 @@ import android.view.View;
  * QRCode view <br>
  * It is used to show data by QRCode
  */
+@SuppressWarnings("unused")
 public class QRCodeView extends View {
 
     protected Bitmap mLogoBitmap;

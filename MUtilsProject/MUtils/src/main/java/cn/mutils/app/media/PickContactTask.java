@@ -14,7 +14,7 @@ import java.util.List;
 import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.ui.core.IActivityExecutor;
 
-@SuppressWarnings("UnnecessaryInterfaceModifier")
+@SuppressWarnings({"UnnecessaryInterfaceModifier", "ConstantConditions"})
 public class PickContactTask extends MediaTask {
 
     public static interface PickContactListener extends IListener {

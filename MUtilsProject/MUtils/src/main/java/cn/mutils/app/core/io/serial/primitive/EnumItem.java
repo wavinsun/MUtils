@@ -16,7 +16,7 @@ import cn.mutils.app.core.xml.XmlUtil;
 /**
  * Support three data types:{"state":"INIT"} {"state":"0"} {"state":0}
  */
-@SuppressWarnings({"serial", "unchecked"})
+@SuppressWarnings({"serial", "unchecked", "unused"})
 public abstract class EnumItem<E extends Enum<E>> extends Serial<Enum<E>> {
 
     public EnumItem() {

@@ -23,7 +23,7 @@ import cn.mutils.app.util.AppUtil;
  *
  * @see NetClient
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "unused"})
 public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESPONSE>>
         implements INetTask<REQUEST, RESPONSE> {
 

@@ -13,7 +13,7 @@ import cn.mutils.app.core.text.StringUtil;
  * AES encrypt and decrypt
  */
 @SuppressLint("GetInstance")
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings("unused")
 public class AESUtil {
 
     public static final String ALGORITHM = "AES";

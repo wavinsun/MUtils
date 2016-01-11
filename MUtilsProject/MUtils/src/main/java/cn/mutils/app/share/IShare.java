@@ -2,7 +2,7 @@ package cn.mutils.app.share;
 
 import cn.mutils.app.os.IContextOwner;
 
-@SuppressWarnings("UnnecessaryInterfaceModifier")
+@SuppressWarnings({"UnnecessaryInterfaceModifier", "unused"})
 public interface IShare extends IContextOwner {
 
     public static interface IShareListener {

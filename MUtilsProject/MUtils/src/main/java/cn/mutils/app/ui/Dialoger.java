@@ -30,7 +30,7 @@ import cn.mutils.app.util.AppUtil;
  * Dialog of framework
  */
 @SuppressLint({"RtlHardcoded", "ShowToast", "InlinedApi"})
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "unused"})
 public class Dialoger extends Dialog implements IDialog {
 
     protected InfoToast mInfoToast;

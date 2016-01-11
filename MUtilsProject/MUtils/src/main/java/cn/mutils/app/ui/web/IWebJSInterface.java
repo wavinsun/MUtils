@@ -7,6 +7,7 @@ import cn.mutils.app.core.INoProguard;
 /**
  * Web JavaScript call interface of framework
  */
+@SuppressWarnings("unused")
 public interface IWebJSInterface extends INoProguard {
 
     /**

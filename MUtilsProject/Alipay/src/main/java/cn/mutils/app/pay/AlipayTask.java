@@ -12,6 +12,7 @@ import java.net.URLEncoder;
 /**
  * AliPay
  */
+@SuppressWarnings({"unused", "UnnecessaryUnboxing"})
 public class AlipayTask extends AppPayTask {
 
     protected String mPartner;

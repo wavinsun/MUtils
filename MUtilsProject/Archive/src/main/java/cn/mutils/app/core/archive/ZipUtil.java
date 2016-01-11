@@ -16,6 +16,7 @@ import cn.mutils.app.core.io.IOUtil;
 /**
  * Fix bug for Archive file by Apache Commons Compress
  */
+@SuppressWarnings({"UnusedAssignment", "unused"})
 public class ZipUtil {
 
     /**
@@ -99,7 +100,7 @@ public class ZipUtil {
                 try {
                     zaos.finish();
                 } catch (Exception e) {
-
+                    //  IOException
                 }
             }
             IOUtil.close(zaos);
@@ -132,7 +133,7 @@ public class ZipUtil {
                 try {
                     zaos.closeArchiveEntry();
                 } catch (Exception e) {
-
+                    // IOException
                 }
             }
             return true;

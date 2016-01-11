@@ -2,6 +2,7 @@ package cn.mutils.app.ui.core;
 
 import android.graphics.drawable.Drawable;
 
+@SuppressWarnings("unused")
 public interface IDefaultDrawableView {
 
     Drawable getDefault();

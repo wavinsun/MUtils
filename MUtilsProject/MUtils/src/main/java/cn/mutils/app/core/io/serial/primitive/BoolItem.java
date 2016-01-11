@@ -17,7 +17,7 @@ import cn.mutils.app.core.xml.XmlUtil;
 /**
  * Support two data types: {"isOK":true} {"isOK":"true"}
  */
-@SuppressWarnings({"serial", "UnnecessaryBoxing"})
+@SuppressWarnings({"serial", "UnnecessaryBoxing", "unused", "UnnecessaryUnboxing"})
 public class BoolItem extends Serial<Boolean> {
 
     protected String mTrue = "true";

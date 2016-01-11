@@ -66,7 +66,7 @@ import cn.mutils.app.core.time.TimeUtil;
 /**
  * Utility of framework for Android runtime
  */
-@SuppressWarnings({"deprecation", "StringBufferReplaceableByString"})
+@SuppressWarnings({"deprecation", "StringBufferReplaceableByString", "unused", "ConstantConditions", "UnusedAssignment"})
 public class AppUtil {
 
     /**
@@ -887,7 +887,7 @@ public class AppUtil {
                 int id = Integer.parseInt(c.getField("status_bar_height").get(null).toString());
                 h = context.getResources().getDimensionPixelSize(id);
             } catch (Exception e) {
-
+                //  ClassNotFoundException
             }
         }
         return h;

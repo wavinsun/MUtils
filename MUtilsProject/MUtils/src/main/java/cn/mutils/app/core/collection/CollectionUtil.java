@@ -9,7 +9,7 @@ import cn.mutils.app.core.beans.ObjectUtil;
 import cn.mutils.app.core.reflect.ReflectUtil;
 import cn.mutils.app.util.AppUtil;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "unused"})
 public class CollectionUtil {
 
     public static <T extends List<E>, E> T truncate(T list, int maxSize) {

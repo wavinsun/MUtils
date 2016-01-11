@@ -36,6 +36,7 @@ import cn.mutils.app.zxing.camera.CameraManager;
  *
  * @author dswitkin@google.com (Daniel Switkin)
  */
+@SuppressWarnings("unused")
 public final class ViewfinderView extends View {
 
     private Paint paint;

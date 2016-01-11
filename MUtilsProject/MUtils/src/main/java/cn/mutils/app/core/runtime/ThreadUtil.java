@@ -6,6 +6,7 @@ import java.util.LinkedList;
 /**
  * Thread utility of framework
  */
+@SuppressWarnings("unused")
 public class ThreadUtil {
 
     /**

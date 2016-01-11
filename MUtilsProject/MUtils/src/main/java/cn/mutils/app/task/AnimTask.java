@@ -7,6 +7,7 @@ import cn.mutils.app.core.ILockable;
 import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.core.task.Task;
 
+@SuppressWarnings("unused")
 public class AnimTask extends Task implements ILockable {
 
     public static abstract class AnimTaskListener implements IListener {

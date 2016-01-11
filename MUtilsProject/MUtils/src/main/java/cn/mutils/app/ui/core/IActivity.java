@@ -5,6 +5,7 @@ import cn.mutils.app.data.IAsyncDataQueueOwner;
 import cn.mutils.app.net.INetQueueOwner;
 import cn.mutils.app.os.IHandlerProvider;
 
+@SuppressWarnings("unused")
 public interface IActivity
         extends IFragmenterManager, INetQueueOwner, IAsyncDataQueueOwner, IToastOwner, IStoppableManager,
         IActivityExecutor, IContentViewOwner, IWindowProvider, IStatusBarOwner, IRunOnceHolder, IHandlerProvider {

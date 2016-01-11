@@ -3,6 +3,7 @@ package cn.mutils.app.core.err;
 /**
  * Http status exception of framework
  */
+@SuppressWarnings("unused")
 public class HttpStatusException extends CodeException {
 
     public HttpStatusException() {

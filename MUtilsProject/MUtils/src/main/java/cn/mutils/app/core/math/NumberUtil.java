@@ -6,6 +6,7 @@ import java.math.BigDecimal;
  * Number utility of framework<br>
  * High precision feature
  */
+@SuppressWarnings("unused")
 public class NumberUtil {
 
     /**

@@ -21,6 +21,7 @@ import com.amap.api.maps2d.model.MarkerOptions;
 
 import cn.mutils.app.amap.R;
 
+@SuppressWarnings("unused")
 @SuppressLint("InflateParams")
 public class AMapView extends MapView {
 

@@ -17,6 +17,7 @@ import cn.mutils.app.ui.AppActivity;
  * WeChat entry activity<br>
  * Please make a subclass in your application like "xxx.xxx.xxx.wxapi.WXEntryActivity"
  */
+@SuppressWarnings({"FieldCanBeLocal", "StatementWithEmptyBody"})
 public class WXEntryActivity extends AppActivity implements IWXAPIEventHandler {
 
     private IWXAPI api;

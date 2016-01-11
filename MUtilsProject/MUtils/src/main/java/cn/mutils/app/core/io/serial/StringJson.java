@@ -16,7 +16,7 @@ import cn.mutils.app.core.xml.XmlUtil;
 /**
  * Support JSON string:{"k":"{"k":0}"}
  */
-@SuppressWarnings({"serial", "unchecked"})
+@SuppressWarnings({"serial", "unchecked", "unused"})
 public class StringJson<T> extends Serial<T> {
 
     public StringJson() {

@@ -2,6 +2,7 @@ package cn.mutils.app.net;
 
 import cn.mutils.app.queue.IQueueItem;
 
+@SuppressWarnings("unused")
 public interface INetTask<REQUEST, RESPONSE> extends
         IQueueItem<INetTask<REQUEST, RESPONSE>> {
 
