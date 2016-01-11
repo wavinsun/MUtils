@@ -4,6 +4,7 @@ import cn.mutils.app.core.IClearable;
 import cn.mutils.app.core.event.IDispatcher;
 import cn.mutils.app.os.IContextOwner;
 
+@SuppressWarnings("unused")
 public interface IQueue extends IClearable, IContextOwner, IDispatcher {
 
     boolean isRunInBackground();

@@ -5,6 +5,7 @@ import cn.mutils.app.core.text.StringUtil;
 /**
  * Byte utility of framework
  */
+@SuppressWarnings("unused")
 public class ByteUtil {
 
     /**

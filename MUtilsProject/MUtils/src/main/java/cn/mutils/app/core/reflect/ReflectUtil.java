@@ -12,7 +12,7 @@ import cn.mutils.app.core.beans.BeanField;
 /**
  * Reflection utility of framework
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({"rawtypes", "unchecked", "unused"})
 public class ReflectUtil {
 
     /**

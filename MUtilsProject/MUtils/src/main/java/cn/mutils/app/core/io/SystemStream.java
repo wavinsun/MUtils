@@ -6,7 +6,7 @@ import java.io.PrintStream;
 /**
  * SystemStream to replace System.out and System.err stream
  */
-@SuppressWarnings("NullableProblems")
+@SuppressWarnings({"NullableProblems", "unused", "UnnecessaryEnumModifier"})
 public class SystemStream extends PrintStream implements ISystemPrinter {
 
     public static enum STREAM_TYPE {

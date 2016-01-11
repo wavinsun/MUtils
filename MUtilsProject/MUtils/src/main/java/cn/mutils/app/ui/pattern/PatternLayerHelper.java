@@ -8,6 +8,7 @@ import cn.mutils.app.ui.AppActivity;
 /**
  * Helper class for pattern layer of gestures password
  */
+@SuppressWarnings("unused")
 public class PatternLayerHelper {
 
     /**

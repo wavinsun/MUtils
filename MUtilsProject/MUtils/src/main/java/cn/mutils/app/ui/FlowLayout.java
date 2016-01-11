@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import cn.mutils.app.R;
 import cn.mutils.app.core.event.IListener;
 
-@SuppressWarnings("UnnecessaryInterfaceModifier")
+@SuppressWarnings({"UnnecessaryInterfaceModifier", "unused"})
 public class FlowLayout extends ViewGroup {
 
     public static interface OnLinesChangeListener extends IListener {

@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Milliseconds utility of framework
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "unused"})
 public class TimeUtil {
 
     public static long getDayTime(long time) {

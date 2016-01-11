@@ -3,6 +3,7 @@ package cn.mutils.app.core.graphics;
 /**
  * Bounds for graphics algorithm logic
  */
+@SuppressWarnings("unused")
 public class Bounds {
 
     /**

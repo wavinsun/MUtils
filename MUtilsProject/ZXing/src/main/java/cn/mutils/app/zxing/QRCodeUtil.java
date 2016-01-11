@@ -15,6 +15,7 @@ import com.google.zxing.common.HybridBinarizer;
 
 import java.util.HashMap;
 
+@SuppressWarnings("unused")
 public class QRCodeUtil {
 
     public static final int COLOR_BLACK = 0xFF000000;

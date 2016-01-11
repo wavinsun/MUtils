@@ -14,7 +14,7 @@ import cn.mutils.app.os.IContextProvider;
 /**
  * Provide object-oriented item view
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "unused"})
 public class UIAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvider {
 
     /**

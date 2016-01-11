@@ -1,5 +1,6 @@
 package cn.mutils.app.core.err;
 
+@SuppressWarnings("unused")
 public class ErrorCodeException extends CodeException {
 
     public ErrorCodeException() {

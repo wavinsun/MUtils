@@ -8,7 +8,7 @@ import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateRes;
 
 /**
  * Fly It Remotely version API
- * <p>
+ * <p/>
  * http://fir.im/dev/api
  */
 @SuppressWarnings("serial")
@@ -20,6 +20,7 @@ public class FIRUpdateTask extends NetTask<FIRUpdateReq, FIRUpdateRes> {
         public String type = "android";
     }
 
+    @SuppressWarnings("unused")
     public static class FIRUpdateRes implements INoProguard {
         public int code = -1;
         public String message;

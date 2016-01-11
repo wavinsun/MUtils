@@ -21,6 +21,7 @@ import cn.mutils.app.core.reflect.ReflectUtil;
 /**
  * Bean field of framework reflection
  */
+@SuppressWarnings("unused")
 public class BeanField {
 
     protected static Map<Class<?>, BeanField[]> sFieldsCache = new ConcurrentHashMap<Class<?>, BeanField[]>();

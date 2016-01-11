@@ -11,6 +11,7 @@ import cn.mutils.app.App;
 import cn.mutils.app.share.ShareBase;
 import cn.mutils.app.util.AppUtil;
 
+@SuppressWarnings("unused")
 public class ShareQzoneDelegate extends ShareBase {
 
     @Override

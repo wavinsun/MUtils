@@ -39,9 +39,6 @@ public class MillisFormat {
 
     /**
      * Format to second
-     *
-     * @param value
-     * @return
      */
     protected static StringBuilder formatInternal(long value) {
         StringBuilder sb = new StringBuilder();
@@ -90,9 +87,6 @@ public class MillisFormat {
 
     /**
      * Format to second
-     *
-     * @param value
-     * @return
      */
     public static String format(long value) {
         return formatInternal(value).toString();
@@ -100,9 +94,6 @@ public class MillisFormat {
 
     /**
      * Format to millisecond
-     *
-     * @param value
-     * @return
      */
     public static String formatAll(long value) {
         StringBuilder sb = formatInternal(value);

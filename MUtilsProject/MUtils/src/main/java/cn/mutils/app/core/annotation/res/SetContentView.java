@@ -9,13 +9,13 @@ import cn.mutils.app.ui.core.IContentViewOwner;
 
 /**
  * IOC for {@link IContentViewOwner#setContentView(int)}
- * 
+ *
  * @see IContentViewOwner#setContentView(int)
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface SetContentView {
 
-	public int value() default 0;
+    int value() default 0;
 
 }

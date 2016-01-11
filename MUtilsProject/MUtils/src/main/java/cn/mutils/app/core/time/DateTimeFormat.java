@@ -8,6 +8,7 @@ import java.util.Date;
 /**
  * Date format of framework
  */
+@SuppressWarnings("ConstantConditions")
 @SuppressLint("SimpleDateFormat")
 public class DateTimeFormat {
 

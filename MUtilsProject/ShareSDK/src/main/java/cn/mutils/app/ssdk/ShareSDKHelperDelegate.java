@@ -7,6 +7,7 @@ import cn.mutils.app.util.AppUtil;
 import cn.mutils.app.util.ShareSDKHelper;
 import cn.sharesdk.framework.ShareSDK;
 
+@SuppressWarnings("unused")
 public class ShareSDKHelperDelegate extends ShareSDKHelper {
 
     @Override

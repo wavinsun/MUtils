@@ -7,6 +7,7 @@ import cn.mutils.app.os.IContextProvider;
 /**
  * WebFrame of framework
  */
+@SuppressWarnings("unused")
 public interface IWebFrame extends IContextProvider {
 
     /**

@@ -24,7 +24,7 @@ import cn.mutils.app.ui.adapter.IItemView;
 import cn.mutils.app.ui.adapter.ItemFrame;
 import cn.mutils.app.ui.adapter.VLinearAdapter;
 
-@SuppressWarnings({"deprecation", "UnnecessaryInterfaceModifier", "ResourceType"})
+@SuppressWarnings({"deprecation", "UnnecessaryInterfaceModifier", "ResourceType", "unused"})
 public class ActionSheet<DATA_ITEM extends ActionItem> {
 
     public static interface OnActionItemClickListener<DATA_ITEM extends ActionItem> {

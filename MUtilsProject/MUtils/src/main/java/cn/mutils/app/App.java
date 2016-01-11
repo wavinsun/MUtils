@@ -21,7 +21,7 @@ import cn.mutils.app.util.UmengHelper;
 /**
  * Application of framework
  */
-@SuppressWarnings({"UnnecessaryUnboxing", "UnnecessaryBoxing"})
+@SuppressWarnings({"UnnecessaryUnboxing", "UnnecessaryBoxing", "unused"})
 @SuppressLint("MissingSuperCall")
 public class App extends Application implements IContextProvider {
 

@@ -10,6 +10,7 @@ import cn.mutils.app.core.util.Edition;
 import cn.mutils.app.util.AppUtil;
 import cn.mutils.app.util.JPushHelper;
 
+@SuppressWarnings("unused")
 public class JPushHelperDelegate extends JPushHelper {
 
     @Override

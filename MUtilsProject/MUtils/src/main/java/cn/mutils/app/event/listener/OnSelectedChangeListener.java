@@ -12,6 +12,7 @@ import cn.mutils.app.ui.TabBar;
  * @see StateViewFrame#setOnSelectedChangeListener(OnSelectedChangeListener)
  * @see TabBar#setOnSelectedChangeListener(OnSelectedChangeListener)
  */
+@SuppressWarnings("UnusedParameters")
 public abstract class OnSelectedChangeListener implements IListener {
 
     /**

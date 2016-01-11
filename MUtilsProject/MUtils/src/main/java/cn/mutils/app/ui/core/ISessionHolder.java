@@ -3,6 +3,7 @@ package cn.mutils.app.ui.core;
 /**
  * Server Session holder of framework for UI
  */
+@SuppressWarnings("unused")
 public interface ISessionHolder {
 
     /**

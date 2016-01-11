@@ -42,7 +42,7 @@ import cn.mutils.app.core.time.MillisFormat;
 /**
  * Template of request and response for net API at Java application level
  */
-@SuppressWarnings({"serial", "unchecked", "deprecation"})
+@SuppressWarnings({"serial", "unchecked", "deprecation", "unused", "UnusedAssignment", "ConstantConditions"})
 public class NetClient<REQUEST, RESPONSE> {
 
     /**
@@ -195,8 +195,6 @@ public class NetClient<REQUEST, RESPONSE> {
 
     /**
      * Response object converted by {@link NetClientListener#convertFromResponse(Object)}
-     * <p>
-     * It will be null if {@link #mResponseConverted} is null.
      */
     protected Object mResponseConverted;
 

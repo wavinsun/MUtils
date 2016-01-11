@@ -17,6 +17,7 @@ package cn.mutils.app.core.runtime;
  * cn.mutils.app.runtime.StackTraceUtil.getCallerElement<br>
  * ... ...
  */
+@SuppressWarnings("unused")
 public class StackTraceUtil {
 
     /**

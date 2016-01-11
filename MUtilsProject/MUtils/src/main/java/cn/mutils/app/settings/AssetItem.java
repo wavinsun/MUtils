@@ -1,6 +1,7 @@
 package cn.mutils.app.settings;
 
 import android.content.Context;
+
 import cn.mutils.app.core.annotation.Ignore;
 import cn.mutils.app.core.beans.BeanCache;
 import cn.mutils.app.core.json.JsonUtil;
@@ -9,78 +10,86 @@ import cn.mutils.app.util.AppUtil;
 
 /**
  * JSON or XML serializer for assets file
- * 
+ *
  * @see JsonUtil
  * @see XmlUtil
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unused"})
 public class AssetItem implements IAssetItem {
 
-	/** Assets file type of XML */
-	public static final int TYPE_ASSET_XML = 0;
-	/** Assets file type of JSON */
-	public static final int TYPE_ASSET_JSON = 1;
+    /**
+     * Assets file type of XML
+     */
+    public static final int TYPE_ASSET_XML = 0;
+    /**
+     * Assets file type of JSON
+     */
+    public static final int TYPE_ASSET_JSON = 1;
 
-	/** Assets file type */
-	protected int mAssetType = TYPE_ASSET_XML;
+    /**
+     * Assets file type
+     */
+    protected int mAssetType = TYPE_ASSET_XML;
 
-	protected String mAssetFileName;
+    protected String mAssetFileName;
 
-	/** Bean cache of assets file */
-	protected BeanCache mAssetCache;
+    /**
+     * Bean cache of assets file
+     */
+    protected BeanCache mAssetCache;
 
-	@Ignore
-	public int getAssetType() {
-		return mAssetType;
-	}
+    @Ignore
+    public int getAssetType() {
+        return mAssetType;
+    }
 
-	public void setAssetType(int assetType) {
-		mAssetType = assetType;
-	}
+    public void setAssetType(int assetType) {
+        mAssetType = assetType;
+    }
 
-	@Ignore
-	public String getAssetFileName() {
-		return mAssetFileName;
-	}
+    @Ignore
+    public String getAssetFileName() {
+        return mAssetFileName;
+    }
 
-	public void setAssetFileName(String assetFileName) {
-		mAssetFileName = assetFileName;
-	}
+    public void setAssetFileName(String assetFileName) {
+        mAssetFileName = assetFileName;
+    }
 
-	public synchronized boolean getFromAsset(Context context) {
-		if (mAssetFileName == null) {
-			return false;
-		}
-		if (mAssetCache == null) {
-			mAssetCache = new BeanCache(this);
-		} else {
-			if (mAssetCache.toTarget() == null) {
-				return true;
-			}
-		}
-		if (mAssetType == TYPE_ASSET_XML) {
-			try {
-				XmlUtil.convert(AppUtil.getAssetString(context, mAssetFileName), this);
-				mAssetCache.fromTarget();
-				return true;
-			} catch (Exception e) {
-				return false;
-			}
-		} else if (mAssetType == TYPE_ASSET_JSON) {
-			try {
-				JsonUtil.convert(AppUtil.getAssetString(context, mAssetFileName), this);
-				mAssetCache.fromTarget();
-				return true;
-			} catch (Exception e) {
-				return false;
-			}
-		}
-		return false;
-	}
+    public synchronized boolean getFromAsset(Context context) {
+        if (mAssetFileName == null) {
+            return false;
+        }
+        if (mAssetCache == null) {
+            mAssetCache = new BeanCache(this);
+        } else {
+            if (mAssetCache.toTarget() == null) {
+                return true;
+            }
+        }
+        if (mAssetType == TYPE_ASSET_XML) {
+            try {
+                XmlUtil.convert(AppUtil.getAssetString(context, mAssetFileName), this);
+                mAssetCache.fromTarget();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        } else if (mAssetType == TYPE_ASSET_JSON) {
+            try {
+                JsonUtil.convert(AppUtil.getAssetString(context, mAssetFileName), this);
+                mAssetCache.fromTarget();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
+    }
 
-	public void clear() {
-		if (mAssetCache != null) {
-			mAssetCache.clear();
-		}
-	}
+    public void clear() {
+        if (mAssetCache != null) {
+            mAssetCache.clear();
+        }
+    }
 }

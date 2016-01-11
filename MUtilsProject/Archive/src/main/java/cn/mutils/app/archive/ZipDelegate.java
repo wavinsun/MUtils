@@ -5,6 +5,7 @@ import java.io.InputStream;
 import cn.mutils.app.core.archive.Zip;
 import cn.mutils.app.core.archive.ZipUtil;
 
+@SuppressWarnings("unused")
 public class ZipDelegate extends Zip {
 
     @Override

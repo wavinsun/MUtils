@@ -14,6 +14,7 @@ import cn.mutils.app.io.AppBroadcast;
 /**
  * WeChat pay task
  */
+@SuppressWarnings({"unused", "ConstantConditions"})
 public class WXPayTask extends AppPayTask implements ILockable {
 
     protected String mAppId;

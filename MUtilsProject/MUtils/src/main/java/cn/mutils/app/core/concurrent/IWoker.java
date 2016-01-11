@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @see Worker
  */
-@SuppressWarnings("SpellCheckingInspection")
+@SuppressWarnings({"SpellCheckingInspection", "unused"})
 public interface IWoker<JOB> {
 
     /**

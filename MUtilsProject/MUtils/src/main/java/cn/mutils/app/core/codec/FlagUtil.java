@@ -5,6 +5,7 @@ import cn.mutils.app.core.text.StringUtil;
 /**
  * Flag utility of framework
  */
+@SuppressWarnings("unused")
 public class FlagUtil {
 
     public static final int FLAG_01 = 0x00000001;

@@ -23,10 +23,10 @@ import cn.mutils.app.core.xml.XmlUtil;
 /**
  * String utility of framework
  */
+@SuppressWarnings({"unused", "UnusedAssignment", "StringBufferReplaceableByString", "SimplifiableConditionalExpression"})
 public class StringUtil {
 
-    protected static final char[] hexDigits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
-            'e', 'f'};
+    protected static final char[] hexDigits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
     public static byte[] md5(byte[] bytes) {
         try {
@@ -41,7 +41,7 @@ public class StringUtil {
     /**
      * MD5 of string
      *
-     * @param text
+     * @param text Text
      * @return Small letter of MD5
      */
     public static String md5(String text) {
@@ -55,7 +55,7 @@ public class StringUtil {
     /**
      * MD5 of string
      *
-     * @param text
+     * @param text Text
      * @return Capital letter of MD5
      */
     public static String MD5(String text) {
@@ -65,7 +65,7 @@ public class StringUtil {
     /**
      * MD5 of file
      *
-     * @param file
+     * @param file File
      * @return Small letter of MD5
      */
     public static String md5(File file) {
@@ -89,7 +89,7 @@ public class StringUtil {
     /**
      * MD5 of file
      *
-     * @param file
+     * @param file File
      * @return Capital letter of MD5
      */
     public static String MD5(File file) {
@@ -98,9 +98,6 @@ public class StringUtil {
 
     /**
      * Convert byte data to binary string
-     *
-     * @param data
-     * @return
      */
     public static String toBinary(byte[] data) {
         char[] str = new char[data.length * 8];
@@ -120,9 +117,6 @@ public class StringUtil {
 
     /**
      * Convert byte data to hex string
-     *
-     * @param data
-     * @return
      */
     public static String toHex(byte[] data) {
         char[] str = new char[data.length + data.length];
@@ -136,9 +130,6 @@ public class StringUtil {
 
     /**
      * Convert hex string to byte data
-     *
-     * @param hex
-     * @return
      */
     public static byte[] toBytes(String hex) {
         byte[] bytes = new byte[hex.length() / 2];
@@ -151,9 +142,6 @@ public class StringUtil {
 
     /**
      * Convert byte array to string
-     *
-     * @param bytes
-     * @return
      */
     public static String get(byte[] bytes) {
         try {
@@ -165,9 +153,6 @@ public class StringUtil {
 
     /**
      * Convert text file to string
-     *
-     * @param file
-     * @return
      */
     public static String get(File file) {
         FileInputStream fis = null;
@@ -183,10 +168,6 @@ public class StringUtil {
 
     /**
      * Put string to text file
-     *
-     * @param file
-     * @param str
-     * @return
      */
     public static boolean put(File file, String str) {
         try {
@@ -199,9 +180,6 @@ public class StringUtil {
 
     /**
      * Convert text stream to string
-     *
-     * @param is
-     * @return
      */
     public static String get(InputStream is) {
         return get(IOUtil.getBytes(is));
@@ -209,10 +187,6 @@ public class StringUtil {
 
     /**
      * Put string to text stream
-     *
-     * @param os
-     * @param str
-     * @return
      */
     public static boolean put(OutputStream os, String str) {
         try {
@@ -225,9 +199,6 @@ public class StringUtil {
 
     /**
      * Detect character set of byte array
-     *
-     * @param bytes
-     * @return
      */
     public static String getCharset(byte[] bytes) {
         if (bytes == null) {
@@ -249,7 +220,7 @@ public class StringUtil {
     /**
      * Whether version is stable
      *
-     * @param version
+     * @param version Version string
      * @return Return true if last one is even
      */
     public static boolean isVersionStable(String version) {
@@ -271,8 +242,8 @@ public class StringUtil {
     /**
      * Compare double versions
      *
-     * @param v1
-     * @param v2
+     * @param v1 Version one
+     * @param v2 Version another
      * @return Zero for v1==v2, positive number for v1>v2, negative number for
      * v1<v2
      */
@@ -300,9 +271,6 @@ public class StringUtil {
 
     /**
      * Print stack trace
-     *
-     * @param e
-     * @return
      */
     public static String printStackTrace(Throwable e) {
         StringWriter sw = new StringWriter();
@@ -333,9 +301,6 @@ public class StringUtil {
 
     /**
      * Get Locale
-     *
-     * @param locale
-     * @return
      */
     public static Locale getLocale(String locale) {
         if (locale == null) {
@@ -352,10 +317,7 @@ public class StringUtil {
     }
 
     /**
-     * Object toString
-     *
-     * @param object
-     * @return
+     * Object to string
      */
     public static String toString(Object object) {
         return object == null ? null : object.toString();
@@ -363,9 +325,6 @@ public class StringUtil {
 
     /**
      * Get tag of stack trace for logging
-     *
-     * @param e
-     * @return
      */
     public static String getTag(StackTraceElement e) {
         StringBuilder sb = new StringBuilder();
@@ -382,9 +341,6 @@ public class StringUtil {
 
     /**
      * Get text content of HTML
-     *
-     * @param html
-     * @return
      */
     public static String htmlText(String html) {
         try {
@@ -397,9 +353,6 @@ public class StringUtil {
 
     /**
      * Convert object to JSON
-     *
-     * @param obj
-     * @return
      */
     public static String toJSON(Object obj) {
         try {
@@ -411,9 +364,6 @@ public class StringUtil {
 
     /**
      * Convert object to XML
-     *
-     * @param obj
-     * @return
      */
     public static String toXML(Object obj) {
         try {
@@ -426,9 +376,6 @@ public class StringUtil {
     /**
      * Convert class to lower case id<br>
      * "StringUtil"->"string.util"
-     *
-     * @param cls
-     * @return
      */
     public static String toLowerCaseId(Class<?> cls) {
         return toLowerCaseId(cls.getName());
@@ -437,9 +384,6 @@ public class StringUtil {
     /**
      * Convert source string to lower case id<br>
      * "StringUtil"->"string.util"
-     *
-     * @param src
-     * @return
      */
     public static String toLowerCaseId(String src) {
         StringBuilder sb = new StringBuilder();
@@ -466,7 +410,7 @@ public class StringUtil {
 
     public static String zeroPadding(String str, int length) {
         if (str == null) {
-            return str;
+            return null;
         }
         int paddingLength = length - str.length();
         if (paddingLength <= 0) {

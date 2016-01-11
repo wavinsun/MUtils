@@ -8,6 +8,7 @@ import java.io.OutputStream;
 /**
  * IO of framework
  */
+@SuppressWarnings("UnusedAssignment")
 public class IOUtil {
 
     public static void copy(InputStream in, OutputStream out) throws Exception {

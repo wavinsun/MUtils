@@ -14,6 +14,7 @@ import cn.mutils.app.core.io.IOUtil;
 /**
  * Simple synchronized HTTP download implementation
  */
+@SuppressWarnings("unused")
 public class Downloader {
 
     /**

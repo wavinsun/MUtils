@@ -6,6 +6,7 @@ import cn.mutils.app.os.IContextProvider;
 /**
  * Web message manager of framework
  */
+@SuppressWarnings("unused")
 public interface IWebMessageManager extends IContextProvider, IClearable {
 
     /**

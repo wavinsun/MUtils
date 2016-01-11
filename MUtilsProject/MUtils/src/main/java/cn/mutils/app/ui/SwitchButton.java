@@ -12,7 +12,7 @@ import android.view.View;
 
 import cn.mutils.app.util.AppUtil;
 
-@SuppressWarnings("UnnecessaryInterfaceModifier")
+@SuppressWarnings({"UnnecessaryInterfaceModifier", "unused"})
 public class SwitchButton extends View {
 
     public static interface OnCheckedChangeListener {

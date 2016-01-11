@@ -9,6 +9,7 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.tencent.weibo.TencentWeibo;
 import cn.sharesdk.tencent.weibo.TencentWeibo.ShareParams;
 
+@SuppressWarnings("unused")
 public class MobShareTencentWeiboDelegate extends ShareBase {
 
     @Override

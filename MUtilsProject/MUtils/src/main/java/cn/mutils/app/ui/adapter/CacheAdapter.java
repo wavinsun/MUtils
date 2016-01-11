@@ -12,6 +12,7 @@ import java.util.List;
  * @see AdapterView
  * @see UIAdapter
  */
+@SuppressWarnings("unused")
 public abstract class CacheAdapter<DATA_ITEM, CACHE_ITEM> extends UIAdapter<DATA_ITEM> {
 
     /**

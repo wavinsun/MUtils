@@ -12,7 +12,7 @@ import cn.mutils.app.core.json.JsonUtil;
 /**
  * Object utility of framework
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "unused", "SimplifiableIfStatement"})
 public class ObjectUtil {
 
     public static Object get(Object object, String property) {
