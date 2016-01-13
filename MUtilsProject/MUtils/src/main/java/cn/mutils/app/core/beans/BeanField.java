@@ -1,7 +1,9 @@
 package cn.mutils.app.core.beans;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
@@ -15,13 +17,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import cn.mutils.app.core.annotation.Ignore;
 import cn.mutils.app.core.annotation.Name;
+import cn.mutils.app.core.reflect.ArgumentsType;
 import cn.mutils.app.core.reflect.GenericInfo;
 import cn.mutils.app.core.reflect.ReflectUtil;
 
 /**
  * Bean field of framework reflection
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnusedAssignment", "UnnecessaryLocalVariable"})
 public class BeanField {
 
     protected static Map<Class<?>, BeanField[]> sFieldsCache = new ConcurrentHashMap<Class<?>, BeanField[]>();
@@ -30,9 +33,9 @@ public class BeanField {
     protected Method mGetMethod;
     protected Method mSetMethod;
     protected String mName;
-    protected Class<?> mOwnerType;
-    protected Class<?> mRawType;
-    protected Type mGenericType;
+    protected Class<?> mOwnerType; // Class who is field owner
+    protected Class<?> mRawType; // Class of field
+    protected Type mGenericType; // Generic type of field
 
     public BeanField(Class<?> ownerType, String name, Field field) {
         mField = field;
@@ -50,11 +53,26 @@ public class BeanField {
         mName = name;
 
         // Generate raw type
+        Class<?> rawType = null;
         if (mField != null) {
+            rawType = mField.getType();
             mGenericType = mField.getGenericType();
         } else {
+            rawType = mGetMethod.getReturnType();
             mGenericType = mGetMethod.getGenericReturnType();
         }
+
+        // Fix bug for base class is ParamterizedType while subclass is a normal class
+        if (rawType == Object.class && (mGenericType instanceof TypeVariable)) {
+            TypeVariable<?> typeVariable = (TypeVariable<?>) mGenericType;
+            Type genericFieldType = ReflectUtil.getInheritGenericType(mOwnerType, typeVariable);
+            if (genericFieldType != null) {
+                mRawType = ReflectUtil.getClass(genericFieldType);
+                mGenericType = genericFieldType;
+                return;
+            }
+        }
+
         if (mGenericType instanceof Class) {
             mRawType = (Class<?>) mGenericType;
         } else {
@@ -166,6 +184,63 @@ public class BeanField {
         } else {
             mSetMethod.invoke(object, value);
         }
+    }
+
+    /**
+     * Get field type by given class and class type
+     */
+    protected static Type getFieldType(Class<?> clazz, Type type, Type fieldType) {
+        if (clazz == null || type == null) {
+            return fieldType;
+        }
+        if (fieldType instanceof GenericArrayType) {
+            GenericArrayType genericArrayType = (GenericArrayType) fieldType;
+            Type componentType = genericArrayType.getGenericComponentType();
+            Type componentTypeX = getFieldType(clazz, type, componentType);
+            if (componentType != componentTypeX) {
+                Type fieldTypeX = Array.newInstance(ReflectUtil.getClass(componentTypeX), 0).getClass();
+                return fieldTypeX;
+            }
+            return fieldType;
+        }
+        if (!ReflectUtil.isGenericParamType(type)) {
+            return fieldType;
+        }
+        if (fieldType instanceof TypeVariable) {
+            String typeVariableName = ((TypeVariable<?>) fieldType).getName();
+            ParameterizedType paramType = (ParameterizedType) ReflectUtil.getGenericParamType(type);
+            Class<?> paramClass = ReflectUtil.getClass(paramType);
+            for (TypeVariable<?> t : paramClass.getTypeParameters()) {
+                if (typeVariableName.equals(t.getName())) {
+                    fieldType = t;
+                    return fieldType;
+                }
+            }
+        }
+        if ((fieldType instanceof ParameterizedType) && (type instanceof ParameterizedType)) {
+            ParameterizedType paramFieldType = (ParameterizedType) fieldType;
+            ParameterizedType paramType = (ParameterizedType) type;
+            boolean changed = false;
+            Type[] arguments = paramFieldType.getActualTypeArguments();
+            TypeVariable<?>[] typeVariables = clazz.getTypeParameters();
+            for (int i = 0, size4i = arguments.length; i < size4i; i++) {
+                Type argument = arguments[i];
+                if (argument instanceof TypeVariable) {
+                    String typeVariableName = ((TypeVariable<?>) argument).getName();
+                    for (int j = 0, size4j = typeVariables.length; j < size4j; j++) {
+                        if (typeVariableName.equals(typeVariables[j].getName())) {
+                            arguments[i] = paramType.getActualTypeArguments()[j];
+                            changed = true;
+                        }
+                    }
+                }
+            }
+            if (changed) {
+                fieldType = new ArgumentsType(arguments, paramType.getOwnerType(), paramType.getRawType());
+                return fieldType;
+            }
+        }
+        return fieldType;
     }
 
     protected static String getFieldNameFromMethod(String method, int startIndex) {

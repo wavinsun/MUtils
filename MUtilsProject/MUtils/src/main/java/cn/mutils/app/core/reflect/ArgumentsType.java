@@ -19,6 +19,16 @@ public class ArgumentsType implements ParameterizedType, IClearable {
 
     protected Type mRawType;
 
+    public ArgumentsType() {
+
+    }
+
+    public ArgumentsType(Type[] arguments, Type ownerType, Type rawType) {
+        mArguments = arguments;
+        mOwnerType = ownerType;
+        mRawType = rawType;
+    }
+
     @Override
     public Type[] getActualTypeArguments() {
         return mArguments;
@@ -28,8 +38,8 @@ public class ArgumentsType implements ParameterizedType, IClearable {
         mArguments = arguments;
     }
 
-    public void setActualTypeArguments(List<Type> argments) {
-        mArguments = (Type[]) argments.toArray();
+    public void setActualTypeArguments(List<Type> arguments) {
+        mArguments = (Type[]) arguments.toArray();
     }
 
     @Override

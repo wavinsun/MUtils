@@ -2,6 +2,7 @@ package cn.mutils.app.core.reflect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.GenericDeclaration;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -12,8 +13,67 @@ import cn.mutils.app.core.beans.BeanField;
 /**
  * Reflection utility of framework
  */
-@SuppressWarnings({"rawtypes", "unchecked", "unused"})
+@SuppressWarnings({"rawtypes", "unchecked", "unused", "UnusedAssignment", "ConstantConditions", "SimplifiableIfStatement"})
 public class ReflectUtil {
+
+    public static Class<?> getClass(Type type) {
+        if (type.getClass() == Class.class) {
+            return (Class<?>) type;
+        }
+        if (type instanceof ParameterizedType) {
+            return ReflectUtil.getClass(((ParameterizedType) type).getRawType());
+        }
+        return Object.class;
+    }
+
+    public static Type getInheritGenericType(Class<?> clazz, TypeVariable<?> typeVariable) {
+        Type type = null;
+        GenericDeclaration genericDeclaration = typeVariable.getGenericDeclaration();
+        do {
+            type = clazz.getGenericSuperclass();
+            if (type == null) {
+                return null;
+            }
+            if (type instanceof ParameterizedType) {
+                ParameterizedType paramType = (ParameterizedType) type;
+                if (paramType.getRawType() == genericDeclaration) {
+                    TypeVariable<?>[] typeVariables = genericDeclaration.getTypeParameters();
+                    Type[] arguments = paramType.getActualTypeArguments();
+                    for (int i = 0, size = typeVariables.length; i < size; i++) {
+                        if (typeVariables[i] == typeVariable) {
+                            return arguments[i];
+                        }
+                    }
+                    return null;
+                }
+            }
+            clazz = ReflectUtil.getClass(type);
+        } while (type != null);
+        return null;
+    }
+
+    public static boolean isGenericParamType(Type type) {
+        if (type == null) {
+            return false;
+        }
+        if (type instanceof ParameterizedType) {
+            return true;
+        }
+        if (type instanceof Class) {
+            return ReflectUtil.isGenericParamType(((Class<?>) type).getGenericSuperclass());
+        }
+        return false;
+    }
+
+    public static Type getGenericParamType(Type type) {
+        if (type instanceof ParameterizedType) {
+            return type;
+        }
+        if (type instanceof Class) {
+            return ReflectUtil.getGenericParamType(((Class<?>) type).getGenericSuperclass());
+        }
+        return type;
+    }
 
     /**
      * Get TypeVariable generic type information
@@ -126,7 +186,7 @@ public class ReflectUtil {
                 return (Class<?>) ((ParameterizedType) t).getRawType();
             }
         }
-        return String.class;
+        return Object.class;
     }
 
     public static Type getParameterizedGenericType(Class<?> targetClass, Type targetGenericType, int ArgumentIndex) {
@@ -136,7 +196,7 @@ public class ReflectUtil {
         if (targetGenericType instanceof ParameterizedType) {
             return ((ParameterizedType) targetGenericType).getActualTypeArguments()[ArgumentIndex];
         }
-        return String.class;
+        return Object.class;
     }
 
     public static Class<?> getParameterizedRawType(Class<?> targetClass, int ArgumentIndex) {
