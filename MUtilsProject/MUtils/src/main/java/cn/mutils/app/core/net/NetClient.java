@@ -463,7 +463,7 @@ public class NetClient<REQUEST, RESPONSE> {
                 mListener.debugging(EVENT_ELASE_TIME, MillisFormat.formatAll(mResponseTime - time));
             }
             Class<RESPONSE> resJsonClass = (Class<RESPONSE>) (mListener != null ? mListener.responseRawType()
-                    : ReflectUtil.getParameterizedRawType(getClass(), 1));
+                    : ReflectUtil.getParamRawType(getClass(), 1));
             resJsonGenericType = mListener != null ? mListener.responseGenericType() : null;
             RESPONSE resJson = JsonUtil.convert(response, resJsonClass, resJsonGenericType);
             if (mListener != null) {

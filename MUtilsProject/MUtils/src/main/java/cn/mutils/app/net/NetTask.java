@@ -94,7 +94,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
     }
 
     protected Class<?> requestRawType() {
-        return ReflectUtil.getParameterizedRawType(this.getClass(), 0);
+        return ReflectUtil.getParamRawType(this.getClass(), 0);
     }
 
     protected Type requestGenericType() {
@@ -102,7 +102,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
     }
 
     protected Class<?> responseRawType() {
-        return ReflectUtil.getParameterizedRawType(this.getClass(), 1);
+        return ReflectUtil.getParamRawType(this.getClass(), 1);
     }
 
     protected Type responseGenericType() {

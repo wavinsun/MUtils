@@ -1,6 +1,7 @@
 package cn.mutils.app.core.beans;
 
 import java.lang.annotation.Annotation;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.GenericArrayType;
@@ -36,6 +37,10 @@ public class BeanField {
     protected Class<?> mOwnerType; // Class who is field owner
     protected Class<?> mRawType; // Class of field
     protected Type mGenericType; // Generic type of field
+
+    protected WeakReference<Type> mGenericTypeSourceRef; // Cache for source generic type
+    protected WeakReference<Class<?>> mRawTypeResultRef; // Cache for result raw type
+    protected WeakReference<Type> mGenericTypeResultRef; // Cache for result generic type
 
     public BeanField(Class<?> ownerType, String name, Field field) {
         mField = field;
@@ -118,19 +123,51 @@ public class BeanField {
         if (mRawType != null) {
             return mRawType;
         } else {
-            Class<?> rawType = null;
+            // Get from cache
+            if (genericType != null && mGenericTypeSourceRef != null) {
+                synchronized (this) {
+                    if (ReflectUtil.isAssignable(genericType, mGenericTypeSourceRef.get())) {
+                        if (mRawTypeResultRef != null) {
+                            Class<?> resultRef = mRawTypeResultRef.get();
+                            if (resultRef != null) {
+                                return resultRef;
+                            }
+                        }
+                    }
+                }
+            }
+
+            Class<?> expectedType = null;
             if (genericType != null && (genericType instanceof ParameterizedType)) {
                 ParameterizedType pt = (ParameterizedType) genericType;
                 if (mOwnerType.isAssignableFrom((Class<?>) pt.getRawType())) {
                     if (mGenericType instanceof TypeVariable) {
                         String n = ((TypeVariable<?>) mGenericType).getName();
                         GenericInfo info = ReflectUtil.getGenericInfo(n, mOwnerType, pt);
-                        rawType = info.rawType;
+                        expectedType = info.rawType;
                         info.clear();
                     }
                 }
             }
-            return rawType != null ? rawType : Object.class;
+            expectedType = expectedType != null ? expectedType : Object.class;
+
+            //Put to cache
+            if (genericType != null) {
+                synchronized (this) {
+                    if (mGenericTypeSourceRef != null) {
+                        if (!genericType.equals(mGenericTypeSourceRef.get())) {
+                            mGenericTypeSourceRef.clear();
+                            mGenericTypeSourceRef = null;
+                            mGenericTypeResultRef = null;
+                            mRawTypeResultRef = null;
+                        }
+                    } else {
+                        mGenericTypeSourceRef = new WeakReference<Type>(genericType);
+                    }
+                    mRawTypeResultRef = new WeakReference<Class<?>>(expectedType);
+                }
+            }
+            return expectedType;
         }
     }
 
@@ -142,6 +179,20 @@ public class BeanField {
         if (!(mGenericType instanceof TypeVariable)) {
             return mGenericType;
         } else {
+            // Get from cache
+            if (genericType != null && mGenericTypeSourceRef != null) {
+                synchronized (this) {
+                    if (ReflectUtil.isAssignable(genericType, mGenericTypeSourceRef.get())) {
+                        if (mGenericTypeResultRef != null) {
+                            Type resultRef = mGenericTypeResultRef.get();
+                            if (resultRef != null) {
+                                return resultRef;
+                            }
+                        }
+                    }
+                }
+            }
+
             Type expectedType = null;
             if (genericType != null && (genericType instanceof ParameterizedType)) {
                 ParameterizedType pt = (ParameterizedType) genericType;
@@ -154,7 +205,25 @@ public class BeanField {
                     }
                 }
             }
-            return expectedType != null ? expectedType : mGenericType;
+            expectedType = expectedType != null ? expectedType : mGenericType;
+
+            //Put to cache
+            if (genericType != null) {
+                synchronized (this) {
+                    if (mGenericTypeSourceRef != null) {
+                        if (!genericType.equals(mGenericTypeSourceRef.get())) {
+                            mGenericTypeSourceRef.clear();
+                            mGenericTypeSourceRef = null;
+                            mGenericTypeResultRef = null;
+                            mRawTypeResultRef = null;
+                        }
+                    } else {
+                        mGenericTypeSourceRef = new WeakReference<Type>(genericType);
+                    }
+                    mGenericTypeResultRef = new WeakReference<Type>(expectedType);
+                }
+            }
+            return expectedType;
         }
     }
 

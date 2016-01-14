@@ -16,6 +16,41 @@ import cn.mutils.app.core.beans.BeanField;
 @SuppressWarnings({"rawtypes", "unchecked", "unused", "UnusedAssignment", "ConstantConditions", "SimplifiableIfStatement"})
 public class ReflectUtil {
 
+    /**
+     * Whether it is assignable from one type to another type
+     */
+    public static boolean isAssignable(Type one, Type another) {
+        if (one == another) {
+            return true;
+        }
+        if (one == null || another == null) {
+            return false;
+        }
+        if (one.equals(another)) {
+            return true;
+        }
+        if ((one instanceof ParameterizedType) && (another instanceof ParameterizedType)) {
+            ParameterizedType oneParamType = (ParameterizedType) one;
+            ParameterizedType anotherParamType = (ParameterizedType) another;
+            if (!oneParamType.getRawType().equals(anotherParamType.getRawType())) {
+                return false;
+            }
+            Type oneOwner = oneParamType.getOwnerType();
+            Type anotherOwner = anotherParamType.getOwnerType();
+            if (oneOwner != null) {
+                if (!oneOwner.equals(anotherOwner)) {
+                    return false;
+                }
+            } else {
+                if (anotherOwner != null) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     public static Class<?> getClass(Type type) {
         if (type.getClass() == Class.class) {
             return (Class<?>) type;
@@ -39,8 +74,12 @@ public class ReflectUtil {
                 if (paramType.getRawType() == genericDeclaration) {
                     TypeVariable<?>[] typeVariables = genericDeclaration.getTypeParameters();
                     Type[] arguments = paramType.getActualTypeArguments();
+                    String typeVariableName = typeVariable.getName();
                     for (int i = 0, size = typeVariables.length; i < size; i++) {
-                        if (typeVariables[i] == typeVariable) {
+                        // Fix bug on android VM
+                        // It is true while typeVariable==typeVariables[i] on JVM
+                        // But It is false on android VM
+                        if (typeVariableName.equals(typeVariables[i].getName())) {
                             return arguments[i];
                         }
                     }
@@ -78,11 +117,10 @@ public class ReflectUtil {
     /**
      * Get TypeVariable generic type information
      */
-    public static GenericInfo getGenericInfo(String typeVariableName, Class<?> targetClass,
-                                             ParameterizedType parameterizedType) {
+    public static GenericInfo getGenericInfo(String typeVariableName, Class<?> clazz, ParameterizedType paramType) {
         GenericInfo gType = new GenericInfo();
         int index = -1;// Type parameter index of target class
-        TypeVariable<?>[] typeVariables = targetClass.getTypeParameters();
+        TypeVariable<?>[] typeVariables = clazz.getTypeParameters();
         for (int i = 0, size = typeVariables.length; i < size; i++) {
             if (typeVariableName.equals(typeVariables[i].getName())) {
                 index = i;
@@ -90,9 +128,9 @@ public class ReflectUtil {
             }
         }
         if (index != -1) {
-            Type[] args = parameterizedType.getActualTypeArguments();
+            Type[] args = paramType.getActualTypeArguments();
             if (index < args.length) {
-                Type t = parameterizedType.getActualTypeArguments()[index];
+                Type t = paramType.getActualTypeArguments()[index];
                 if (t instanceof Class) {
                     gType.rawType = (Class<?>) t;
                 } else if (t instanceof ParameterizedType) {
@@ -104,9 +142,9 @@ public class ReflectUtil {
         return gType;
     }
 
-    public static <T> Constructor<T> getConstructor(Class<T> targetClass, Class<?>... parameterTypes) {
+    public static <T> Constructor<T> getConstructor(Class<T> targetClass, Class<?>... paramTypes) {
         try {
-            return targetClass.getConstructor(parameterTypes);
+            return targetClass.getConstructor(paramTypes);
         } catch (Exception e) {
             return null;
         }
@@ -169,16 +207,15 @@ public class ReflectUtil {
         }
     }
 
-    public static Class<?> getParameterizedRawType(Class<?> targetClass, Type targetGenericType, int ArgumentIndex) {
-        if (targetGenericType == null) {
-            targetGenericType = targetClass.getGenericSuperclass();
-        } else {
-            if (!(targetGenericType instanceof ParameterizedType)) {
-                targetGenericType = targetClass.getGenericSuperclass();
-            }
+    public static Class<?> getParamRawType(Class<?> clazz, Type genericType, int ArgumentIndex) {
+        if (genericType == null) {
+            genericType = clazz.getGenericSuperclass();
         }
-        if (targetGenericType instanceof ParameterizedType) {
-            Type t = ((ParameterizedType) targetGenericType).getActualTypeArguments()[ArgumentIndex];
+        if (!(genericType instanceof ParameterizedType)) {
+            genericType = getGenericParamType(genericType);
+        }
+        if (genericType instanceof ParameterizedType) {
+            Type t = ((ParameterizedType) genericType).getActualTypeArguments()[ArgumentIndex];
             if (t instanceof Class) {
                 return (Class<?>) t;
             }
@@ -189,60 +226,50 @@ public class ReflectUtil {
         return Object.class;
     }
 
-    public static Type getParameterizedGenericType(Class<?> targetClass, Type targetGenericType, int ArgumentIndex) {
-        if (targetGenericType == null) {
-            targetGenericType = targetClass.getGenericSuperclass();
-        }
-        if (targetGenericType instanceof ParameterizedType) {
-            return ((ParameterizedType) targetGenericType).getActualTypeArguments()[ArgumentIndex];
-        }
-        return Object.class;
-    }
-
-    public static Class<?> getParameterizedRawType(Class<?> targetClass, int ArgumentIndex) {
-        return getParameterizedRawType(targetClass, null, ArgumentIndex);
-    }
-
-    public static Type getParameterizedGenericType(Class<?> targetClass, int ArgumentIndex) {
-        return getParameterizedGenericType(targetClass, null, ArgumentIndex);
-    }
-
-    public static Class<?> getCollectionElementRawType(Class<?> collectionClass, Type genericType) {
-        return getParameterizedRawType(collectionClass, genericType, 0);
-    }
-
-    public static Type getCollectionElementGenericType(Class<?> collectionClass, Type genericType) {
-        return getParameterizedGenericType(collectionClass, genericType, 0);
-    }
-
-    public static Class<?> getMapKeyRawType(Class<?> mapClass, Type genericType) {
+    public static Type getParamGenericType(Class<?> clazz, Type genericType, int ArgumentIndex) {
         if (genericType == null) {
-            genericType = mapClass.getGenericSuperclass();
-        } else {
-            if (!(genericType instanceof ParameterizedType)) {
-                genericType = mapClass.getGenericSuperclass();
-            }
+            genericType = clazz.getGenericSuperclass();
+        }
+        if (!(genericType instanceof ParameterizedType)) {
+            genericType = getGenericParamType(genericType);
         }
         if (genericType instanceof ParameterizedType) {
-            Type t = ((ParameterizedType) genericType).getActualTypeArguments()[0];
-            if (t instanceof Class) {
-                return (Class<?>) t;
-            }
+            return ((ParameterizedType) genericType).getActualTypeArguments()[ArgumentIndex];
         }
         return Object.class;
     }
 
-    public static Class<?> getMapValueRawType(Class<?> mapClass, Type genericType) {
-        return getParameterizedRawType(mapClass, genericType, 1);
+    public static Class<?> getParamRawType(Class<?> clazz, int ArgumentIndex) {
+        return getParamRawType(clazz, null, ArgumentIndex);
     }
 
-    public static Type getMapValueGenericType(Class<?> mapClass, Type genericType) {
-        return getParameterizedGenericType(mapClass, genericType, 1);
+    public static Type getParamGenericType(Class<?> clazz, int ArgumentIndex) {
+        return getParamGenericType(clazz, null, ArgumentIndex);
     }
 
-    public static Object valueOfEnum(Class<?> enumType, String name) {
+    public static Class<?> getCollectionElementRawType(Class<?> clazz, Type genericType) {
+        return getParamRawType(clazz, genericType, 0);
+    }
+
+    public static Type getCollectionElementGenericType(Class<?> clazz, Type genericType) {
+        return getParamGenericType(clazz, genericType, 0);
+    }
+
+    public static Class<?> getMapKeyRawType(Class<?> clazz, Type genericType) {
+        return getParamRawType(clazz, genericType, 0);
+    }
+
+    public static Class<?> getMapValueRawType(Class<?> clazz, Type genericType) {
+        return getParamRawType(clazz, genericType, 1);
+    }
+
+    public static Type getMapValueGenericType(Class<?> clazz, Type genericType) {
+        return getParamGenericType(clazz, genericType, 1);
+    }
+
+    public static Object valueOfEnum(Class<?> clazz, String name) {
         try {
-            return Enum.valueOf((Class<Enum>) enumType, name);
+            return Enum.valueOf((Class<Enum>) clazz, name);
         } catch (Exception e) {
             return null;
         }

@@ -40,8 +40,8 @@ public class StringJson<T> extends Serial<T> {
         try {
             Class<?> itemClass = itemField == null ? this.getClass() : itemField.getRawType();
             Type genericType = itemField == null ? null : itemField.getGenericType();
-            Class<T> targetClass = (Class<T>) ReflectUtil.getParameterizedRawType(itemClass, genericType, 0);
-            Type targetType = ReflectUtil.getParameterizedGenericType(itemClass, genericType, 0);
+            Class<T> targetClass = (Class<T>) ReflectUtil.getParamRawType(itemClass, genericType, 0);
+            Type targetType = ReflectUtil.getParamGenericType(itemClass, genericType, 0);
             return JsonUtil.convert(json, targetClass, targetType);
         } catch (Exception e) {
             return null;
