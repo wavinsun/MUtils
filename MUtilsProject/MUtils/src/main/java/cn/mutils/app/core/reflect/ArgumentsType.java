@@ -10,7 +10,7 @@ import cn.mutils.app.core.IClearable;
 /**
  * Simple implementation of {@link ParameterizedType}
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "RedundantIfStatement"})
 public class ArgumentsType implements ParameterizedType, IClearable {
 
     protected Type[] mArguments;
@@ -69,4 +69,27 @@ public class ArgumentsType implements ParameterizedType, IClearable {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || !(o instanceof ParameterizedType)) {
+            return false;
+        }
+        if (mOwnerType == null || mRawType == null || mArguments == null) {
+            return false;
+        }
+        ParameterizedType paramType = (ParameterizedType) o;
+        if (!mOwnerType.equals(paramType.getOwnerType())) {
+            return false;
+        }
+        if (!mRawType.equals(paramType.getRawType())) {
+            return false;
+        }
+        if (!Arrays.equals(mArguments, paramType.getActualTypeArguments())) {
+            return false;
+        }
+        return true;
+    }
 }
