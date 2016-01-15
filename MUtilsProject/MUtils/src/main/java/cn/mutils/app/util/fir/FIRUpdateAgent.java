@@ -4,6 +4,7 @@ import android.view.Gravity;
 
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.HttpHandler;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 
@@ -26,7 +27,7 @@ import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateRes;
 /**
  * Fly It Remotely Update Agent
  */
-@SuppressWarnings("ResultOfMethodCallIgnored")
+@SuppressWarnings({"ResultOfMethodCallIgnored", "StringBufferReplaceableByString"})
 public class FIRUpdateAgent extends ContextOwnerTask implements IClearable {
 
     /**
@@ -38,6 +39,12 @@ public class FIRUpdateAgent extends ContextOwnerTask implements IClearable {
      * FIR download APK file name for target version
      */
     public static final String FIR_APK = "fir.apk";
+
+    protected HttpHandler<File> mDownloadHandler;
+
+    protected String mDownloadPath;
+
+    protected String mDownloadPathOfTargetVersion;
 
     /**
      * FIR download APK state for target version
@@ -73,6 +80,12 @@ public class FIRUpdateAgent extends ContextOwnerTask implements IClearable {
     @Override
     protected void onStop() {
         mUpdateTask.stop();
+        if (mDownloadHandler != null) {
+            if (mTargetVersion == null) {
+                mDownloadHandler.cancel();
+                mDownloadHandler = null;
+            }
+        }
         clear();
     }
 
@@ -131,6 +144,8 @@ public class FIRUpdateAgent extends ContextOwnerTask implements IClearable {
     }
 
     public void clear() {
+        mDownloadPath = null;
+        mDownloadPathOfTargetVersion = null;
         mContext = null;
         mAlert = null;
         mVersionUpdateListener = null;
@@ -229,14 +244,17 @@ public class FIRUpdateAgent extends ContextOwnerTask implements IClearable {
             sb.append(mVersionShort);
             sb.append(".apk");
             if (mTargetVersion == null) {
-                new HttpUtils().download(mInstallUrl, sb.toString(), mDownloadCallBack);
+                mDownloadPath = sb.toString();
+                mDownloadHandler = new HttpUtils().download(mInstallUrl, mDownloadPath, mDownloadCallBack);
                 if (mDownloadCallBack == null) {
                     clear();
                 }
             } else {
                 if (sTargetVersionDownloading == null) {
                     sTargetVersionDownloading = new Object();
-                    new HttpUtils().download(mInstallUrl, sb.toString(), new FIRUpdateTargetVersionDownloadCallBack());
+                    mDownloadPathOfTargetVersion = AppUtil.getDiskCacheDir(mContext, FIR_DIR) + FIR_APK;
+                    mDownloadPath = sb.toString();
+                    mDownloadHandler = new HttpUtils().download(mInstallUrl, mDownloadPath, new FIRUpdateTargetVersionDownloadCallBack());
                 }
             }
             return false;
@@ -258,7 +276,7 @@ public class FIRUpdateAgent extends ContextOwnerTask implements IClearable {
         public void onSuccess(ResponseInfo<File> responseInfo) {
             Logs.i("FIRUpdateAgent", "Download target version success");
             sTargetVersionDownloading = null;
-            File renameTo = new File(AppUtil.getDiskCacheDir(mContext, FIR_DIR) + FIR_APK);
+            File renameTo = new File(mDownloadPathOfTargetVersion);
             if (renameTo.exists()) {
                 renameTo.delete();
             }
@@ -270,11 +288,19 @@ public class FIRUpdateAgent extends ContextOwnerTask implements IClearable {
         public void onFailure(HttpException error, String msg) {
             Logs.e("FIRUpdateAgent", "Download target version failure");
             sTargetVersionDownloading = null;
-            File file = new File(AppUtil.getDiskCacheDir(mContext, FIR_DIR) + mTargetVersion + ".apk");
+            File file = new File(mDownloadPath);
             if (file.exists()) {
                 file.delete();
             }
             clear();
+        }
+
+        @Override
+        public void onCancelled() {
+            Logs.e("FIRUpdateAgent", "Download target version cancelled");
+            if (mDownloadPath != null) {
+                sTargetVersionDownloading = null;
+            }
         }
 
     }
