@@ -144,8 +144,10 @@ public class FIRUpdateAgent extends ContextOwnerTask implements IClearable {
     }
 
     public void clear() {
-        mDownloadPath = null;
-        mDownloadPathOfTargetVersion = null;
+        if (mTargetVersion == null) {
+            mDownloadPath = null;
+            mDownloadPathOfTargetVersion = null;
+        }
         mContext = null;
         mAlert = null;
         mVersionUpdateListener = null;
