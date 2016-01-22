@@ -32,6 +32,7 @@ import cn.mutils.app.core.IClearable;
 import cn.mutils.app.core.annotation.net.Head;
 import cn.mutils.app.core.beans.BeanField;
 import cn.mutils.app.core.codec.FlagUtil;
+import cn.mutils.app.core.err.AbortedException;
 import cn.mutils.app.core.err.HttpStatusException;
 import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.core.json.JsonUtil;
@@ -205,7 +206,7 @@ public class NetClient<REQUEST, RESPONSE> {
     /**
      * Value of HTTP head Refer
      */
-    protected String mReferer;
+    protected String mRefer;
 
     /**
      * Cookie identity
@@ -214,19 +215,23 @@ public class NetClient<REQUEST, RESPONSE> {
 
     /**
      * Regular expression for HTTP 500
-     * <p>
+     * <p/>
      * Apache Tomcat 7.0.47 HTTP Status 500
      */
     protected String mHttp500HtmlRegex = "(.*?)<pre>(.*?)</pre>(.*?)";
 
     /**
      * Server stack trace index of regular expression for HTTP 500
-     * <p>
+     * <p/>
      * 2 is server stack trace index of Apache Tomcat 7.0.47 HTTP Status 500
      */
     protected int mHttp500HtmlRegexGroup = 2;
 
     protected long mResponseTime;
+
+    protected HttpUriRequest mHttpRequest;
+
+    protected boolean mAborted;
 
     protected NetClientListener<REQUEST, RESPONSE> mListener;
 
@@ -366,6 +371,23 @@ public class NetClient<REQUEST, RESPONSE> {
         this.mResponse = response;
     }
 
+    public boolean isAborted() {
+        return mAborted;
+    }
+
+    public synchronized void abort() {
+        if (!mAborted) {
+            mAborted = true;
+            if (mHttpRequest != null && !mHttpRequest.isAborted()) {
+                try {
+                    mHttpRequest.abort();
+                } catch (Exception e) {
+                    // UnsupportedOperationException
+                }
+            }
+        }
+    }
+
     /**
      * Execute client
      *
@@ -380,14 +402,18 @@ public class NetClient<REQUEST, RESPONSE> {
         clientParams.setParameter(CoreConnectionPNames.SO_TIMEOUT, 60000);
         clientParams.setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10000);
         try {
+            if (mAborted) {
+                throw new AbortedException();
+            }
             if (isRequestConvertible() && mListener != null) {
                 mRequest = mListener.convertToRequest();
             }
             String params = null, spec = isRestUrl() ? convertToRestUrl(mRequest, mUrl) : mUrl;
             URL url = new URL(spec);
-            HttpUriRequest httpRequest = null;
             if (REQUEST_METHOD_POST.equals(mRequestMethod)) {
-                httpRequest = new HttpPost(url.toURI());
+                synchronized (this) {
+                    mHttpRequest = new HttpPost(url.toURI());
+                }
                 params = isPostParams() ? convertToParameters(mRequest, isSplitArrayParams()) : null;
                 if (isPostJson()) {
                     if (isPostJsonSigned() && mListener != null) {
@@ -400,12 +426,14 @@ public class NetClient<REQUEST, RESPONSE> {
                 if (isPostJson() && entity != null) {
                     ((StringEntity) entity).setContentType("application/json");
                 }
-                ((HttpPost) httpRequest).setEntity(entity);
+                ((HttpPost) mHttpRequest).setEntity(entity);
             } else {
                 params = convertToParameters(mRequest, isSplitArrayParams());
-                httpRequest = new HttpGet(spec + (spec.contains("?") ? "&" : "?") + params);
+                synchronized (this) {
+                    mHttpRequest = new HttpGet(spec + (spec.contains("?") ? "&" : "?") + params);
+                }
             }
-            String headers = convertToHeaders(mRequest, httpRequest);
+            String headers = convertToHeaders(mRequest, mHttpRequest);
             if (mListener != null) {
                 mListener.debugging(EVENT_URL, spec);
                 mListener.debugging(EVENT_REQUEST_METHOD, mRequestMethod);
@@ -418,25 +446,28 @@ public class NetClient<REQUEST, RESPONSE> {
             }
             if (isCookieWithRequest()) {
                 String cookie = mListener != null ? mListener.requestCookie(url) : (mCookieCacheId + "=Cookie");
-                httpRequest.setHeader("Cookie", cookie);
+                mHttpRequest.setHeader("Cookie", cookie);
                 if (mListener != null) {
                     mListener.debugging(EVENT_REQUEST_COOKIE, cookie);
                 }
             }
-            if (mReferer != null) {
-                httpRequest.setHeader("Refer", mReferer);
+            if (mRefer != null) {
+                mHttpRequest.setHeader("Refer", mRefer);
             }
-            httpRequest.setHeader("Cache-Control", "no-cache");
-            HttpParams requestParams = httpRequest.getParams();
+            mHttpRequest.setHeader("Cache-Control", "no-cache");
+            HttpParams requestParams = mHttpRequest.getParams();
             requestParams.setParameter(HTTP.CONTENT_ENCODING, "UTF-8");
             requestParams.setParameter(HTTP.CHARSET_PARAM, "UTF-8");
             requestParams.setParameter(HTTP.DEFAULT_PROTOCOL_CHARSET, "UTF-8");
-            HttpResponse httpResponse = client.execute(httpRequest);
+            HttpResponse httpResponse = client.execute(mHttpRequest);
             int statusCode = httpResponse.getStatusLine().getStatusCode();
             if (statusCode != 200 && statusCode != 500) {
                 throw new HttpStatusException(statusCode);
             }
             String response = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
+            if (mAborted) {
+                throw new AbortedException();
+            }
             mResponseTime = System.currentTimeMillis();
             if (statusCode == 500) {
                 throw new HttpStatusException(statusCode,
@@ -469,6 +500,9 @@ public class NetClient<REQUEST, RESPONSE> {
             if (mListener != null) {
                 mListener.errorCodeVerify(resJson);
             }
+            if (mAborted) {
+                throw new AbortedException();
+            }
             mResponse = resJson;
             if (isResponseConvertible() && mListener != null) {
                 mResponseConverted = mListener.convertFromResponse(mResponse);
@@ -480,6 +514,10 @@ public class NetClient<REQUEST, RESPONSE> {
             }
             return e;
         } finally {
+            synchronized (this) {
+                mAborted = false;// Reuse
+                mHttpRequest = null;
+            }
             client.getConnectionManager().shutdown();
             if (resJsonGenericType != null && (resJsonGenericType instanceof IClearable)) {
                 ((IClearable) resJsonGenericType).clear();

@@ -9,7 +9,6 @@ import java.lang.reflect.Type;
 import java.net.URL;
 
 import cn.mutils.app.App;
-import cn.mutils.app.BuildConfig;
 import cn.mutils.app.core.err.NoConnectionException;
 import cn.mutils.app.core.log.Logs;
 import cn.mutils.app.core.net.NetClient;
@@ -313,6 +312,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
                 if (this.mTask != null) {
                     this.mTask.cancel(true);
                 }
+                mClient.abort();
             }
         }
         mContext = null;
@@ -335,7 +335,7 @@ public class NetTask<REQUEST, RESPONSE> extends QueueItem<INetTask<REQUEST, RESP
                 }
                 return mClient.execute();
             } catch (Exception e) {
-                if (BuildConfig.DEBUG) {
+                if (App.isDebugType()) {
                     debugging(NetClient.EVENT_EXCEPTION, AppUtil.printStackTrace(e));
                 }
                 return e;
