@@ -121,12 +121,12 @@ public class DesktopPrinter extends JDialog implements ISystemPrinter {
 	}
 
 	@Override
-	public void sysout(String str) {
+	public void systemOut(String str) {
 		log(str, false);
 	}
 
 	@Override
-	public void syserr(String str) {
+	public void systemErr(String str) {
 		log(str, true);
 	}
 

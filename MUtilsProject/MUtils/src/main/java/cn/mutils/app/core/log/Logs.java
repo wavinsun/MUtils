@@ -1,6 +1,6 @@
 package cn.mutils.app.core.log;
 
-import cn.mutils.app.App;
+import cn.mutils.app.AppBuildConfig;
 import cn.mutils.app.AppLogs;
 import cn.mutils.app.core.runtime.AppRuntime;
 import cn.mutils.app.core.runtime.StackTraceUtil;
@@ -218,7 +218,7 @@ public class Logs implements ILogs {
         return logs.error(StringUtil.getTag(StackTraceUtil.getCallerElement()), msg, tr);
     }
 
-    protected boolean mEnabled = App.isDebugType();
+    protected boolean mEnabled = AppBuildConfig.DEBUG;
 
     @Override
     public int verbose(String tag, String msg) {
