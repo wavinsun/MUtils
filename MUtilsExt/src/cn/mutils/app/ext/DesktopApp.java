@@ -155,8 +155,8 @@ public class DesktopApp {
 		}
 
 		@Override
-		public void sysout(String str) {
-			getSystemPrinter().sysout(str);
+		public void systemOut(String str) {
+			getSystemPrinter().systemOut(str);
 		}
 
 	}
@@ -168,8 +168,8 @@ public class DesktopApp {
 		}
 
 		@Override
-		public void syserr(String str) {
-			getSystemPrinter().syserr(str);
+		public void systemErr(String str) {
+			getSystemPrinter().systemErr(str);
 		}
 	}
 

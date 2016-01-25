@@ -16,6 +16,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/juniversalchardet-1.0.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xmpcore-5.1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/metadata-extractor-2.8.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/mutils.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/MUtils-release.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
