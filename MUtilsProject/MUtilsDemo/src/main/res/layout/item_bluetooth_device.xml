@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/VLinearHFill">
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/Wrap"
+        android:paddingLeft="@dimen/padding"/>
+
+    <TextView
+        android:id="@+id/address"
+        style="@style/Wrap"
+        android:paddingLeft="@dimen/padding"/>
+
+    <View
+        style="@style/HLineGap"
+        android:background="@color/line" />
+
+</LinearLayout>
