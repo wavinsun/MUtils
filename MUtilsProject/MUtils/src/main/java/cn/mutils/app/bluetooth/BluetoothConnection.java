@@ -12,6 +12,7 @@ import android.os.Message;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.UUID;
 
 import cn.mutils.app.AppBuildConfig;
@@ -516,8 +517,9 @@ public class BluetoothConnection extends Dispatcher {
                     // Read from the InputStream
                     bytes = mmInStream.read(buffer);
 
+                    byte[] data = Arrays.copyOf(buffer, bytes);
                     // Send the obtained bytes to the UI Activity
-                    mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer).sendToTarget();
+                    mHandler.obtainMessage(MESSAGE_READ, -1, -1, data).sendToTarget();
                 } catch (IOException e) {
                     Logs.e("disconnected", e);
                     connectionLost();
