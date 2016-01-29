@@ -164,6 +164,10 @@
             <TextView android:id="@+id/pattern"
                 style="@style/MainBtn"
                 android:text="Pattern"/>
+
+            <TextView android:id="@+id/bluetooth"
+                style="@style/MainBtn"
+                android:text="Bluetooth"/>
             
         </cn.mutils.app.ui.FlowLayout>
     </ScrollView>

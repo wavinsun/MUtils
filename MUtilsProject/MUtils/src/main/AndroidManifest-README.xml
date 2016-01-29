@@ -49,6 +49,11 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <!-- ShareSDK END -->
 
+    <!-- Bluetooth BEGIN -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!-- Bluetooth END -->
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
