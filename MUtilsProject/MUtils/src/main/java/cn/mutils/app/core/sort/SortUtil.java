@@ -13,11 +13,13 @@ import cn.mutils.app.core.sort.comparator.FileModifiedComparator;
 import cn.mutils.app.core.sort.comparator.IndexItemComparator;
 import cn.mutils.app.core.sort.comparator.LastAccessItemComparator;
 import cn.mutils.app.core.sort.comparator.LastAccessItemEntryComparator;
+import cn.mutils.app.core.sort.comparator.ListSizeComparator;
 import cn.mutils.app.core.sort.comparator.PreSortedComparator;
 
 /**
  * Sort utility of framework
  */
+@SuppressWarnings("unused")
 public class SortUtil {
 
     /**
@@ -143,6 +145,23 @@ public class SortUtil {
      */
     public static <E extends IIndexItem> List<E> sortByIndex(List<E> list, Order order) {
         IndexItemComparator comparator = new IndexItemComparator();
+        comparator.setOrder(order);
+        Collections.sort(list, comparator);
+        return list;
+    }
+
+    /**
+     * Sort list by list item size
+     */
+    public static <E> List<List<E>> sortByListSize(List<List<E>> list) {
+        return sortByListSize(list, Order.ASC);
+    }
+
+    /**
+     * Sort list list item size for order
+     */
+    public static <E> List<List<E>> sortByListSize(List<List<E>> list, Order order) {
+        ListSizeComparator comparator = new ListSizeComparator();
         comparator.setOrder(order);
         Collections.sort(list, comparator);
         return list;
