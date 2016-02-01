@@ -1,6 +1,8 @@
 package cn.mutils.app;
 
 import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
 import android.test.ApplicationTestCase;
 
 import java.lang.reflect.Type;
@@ -10,6 +12,7 @@ import java.util.HashMap;
 import cn.mutils.app.core.beans.BeanField;
 import cn.mutils.app.core.json.JsonUtil;
 import cn.mutils.app.core.reflect.ReflectUtil;
+import cn.mutils.app.util.AppUtil;
 
 public class ExampleUnitTest extends ApplicationTestCase<Application> {
 
@@ -46,6 +49,29 @@ public class ExampleUnitTest extends ApplicationTestCase<Application> {
     }
 
     public void test() throws Exception {
+        testAppUtil();
+    }
+
+    protected void testAppUtil() throws Exception {
+        Thread sub = new Thread() {
+            @Override
+            public void run() {
+                boolean isMain = AppUtil.isMainThread();
+                System.out.println("Sub thread:" + isMain);
+            }
+        };
+        sub.start();
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                boolean isMain = AppUtil.isMainThread();
+                System.out.println("Main thread:" + isMain);
+            }
+        });
+        Thread.sleep(100000);
+    }
+
+    protected void testBeanField() throws Exception {
         BeanField fl = BeanField.getField(D.class, "l");
         Type tl = fl.getRawType();
         System.out.println(tl);
