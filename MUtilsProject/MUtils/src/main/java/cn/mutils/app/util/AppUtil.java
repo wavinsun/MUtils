@@ -403,7 +403,7 @@ public class AppUtil {
     }
 
     /**
-     * toStirng of JSON
+     * toString of JSON
      */
     public static String toStringJSON(Object obj) {
         return StringUtil.toJSON(obj);
@@ -856,8 +856,20 @@ public class AppUtil {
      * OnCreate of Application.
      */
     public static void fixAsyncTask() {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new AsyncTaskClassLoader());
+        if (isMainThread()) {
+            try {
+                Class.forName("android.os.AsyncTask");
+            } catch (Exception e) {
+                // ClassNotFoundException
+            }
+        } else {
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new AsyncTaskClassLoader());
+        }
+    }
+
+    public static boolean isMainThread() {
+        return Looper.myLooper() == Looper.getMainLooper();
     }
 
     public static Locale getLocale(Context context) {
