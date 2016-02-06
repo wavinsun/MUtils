@@ -35,7 +35,7 @@ public class UIAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvide
     /**
      * Set type for item views to create by reflection
      *
-     * @see #getItemView()
+     * @see #getItemView(int)
      */
     public void setItemViewClass(Class<? extends IItemView<DATA_ITEM>> itemViewClass) {
         mItemViewConstructor = ReflectUtil.getConstructor(itemViewClass, Context.class);
@@ -124,7 +124,7 @@ public class UIAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvide
      *
      * @see IItemView
      */
-    public IItemView<DATA_ITEM> getItemView() {
+    public IItemView<DATA_ITEM> getItemView(int position) {
         if (mItemViewConstructor == null) {
             return null;
         }
@@ -145,7 +145,7 @@ public class UIAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvide
         IItemView<DATA_ITEM> itemView = (IItemView<DATA_ITEM>) convertView;
         boolean isCreated = itemView != null;
         if (!isCreated) {
-            itemView = this.getItemView();
+            itemView = this.getItemView(position);
             itemView.setAdapter(this);
         }
         itemView.setPosition(position);

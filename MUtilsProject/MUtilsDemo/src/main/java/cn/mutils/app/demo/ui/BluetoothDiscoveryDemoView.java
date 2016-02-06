@@ -72,7 +72,7 @@ public class BluetoothDiscoveryDemoView extends StateView {
     class DiscoveryAdapter extends UIAdapter<BluetoothDevice> {
 
         @Override
-        public IItemView<BluetoothDevice> getItemView() {
+        public IItemView<BluetoothDevice> getItemView(int position) {
             return new DiscoveryItemView(getContext());
         }
     }
