@@ -12,7 +12,7 @@ import cn.mutils.app.ui.core.IViewFinder;
  * Object-oriented for
  * {@link BaseAdapter#getView(int, View, android.view.ViewGroup)}
  *
- * @see UIAdapter#getItemView()
+ * @see UIAdapter#getItemView(int)
  * @see UIAdapter#getView(int, View, android.view.ViewGroup)
  */
 @SuppressWarnings("unused")
@@ -27,7 +27,7 @@ public interface IItemView<DATA_ITEM> extends IView, IViewFinder, IContentViewOw
 
     /**
      * Set Adapter for IItemView.
-     * <p/>
+     * <p>
      * It called by framework.
      *
      * @param adapter Adapter

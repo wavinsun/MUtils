@@ -243,7 +243,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
         }
 
         @Override
-        public IItemView<DATA_ITEM> getItemView() {
+        public IItemView<DATA_ITEM> getItemView(int position) {
             return new OActionItemView<DATA_ITEM>(getContext());
         }
     }
