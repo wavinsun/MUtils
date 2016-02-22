@@ -3,8 +3,8 @@ package cn.mutils.app.push;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.mutils.app.core.json.JsonUtil;
 import cn.mutils.app.os.ContextOwner;
+import cn.mutils.core.json.JsonUtil;
 
 /**
  * Implements {@link IPushManager}

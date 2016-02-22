@@ -1,7 +1,7 @@
 package cn.mutils.app.demo.net;
 
-import cn.mutils.app.core.err.ErrorCodeException;
 import cn.mutils.app.net.NetTask;
+import cn.mutils.core.err.ErrorCodeException;
 
 public class BasicTask<REQUEST, RESPONSE> extends NetTask<REQUEST, RESPONSE> {
 

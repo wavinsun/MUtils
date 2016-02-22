@@ -7,12 +7,12 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import cn.mutils.app.core.annotation.event.OnClick;
-import cn.mutils.app.core.annotation.res.FindViewById;
-import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.demo.ShellActivity;
 import cn.mutils.app.ui.StateView;
+import cn.mutils.core.annotation.event.Click;
+import cn.mutils.core.annotation.res.FindViewById;
+import cn.mutils.core.annotation.res.SetContentView;
 
 @SetContentView(R.layout.view_bluetooth)
 public class BluetoothDemoView extends StateView {
@@ -44,7 +44,7 @@ public class BluetoothDemoView extends StateView {
         mLogText.setText(sb);
     }
 
-    @OnClick(R.id.client)
+    @Click(R.id.client)
     protected void onClickClient(View v) {
         ShellActivity.ShellExtra extra = new ShellActivity.ShellExtra();
         extra.setTitle(((TextView) v).getText().toString());
@@ -54,7 +54,7 @@ public class BluetoothDemoView extends StateView {
         startActivity(intent);
     }
 
-    @OnClick(R.id.server)
+    @Click(R.id.server)
     protected void onClickServer(View v) {
         ShellActivity.ShellExtra extra = new ShellActivity.ShellExtra();
         extra.setTitle(((TextView) v).getText().toString());

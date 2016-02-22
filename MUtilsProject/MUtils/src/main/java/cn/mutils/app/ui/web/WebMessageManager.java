@@ -5,8 +5,8 @@ import android.content.Context;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import cn.mutils.app.core.json.JsonUtil;
-import cn.mutils.app.core.log.Logs;
+import cn.mutils.core.json.JsonUtil;
+import cn.mutils.core.log.Logs;
 
 /**
  * Implements {@link IWebMessageManager}

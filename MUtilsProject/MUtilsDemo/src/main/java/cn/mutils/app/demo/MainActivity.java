@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
-import cn.mutils.app.core.annotation.event.OnClick;
-import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.ShellActivity.ShellExtra;
 import cn.mutils.app.demo.ui.AESDemoView;
 import cn.mutils.app.demo.ui.AMapDemoView;
@@ -39,16 +37,18 @@ import cn.mutils.app.demo.ui.UmengDemoView;
 import cn.mutils.app.demo.ui.ViewTypeDemoView;
 import cn.mutils.app.demo.ui.WebFrameDemoView;
 import cn.mutils.app.demo.ui.ZipDemoView;
+import cn.mutils.core.annotation.event.Click;
+import cn.mutils.core.annotation.res.SetContentView;
 
 @SetContentView(R.layout.activity_main)
 public class MainActivity extends BasicActivity {
 
-    @OnClick(R.id.alert_by_activity)
+    @Click(R.id.alert_by_activity)
     protected void onClickAlertByActivity() {
         startActivity(new Intent(this, AlertDemoActivity.class));
     }
 
-    @OnClick(R.id.alert)
+    @Click(R.id.alert)
     protected void onClickAlert(View v) {
         Intent intent = new Intent(this, ShellActivity.class);
         ShellExtra extra = new ShellExtra();
@@ -60,12 +60,12 @@ public class MainActivity extends BasicActivity {
         startActivity(intent);
     }
 
-    @OnClick(R.id.pattern)
+    @Click(R.id.pattern)
     protected void onClickPattern() {
         startActivity(new Intent(this, PatternDemoActivity.class));
     }
 
-    @OnClick({R.id.test, R.id.ui_adapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir, R.id.anim_task, R.id.media, R.id.net_task,
+    @Click({R.id.test, R.id.ui_adapter, R.id.zip, R.id.conf_item, R.id.aes, R.id.fir, R.id.anim_task, R.id.media, R.id.net_task,
             R.id.pay, R.id.qrcode, R.id.share, R.id.action_sheet, R.id.amap, R.id.date_chooser, R.id.prompt,
             R.id.progress_view, R.id.tip_view, R.id.busy, R.id.path_button, R.id.hlinear_adapter, R.id.index_view,
             R.id.web_frame, R.id.intent_executor, R.id.umeng, R.id.surface_viewer, R.id.progress_icon, R.id.channel,

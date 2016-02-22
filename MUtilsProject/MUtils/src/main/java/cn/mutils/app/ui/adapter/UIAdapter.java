@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-import cn.mutils.app.core.reflect.ReflectUtil;
 import cn.mutils.app.os.IContextProvider;
+import cn.mutils.core.reflect.ReflectUtil;
 
 /**
  * Provide object-oriented item view

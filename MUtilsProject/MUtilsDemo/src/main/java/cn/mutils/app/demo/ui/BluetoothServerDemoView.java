@@ -8,12 +8,12 @@ import android.widget.TextView;
 import java.util.UUID;
 
 import cn.mutils.app.bluetooth.BluetoothConnection;
-import cn.mutils.app.core.annotation.res.FindViewById;
-import cn.mutils.app.core.annotation.res.SetContentView;
-import cn.mutils.app.core.log.Logs;
-import cn.mutils.app.core.time.DateTime;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.ui.StateView;
+import cn.mutils.core.annotation.res.FindViewById;
+import cn.mutils.core.annotation.res.SetContentView;
+import cn.mutils.core.log.Logs;
+import cn.mutils.core.time.DateTime;
 
 @SetContentView(R.layout.view_bluetooth_server)
 public class BluetoothServerDemoView extends StateView {

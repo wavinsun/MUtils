@@ -5,12 +5,12 @@ import android.util.AttributeSet;
 
 import java.util.List;
 
-import cn.mutils.app.core.annotation.event.OnClick;
-import cn.mutils.app.core.annotation.res.SetContentView;
-import cn.mutils.app.core.beans.BeanCache;
-import cn.mutils.app.core.log.Logs;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.ui.StateView;
+import cn.mutils.core.annotation.event.Click;
+import cn.mutils.core.annotation.res.SetContentView;
+import cn.mutils.core.beans.BeanCache;
+import cn.mutils.core.log.Logs;
 
 @SetContentView(R.layout.view_test)
 public class TestDemoView extends StateView {
@@ -27,7 +27,7 @@ public class TestDemoView extends StateView {
         super(context, attrs, defStyle);
     }
 
-    @OnClick(R.id.go)
+    @Click(R.id.go)
     protected void onClickGo() {
         TestClass t = new TestClass();
         BeanCache cache = new BeanCache(t);

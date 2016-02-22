@@ -3,9 +3,9 @@ package cn.mutils.app.task;
 import android.os.Handler;
 import android.os.Looper;
 
-import cn.mutils.app.core.ILockable;
-import cn.mutils.app.core.event.IListener;
-import cn.mutils.app.core.task.Task;
+import cn.mutils.core.ILockable;
+import cn.mutils.core.event.IListener;
+import cn.mutils.core.task.Task;
 
 @SuppressWarnings("unused")
 public class AnimTask extends Task implements ILockable {

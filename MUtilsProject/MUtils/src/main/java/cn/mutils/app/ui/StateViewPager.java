@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.mutils.app.core.event.Dispatcher;
 import cn.mutils.app.event.listener.OnActivityResultListener;
 import cn.mutils.app.event.listener.OnSelectedChangeListener;
 import cn.mutils.app.ui.core.ICachedViewManager;
 import cn.mutils.app.ui.core.IStateView;
 import cn.mutils.app.ui.core.IStateViewManager;
 import cn.mutils.app.ui.core.UICore;
+import cn.mutils.core.event.Dispatcher;
 
 @SuppressWarnings({"unused", "RedundantIfStatement"})
 public class StateViewPager extends ViewPager implements IStateView, IStateViewManager, ICachedViewManager {

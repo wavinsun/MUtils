@@ -19,25 +19,25 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.mutils.app.core.ILockable;
-import cn.mutils.app.core.annotation.event.OnClick;
-import cn.mutils.app.core.annotation.res.FindViewById;
-import cn.mutils.app.core.annotation.res.GetColor;
-import cn.mutils.app.core.annotation.res.GetColorStateList;
-import cn.mutils.app.core.annotation.res.GetDimension;
-import cn.mutils.app.core.annotation.res.GetDimensionPixelSize;
-import cn.mutils.app.core.annotation.res.GetDrawable;
-import cn.mutils.app.core.annotation.res.GetString;
-import cn.mutils.app.core.annotation.res.GetStringArray;
-import cn.mutils.app.core.annotation.res.LoadAnimation;
-import cn.mutils.app.core.annotation.res.SetContentView;
-import cn.mutils.app.core.reflect.ReflectUtil;
-import cn.mutils.app.core.task.IStoppable;
-import cn.mutils.app.core.task.IStoppableManager;
 import cn.mutils.app.event.listener.OnActivityResultListener;
 import cn.mutils.app.event.listener.OnClickListener;
 import cn.mutils.app.os.IContextProvider;
 import cn.mutils.app.ui.InfoToast;
+import cn.mutils.core.ILockable;
+import cn.mutils.core.annotation.event.Click;
+import cn.mutils.core.annotation.res.FindViewById;
+import cn.mutils.core.annotation.res.GetColor;
+import cn.mutils.core.annotation.res.GetColorStateList;
+import cn.mutils.core.annotation.res.GetDimension;
+import cn.mutils.core.annotation.res.GetDimensionPixelSize;
+import cn.mutils.core.annotation.res.GetDrawable;
+import cn.mutils.core.annotation.res.GetString;
+import cn.mutils.core.annotation.res.GetStringArray;
+import cn.mutils.core.annotation.res.LoadAnimation;
+import cn.mutils.core.annotation.res.SetContentView;
+import cn.mutils.core.reflect.ReflectUtil;
+import cn.mutils.core.task.IStoppable;
+import cn.mutils.core.task.IStoppableManager;
 
 /**
  * UI core implementation of framework
@@ -121,7 +121,7 @@ public class UICore {
         Class<?> c = finder.getClass();
         while (IViewFinder.class.isAssignableFrom(c)) {
             for (Method m : c.getDeclaredMethods()) {
-                OnClick oc = m.getAnnotation(OnClick.class);
+                Click oc = m.getAnnotation(Click.class);
                 if (oc == null) {
                     continue;
                 }

@@ -3,7 +3,7 @@ package cn.mutils.app.task;
 import android.os.Handler;
 import android.os.Looper;
 
-import cn.mutils.app.core.task.IStoppable;
+import cn.mutils.core.task.IStoppable;
 
 public class DelayTask implements IStoppable {
 

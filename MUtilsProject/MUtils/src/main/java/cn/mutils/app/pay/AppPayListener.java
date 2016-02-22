@@ -1,6 +1,6 @@
 package cn.mutils.app.pay;
 
-import cn.mutils.app.core.event.IListener;
+import cn.mutils.core.event.IListener;
 
 public interface AppPayListener extends IListener {
 

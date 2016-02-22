@@ -2,7 +2,7 @@ package cn.mutils.app.ui.adapter;
 
 import java.util.List;
 
-import cn.mutils.app.core.ILabelItem;
+import cn.mutils.core.ILabelItem;
 import kankan.wheel.widget.WheelAdapter;
 
 /**

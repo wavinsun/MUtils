@@ -3,9 +3,9 @@ package cn.mutils.app.io;
 import android.content.Intent;
 import android.os.Bundle;
 
-import cn.mutils.app.core.INoProguard;
-import cn.mutils.app.core.json.JsonUtil;
 import cn.mutils.app.util.AppUtil;
+import cn.mutils.core.INoProguard;
+import cn.mutils.core.json.JsonUtil;
 
 /**
  * Extra of framework.<br>

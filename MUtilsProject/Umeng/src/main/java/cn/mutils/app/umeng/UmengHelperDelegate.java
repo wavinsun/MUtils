@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.mutils.app.App;
-import cn.mutils.app.core.event.listener.VersionUpdateListener;
-import cn.mutils.app.core.util.Edition;
 import cn.mutils.app.ui.core.IActivity;
 import cn.mutils.app.util.AppUtil;
 import cn.mutils.app.util.UmengHelper;
+import cn.mutils.core.event.listener.VersionUpdateListener;
+import cn.mutils.core.util.Edition;
 
 @SuppressWarnings({"UnnecessaryUnboxing", "UnnecessaryBoxing", "unused", "SimplifiableConditionalExpression"})
 public class UmengHelperDelegate extends UmengHelper {

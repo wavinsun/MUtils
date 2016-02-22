@@ -2,8 +2,8 @@ package cn.mutils.app.task;
 
 import android.content.Context;
 
-import cn.mutils.app.core.task.Task;
 import cn.mutils.app.os.IContextOwner;
+import cn.mutils.core.task.Task;
 
 public class ContextOwnerTask extends Task implements IContextOwner {
 

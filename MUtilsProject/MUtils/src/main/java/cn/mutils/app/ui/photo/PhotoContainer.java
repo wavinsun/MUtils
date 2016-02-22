@@ -24,10 +24,10 @@ import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
 
 import java.util.List;
 
-import cn.mutils.app.core.event.Dispatcher;
-import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.event.listener.AppBitmapLoadCallBack;
 import cn.mutils.app.event.listener.OnSelectedChangeListener;
+import cn.mutils.core.event.Dispatcher;
+import cn.mutils.core.event.IListener;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 

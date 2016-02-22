@@ -2,8 +2,8 @@ package cn.mutils.app.util;
 
 import android.content.Context;
 
-import cn.mutils.app.core.event.listener.VersionUpdateListener;
-import cn.mutils.app.core.runtime.Delegate;
+import cn.mutils.core.event.listener.VersionUpdateListener;
+import cn.mutils.core.runtime.Delegate;
 
 public class UmengHelper extends Delegate<UmengHelper> {
 

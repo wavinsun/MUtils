@@ -2,8 +2,8 @@ package cn.mutils.app.archive;
 
 import java.io.InputStream;
 
-import cn.mutils.app.core.archive.Zip;
-import cn.mutils.app.core.archive.ZipUtil;
+import cn.mutils.core.archive.Zip;
+import cn.mutils.core.archive.ZipUtil;
 
 @SuppressWarnings("unused")
 public class ZipDelegate extends Zip {

@@ -9,10 +9,10 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.LocationManagerProxy;
 import com.amap.api.location.LocationProviderProxy;
 
-import cn.mutils.app.core.event.Dispatcher;
-import cn.mutils.app.core.task.IStoppable;
 import cn.mutils.app.event.listener.AppLocationListener;
 import cn.mutils.app.lbs.AppLocation;
+import cn.mutils.core.event.Dispatcher;
+import cn.mutils.core.task.IStoppable;
 
 /**
  * AMap Location

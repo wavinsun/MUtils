@@ -4,11 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import cn.mutils.app.core.INoProguard;
-import cn.mutils.app.core.annotation.Name;
-import cn.mutils.app.core.annotation.event.OnClick;
-import cn.mutils.app.core.annotation.res.FindViewById;
-import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.net.INetTask;
 import cn.mutils.app.net.NetExceptionUtil;
@@ -21,6 +16,11 @@ import cn.mutils.app.pay.UPPayTask;
 import cn.mutils.app.pay.WXPayTask;
 import cn.mutils.app.ui.Alert;
 import cn.mutils.app.ui.StateView;
+import cn.mutils.core.INoProguard;
+import cn.mutils.core.annotation.Name;
+import cn.mutils.core.annotation.event.Click;
+import cn.mutils.core.annotation.res.FindViewById;
+import cn.mutils.core.annotation.res.SetContentView;
 
 @SetContentView(R.layout.view_pay)
 public class PayDemoView extends StateView {
@@ -49,7 +49,7 @@ public class PayDemoView extends StateView {
         mLog.setText(sb);
     }
 
-    @OnClick(R.id.union_pay)
+    @Click(R.id.union_pay)
     protected void onClickUnionPay() {
         UPPayTNTask task = new UPPayTNTask();
         task.addListener(new NetTaskListener<String, String>() {
@@ -89,7 +89,7 @@ public class PayDemoView extends StateView {
         add(task);
     }
 
-    @OnClick(R.id.ali_pay)
+    @Click(R.id.ali_pay)
     protected void onClickAliPay() {
         AlipayTask task = new AlipayTask();
         task.setBody("Body");
@@ -121,7 +121,7 @@ public class PayDemoView extends StateView {
         task.start();
     }
 
-    @OnClick(R.id.wx_pay)
+    @Click(R.id.wx_pay)
     protected void onClickWXPay() {
         WXPayInfoTask task = new WXPayInfoTask();
         task.setRequest(new WXPayInfoTask.WXPayInfoReq());

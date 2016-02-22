@@ -2,12 +2,12 @@ package cn.mutils.app.demo;
 
 import android.os.Bundle;
 
-import cn.mutils.app.core.annotation.res.FindViewById;
-import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.ui.BasicActivity;
 import cn.mutils.app.ui.pattern.PatternCanvas;
 import cn.mutils.app.ui.pattern.PatternIcon;
 import cn.mutils.app.util.AppUtil;
+import cn.mutils.core.annotation.res.FindViewById;
+import cn.mutils.core.annotation.res.SetContentView;
 
 @SetContentView(R.layout.activity_pattern)
 public class PatternActivity extends BasicActivity {

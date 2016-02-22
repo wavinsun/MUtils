@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.mutils.app.R;
-import cn.mutils.app.core.event.IListener;
+import cn.mutils.core.event.IListener;
 
 @SuppressWarnings({"UnnecessaryInterfaceModifier", "unused"})
 public class FlowLayout extends ViewGroup {

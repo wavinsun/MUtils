@@ -8,13 +8,13 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import cn.mutils.app.core.annotation.res.FindViewById;
-import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.ui.StateView;
 import cn.mutils.app.ui.adapter.HLinearAdapter;
 import cn.mutils.app.ui.adapter.IItemView;
 import cn.mutils.app.ui.adapter.ItemView;
+import cn.mutils.core.annotation.res.FindViewById;
+import cn.mutils.core.annotation.res.SetContentView;
 
 @SetContentView(R.layout.view_hlinear_adapter)
 public class HLinearAdapterDemoView extends StateView {

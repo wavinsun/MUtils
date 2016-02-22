@@ -2,7 +2,7 @@ package cn.mutils.app.share;
 
 import android.content.Context;
 
-import cn.mutils.app.core.runtime.Delegate;
+import cn.mutils.core.runtime.Delegate;
 
 public abstract class ShareBase extends Delegate<ShareBase> implements IShare {
 

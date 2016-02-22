@@ -4,11 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import cn.mutils.app.core.annotation.event.OnClick;
-import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.share.Share;
 import cn.mutils.app.ui.StateView;
+import cn.mutils.core.annotation.event.Click;
+import cn.mutils.core.annotation.res.SetContentView;
 
 @SetContentView(R.layout.view_share)
 public class ShareDemoView extends StateView {
@@ -31,7 +31,7 @@ public class ShareDemoView extends StateView {
 
     }
 
-    @OnClick({R.id.qq, R.id.qzone, R.id.wechat, R.id.momoents, R.id.weibo, R.id.tencent_weibo_share_sdk})
+    @Click({R.id.qq, R.id.qzone, R.id.wechat, R.id.momoents, R.id.weibo, R.id.tencent_weibo_share_sdk})
     protected void onClick(View v) {
         Share share = new Share(getContext());
         share.setTitle("Title");
