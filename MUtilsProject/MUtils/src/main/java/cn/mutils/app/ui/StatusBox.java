@@ -9,9 +9,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.WindowManager;
 
-import cn.mutils.app.core.codec.FlagUtil;
 import cn.mutils.app.ui.core.IStatusBarOwner;
 import cn.mutils.app.util.AppUtil;
+import cn.mutils.core.codec.FlagUtil;
 
 @SuppressWarnings("ResourceType")
 @SuppressLint("DrawAllocation")

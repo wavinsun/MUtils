@@ -10,10 +10,10 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
-import cn.mutils.app.core.INoProguard;
-import cn.mutils.app.core.log.Logs;
-import cn.mutils.app.core.text.StringUtil;
-import cn.mutils.app.core.time.DateTime;
+import cn.mutils.core.INoProguard;
+import cn.mutils.core.log.Logs;
+import cn.mutils.core.text.StringUtil;
+import cn.mutils.core.time.DateTime;
 
 /**
  * WebFrame chrome client of framework

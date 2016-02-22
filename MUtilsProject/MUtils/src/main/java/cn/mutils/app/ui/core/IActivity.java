@@ -1,9 +1,9 @@
 package cn.mutils.app.ui.core;
 
-import cn.mutils.app.core.task.IStoppableManager;
 import cn.mutils.app.data.IAsyncDataQueueOwner;
 import cn.mutils.app.net.INetQueueOwner;
 import cn.mutils.app.os.IHandlerProvider;
+import cn.mutils.core.task.IStoppableManager;
 
 @SuppressWarnings("unused")
 public interface IActivity

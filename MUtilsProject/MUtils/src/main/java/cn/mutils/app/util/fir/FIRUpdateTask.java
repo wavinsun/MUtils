@@ -1,14 +1,14 @@
 package cn.mutils.app.util.fir;
 
-import cn.mutils.app.core.INoProguard;
-import cn.mutils.app.core.err.ErrorCodeException;
 import cn.mutils.app.net.NetTask;
 import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateReq;
 import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateRes;
+import cn.mutils.core.INoProguard;
+import cn.mutils.core.err.ErrorCodeException;
 
 /**
  * Fly It Remotely version API
- * <p/>
+ * <p>
  * http://fir.im/dev/api
  */
 @SuppressWarnings("serial")

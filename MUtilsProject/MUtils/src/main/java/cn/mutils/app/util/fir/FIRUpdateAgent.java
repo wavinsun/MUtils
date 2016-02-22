@@ -10,11 +10,6 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 
 import java.io.File;
 
-import cn.mutils.app.core.IClearable;
-import cn.mutils.app.core.event.listener.VersionUpdateListener;
-import cn.mutils.app.core.log.Logs;
-import cn.mutils.app.core.text.MBFormat;
-import cn.mutils.app.core.text.StringUtil;
 import cn.mutils.app.net.INetTask;
 import cn.mutils.app.net.NetTaskListener;
 import cn.mutils.app.task.ContextOwnerTask;
@@ -23,6 +18,11 @@ import cn.mutils.app.ui.Alert.AlertListener;
 import cn.mutils.app.util.AppUtil;
 import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateReq;
 import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateRes;
+import cn.mutils.core.IClearable;
+import cn.mutils.core.event.listener.VersionUpdateListener;
+import cn.mutils.core.log.Logs;
+import cn.mutils.core.text.MBFormat;
+import cn.mutils.core.text.StringUtil;
 
 /**
  * Fly It Remotely Update Agent

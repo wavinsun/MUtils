@@ -54,14 +54,14 @@ import java.util.List;
 import java.util.Locale;
 
 import cn.mutils.app.AppLocale;
-import cn.mutils.app.core.archive.Zip;
-import cn.mutils.app.core.beans.ObjectUtil;
-import cn.mutils.app.core.collection.CollectionUtil;
-import cn.mutils.app.core.crypto.AESUtil;
-import cn.mutils.app.core.io.IOUtil;
-import cn.mutils.app.core.math.NumberUtil;
-import cn.mutils.app.core.text.StringUtil;
-import cn.mutils.app.core.time.TimeUtil;
+import cn.mutils.core.archive.Zip;
+import cn.mutils.core.beans.ObjectUtil;
+import cn.mutils.core.collection.CollectionUtil;
+import cn.mutils.core.crypto.AESUtil;
+import cn.mutils.core.io.IOUtil;
+import cn.mutils.core.math.NumberUtil;
+import cn.mutils.core.text.StringUtil;
+import cn.mutils.core.time.TimeUtil;
 
 /**
  * Utility of framework for Android runtime

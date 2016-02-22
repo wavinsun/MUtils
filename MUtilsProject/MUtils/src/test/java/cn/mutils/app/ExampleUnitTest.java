@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import cn.mutils.app.core.beans.BeanField;
-import cn.mutils.app.core.sort.SortUtil;
+import cn.mutils.core.beans.BeanField;
+import cn.mutils.core.sort.SortUtil;
 
 import static org.junit.Assert.assertEquals;
 

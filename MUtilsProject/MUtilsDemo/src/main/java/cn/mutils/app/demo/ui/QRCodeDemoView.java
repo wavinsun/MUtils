@@ -5,15 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
 
-import cn.mutils.app.core.annotation.event.OnClick;
-import cn.mutils.app.core.annotation.res.FindViewById;
-import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.CaptureActivity;
 import cn.mutils.app.demo.CaptureActivity.CaptureResult;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.event.listener.OnActivityResultListener;
 import cn.mutils.app.ui.StateView;
 import cn.mutils.app.zxing.QRCodeView;
+import cn.mutils.core.annotation.event.Click;
+import cn.mutils.core.annotation.res.FindViewById;
+import cn.mutils.core.annotation.res.SetContentView;
 
 @SetContentView(R.layout.view_qrcode)
 public class QRCodeDemoView extends StateView {
@@ -52,7 +52,7 @@ public class QRCodeDemoView extends StateView {
         });
     }
 
-    @OnClick(R.id.go)
+    @Click(R.id.go)
     protected void onClickGo() {
         startActivityForResult(new Intent(getContext(), CaptureActivity.class), REQUEST_CODE_CAPTURE);
     }

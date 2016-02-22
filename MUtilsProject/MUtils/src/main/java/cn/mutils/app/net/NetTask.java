@@ -9,13 +9,13 @@ import java.lang.reflect.Type;
 import java.net.URL;
 
 import cn.mutils.app.AppBuildConfig;
-import cn.mutils.app.core.err.NoConnectionException;
-import cn.mutils.app.core.log.Logs;
-import cn.mutils.app.core.net.NetClient;
-import cn.mutils.app.core.net.NetClient.NetClientListener;
-import cn.mutils.app.core.reflect.ReflectUtil;
 import cn.mutils.app.queue.QueueItem;
 import cn.mutils.app.util.AppUtil;
+import cn.mutils.core.err.NoConnectionException;
+import cn.mutils.core.log.Logs;
+import cn.mutils.core.net.NetClient;
+import cn.mutils.core.net.NetClient.NetClientListener;
+import cn.mutils.core.reflect.ReflectUtil;
 
 /**
  * Template of request and response for net API at Android application level

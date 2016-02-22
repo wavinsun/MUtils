@@ -12,10 +12,6 @@ import android.widget.TextView;
 import java.io.File;
 import java.util.List;
 
-import cn.mutils.app.core.annotation.event.OnClick;
-import cn.mutils.app.core.annotation.res.FindViewById;
-import cn.mutils.app.core.annotation.res.SetContentView;
-import cn.mutils.app.core.log.Logs;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.os.IntentExecutor;
 import cn.mutils.app.ui.PopMenu;
@@ -24,6 +20,10 @@ import cn.mutils.app.ui.adapter.IItemView;
 import cn.mutils.app.ui.adapter.ItemView;
 import cn.mutils.app.ui.adapter.PopMenuAdapter;
 import cn.mutils.app.util.AppUtil;
+import cn.mutils.core.annotation.event.Click;
+import cn.mutils.core.annotation.res.FindViewById;
+import cn.mutils.core.annotation.res.SetContentView;
+import cn.mutils.core.log.Logs;
 
 @SetContentView(R.layout.view_intent_executor)
 public class IntentExecutorDemoView extends StateView {
@@ -40,7 +40,7 @@ public class IntentExecutorDemoView extends StateView {
         super(context, attrs, defStyle);
     }
 
-    @OnClick(R.id.go)
+    @Click(R.id.go)
     protected void onClickGoBtn(View v) {
         Context context = getContext();
         String path = AppUtil.getDiskDataRoot(context) + "IntentExecutor.png";
@@ -93,7 +93,7 @@ public class IntentExecutorDemoView extends StateView {
             mText.setText(mDataProvider.getLabel());
         }
 
-        @OnClick
+        @Click
         protected void onClick() {
             ((IntentExecutorAdapter) getAdapter()).getPopMenue().dismiss();
             getContext().startActivity(mDataProvider.getIntent());

@@ -2,7 +2,7 @@ package cn.mutils.app.ui.web;
 
 import android.webkit.JavascriptInterface;
 
-import cn.mutils.app.core.INoProguard;
+import cn.mutils.core.INoProguard;
 
 /**
  * Web JavaScript call interface of framework

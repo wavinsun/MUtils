@@ -1,6 +1,6 @@
 package cn.mutils.app.queue;
 
-import cn.mutils.app.core.event.IListener;
+import cn.mutils.core.event.IListener;
 
 public interface IQueueItemListener<QUEUE_ITEM extends IQueueItem<QUEUE_ITEM>> extends IListener {
 

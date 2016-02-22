@@ -2,7 +2,7 @@ package cn.mutils.app.util;
 
 import android.content.Context;
 
-import cn.mutils.app.core.runtime.Delegate;
+import cn.mutils.core.runtime.Delegate;
 
 public class ShareSDKHelper extends Delegate<ShareSDKHelper> {
 

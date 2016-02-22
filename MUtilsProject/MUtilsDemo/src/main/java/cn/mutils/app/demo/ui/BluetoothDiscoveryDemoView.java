@@ -11,15 +11,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.mutils.app.bluetooth.DiscoveryTask;
-import cn.mutils.app.core.annotation.event.OnClick;
-import cn.mutils.app.core.annotation.res.FindViewById;
-import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.ui.AppActivity;
 import cn.mutils.app.ui.StateView;
 import cn.mutils.app.ui.adapter.IItemView;
 import cn.mutils.app.ui.adapter.ItemView;
 import cn.mutils.app.ui.adapter.UIAdapter;
+import cn.mutils.core.annotation.event.Click;
+import cn.mutils.core.annotation.res.FindViewById;
+import cn.mutils.core.annotation.res.SetContentView;
 
 @SetContentView(R.layout.view_bluetooth_discovery)
 public class BluetoothDiscoveryDemoView extends StateView {
@@ -96,7 +96,7 @@ public class BluetoothDiscoveryDemoView extends StateView {
             mAddressText.setText("Address: " + mDataProvider.getAddress());
         }
 
-        @OnClick
+        @Click
         protected void onClick() {
             Context context = getContext();
             if (!(context instanceof Activity)) {

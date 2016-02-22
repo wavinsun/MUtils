@@ -3,12 +3,12 @@ package cn.mutils.app.demo;
 import android.content.Intent;
 import android.os.Bundle;
 
-import cn.mutils.app.core.annotation.res.FindViewById;
-import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.ui.BasicActivity;
 import cn.mutils.app.io.Extra;
 import cn.mutils.app.zxing.CaptureView;
 import cn.mutils.app.zxing.CaptureView.CaptureListener;
+import cn.mutils.core.annotation.res.FindViewById;
+import cn.mutils.core.annotation.res.SetContentView;
 
 @SuppressWarnings("serial")
 @SetContentView(R.layout.activity_capture)

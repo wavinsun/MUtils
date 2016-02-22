@@ -2,7 +2,7 @@ package cn.mutils.app.event.listener;
 
 import android.view.View;
 
-import cn.mutils.app.core.event.IListener;
+import cn.mutils.core.event.IListener;
 
 /**
  * Input change listener of framework

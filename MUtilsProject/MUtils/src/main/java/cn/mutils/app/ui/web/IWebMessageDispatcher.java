@@ -1,7 +1,7 @@
 package cn.mutils.app.ui.web;
 
-import cn.mutils.app.core.INoProguard;
 import cn.mutils.app.os.IContextProvider;
+import cn.mutils.core.INoProguard;
 
 /**
  * Web message dispatcher of framework

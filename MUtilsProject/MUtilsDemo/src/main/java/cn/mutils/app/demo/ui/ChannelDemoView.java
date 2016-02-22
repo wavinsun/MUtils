@@ -4,11 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import cn.mutils.app.core.annotation.res.FindViewById;
-import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.ui.StateView;
 import cn.mutils.app.util.AppUtil;
+import cn.mutils.core.annotation.res.FindViewById;
+import cn.mutils.core.annotation.res.SetContentView;
 
 @SetContentView(R.layout.view_channel)
 public class ChannelDemoView extends StateView {
@@ -32,6 +32,6 @@ public class ChannelDemoView extends StateView {
     public void onCreate() {
         super.onCreate();
 
-        mLog.setText(AppUtil.getAppMetaData(getContext(),"UMENG_CHANNEL"));
+        mLog.setText(AppUtil.getAppMetaData(getContext(), "UMENG_CHANNEL"));
     }
 }

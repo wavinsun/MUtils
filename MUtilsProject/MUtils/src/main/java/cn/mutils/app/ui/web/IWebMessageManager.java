@@ -1,7 +1,7 @@
 package cn.mutils.app.ui.web;
 
-import cn.mutils.app.core.IClearable;
 import cn.mutils.app.os.IContextProvider;
+import cn.mutils.core.IClearable;
 
 /**
  * Web message manager of framework

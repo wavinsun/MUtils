@@ -11,14 +11,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import cn.mutils.app.bluetooth.BluetoothConnection;
-import cn.mutils.app.core.annotation.event.OnClick;
-import cn.mutils.app.core.annotation.res.FindViewById;
-import cn.mutils.app.core.annotation.res.SetContentView;
-import cn.mutils.app.core.log.Logs;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.demo.ShellActivity;
 import cn.mutils.app.event.listener.OnActivityResultListener;
 import cn.mutils.app.ui.StateView;
+import cn.mutils.core.annotation.event.Click;
+import cn.mutils.core.annotation.res.FindViewById;
+import cn.mutils.core.annotation.res.SetContentView;
+import cn.mutils.core.log.Logs;
 
 
 @SetContentView(R.layout.view_bluetooth_client)
@@ -103,7 +103,7 @@ public class BluetoothClientDemoView extends StateView {
         });
     }
 
-    @OnClick(R.id.discovery)
+    @Click(R.id.discovery)
     protected void onClickDiscovery(View v) {
         ShellActivity.ShellExtra extra = new ShellActivity.ShellExtra();
         extra.setTitle(((TextView) v).getText().toString());
@@ -113,7 +113,7 @@ public class BluetoothClientDemoView extends StateView {
         startActivityForResult(intent, REQUEST_BLUETOOTH_DEVICE);
     }
 
-    @OnClick(R.id.send)
+    @Click(R.id.send)
     protected void onClickSend() {
         if (mConnection.getState() != BluetoothConnection.STATE_CONNECTED) {
             toast("Not Connected");

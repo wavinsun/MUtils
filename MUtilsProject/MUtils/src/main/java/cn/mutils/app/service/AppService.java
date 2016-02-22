@@ -7,13 +7,13 @@ import android.os.IBinder;
 import java.util.LinkedList;
 import java.util.List;
 
-import cn.mutils.app.core.task.IStoppable;
-import cn.mutils.app.core.task.IStoppableManager;
 import cn.mutils.app.net.INetQueue;
 import cn.mutils.app.net.INetQueueOwner;
 import cn.mutils.app.net.INetTask;
 import cn.mutils.app.net.NetQueue;
 import cn.mutils.app.ui.core.UICore;
+import cn.mutils.core.task.IStoppable;
+import cn.mutils.core.task.IStoppableManager;
 
 @SuppressWarnings("deprecation")
 public class AppService extends Service implements INetQueueOwner,

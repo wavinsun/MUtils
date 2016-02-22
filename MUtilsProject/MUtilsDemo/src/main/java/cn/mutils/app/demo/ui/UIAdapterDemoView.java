@@ -8,14 +8,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import cn.mutils.app.core.annotation.event.OnClick;
-import cn.mutils.app.core.annotation.res.FindViewById;
-import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.ui.StateView;
 import cn.mutils.app.ui.adapter.IItemView;
 import cn.mutils.app.ui.adapter.ItemView;
 import cn.mutils.app.ui.adapter.UIAdapter;
+import cn.mutils.core.annotation.event.Click;
+import cn.mutils.core.annotation.res.FindViewById;
+import cn.mutils.core.annotation.res.SetContentView;
 
 @SetContentView(R.layout.view_ui_adapter)
 public class UIAdapterDemoView extends StateView {
@@ -114,7 +114,7 @@ public class UIAdapterDemoView extends StateView {
             mConentText.setText(mDataProvider.getContent());
         }
 
-        @OnClick
+        @Click
         protected void onClick() {
             toast("You clicked item " + (mPosition + 1));
         }

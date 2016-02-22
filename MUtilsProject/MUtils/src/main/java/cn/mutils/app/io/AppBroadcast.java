@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import cn.mutils.app.core.reflect.ReflectUtil;
+import cn.mutils.core.reflect.ReflectUtil;
 
 @SuppressWarnings({"unchecked", "UnnecessaryInterfaceModifier"})
 public class AppBroadcast<EXTRA extends Extra> implements IBroadcast {

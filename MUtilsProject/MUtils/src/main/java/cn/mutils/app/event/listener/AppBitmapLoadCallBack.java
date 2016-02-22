@@ -7,8 +7,8 @@ import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.bitmap.callback.BitmapLoadCallBack;
 import com.lidroid.xutils.bitmap.callback.DefaultBitmapLoadCallBack;
 
-import cn.mutils.app.core.event.IListener;
 import cn.mutils.app.ui.core.IDefaultDrawableView;
+import cn.mutils.core.event.IListener;
 
 /**
  * Call back for BitmapUtils

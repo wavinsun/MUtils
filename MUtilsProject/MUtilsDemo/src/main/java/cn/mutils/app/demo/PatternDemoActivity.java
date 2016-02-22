@@ -3,9 +3,9 @@ package cn.mutils.app.demo;
 
 import android.os.Bundle;
 
-import cn.mutils.app.core.annotation.event.OnClick;
-import cn.mutils.app.core.annotation.res.SetContentView;
 import cn.mutils.app.demo.ui.BasicActivity;
+import cn.mutils.core.annotation.event.Click;
+import cn.mutils.core.annotation.res.SetContentView;
 
 @SetContentView(R.layout.activity_demo_pattern)
 public class PatternDemoActivity extends BasicActivity {
@@ -21,7 +21,7 @@ public class PatternDemoActivity extends BasicActivity {
         return true;
     }
 
-    @OnClick(R.id.go)
+    @Click(R.id.go)
     protected void onClickGo() {
         startPatternActivity();
     }

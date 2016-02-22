@@ -28,10 +28,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cn.mutils.app.R;
-import cn.mutils.app.core.err.CookieExpiredException;
-import cn.mutils.app.core.event.Dispatcher;
-import cn.mutils.app.core.event.listener.VersionUpdateListener;
-import cn.mutils.app.core.task.IStoppable;
 import cn.mutils.app.data.AsyncDataQueue;
 import cn.mutils.app.data.IAsyncDataQueue;
 import cn.mutils.app.data.IAsyncDataQueueListener;
@@ -53,6 +49,10 @@ import cn.mutils.app.ui.util.DoubleBackClickHelper;
 import cn.mutils.app.ui.util.WaitingLayerHelper;
 import cn.mutils.app.util.JPushHelper;
 import cn.mutils.app.util.UmengHelper;
+import cn.mutils.core.err.CookieExpiredException;
+import cn.mutils.core.event.Dispatcher;
+import cn.mutils.core.event.listener.VersionUpdateListener;
+import cn.mutils.core.task.IStoppable;
 
 @SuppressLint({"ShowToast", "InlinedApi"})
 public class AppActivity extends FragmentActivity implements IActivity, ISessionHolder {

@@ -13,7 +13,7 @@ import com.lidroid.xutils.BitmapUtils;
 
 import java.util.List;
 
-import cn.mutils.app.core.IPhotoItem;
+import cn.mutils.core.IPhotoItem;
 
 @SuppressWarnings({"UnnecessaryInterfaceModifier", "unused"})
 public class ImagePager extends ViewPager {

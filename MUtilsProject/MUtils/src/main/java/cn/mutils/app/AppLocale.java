@@ -7,8 +7,8 @@ import android.content.res.Resources;
 
 import java.util.Locale;
 
-import cn.mutils.app.core.text.StringUtil;
 import cn.mutils.app.util.AppUtil;
+import cn.mutils.core.text.StringUtil;
 
 /**
  * Language configuration for application

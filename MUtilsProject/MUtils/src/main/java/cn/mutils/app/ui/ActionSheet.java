@@ -18,11 +18,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.mutils.app.R;
-import cn.mutils.app.core.annotation.event.OnClick;
 import cn.mutils.app.ui.ActionSheet.ActionItem;
 import cn.mutils.app.ui.adapter.IItemView;
 import cn.mutils.app.ui.adapter.ItemFrame;
 import cn.mutils.app.ui.adapter.VLinearAdapter;
+import cn.mutils.core.annotation.event.Click;
 
 @SuppressWarnings({"deprecation", "UnnecessaryInterfaceModifier", "ResourceType", "unused"})
 public class ActionSheet<DATA_ITEM extends ActionItem> {
@@ -292,7 +292,7 @@ public class ActionSheet<DATA_ITEM extends ActionItem> {
             });
         }
 
-        @OnClick
+        @Click
         protected void onClick(View v) {
             OActionSheetAdapter<DATA_ITEM> adapter = (OActionSheetAdapter<DATA_ITEM>) getAdapter();
             ActionSheet<DATA_ITEM> actionSheet = adapter.getActionSheet();

@@ -10,10 +10,10 @@ import android.content.IntentFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.mutils.app.core.ILockable;
-import cn.mutils.app.core.event.IListener;
-import cn.mutils.app.core.task.IStoppableManager;
 import cn.mutils.app.task.ContextOwnerTask;
+import cn.mutils.core.ILockable;
+import cn.mutils.core.event.IListener;
+import cn.mutils.core.task.IStoppableManager;
 
 @SuppressWarnings({"ResourceType", "unused", "UnnecessaryInterfaceModifier"})
 public class DiscoveryTask extends ContextOwnerTask implements ILockable {

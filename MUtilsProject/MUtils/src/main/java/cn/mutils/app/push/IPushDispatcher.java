@@ -1,7 +1,7 @@
 package cn.mutils.app.push;
 
-import cn.mutils.app.core.INoProguard;
 import cn.mutils.app.os.IContextProvider;
+import cn.mutils.core.INoProguard;
 
 /**
  * Push dispatcher of framework

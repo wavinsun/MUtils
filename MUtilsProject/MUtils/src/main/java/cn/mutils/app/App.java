@@ -6,17 +6,17 @@ import android.content.Context;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
-import cn.mutils.app.core.codec.FlagUtil;
-import cn.mutils.app.core.log.Logs;
-import cn.mutils.app.core.task.RepeatTask;
-import cn.mutils.app.core.task.RepeatTask.RepeatTaskListener;
-import cn.mutils.app.core.task.RepeatTaskManager;
-import cn.mutils.app.core.util.Edition;
 import cn.mutils.app.os.IContextProvider;
 import cn.mutils.app.util.AppUtil;
 import cn.mutils.app.util.JPushHelper;
 import cn.mutils.app.util.ShareSDKHelper;
 import cn.mutils.app.util.UmengHelper;
+import cn.mutils.core.codec.FlagUtil;
+import cn.mutils.core.log.Logs;
+import cn.mutils.core.task.RepeatTask;
+import cn.mutils.core.task.RepeatTask.RepeatTaskListener;
+import cn.mutils.core.task.RepeatTaskManager;
+import cn.mutils.core.util.Edition;
 
 /**
  * Application of framework

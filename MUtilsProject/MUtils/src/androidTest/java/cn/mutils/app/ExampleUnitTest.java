@@ -9,10 +9,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cn.mutils.app.core.beans.BeanField;
-import cn.mutils.app.core.json.JsonUtil;
-import cn.mutils.app.core.reflect.ReflectUtil;
 import cn.mutils.app.util.AppUtil;
+import cn.mutils.core.beans.BeanField;
+import cn.mutils.core.json.JsonUtil;
+import cn.mutils.core.reflect.ReflectUtil;
 
 public class ExampleUnitTest extends ApplicationTestCase<Application> {
 

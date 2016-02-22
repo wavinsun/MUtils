@@ -18,9 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import cn.mutils.app.core.codec.FlagUtil;
 import cn.mutils.app.ui.core.IViewFinder;
 import cn.mutils.app.ui.core.UICore;
+import cn.mutils.core.codec.FlagUtil;
 
 @SuppressWarnings({"deprecation", "unused"})
 public class Alert implements IViewFinder {

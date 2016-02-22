@@ -16,9 +16,9 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import cn.mutils.app.AppBuildConfig;
-import cn.mutils.app.core.event.Dispatcher;
-import cn.mutils.app.core.event.IListener;
-import cn.mutils.app.core.log.Logs;
+import cn.mutils.core.event.Dispatcher;
+import cn.mutils.core.event.IListener;
+import cn.mutils.core.log.Logs;
 
 /**
  * This class does all the work for setting up and managing Bluetooth

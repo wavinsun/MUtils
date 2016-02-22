@@ -8,13 +8,13 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import cn.mutils.app.core.annotation.Ignore;
-import cn.mutils.app.core.annotation.Primitive;
-import cn.mutils.app.core.annotation.Primitive.PrimitiveType;
-import cn.mutils.app.core.beans.BeanCache;
-import cn.mutils.app.core.beans.BeanField;
-import cn.mutils.app.core.json.JsonUtil;
 import cn.mutils.app.util.AppUtil;
+import cn.mutils.core.annotation.Ignore;
+import cn.mutils.core.annotation.Primitive;
+import cn.mutils.core.annotation.PrimitiveType;
+import cn.mutils.core.beans.BeanCache;
+import cn.mutils.core.beans.BeanField;
+import cn.mutils.core.json.JsonUtil;
 
 /**
  * JOSN or XML serializer for shared preferences

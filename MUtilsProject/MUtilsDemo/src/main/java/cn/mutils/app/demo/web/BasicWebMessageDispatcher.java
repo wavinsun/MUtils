@@ -2,11 +2,11 @@ package cn.mutils.app.demo.web;
 
 import org.json.JSONObject;
 
-import cn.mutils.app.core.json.JsonUtil;
-import cn.mutils.app.core.reflect.ReflectUtil;
 import cn.mutils.app.demo.web.BasicWebMessage.BasicWebMessageData;
 import cn.mutils.app.demo.web.BasicWebMessage.BasicWebMessageResult;
 import cn.mutils.app.ui.web.WebMessageDispatcher;
+import cn.mutils.core.json.JsonUtil;
+import cn.mutils.core.reflect.ReflectUtil;
 
 @SuppressWarnings({"serial", "unchecked"})
 public abstract class BasicWebMessageDispatcher<DATA extends BasicWebMessageData, RESULT extends BasicWebMessageResult>

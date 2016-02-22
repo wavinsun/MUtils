@@ -1,7 +1,7 @@
 package cn.mutils.app.lbs;
 
-import cn.mutils.app.core.INoProguard;
-import cn.mutils.app.core.json.JsonUtil;
+import cn.mutils.core.INoProguard;
+import cn.mutils.core.json.JsonUtil;
 
 /**
  * Compatibility for AMap and Baidu Map
