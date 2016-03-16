@@ -165,10 +165,6 @@
                 style="@style/MainBtn"
                 android:text="Pattern"/>
 
-            <TextView android:id="@+id/bluetooth"
-                style="@style/MainBtn"
-                android:text="Bluetooth"/>
-
             <TextView android:id="@+id/view_type"
                 style="@style/MainBtn"
                 android:text="ViewType"/>
