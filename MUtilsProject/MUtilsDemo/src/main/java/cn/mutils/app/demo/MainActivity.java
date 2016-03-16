@@ -11,7 +11,6 @@ import cn.mutils.app.demo.ui.ActionSheetDemoView;
 import cn.mutils.app.demo.ui.AlertDemoView;
 import cn.mutils.app.demo.ui.AnimTaskDemoView;
 import cn.mutils.app.demo.ui.BasicActivity;
-import cn.mutils.app.demo.ui.BluetoothDemoView;
 import cn.mutils.app.demo.ui.BusyDemoView;
 import cn.mutils.app.demo.ui.ChannelDemoView;
 import cn.mutils.app.demo.ui.ConfItemDemoView;
@@ -69,7 +68,7 @@ public class MainActivity extends BasicActivity {
             R.id.pay, R.id.qrcode, R.id.share, R.id.action_sheet, R.id.amap, R.id.date_chooser, R.id.prompt,
             R.id.progress_view, R.id.tip_view, R.id.busy, R.id.path_button, R.id.hlinear_adapter, R.id.index_view,
             R.id.web_frame, R.id.intent_executor, R.id.umeng, R.id.surface_viewer, R.id.progress_icon, R.id.channel,
-            R.id.bluetooth, R.id.view_type})
+            R.id.view_type})
     protected void onClick(View v) {
         Intent intent = new Intent(this, ShellActivity.class);
         ShellExtra extra = new ShellExtra();
@@ -160,9 +159,6 @@ public class MainActivity extends BasicActivity {
                 break;
             case R.id.channel:
                 extra.setViewName(ChannelDemoView.class.getName());
-                break;
-            case R.id.bluetooth:
-                extra.setViewName(BluetoothDemoView.class.getName());
                 break;
             case R.id.view_type:
                 extra.setViewName(ViewTypeDemoView.class.getName());
