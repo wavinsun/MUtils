@@ -74,7 +74,7 @@ public class ConfItem extends PrefItem implements IAssetItem {
             }
         } else if (mAssetType == TYPE_ASSET_JSON) {
             try {
-                JsonUtil.convert(AppUtil.getAssetString(context, mAssetFileName), this);
+                JsonUtil.fromString(AppUtil.getAssetString(context, mAssetFileName), this);
                 mAssetCache.fromTarget();
                 return true;
             } catch (Exception e) {

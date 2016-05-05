@@ -77,7 +77,7 @@ public class HelloWorldPushDispatcher extends PushDispathcer<HelloWorldMessage> 
     @Override
     public HelloWorldMessage translateMessage() {
         try {
-            return JsonUtil.convertFromJson(mData, HelloWorldMessage.class);
+            return JsonUtil.fromJson(mData, HelloWorldMessage.class);
         } catch (Exception e) {
             return null;
         }

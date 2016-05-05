@@ -29,14 +29,14 @@ public class PushManager extends ContextOwner implements IPushManager {
         }
         Object json = null;
         try {
-            json = JsonUtil.toJSON(message);
+            json = JsonUtil.fromString(message);
         } catch (Exception e) {
             return;
         }
         for (Class<? extends IPushDispatcher<?>> dispatcherClass : mDispatchers) {
             IPushDispatcher dispatcher = null;
             try {
-                dispatcher = JsonUtil.convertFromJson(json, dispatcherClass);
+                dispatcher = JsonUtil.fromJson(json, dispatcherClass);
                 dispatcher.setManager(this);
                 if (!dispatcher.preTranslateMessage()) {
                     Object msg = dispatcher.translateMessage();

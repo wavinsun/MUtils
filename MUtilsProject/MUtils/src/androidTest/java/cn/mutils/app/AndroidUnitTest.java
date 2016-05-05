@@ -14,9 +14,9 @@ import cn.mutils.core.beans.BeanField;
 import cn.mutils.core.json.JsonUtil;
 import cn.mutils.core.reflect.ReflectUtil;
 
-public class ExampleUnitTest extends ApplicationTestCase<Application> {
+public class AndroidUnitTest extends ApplicationTestCase<Application> {
 
-    public ExampleUnitTest() {
+    public AndroidUnitTest() {
         super(Application.class);
     }
 
@@ -49,7 +49,7 @@ public class ExampleUnitTest extends ApplicationTestCase<Application> {
     }
 
     public void test() throws Exception {
-        testAppUtil();
+        testBeanField();
     }
 
     protected void testAppUtil() throws Exception {
@@ -86,21 +86,20 @@ public class ExampleUnitTest extends ApplicationTestCase<Application> {
         for (int i = 0; i < 3; i++) {
             f.add(new D());
         }
-        String str = JsonUtil.convert(f);
+        String str = JsonUtil.toString(f);
         for (int i = 0; i < 3; i++) {
-            JsonUtil.convert(str, F.class);
+            JsonUtil.fromString(str, F.class);
         }
         C c = new C();
         for (int i = 0; i < 3; i++) {
             c.t.add(i);
         }
-        String sc = JsonUtil.convert(c);
+        String sc = JsonUtil.toString(c);
         for (int i = 0; i < 3; i++) {
-            P<ArrayList<Integer>> p = JsonUtil.convert(sc, P.class, c.getClass().getGenericSuperclass());
-            String tStr = JsonUtil.convert(p.t);
+            P<ArrayList<Integer>> p = JsonUtil.fromString(sc, P.class, c.getClass().getGenericSuperclass());
+            String tStr = JsonUtil.toString(p.t);
             System.out.println(tStr);
         }
-        System.out.println("OK");
     }
 
 }

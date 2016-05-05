@@ -146,7 +146,7 @@ public class AppLocation implements INoProguard {
     @Override
     public String toString() {
         try {
-            return JsonUtil.convert(this);
+            return JsonUtil.toString(this);
         } catch (Exception e) {
             return "";
         }

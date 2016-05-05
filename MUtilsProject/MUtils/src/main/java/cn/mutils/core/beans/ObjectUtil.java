@@ -57,7 +57,7 @@ public class ObjectUtil {
 
     public static <T> T copy(T src) {
         try {
-            return (T) JsonUtil.convertFromJson(JsonUtil.convertToJson(src), src.getClass());
+            return (T) JsonUtil.fromJson(JsonUtil.toJson(src), src.getClass());
         } catch (Exception e) {
             return null;
         }
@@ -65,7 +65,7 @@ public class ObjectUtil {
 
     public static boolean copy(Object target, Object src) {
         try {
-            JsonUtil.convertFromJson(JsonUtil.convertToJson(src), target);
+            JsonUtil.fromJson(JsonUtil.toJson(src), target);
             return true;
         } catch (Exception e) {
             return false;
