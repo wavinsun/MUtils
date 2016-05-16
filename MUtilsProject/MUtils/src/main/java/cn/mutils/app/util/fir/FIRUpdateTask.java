@@ -1,9 +1,11 @@
 package cn.mutils.app.util.fir;
 
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+
 import cn.mutils.app.net.NetTask;
 import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateReq;
 import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateRes;
-import cn.mutils.core.INoProguard;
 import cn.mutils.core.err.ErrorCodeException;
 
 /**
@@ -12,16 +14,22 @@ import cn.mutils.core.err.ErrorCodeException;
  * http://fir.im/dev/api
  */
 @SuppressWarnings("serial")
+@Keep
+@KeepClassMembers
 public class FIRUpdateTask extends NetTask<FIRUpdateReq, FIRUpdateRes> {
 
-    public static class FIRUpdateReq implements INoProguard {
+    @Keep
+    @KeepClassMembers
+    public static class FIRUpdateReq {
         public String bundle_id;
         public String api_token;
         public String type = "android";
     }
 
     @SuppressWarnings("unused")
-    public static class FIRUpdateRes implements INoProguard {
+    @Keep
+    @KeepClassMembers
+    public static class FIRUpdateRes {
         public int code = -1;
         public String message;
 

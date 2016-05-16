@@ -10,7 +10,9 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
-import cn.mutils.core.INoProguard;
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+
 import cn.mutils.core.log.Logs;
 import cn.mutils.core.text.StringUtil;
 import cn.mutils.core.time.DateTime;
@@ -20,7 +22,9 @@ import cn.mutils.core.time.DateTime;
  */
 @SuppressLint("NewApi")
 @SuppressWarnings({"serial", "unused", "deprecation"})
-public class WebFrameChromeClient extends WebChromeClient implements INoProguard {
+@Keep
+@KeepClassMembers
+public class WebFrameChromeClient extends WebChromeClient {
 
     public static final int REQUEST_CODE_FILE_CHOOSER_DEFAULT = 10000;
 

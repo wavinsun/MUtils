@@ -9,12 +9,14 @@ import android.support.v4.app.NotificationCompat;
 
 import org.json.JSONObject;
 
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+
 import cn.mutils.app.demo.PushNotifyActivity;
 import cn.mutils.app.demo.PushNotifyActivity.DemoPushNotifyExtra;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.demo.push.HelloWorldPushDispatcher.HelloWorldMessage;
 import cn.mutils.app.push.PushDispathcer;
-import cn.mutils.core.INoProguard;
 import cn.mutils.core.json.JsonUtil;
 
 @SuppressWarnings("serial")
@@ -22,7 +24,9 @@ public class HelloWorldPushDispatcher extends PushDispathcer<HelloWorldMessage> 
 
     public static final int CODE_HELLO_WORLD = 1000;
 
-    public static class HelloWorldMessage implements INoProguard {
+    @Keep
+    @KeepClassMembers
+    public static class HelloWorldMessage {
 
         protected String mName;
 

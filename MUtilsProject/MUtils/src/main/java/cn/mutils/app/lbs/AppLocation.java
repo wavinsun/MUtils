@@ -1,13 +1,17 @@
 package cn.mutils.app.lbs;
 
-import cn.mutils.core.INoProguard;
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+
 import cn.mutils.core.json.JsonUtil;
 
 /**
  * Compatibility for AMap and Baidu Map
  */
 @SuppressWarnings({"serial", "unused"})
-public class AppLocation implements INoProguard {
+@Keep
+@KeepClassMembers
+public class AppLocation {
 
     /**
      * 海拔

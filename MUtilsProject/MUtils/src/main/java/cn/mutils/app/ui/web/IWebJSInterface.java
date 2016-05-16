@@ -2,13 +2,19 @@ package cn.mutils.app.ui.web;
 
 import android.webkit.JavascriptInterface;
 
-import cn.mutils.core.INoProguard;
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+import proguard.annotation.KeepImplementations;
+
 
 /**
  * Web JavaScript call interface of framework
  */
 @SuppressWarnings("unused")
-public interface IWebJSInterface extends INoProguard {
+@Keep
+@KeepClassMembers
+@KeepImplementations
+public interface IWebJSInterface {
 
     /**
      * Get WebFrame

@@ -1,6 +1,7 @@
 package cn.mutils.core.runtime;
 
-import cn.mutils.core.INoProguard;
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
 
 /**
  * Delegate of framework
@@ -8,7 +9,9 @@ import cn.mutils.core.INoProguard;
  * @param <T>
  */
 @SuppressWarnings("unchecked")
-public class Delegate<T extends Delegate> implements INoProguard {
+@Keep
+@KeepClassMembers
+public class Delegate<T extends Delegate> {
 
     /**
      * Delegate object

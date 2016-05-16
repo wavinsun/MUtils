@@ -3,8 +3,10 @@ package cn.mutils.app.io;
 import android.content.Intent;
 import android.os.Bundle;
 
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+
 import cn.mutils.app.util.AppUtil;
-import cn.mutils.core.INoProguard;
 import cn.mutils.core.json.JsonUtil;
 
 /**
@@ -12,7 +14,9 @@ import cn.mutils.core.json.JsonUtil;
  * JSON content for {@link Intent} and {@link Bundle}.
  */
 @SuppressWarnings({"serial", "unused"})
-public class Extra implements INoProguard {
+@Keep
+@KeepClassMembers
+public class Extra {
 
     public boolean getFrom(Intent intent) {
         try {

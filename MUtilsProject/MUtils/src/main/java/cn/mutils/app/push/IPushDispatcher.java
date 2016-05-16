@@ -1,12 +1,18 @@
 package cn.mutils.app.push;
 
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+import proguard.annotation.KeepImplementations;
+
 import cn.mutils.app.os.IContextProvider;
-import cn.mutils.core.INoProguard;
 
 /**
  * Push dispatcher of framework
  */
-public interface IPushDispatcher<MESSAGE> extends IContextProvider, INoProguard {
+@Keep
+@KeepClassMembers
+@KeepImplementations
+public interface IPushDispatcher<MESSAGE> extends IContextProvider {
 
     /**
      * Whether to intercept translate message
