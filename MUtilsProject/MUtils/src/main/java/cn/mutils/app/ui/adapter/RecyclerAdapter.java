@@ -10,7 +10,6 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 
 import cn.mutils.core.reflect.ReflectUtil;
-import cn.mutils.core.sort.IIndexItem;
 
 /**
  * RecyclerAdapter
@@ -23,49 +22,49 @@ public class RecyclerAdapter<DATA_ITEM> extends RecyclerView.Adapter<RecyclerAda
 
     protected Constructor<? extends IItemView<DATA_ITEM>> mItemViewConstructor;
 
-    public void setItemViewClass(Class<? extends IItemView<DATA_ITEM>> itemViewClass){
-        mItemViewConstructor= ReflectUtil.getConstructor(itemViewClass, Context.class);
+    public void setItemViewClass(Class<? extends IItemView<DATA_ITEM>> itemViewClass) {
+        mItemViewConstructor = ReflectUtil.getConstructor(itemViewClass, Context.class);
     }
 
-    public Context getContext(){
-        return mContainer==null?null:mContainer.getContext();
+    public Context getContext() {
+        return mContainer == null ? null : mContainer.getContext();
     }
 
-    public ViewGroup getContainer(){
+    public ViewGroup getContainer() {
         return this.mContainer;
     }
 
-    protected void onContainerChanged(){
+    protected void onContainerChanged() {
 
     }
 
-    public List<DATA_ITEM> getDataProvider(){
+    public List<DATA_ITEM> getDataProvider() {
         return mDataProvider;
     }
 
-    public void setDataProvider(List<DATA_ITEM> dataProvider){
-        this.mDataProvider=dataProvider;
+    public void setDataProvider(List<DATA_ITEM> dataProvider) {
+        this.mDataProvider = dataProvider;
         this.notifyDataSetChanged();
     }
 
     @Override
     public DATA_ITEM getItem(int position) {
-        return mDataProvider==null?null:mDataProvider.get(position);
+        return mDataProvider == null ? null : mDataProvider.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return mDataProvider==null?0:mDataProvider.size();
+        return mDataProvider == null ? 0 : mDataProvider.size();
     }
 
     @Override
-    public int getCount(){
-        return mDataProvider==null?0:mDataProvider.size();
+    public int getCount() {
+        return mDataProvider == null ? 0 : mDataProvider.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return getCount()==0;
+        return getCount() == 0;
     }
 
     @Override
@@ -103,17 +102,17 @@ public class RecyclerAdapter<DATA_ITEM> extends RecyclerView.Adapter<RecyclerAda
         return 1;
     }
 
-    public IItemView<DATA_ITEM> getItemView(int itemViewType){
-        return mItemViewConstructor==null?null:ReflectUtil.newInstance(mItemViewConstructor,getContext());
+    public IItemView<DATA_ITEM> getItemView(int itemViewType) {
+        return mItemViewConstructor == null ? null : ReflectUtil.newInstance(mItemViewConstructor, getContext());
     }
 
     @Override
     public RecyclerViewHolder<DATA_ITEM> onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(this.mContainer==null){
-            this.mContainer=parent;
+        if (this.mContainer == null) {
+            this.mContainer = parent;
             this.onContainerChanged();
         }
-        IItemView<DATA_ITEM> itemView=getItemView(viewType);
+        IItemView<DATA_ITEM> itemView = getItemView(viewType);
         itemView.setAdapter(this);
         itemView.onCreate();
         return new RecyclerViewHolder<DATA_ITEM>(itemView.toView());
@@ -121,8 +120,8 @@ public class RecyclerAdapter<DATA_ITEM> extends RecyclerView.Adapter<RecyclerAda
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder<DATA_ITEM> holder, int position) {
-        IItemView<DATA_ITEM> itemView=holder.getItemView();
-        if(itemView==null){
+        IItemView<DATA_ITEM> itemView = holder.getItemView();
+        if (itemView == null) {
             return;
         }
         itemView.setPosition(position);
@@ -130,14 +129,14 @@ public class RecyclerAdapter<DATA_ITEM> extends RecyclerView.Adapter<RecyclerAda
         itemView.onResume();
     }
 
-    public static class RecyclerViewHolder<DATA_ITEM> extends RecyclerView.ViewHolder{
+    public static class RecyclerViewHolder<DATA_ITEM> extends RecyclerView.ViewHolder {
 
-        public RecyclerViewHolder(View itemView){
+        public RecyclerViewHolder(View itemView) {
             super(itemView);
         }
 
-        public IItemView<DATA_ITEM> getItemView(){
-            return (itemView instanceof IIndexItem)?((IItemView<DATA_ITEM>)itemView):null;
+        public IItemView<DATA_ITEM> getItemView() {
+            return (itemView instanceof IItemView) ? ((IItemView<DATA_ITEM>) itemView) : null;
         }
 
     }

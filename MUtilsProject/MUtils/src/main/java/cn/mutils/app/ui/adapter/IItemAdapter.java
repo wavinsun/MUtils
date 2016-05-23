@@ -10,7 +10,7 @@ import cn.mutils.app.os.IContextProvider;
 /**
  * IItemAdapter
  */
-public interface IItemAdapter<DATA_ITEM> extends ListAdapter, SpinnerAdapter,IContextProvider {
+public interface IItemAdapter<DATA_ITEM> extends ListAdapter, SpinnerAdapter, IContextProvider {
 
     List<DATA_ITEM> getDataProvider();
 

@@ -27,6 +27,7 @@ import cn.mutils.app.demo.ui.ProgressIconDemoView;
 import cn.mutils.app.demo.ui.ProgressViewDemoView;
 import cn.mutils.app.demo.ui.PromptDemoView;
 import cn.mutils.app.demo.ui.QRCodeDemoView;
+import cn.mutils.app.demo.ui.RecyclerAdapterDemoView;
 import cn.mutils.app.demo.ui.ShareDemoView;
 import cn.mutils.app.demo.ui.SurfaceViewerDemoView;
 import cn.mutils.app.demo.ui.TestDemoView;
@@ -68,7 +69,7 @@ public class MainActivity extends BasicActivity {
             R.id.pay, R.id.qrcode, R.id.share, R.id.action_sheet, R.id.amap, R.id.date_chooser, R.id.prompt,
             R.id.progress_view, R.id.tip_view, R.id.busy, R.id.path_button, R.id.hlinear_adapter, R.id.index_view,
             R.id.web_frame, R.id.intent_executor, R.id.umeng, R.id.surface_viewer, R.id.progress_icon, R.id.channel,
-            R.id.view_type})
+            R.id.view_type, R.id.recycler_adapter})
     protected void onClick(View v) {
         Intent intent = new Intent(this, ShellActivity.class);
         ShellExtra extra = new ShellExtra();
@@ -162,6 +163,9 @@ public class MainActivity extends BasicActivity {
                 break;
             case R.id.view_type:
                 extra.setViewName(ViewTypeDemoView.class.getName());
+                break;
+            case R.id.recycler_adapter:
+                extra.setViewName(RecyclerAdapterDemoView.class.getName());
                 break;
             default:
                 break;

@@ -168,6 +168,10 @@
             <TextView android:id="@+id/view_type"
                 style="@style/MainBtn"
                 android:text="ViewType"/>
+
+            <TextView android:id="@+id/recycler_adapter"
+                 style="@style/MainBtn"
+                 android:text="RecyclerAdapter"/>
             
         </cn.mutils.app.ui.FlowLayout>
     </ScrollView>
