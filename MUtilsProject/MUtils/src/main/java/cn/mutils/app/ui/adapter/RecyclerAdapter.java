@@ -13,7 +13,7 @@ import cn.mutils.core.reflect.ReflectUtil;
 import cn.mutils.core.sort.IIndexItem;
 
 /**
- * Created by wenhua.ywh on 2016/5/23.
+ * RecyclerAdapter
  */
 public class RecyclerAdapter<DATA_ITEM> extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder<DATA_ITEM>> implements IItemAdapter<DATA_ITEM> {
 

@@ -8,7 +8,7 @@ import java.util.List;
 import cn.mutils.app.os.IContextProvider;
 
 /**
- * Created by wenhua.ywh on 2016/5/23.
+ * IItemAdapter
  */
 public interface IItemAdapter<DATA_ITEM> extends ListAdapter, SpinnerAdapter,IContextProvider {
 
