@@ -15,7 +15,7 @@ import cn.mutils.core.reflect.ReflectUtil;
  * Provide object-oriented item view
  */
 @SuppressWarnings({"unchecked", "unused"})
-public class UIAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvider {
+public class ItemAdapter<DATA_ITEM> extends BaseAdapter implements IItemAdapter<DATA_ITEM> {
 
     /**
      * Container who hold item views
@@ -58,7 +58,7 @@ public class UIAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvide
      *
      * @see #mContainer
      */
-    public View getContainer() {
+    public ViewGroup getContainer() {
         return this.mContainer;
     }
 
@@ -124,7 +124,7 @@ public class UIAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvide
      *
      * @see IItemView
      */
-    public IItemView<DATA_ITEM> getItemView(int position) {
+    public IItemView<DATA_ITEM> getItemView(int itemViewType) {
         if (mItemViewConstructor == null) {
             return null;
         }
@@ -145,7 +145,7 @@ public class UIAdapter<DATA_ITEM> extends BaseAdapter implements IContextProvide
         IItemView<DATA_ITEM> itemView = (IItemView<DATA_ITEM>) convertView;
         boolean isCreated = itemView != null;
         if (!isCreated) {
-            itemView = this.getItemView(position);
+            itemView = this.getItemView(this.getItemViewType(position));
             itemView.setAdapter(this);
         }
         itemView.setPosition(position);

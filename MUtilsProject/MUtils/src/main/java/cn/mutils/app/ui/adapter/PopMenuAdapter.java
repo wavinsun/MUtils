@@ -5,7 +5,7 @@ import cn.mutils.app.ui.PopMenu;
 /**
  * Adapter for {@link PopMenu}
  * 
- * @see UIAdapter
+ * @see ItemAdapter
  */
 public abstract class PopMenuAdapter<DATA_ITEM> extends VLinearAdapter<DATA_ITEM> {
 

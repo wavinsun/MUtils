@@ -16,7 +16,7 @@ public abstract class ItemFrame<DATA_ITEM> extends FrameLayout implements IItemV
 
 	protected DATA_ITEM mDataProvider;
 
-	protected UIAdapter<DATA_ITEM> mAdapter;
+	protected IItemAdapter<DATA_ITEM> mAdapter;
 
 	public ItemFrame(Context context) {
 		super(context);
@@ -30,11 +30,11 @@ public abstract class ItemFrame<DATA_ITEM> extends FrameLayout implements IItemV
 		super(context, attrs, defStyle);
 	}
 
-	public void setAdapter(UIAdapter<DATA_ITEM> adapter) {
+	public void setAdapter(IItemAdapter<DATA_ITEM> adapter) {
 		mAdapter = adapter;
 	}
 
-	public UIAdapter<DATA_ITEM> getAdapter() {
+	public IItemAdapter<DATA_ITEM> getAdapter() {
 		return mAdapter;
 	}
 

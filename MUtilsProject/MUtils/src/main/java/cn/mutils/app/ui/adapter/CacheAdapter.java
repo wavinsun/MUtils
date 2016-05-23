@@ -10,10 +10,10 @@ import java.util.List;
  * Cache Adapter who provide ability of {@link AdapterView} to general view
  *
  * @see AdapterView
- * @see UIAdapter
+ * @see ItemAdapter
  */
 @SuppressWarnings("unused")
-public abstract class CacheAdapter<DATA_ITEM, CACHE_ITEM> extends UIAdapter<DATA_ITEM> {
+public abstract class CacheAdapter<DATA_ITEM, CACHE_ITEM> extends ItemAdapter<DATA_ITEM> {
 
     /**
      * Cache views

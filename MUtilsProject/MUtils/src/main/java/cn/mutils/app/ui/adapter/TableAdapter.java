@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Adapter for {@link TableLayout}
  *
- * @see UIAdapter
+ * @see ItemAdapter
  */
 public abstract class TableAdapter<DATA_ITEM> extends CacheAdapter<DATA_ITEM, List<IItemView<DATA_ITEM>>> {
 
@@ -84,8 +84,9 @@ public abstract class TableAdapter<DATA_ITEM> extends CacheAdapter<DATA_ITEM, Li
         OTableRow row = new OTableRow(getContext());
         row.setColumn(mColumnCount);
         List<IItemView<DATA_ITEM>> rowViews = new LinkedList<IItemView<DATA_ITEM>>();
+        int viewType=getItemViewType(-1);
         for (int j = 0; j < mColumnCount; j++) {
-            IItemView<DATA_ITEM> itemView = getItemView(-1);
+            IItemView<DATA_ITEM> itemView = getItemView(viewType);
             itemView.setAdapter(this);
             itemView.onCreate();
             fixItemViewParams(itemView);
@@ -115,13 +116,14 @@ public abstract class TableAdapter<DATA_ITEM> extends CacheAdapter<DATA_ITEM, Li
         }
         int newColumnCount = mColumnCount + transform;
         int containerRows = mContainer.getChildCount();
+        int viewType=getItemViewType(-1);
         if (transform > 0) {// column increase
             for (int i = 0, size = containerRows; i < size; i++) {
                 OTableRow row = mCacheRows.get(i);
                 row.setColumn(newColumnCount);
                 List<IItemView<DATA_ITEM>> rowViews = mCacheViews.get(i);
                 for (int j = 0; j < transform; j++) {
-                    IItemView<DATA_ITEM> itemView = getItemView(-1);
+                    IItemView<DATA_ITEM> itemView = getItemView(viewType);
                     itemView.setAdapter(this);
                     itemView.onCreate();
                     fixItemViewParams(itemView);
@@ -171,8 +173,9 @@ public abstract class TableAdapter<DATA_ITEM> extends CacheAdapter<DATA_ITEM, Li
             newRowViews.add(itemView);
             newRow.addView(itemView.toView());
         }
+        int viewType=getItemViewType(-1);
         for (int i = newRowViews.size(); i < columnCount; i++) {
-            IItemView<DATA_ITEM> itemView = getItemView(-1);
+            IItemView<DATA_ITEM> itemView = getItemView(viewType);
             itemView.setAdapter(this);
             itemView.onCreate();
             fixItemViewParams(itemView);

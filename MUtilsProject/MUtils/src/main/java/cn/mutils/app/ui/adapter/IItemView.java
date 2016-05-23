@@ -12,8 +12,8 @@ import cn.mutils.app.ui.core.IViewFinder;
  * Object-oriented for
  * {@link BaseAdapter#getView(int, View, android.view.ViewGroup)}
  *
- * @see UIAdapter#getItemView(int)
- * @see UIAdapter#getView(int, View, android.view.ViewGroup)
+ * @see IItemAdapter#getItemView(int)
+ * @see ItemAdapter#getView(int, View, android.view.ViewGroup)
  */
 @SuppressWarnings("unused")
 public interface IItemView<DATA_ITEM> extends IView, IViewFinder, IContentViewOwner, IContextProvider {
@@ -21,9 +21,9 @@ public interface IItemView<DATA_ITEM> extends IView, IViewFinder, IContentViewOw
     /**
      * Get Adapter for IItemView.
      *
-     * @return {@link UIAdapter}
+     * @return {@link ItemAdapter}
      */
-    UIAdapter<DATA_ITEM> getAdapter();
+    IItemAdapter<DATA_ITEM> getAdapter();
 
     /**
      * Set Adapter for IItemView.
@@ -31,9 +31,9 @@ public interface IItemView<DATA_ITEM> extends IView, IViewFinder, IContentViewOw
      * It called by framework.
      *
      * @param adapter Adapter
-     * @see UIAdapter#getView(int, View, android.view.ViewGroup)
+     * @see ItemAdapter#getView(int, View, android.view.ViewGroup)
      */
-    void setAdapter(UIAdapter<DATA_ITEM> adapter);
+    void setAdapter(IItemAdapter<DATA_ITEM> adapter);
 
     /**
      * Get position for IItemView.
@@ -44,7 +44,7 @@ public interface IItemView<DATA_ITEM> extends IView, IViewFinder, IContentViewOw
      * Set position for IItemView.<br>
      * It called by framework.
      *
-     * @see UIAdapter#getView(int, View, android.view.ViewGroup)
+     * @see ItemAdapter#getView(int, View, android.view.ViewGroup)
      */
     void setPosition(int position);
 
@@ -56,28 +56,28 @@ public interface IItemView<DATA_ITEM> extends IView, IViewFinder, IContentViewOw
     /**
      * Set data provider for IItemView.
      *
-     * @see UIAdapter#getView(int, View, android.view.ViewGroup)
+     * @see ItemAdapter#getView(int, View, android.view.ViewGroup)
      */
     void setDataProvider(DATA_ITEM dataProvider);
 
     /**
      * Notify data set changed by IItemView
      *
-     * @see UIAdapter#notifyDataSetChanged()
+     * @see ItemAdapter#notifyDataSetChanged()
      */
     void notifyDataSetChanged();
 
     /**
      * IItemView creation
      *
-     * @see UIAdapter#getView(int, View, android.view.ViewGroup)
+     * @see ItemAdapter#getView(int, View, android.view.ViewGroup)
      */
     void onCreate();
 
     /**
      * IItemView reuse
      *
-     * @see UIAdapter#getView(int, View, android.view.ViewGroup)
+     * @see ItemAdapter#getView(int, View, android.view.ViewGroup)
      */
     void onResume();
 

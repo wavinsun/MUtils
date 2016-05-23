@@ -33,7 +33,7 @@
             <TextView
                 android:id="@+id/ui_adapter"
                 style="@style/MainBtn"
-                android:text="UIAdapter"/>
+                android:text="ItemAdapter"/>
             
             <TextView
                 android:id="@+id/zip"

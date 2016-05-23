@@ -16,7 +16,7 @@ public abstract class ItemView<DATA_ITEM> extends RelativeLayout implements IIte
 
 	protected DATA_ITEM mDataProvider;
 
-	protected UIAdapter<DATA_ITEM> mAdapter;
+	protected IItemAdapter<DATA_ITEM> mAdapter;
 
 	public ItemView(Context context) {
 		super(context);
@@ -30,11 +30,11 @@ public abstract class ItemView<DATA_ITEM> extends RelativeLayout implements IIte
 		super(context, attrs, defStyle);
 	}
 
-	public void setAdapter(UIAdapter<DATA_ITEM> adapter) {
+	public void setAdapter(IItemAdapter<DATA_ITEM> adapter) {
 		mAdapter = adapter;
 	}
 
-	public UIAdapter<DATA_ITEM> getAdapter() {
+	public IItemAdapter<DATA_ITEM> getAdapter() {
 		return mAdapter;
 	}
 

@@ -31,7 +31,7 @@ import cn.mutils.app.demo.ui.ShareDemoView;
 import cn.mutils.app.demo.ui.SurfaceViewerDemoView;
 import cn.mutils.app.demo.ui.TestDemoView;
 import cn.mutils.app.demo.ui.TipViewDemoView;
-import cn.mutils.app.demo.ui.UIAdapterDemoView;
+import cn.mutils.app.demo.ui.ItemAdapterDemoView;
 import cn.mutils.app.demo.ui.UmengDemoView;
 import cn.mutils.app.demo.ui.ViewTypeDemoView;
 import cn.mutils.app.demo.ui.WebFrameDemoView;
@@ -80,7 +80,7 @@ public class MainActivity extends BasicActivity {
                 extra.setViewName(TestDemoView.class.getName());
                 break;
             case R.id.ui_adapter:
-                extra.setViewName(UIAdapterDemoView.class.getName());
+                extra.setViewName(ItemAdapterDemoView.class.getName());
                 break;
             case R.id.zip:
                 extra.setViewName(ZipDemoView.class.getName());

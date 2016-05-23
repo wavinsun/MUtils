@@ -11,29 +11,29 @@ import java.util.ArrayList;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.ui.StateView;
 import cn.mutils.app.ui.adapter.IItemView;
+import cn.mutils.app.ui.adapter.ItemAdapter;
 import cn.mutils.app.ui.adapter.ItemView;
-import cn.mutils.app.ui.adapter.UIAdapter;
 import cn.mutils.core.annotation.event.Click;
 import cn.mutils.core.annotation.res.FindViewById;
 import cn.mutils.core.annotation.res.SetContentView;
 
 @SetContentView(R.layout.view_ui_adapter)
-public class UIAdapterDemoView extends StateView {
+public class ItemAdapterDemoView extends StateView {
 
     @FindViewById(R.id.list)
     protected ListView mList;
 
     protected MyAdapter mAdapter;
 
-    public UIAdapterDemoView(Context context) {
+    public ItemAdapterDemoView(Context context) {
         super(context);
     }
 
-    public UIAdapterDemoView(Context context, AttributeSet attrs) {
+    public ItemAdapterDemoView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public UIAdapterDemoView(Context context, AttributeSet attrs, int defStyle) {
+    public ItemAdapterDemoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -78,10 +78,10 @@ public class UIAdapterDemoView extends StateView {
 
     }
 
-    class MyAdapter extends UIAdapter<MyItem> {
+    class MyAdapter extends ItemAdapter<MyItem> {
 
         @Override
-        public IItemView<MyItem> getItemView(int position) {
+        public IItemView<MyItem> getItemView(int itemViewType) {
             return new MyItemView(getContext());
         }
 
