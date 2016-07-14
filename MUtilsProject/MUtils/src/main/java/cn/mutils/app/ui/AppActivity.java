@@ -33,6 +33,7 @@ import cn.mutils.app.data.IAsyncDataQueue;
 import cn.mutils.app.data.IAsyncDataQueueListener;
 import cn.mutils.app.data.IAsyncDataTask;
 import cn.mutils.app.event.listener.OnActivityResultListener;
+import cn.mutils.app.jpush.IJPushHelper;
 import cn.mutils.app.net.INetQueue;
 import cn.mutils.app.net.INetQueueListener;
 import cn.mutils.app.net.INetTask;
@@ -47,11 +48,11 @@ import cn.mutils.app.ui.core.UICore;
 import cn.mutils.app.ui.pattern.PatternLayerHelper;
 import cn.mutils.app.ui.util.DoubleBackClickHelper;
 import cn.mutils.app.ui.util.WaitingLayerHelper;
-import cn.mutils.app.util.JPushHelper;
-import cn.mutils.app.util.UmengHelper;
+import cn.mutils.app.umeng.IUmengHelper;
 import cn.mutils.core.err.CookieExpiredException;
 import cn.mutils.core.event.Dispatcher;
 import cn.mutils.core.event.listener.VersionUpdateListener;
+import cn.mutils.core.runtime.CC;
 import cn.mutils.core.task.IStoppable;
 
 @SuppressLint({"ShowToast", "InlinedApi"})
@@ -59,8 +60,8 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 
     protected PatternLayerHelper mPatternLayerHelper;
     protected WaitingLayerHelper mWaitingLayerHelper;
-    protected UmengHelper mUmengHelper;
-    protected JPushHelper mJHelper;
+    protected IUmengHelper mUmengHelper;
+    protected IJPushHelper mJHelper;
 
     protected AsyncDataQueue mAsyncDataQueue;
     protected NetQueue mNetQueue;
@@ -330,8 +331,8 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
         UICore.injectContentView(this);
 
         mRunning = true;
-        mUmengHelper = new UmengHelper();
-        mJHelper = new JPushHelper();
+        mUmengHelper = CC.getService(IUmengHelper.class);
+        mJHelper = CC.getService(IJPushHelper.class);
     }
 
     @Override
@@ -358,8 +359,12 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
         if (mPatternLayerHelper != null) {
             mPatternLayerHelper.onResume();
         }
-        mUmengHelper.delegate().onResume(this);
-        mJHelper.delegate().onResume(this);
+        if (mUmengHelper != null) {
+            mUmengHelper.onResume(this);
+        }
+        if (mJHelper != null) {
+            mJHelper.onResume(this);
+        }
         if (mRunOnceOnResumeList != null) {
             for (Runnable r : mRunOnceOnResumeList) {
                 r.run();
@@ -370,8 +375,12 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
 
     @Override
     protected void onPause() {
-        mUmengHelper.delegate().onPause(this);
-        mJHelper.delegate().onPause(this);
+        if (mUmengHelper != null) {
+            mUmengHelper.onPause(this);
+        }
+        if (mJHelper != null) {
+            mJHelper.onPause(this);
+        }
         mRunning = false;
         UICore.dispatchPause(this);
         super.onPause();
@@ -419,7 +428,9 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
         }
-        mUmengHelper.delegate().onDestroy(this);
+        if (mUmengHelper != null) {
+            mUmengHelper.onDestroy(this);
+        }
         if (mWaitingLayerHelper != null) {
             mWaitingLayerHelper.onDestroy();
         }
@@ -648,15 +659,24 @@ public class AppActivity extends FragmentActivity implements IActivity, ISession
     }
 
     public boolean hasNewVersion() {
-        return mUmengHelper.delegate().hasNewVersion(this);
+        if (mUmengHelper == null) {
+            return false;
+        }
+        return mUmengHelper.hasNewVersion(this);
     }
 
     public void checkNewVersion(VersionUpdateListener listener) {
-        mUmengHelper.delegate().checkNewVersion(this, listener);
+        if (mUmengHelper == null) {
+            return;
+        }
+        mUmengHelper.checkNewVersion(this, listener);
     }
 
     public void feedback() {
-        mUmengHelper.delegate().feedback(this);
+        if (mUmengHelper == null) {
+            return;
+        }
+        mUmengHelper.feedback(this);
     }
 
     class OnClickTitleBoxBackButtonListener implements OnClickListener {

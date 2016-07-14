@@ -54,12 +54,13 @@ import java.util.List;
 import java.util.Locale;
 
 import cn.mutils.app.AppLocale;
-import cn.mutils.core.archive.Zip;
+import cn.mutils.core.archive.IZip;
 import cn.mutils.core.beans.ObjectUtil;
 import cn.mutils.core.collection.CollectionUtil;
 import cn.mutils.core.crypto.AESUtil;
 import cn.mutils.core.io.IOUtil;
 import cn.mutils.core.math.NumberUtil;
+import cn.mutils.core.runtime.CC;
 import cn.mutils.core.text.StringUtil;
 import cn.mutils.core.time.TimeUtil;
 
@@ -344,11 +345,15 @@ public class AppUtil {
      * Get byte array of assets zip file
      */
     public static byte[] getAssetZipBytes(Context context, String fileName, String entryName) {
+        IZip zip = CC.getService(IZip.class);
+        if (zip == null) {
+            return null;
+        }
         AssetManager am = context.getAssets();
         InputStream is = null;
         try {
             is = am.open(fileName);
-            return new Zip().delegate().getBytes(is, entryName);
+            return zip.getBytes(is, entryName);
         } catch (Exception e) {
             return null;
         } finally {

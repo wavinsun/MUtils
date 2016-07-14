@@ -6,13 +6,14 @@ import android.content.Context;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
+import cn.mutils.app.jpush.IJPushHelper;
 import cn.mutils.app.os.IContextProvider;
+import cn.mutils.app.umeng.IUmengHelper;
 import cn.mutils.app.util.AppUtil;
-import cn.mutils.app.util.JPushHelper;
 import cn.mutils.app.util.ShareSDKHelper;
-import cn.mutils.app.util.UmengHelper;
 import cn.mutils.core.codec.FlagUtil;
 import cn.mutils.core.log.Logs;
+import cn.mutils.core.runtime.CC;
 import cn.mutils.core.task.RepeatTask;
 import cn.mutils.core.task.RepeatTask.RepeatTaskListener;
 import cn.mutils.core.task.RepeatTaskManager;
@@ -40,9 +41,9 @@ public class App extends Application implements IContextProvider {
 
     protected RepeatTaskManager mRepeatTaskManager;
 
-    protected JPushHelper mJPushHelper;
+    protected IJPushHelper mJPushHelper;
 
-    protected UmengHelper mUmengHelper;
+    protected IUmengHelper mUmengHelper;
 
     @Override
     public void onCreate() {
@@ -58,15 +59,19 @@ public class App extends Application implements IContextProvider {
         AppUtil.fixAsyncTask();
 
         mEdition = detectEdition();
-        mUmengHelper = new UmengHelper();
-        mFlags = FlagUtil.setFlags(mFlags, FLAG_UMENG, mUmengHelper.delegate().isUmengEnabled(this));
-        if (isUmengEnabled()) {
-            mUmengHelper.delegate().initUmeng(this);
+        mUmengHelper = CC.getService(IUmengHelper.class);
+        if(mUmengHelper!=null){
+            mFlags = FlagUtil.setFlags(mFlags, FLAG_UMENG, mUmengHelper.isUmengEnabled(this));
+            if (isUmengEnabled()) {
+                mUmengHelper.initUmeng(this);
+            }
         }
-        mJPushHelper = new JPushHelper();
-        mFlags = FlagUtil.setFlags(mFlags, FLAG_JPUSH, mJPushHelper.delegate().isJPushEnabled(this));
-        if (isJPushEneabled()) {
-            mJPushHelper.delegate().initJPush(this);
+        mJPushHelper = CC.getService(IJPushHelper.class);
+        if (mJPushHelper != null) {
+            mFlags = FlagUtil.setFlags(mFlags, FLAG_JPUSH, mJPushHelper.isJPushEnabled(this));
+            if (isJPushEneabled()) {
+                mJPushHelper.initJPush(this);
+            }
         }
         ShareSDKHelper shareSDKHelper = new ShareSDKHelper();
         mFlags = FlagUtil.setFlags(mFlags, FLAG_SHARE_SDK, shareSDKHelper.delegate().isShareSDKEnabled(this));
@@ -168,11 +173,11 @@ public class App extends Application implements IContextProvider {
             } catch (Exception e) {
                 // crash again
             } finally {
-                if (isUmengEnabled()) {
-                    mUmengHelper.delegate().onKillProcess(App.this);
+                if (mUmengHelper != null && isUmengEnabled()) {
+                    mUmengHelper.onKillProcess(App.this);
                 }
-                if (isJPushEneabled()) {
-                    mJPushHelper.delegate().onKillProcess(App.this);
+                if (mJPushHelper != null && isJPushEneabled()) {
+                    mJPushHelper.onKillProcess(App.this);
                 }
                 AppUtil.exit(10);
             }
