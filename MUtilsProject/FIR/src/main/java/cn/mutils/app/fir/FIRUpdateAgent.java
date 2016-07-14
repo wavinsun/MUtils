@@ -1,4 +1,4 @@
-package cn.mutils.app.util.fir;
+package cn.mutils.app.fir;
 
 import android.view.Gravity;
 
@@ -16,8 +16,6 @@ import cn.mutils.app.task.ContextOwnerTask;
 import cn.mutils.app.ui.Alert;
 import cn.mutils.app.ui.Alert.AlertListener;
 import cn.mutils.app.util.AppUtil;
-import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateReq;
-import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateRes;
 import cn.mutils.core.IClearable;
 import cn.mutils.core.event.listener.VersionUpdateListener;
 import cn.mutils.core.log.Logs;
@@ -65,7 +63,7 @@ public class FIRUpdateAgent extends ContextOwnerTask implements IClearable {
     protected FIRUpdateTask mUpdateTask;
 
     public FIRUpdateAgent() {
-        FIRUpdateReq req = new FIRUpdateReq();
+        FIRUpdateTask.FIRUpdateReq req = new FIRUpdateTask.FIRUpdateReq();
         mUpdateTask = new FIRUpdateTask();
         mUpdateTask.setRequest(req);
         mUpdateTask.addListener(new FirUpdateTaskListener());
@@ -157,14 +155,14 @@ public class FIRUpdateAgent extends ContextOwnerTask implements IClearable {
     class FirUpdateTaskListener extends NetTaskListener<FIRUpdateTask.FIRUpdateReq, FIRUpdateTask.FIRUpdateRes> {
 
         @Override
-        public void onException(INetTask<FIRUpdateReq, FIRUpdateRes> task, Exception e) {
+        public void onException(INetTask<FIRUpdateTask.FIRUpdateReq, FIRUpdateTask.FIRUpdateRes> task, Exception e) {
             if (mVersionUpdateListener != null) {
                 mVersionUpdateListener.onNo();
             }
         }
 
         @Override
-        public void onComplete(INetTask<FIRUpdateReq, FIRUpdateRes> task, FIRUpdateRes response) {
+        public void onComplete(INetTask<FIRUpdateTask.FIRUpdateReq, FIRUpdateTask.FIRUpdateRes> task, FIRUpdateTask.FIRUpdateRes response) {
             String version = AppUtil.getAppVersionName(mContext);
             String installUrl = response.installUrl;
             String versionShort = response.versionShort;

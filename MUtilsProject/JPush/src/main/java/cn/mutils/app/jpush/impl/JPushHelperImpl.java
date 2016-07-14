@@ -1,17 +1,16 @@
-package cn.mutils.app.jpush;
-
+package cn.mutils.app.jpush.impl;
 
 import android.content.Context;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.mutils.app.App;
+import cn.mutils.app.jpush.IJPushHelper;
 import cn.mutils.app.util.AppUtil;
-import cn.mutils.app.util.JPushHelper;
 import cn.mutils.core.log.Logs;
 import cn.mutils.core.util.Edition;
 
 @SuppressWarnings("unused")
-public class JPushHelperDelegate extends JPushHelper {
+public class JPushHelperImpl implements IJPushHelper {
 
     @Override
     public void onResume(Context context) {

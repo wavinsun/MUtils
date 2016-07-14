@@ -1,12 +1,11 @@
-package cn.mutils.app.archive;
+package cn.mutils.core.archive.impl;
 
 import java.io.InputStream;
 
-import cn.mutils.core.archive.Zip;
+import cn.mutils.core.archive.IZip;
 import cn.mutils.core.archive.ZipUtil;
 
-@SuppressWarnings("unused")
-public class ZipDelegate extends Zip {
+public class ZipImpl implements IZip {
 
     @Override
     public byte[] getBytes(InputStream is, String entryName) {

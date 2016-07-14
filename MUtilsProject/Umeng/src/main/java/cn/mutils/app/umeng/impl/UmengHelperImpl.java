@@ -1,4 +1,4 @@
-package cn.mutils.app.umeng;
+package cn.mutils.app.umeng.impl;
 
 import android.content.Context;
 
@@ -16,13 +16,13 @@ import java.util.List;
 
 import cn.mutils.app.App;
 import cn.mutils.app.ui.core.IActivity;
+import cn.mutils.app.umeng.IUmengHelper;
 import cn.mutils.app.util.AppUtil;
-import cn.mutils.app.util.UmengHelper;
 import cn.mutils.core.event.listener.VersionUpdateListener;
 import cn.mutils.core.util.Edition;
 
 @SuppressWarnings({"UnnecessaryUnboxing", "UnnecessaryBoxing", "unused", "SimplifiableConditionalExpression"})
-public class UmengHelperDelegate extends UmengHelper {
+public class UmengHelperImpl implements IUmengHelper {
 
     protected static Boolean sHasNewVersion;
 
@@ -94,7 +94,7 @@ public class UmengHelperDelegate extends UmengHelper {
                 @Override
                 public void onUpdateReturned(int statusCode, final UpdateResponse updateInfo) {
                     boolean hasNewVersion = statusCode == UpdateStatus.Yes;
-                    synchronized (UmengHelperDelegate.class) {
+                    synchronized (UmengHelperImpl.class) {
                         sHasNewVersion = Boolean.valueOf(hasNewVersion);
                     }
                     if (c instanceof IActivity) {

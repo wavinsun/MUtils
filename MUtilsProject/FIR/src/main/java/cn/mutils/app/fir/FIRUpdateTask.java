@@ -1,11 +1,11 @@
-package cn.mutils.app.util.fir;
+package cn.mutils.app.fir;
 
 import proguard.annotation.Keep;
 import proguard.annotation.KeepClassMembers;
 
 import cn.mutils.app.net.NetTask;
-import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateReq;
-import cn.mutils.app.util.fir.FIRUpdateTask.FIRUpdateRes;
+import cn.mutils.app.fir.FIRUpdateTask.FIRUpdateReq;
+import cn.mutils.app.fir.FIRUpdateTask.FIRUpdateRes;
 import cn.mutils.core.err.ErrorCodeException;
 
 /**

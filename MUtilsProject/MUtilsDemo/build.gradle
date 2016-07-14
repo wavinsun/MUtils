@@ -79,4 +79,6 @@ dependencies {
     compile project(':Archive')
     compile project(':MM')
     compile project(':QQ')
+    compile project(':FIR')
+    compile project(':SwipeListView')
 }

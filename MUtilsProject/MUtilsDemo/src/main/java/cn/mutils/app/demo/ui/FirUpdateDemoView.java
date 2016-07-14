@@ -12,7 +12,7 @@ import java.io.File;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.ui.StateView;
 import cn.mutils.app.util.AppUtil;
-import cn.mutils.app.util.fir.FIRUpdateAgent;
+import cn.mutils.app.fir.FIRUpdateAgent;
 import cn.mutils.core.annotation.event.Click;
 import cn.mutils.core.annotation.res.SetContentView;
 import cn.mutils.core.event.listener.VersionUpdateListener;
