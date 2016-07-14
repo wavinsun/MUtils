@@ -1,19 +1,24 @@
 package cn.mutils.app.demo.web;
 
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+
 import cn.mutils.app.demo.web.BasicWebMessage.BasicWebMessageData;
 import cn.mutils.app.demo.web.BasicWebMessage.BasicWebMessageResult;
 import cn.mutils.app.ui.web.WebMessageState;
-import cn.mutils.core.INoProguard;
 
 @SuppressWarnings("serial")
-public class BasicWebMessage<DATA extends BasicWebMessageData, RESULT extends BasicWebMessageResult>
-        implements INoProguard {
+public class BasicWebMessage<DATA extends BasicWebMessageData, RESULT extends BasicWebMessageResult> {
 
-    public static class BasicWebMessageData implements INoProguard {
+    @Keep
+    @KeepClassMembers
+    public static class BasicWebMessageData {
 
     }
 
-    public static class BasicWebMessageResult implements INoProguard {
+    @Keep
+    @KeepClassMembers
+    public static class BasicWebMessageResult {
 
         public WebMessageState state = WebMessageState.invalid;
 

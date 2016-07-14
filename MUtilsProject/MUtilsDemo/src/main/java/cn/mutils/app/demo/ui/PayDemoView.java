@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+
 import cn.mutils.app.demo.R;
 import cn.mutils.app.net.INetTask;
 import cn.mutils.app.net.NetExceptionUtil;
@@ -16,7 +19,6 @@ import cn.mutils.app.pay.UPPayTask;
 import cn.mutils.app.pay.WXPayTask;
 import cn.mutils.app.ui.Alert;
 import cn.mutils.app.ui.StateView;
-import cn.mutils.core.INoProguard;
 import cn.mutils.core.annotation.Name;
 import cn.mutils.core.annotation.event.Click;
 import cn.mutils.core.annotation.res.FindViewById;
@@ -168,11 +170,16 @@ public class PayDemoView extends StateView {
     }
 
     public static class WXPayInfoTask extends NetTask<WXPayInfoTask.WXPayInfoReq, WXPayInfoTask.WXPayInfoRes> {
-        public static class WXPayInfoReq implements INoProguard {
+
+        @Keep
+        @KeepClassMembers
+        public static class WXPayInfoReq {
             public String plat = "android";
         }
 
-        public static class WXPayInfoRes implements INoProguard {
+        @Keep
+        @KeepClassMembers
+        public static class WXPayInfoRes {
             public String appid;
             public String noncestr;
 

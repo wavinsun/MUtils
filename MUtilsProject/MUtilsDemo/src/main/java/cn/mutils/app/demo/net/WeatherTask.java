@@ -2,9 +2,11 @@ package cn.mutils.app.demo.net;
 
 import android.content.Context;
 
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+
 import cn.mutils.app.demo.net.WeatherTask.WeatherReq;
 import cn.mutils.app.demo.net.WeatherTask.WeatherRes;
-import cn.mutils.core.INoProguard;
 import cn.mutils.core.annotation.Format;
 import cn.mutils.core.annotation.Name;
 import cn.mutils.core.annotation.Primitive;
@@ -14,6 +16,8 @@ import cn.mutils.core.time.DateTime;
 @SuppressWarnings("serial")
 public class WeatherTask extends BasicTask<WeatherReq, WeatherRes> {
 
+    @Keep
+    @KeepClassMembers
     public static class WeatherReq extends BasicRequest {
 
         protected String mCitypinyin;
@@ -28,6 +32,8 @@ public class WeatherTask extends BasicTask<WeatherReq, WeatherRes> {
 
     }
 
+    @Keep
+    @KeepClassMembers
     public static class WeatherRes extends BasicResponse {
 
         protected WeatherRet mRetData;
@@ -42,7 +48,9 @@ public class WeatherTask extends BasicTask<WeatherReq, WeatherRes> {
 
     }
 
-    public static class WeatherRet implements INoProguard {
+    @Keep
+    @KeepClassMembers
+    public static class WeatherRet {
 
         protected String mCity;
 

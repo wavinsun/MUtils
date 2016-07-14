@@ -1,14 +1,20 @@
 package cn.mutils.app.ui.web;
 
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+import proguard.annotation.KeepImplementations;
+
 import cn.mutils.app.os.IContextProvider;
-import cn.mutils.core.INoProguard;
 
 /**
  * Web message dispatcher of framework
  *
  * @param <MESSAGE>
  */
-public interface IWebMessageDispatcher<MESSAGE> extends IContextProvider, INoProguard {
+@Keep
+@KeepClassMembers
+@KeepImplementations
+public interface IWebMessageDispatcher<MESSAGE> extends IContextProvider {
 
     /**
      * Whether to intercept translate message

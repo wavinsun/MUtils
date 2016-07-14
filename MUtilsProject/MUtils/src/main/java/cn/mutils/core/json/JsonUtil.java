@@ -20,11 +20,11 @@ import cn.mutils.core.reflect.ReflectUtil;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class JsonUtil {
 
-    public static <T> T convertFromJson(Object json, Class<T> targetClass) throws Exception {
-        return convertFromJson(json, targetClass, null);
+    public static <T> T fromJson(Object json, Class<T> targetClass) throws Exception {
+        return fromJson(json, targetClass, null);
     }
 
-    protected static <T> T convertFromJson(Object json, Class<T> targetClass, Type genericType) throws Exception {
+    protected static <T> T fromJson(Object json, Class<T> targetClass, Type genericType) throws Exception {
         if (JSONObject.NULL.equals(json)) {
             return null;
         }
@@ -43,14 +43,14 @@ public class JsonUtil {
         } else if (targetClass == JSONObject.class || targetClass == JSONArray.class) {
             return (T) json;
         }
-        return convertFromJson(json, targetClass.newInstance(), genericType);
+        return fromJson(json, targetClass.newInstance(), genericType);
     }
 
-    public static <T> T convertFromJson(Object json, T target) throws Exception {
-        return convertFromJson(json, target, null);
+    public static <T> T fromJson(Object json, T target) throws Exception {
+        return fromJson(json, target, null);
     }
 
-    protected static <T> T convertFromJson(Object json, T target, Type genericType) throws Exception {
+    protected static <T> T fromJson(Object json, T target, Type genericType) throws Exception {
         if (JSONObject.NULL.equals(json)) {
             return null;
         }
@@ -85,7 +85,7 @@ public class JsonUtil {
             Class<?> fClass = f.getRawType(genericType);
             f.set(target,
                     IJsonItem.class.isAssignableFrom(fClass) ? (((IJsonItem) fClass.newInstance()).fromJson(sub, f))
-                            : convertFromJson(sub, fClass, f.getGenericType(genericType)));
+                            : fromJson(sub, fClass, f.getGenericType(genericType)));
         }
         return target;
     }
@@ -97,7 +97,7 @@ public class JsonUtil {
         Type eType = ReflectUtil.getCollectionElementGenericType(targetClass, genericType);
         JSONArray jsonArray = (JSONArray) json;
         for (int i = 0, size = jsonArray.length(); i < size; i++) {
-            target.add(convertFromJson(jsonArray.opt(i), eClass, eType));
+            target.add(fromJson(jsonArray.opt(i), eClass, eType));
         }
         return target;
     }
@@ -114,40 +114,40 @@ public class JsonUtil {
         Iterator<String> keys = jsonObject.keys();
         while (keys.hasNext()) {
             String k = keys.next();
-            target.put(k, convertFromJson(jsonObject.opt(k), vClass, vType));
+            target.put(k, fromJson(jsonObject.opt(k), vClass, vType));
         }
         return target;
     }
 
-    public static <T> T convert(String str, Class<T> targetClass) throws Exception {
-        return convert(str, targetClass, null);
+    public static <T> T fromString(String str, Class<T> targetClass) throws Exception {
+        return fromString(str, targetClass, null);
     }
 
-    public static <T> T convert(String str, Class<T> targetClass, Type genericType) throws Exception {
+    public static <T> T fromString(String str, Class<T> targetClass, Type genericType) throws Exception {
         if (str == null) {
             return null;
         }
         if (targetClass == String.class) {
             return (T) str;
         }
-        return convertFromJson(toJSON(str), targetClass, genericType);
+        return fromJson(fromString(str), targetClass, genericType);
     }
 
-    public static <T> T convert(String str, T target) throws Exception {
+    public static <T> T fromString(String str, T target) throws Exception {
         if (target instanceof String) {
             return (T) str;
         }
-        return convertFromJson(toJSON(str), target, null);
+        return fromJson(fromString(str), target, null);
     }
 
-    public static <T> String convert(T target) throws Exception {
+    public static <T> String toString(T target) throws Exception {
         if (target == null) {
             return null;
         }
-        return convertToJson(target).toString();
+        return toJson(target).toString();
     }
 
-    public static <T> Object convertToJson(T target) throws Exception {
+    public static <T> Object toJson(T target) throws Exception {
         if (target == null) {
             return JSONObject.NULL;
         } else if (target instanceof Collection) {
@@ -179,7 +179,7 @@ public class JsonUtil {
             if (v == null) {
                 continue;
             }
-            json.put(f.getName(), (v instanceof IJsonItem) ? (((IJsonItem) v).toJson(f)) : convertToJson(v));
+            json.put(f.getName(), (v instanceof IJsonItem) ? (((IJsonItem) v).toJson(f)) : toJson(v));
         }
         return json;
     }
@@ -187,7 +187,7 @@ public class JsonUtil {
     protected static <T> Object convertCollectionToJson(T target) throws Exception {
         JSONArray json = new JSONArray();
         for (Object e : (Collection<?>) target) {
-            json.put(convertToJson(e));
+            json.put(toJson(e));
         }
         return json;
     }
@@ -203,12 +203,12 @@ public class JsonUtil {
             if (v == null) {
                 continue;
             }
-            json.put((String) k, convertToJson(v));
+            json.put((String) k, toJson(v));
         }
         return json;
     }
 
-    public static Object toJSON(String json) throws Exception {
+    public static Object fromString(String json) throws Exception {
         return new JSONTokener(json).nextValue();
     }
 

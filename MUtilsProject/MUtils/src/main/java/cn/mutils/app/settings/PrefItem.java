@@ -114,7 +114,7 @@ public class PrefItem implements IPrefItem {
                 return true;
             }
             try {
-                JsonUtil.convert(sb.toString(), this);
+                JsonUtil.fromString(sb.toString(), this);
                 mPrefCache.fromTarget();
                 return true;
             } catch (Exception e) {
@@ -122,7 +122,7 @@ public class PrefItem implements IPrefItem {
             }
         } else if (mPrefType == TYPE_PREF_JSON) {
             try {
-                JsonUtil.convert(AppUtil.getPrefString(context, mPrefFileName, AppUtil.KEY, null), this);
+                JsonUtil.fromString(AppUtil.getPrefString(context, mPrefFileName, AppUtil.KEY, null), this);
                 mPrefCache.fromTarget();
                 return true;
             } catch (Exception e) {
@@ -146,7 +146,7 @@ public class PrefItem implements IPrefItem {
         }
         if (mPrefType == TYPE_PREF_MAP) {
             try {
-                JSONObject jsonObject = (JSONObject) JsonUtil.convertToJson(this);
+                JSONObject jsonObject = (JSONObject) JsonUtil.toJson(this);
                 Editor editor = AppUtil.getPref(context, mPrefFileName).edit();
                 for (BeanField f : BeanField.getFields(this.getClass())) {
                     String name = f.getName();
@@ -168,7 +168,7 @@ public class PrefItem implements IPrefItem {
             }
         } else if (mPrefType == TYPE_PREF_JSON) {
             try {
-                AppUtil.setPrefString(context, mPrefFileName, AppUtil.KEY, JsonUtil.convert(this));
+                AppUtil.setPrefString(context, mPrefFileName, AppUtil.KEY, JsonUtil.toString(this));
                 return true;
             } catch (Exception e) {
                 mPrefCache.clear(changed);

@@ -1,9 +1,15 @@
 package cn.mutils.core.json;
 
-import cn.mutils.core.INoProguard;
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+import proguard.annotation.KeepImplementations;
+
 import cn.mutils.core.beans.BeanField;
 
-public interface IJsonItem extends INoProguard {
+@Keep
+@KeepClassMembers
+@KeepImplementations
+public interface IJsonItem {
 
     IJsonItem fromJson(Object json, BeanField itemField);
 

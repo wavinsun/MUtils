@@ -60,7 +60,7 @@ public class PropertiesUtil {
             f.set(target,
                     IPropertyItem.class.isAssignableFrom(fClass)
                             ? (((IPropertyItem) fClass.newInstance()).fromProperty(value, f))
-                            : JsonUtil.convert(value, fClass, f.getGenericType()));
+                            : JsonUtil.fromString(value, fClass, f.getGenericType()));
         }
         return target;
     }
@@ -76,7 +76,7 @@ public class PropertiesUtil {
         Enumeration<?> enu = p.propertyNames();
         while (enu.hasMoreElements()) {
             Object k = enu.nextElement();
-            target.put(k, JsonUtil.convert(p.getProperty((String) k), vClass, vType));
+            target.put(k, JsonUtil.fromString(p.getProperty((String) k), vClass, vType));
         }
         return target;
     }
@@ -110,7 +110,7 @@ public class PropertiesUtil {
                 continue;
             }
             p.setProperty(f.getName(),
-                    (v instanceof IPropertyItem) ? (((IPropertyItem) v).toProperty(f)) : JsonUtil.convert(v));
+                    (v instanceof IPropertyItem) ? (((IPropertyItem) v).toProperty(f)) : JsonUtil.toString(v));
         }
         return p;
     }
@@ -126,7 +126,7 @@ public class PropertiesUtil {
             if (v == null) {
                 continue;
             }
-            p.setProperty((String) k, JsonUtil.convert(v));
+            p.setProperty((String) k, JsonUtil.toString(v));
         }
         return p;
     }

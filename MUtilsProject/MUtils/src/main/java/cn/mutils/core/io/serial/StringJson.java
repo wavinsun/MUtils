@@ -30,7 +30,7 @@ public class StringJson<T> extends Serial<T> {
     @Override
     public String toString() {
         try {
-            return JsonUtil.convert(mValue);
+            return JsonUtil.toString(mValue);
         } catch (Exception e) {
             return null;
         }
@@ -42,7 +42,7 @@ public class StringJson<T> extends Serial<T> {
             Type genericType = itemField == null ? null : itemField.getGenericType();
             Class<T> targetClass = (Class<T>) ReflectUtil.getParamRawType(itemClass, genericType, 0);
             Type targetType = ReflectUtil.getParamGenericType(itemClass, genericType, 0);
-            return JsonUtil.convert(json, targetClass, targetType);
+            return JsonUtil.fromString(json, targetClass, targetType);
         } catch (Exception e) {
             return null;
         }

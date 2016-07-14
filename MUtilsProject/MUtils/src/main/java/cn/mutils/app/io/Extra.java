@@ -3,8 +3,10 @@ package cn.mutils.app.io;
 import android.content.Intent;
 import android.os.Bundle;
 
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+
 import cn.mutils.app.util.AppUtil;
-import cn.mutils.core.INoProguard;
 import cn.mutils.core.json.JsonUtil;
 
 /**
@@ -12,11 +14,13 @@ import cn.mutils.core.json.JsonUtil;
  * JSON content for {@link Intent} and {@link Bundle}.
  */
 @SuppressWarnings({"serial", "unused"})
-public class Extra implements INoProguard {
+@Keep
+@KeepClassMembers
+public class Extra {
 
     public boolean getFrom(Intent intent) {
         try {
-            JsonUtil.convert(intent.getStringExtra(AppUtil.KEY), this);
+            JsonUtil.fromString(intent.getStringExtra(AppUtil.KEY), this);
             return true;
         } catch (Exception e) {
             return false;
@@ -25,7 +29,7 @@ public class Extra implements INoProguard {
 
     public boolean putTo(Intent intent) {
         try {
-            intent.putExtra(AppUtil.KEY, JsonUtil.convert(this));
+            intent.putExtra(AppUtil.KEY, JsonUtil.toString(this));
             return true;
         } catch (Exception e) {
             return false;
@@ -34,7 +38,7 @@ public class Extra implements INoProguard {
 
     public boolean getFrom(Bundle bundle) {
         try {
-            JsonUtil.convert(bundle.getString(AppUtil.KEY), this);
+            JsonUtil.fromString(bundle.getString(AppUtil.KEY), this);
             return true;
         } catch (Exception e) {
             return false;
@@ -43,7 +47,7 @@ public class Extra implements INoProguard {
 
     public boolean putTo(Bundle bundle) {
         try {
-            bundle.putString(AppUtil.KEY, JsonUtil.convert(this));
+            bundle.putString(AppUtil.KEY, JsonUtil.toString(this));
             return true;
         } catch (Exception e) {
             return false;

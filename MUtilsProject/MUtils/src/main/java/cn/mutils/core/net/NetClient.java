@@ -417,9 +417,9 @@ public class NetClient<REQUEST, RESPONSE> {
                 params = isPostParams() ? convertToParameters(mRequest, isSplitArrayParams()) : null;
                 if (isPostJson()) {
                     if (isPostJsonSigned() && mListener != null) {
-                        params = JsonUtil.convert(mListener.signPostJson(mRequest));
+                        params = JsonUtil.toString(mListener.signPostJson(mRequest));
                     } else {
-                        params = JsonUtil.convert(mRequest);
+                        params = JsonUtil.toString(mRequest);
                     }
                 }
                 HttpEntity entity = convertToEntity(params != null ? params : mRequest);
@@ -496,7 +496,7 @@ public class NetClient<REQUEST, RESPONSE> {
             Class<RESPONSE> resJsonClass = (Class<RESPONSE>) (mListener != null ? mListener.responseRawType()
                     : ReflectUtil.getParamRawType(getClass(), 1));
             resJsonGenericType = mListener != null ? mListener.responseGenericType() : null;
-            RESPONSE resJson = JsonUtil.convert(response, resJsonClass, resJsonGenericType);
+            RESPONSE resJson = JsonUtil.fromString(response, resJsonClass, resJsonGenericType);
             if (mListener != null) {
                 mListener.errorCodeVerify(resJson);
             }
@@ -549,7 +549,7 @@ public class NetClient<REQUEST, RESPONSE> {
                         continue;
                     }
                     String name = field.getName();
-                    String hValue = JsonUtil.convert(value);
+                    String hValue = JsonUtil.toString(value);
                     httpRequest.setHeader(name, hValue);
                     if (sb.length() != 0) {
                         sb.append("\n");
@@ -587,7 +587,7 @@ public class NetClient<REQUEST, RESPONSE> {
                     if (!url.contains(restKey)) {
                         continue;
                     }
-                    String restValue = URLEncoder.encode(JsonUtil.convert(value), "UTF-8");
+                    String restValue = URLEncoder.encode(JsonUtil.toString(value), "UTF-8");
                     url = url.replace(restKey, restValue);
                 } catch (Exception e) {
                     // UnsupportedEncodingException
@@ -604,7 +604,7 @@ public class NetClient<REQUEST, RESPONSE> {
                     if (!url.contains(restKey)) {
                         continue;
                     }
-                    String restValue = URLEncoder.encode(JsonUtil.convert(value), "UTF-8");
+                    String restValue = URLEncoder.encode(JsonUtil.toString(value), "UTF-8");
                     url = url.replace(restKey, restValue);
                 } catch (Exception e) {
                     // UnsupportedEncodingException
@@ -644,7 +644,7 @@ public class NetClient<REQUEST, RESPONSE> {
                     if ((value instanceof List) && splitArrayParams) {
                         sb.append(convertToSplitArrayParam((List<?>) value));
                     } else {
-                        sb.append(URLEncoder.encode(JsonUtil.convert(value), "UTF-8"));
+                        sb.append(URLEncoder.encode(JsonUtil.toString(value), "UTF-8"));
                     }
                 } catch (Exception e) {
                     // UnsupportedEncodingException
@@ -667,7 +667,7 @@ public class NetClient<REQUEST, RESPONSE> {
                     if ((value instanceof List) && splitArrayParams) {
                         sb.append(convertToSplitArrayParam((List<?>) value));
                     } else {
-                        sb.append(URLEncoder.encode(JsonUtil.convert(value), "UTF-8"));
+                        sb.append(URLEncoder.encode(JsonUtil.toString(value), "UTF-8"));
                     }
                 } catch (Exception e) {
                     // UnsupportedEncodingException
@@ -687,7 +687,7 @@ public class NetClient<REQUEST, RESPONSE> {
                 if (i != 0) {
                     sb.append(",");
                 }
-                sb.append(URLEncoder.encode(JsonUtil.convert(value.get(i)), "UTF-8"));
+                sb.append(URLEncoder.encode(JsonUtil.toString(value.get(i)), "UTF-8"));
             } catch (Exception e) {
                 // UnsupportedEncodingException
             }
@@ -722,7 +722,7 @@ public class NetClient<REQUEST, RESPONSE> {
                     } else {
                         try {
                             entity.addPart(key.toString(),
-                                    new StringBody(JsonUtil.convert(value), Charset.forName("UTF-8")));
+                                    new StringBody(JsonUtil.toString(value), Charset.forName("UTF-8")));
                         } catch (Exception e) {
                             // UnsupportedCharsetException
                         }
@@ -739,7 +739,7 @@ public class NetClient<REQUEST, RESPONSE> {
                             entity.addPart(field.getName(), new FileBody((File) value));
                         } else {
                             entity.addPart(field.getName(),
-                                    new StringBody(JsonUtil.convert(value), Charset.forName("UTF-8")));
+                                    new StringBody(JsonUtil.toString(value), Charset.forName("UTF-8")));
                         }
                     } catch (Exception e) {
                         // IllegalAccessException

@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
  * {@link LinearLayout#HORIZONTAL}
  *
  * @see LinearLayout#HORIZONTAL
- * @see UIAdapter
+ * @see ItemAdapter
  */
 public class HLinearAdapter<DATA_ITEM> extends CacheAdapter<DATA_ITEM, IItemView<DATA_ITEM>> {
 
@@ -48,7 +48,8 @@ public class HLinearAdapter<DATA_ITEM> extends CacheAdapter<DATA_ITEM, IItemView
 
     @Override
     protected void allocCacheAt(int index) {
-        IItemView<DATA_ITEM> itemView = getItemView(index);
+        int viewType = getItemViewType(index);
+        IItemView<DATA_ITEM> itemView = getItemView(viewType);
         itemView.setAdapter(this);
         itemView.onCreate();
         fixItemViewParams(itemView);

@@ -53,7 +53,7 @@ public class HLinearAdapterDemoView extends StateView {
     class MyAdapter extends HLinearAdapter<Integer> {
 
         @Override
-        public IItemView<Integer> getItemView(int position) {
+        public IItemView<Integer> getItemView(int itemViewType) {
             return new ColorRectItemView(getContext());
         }
 

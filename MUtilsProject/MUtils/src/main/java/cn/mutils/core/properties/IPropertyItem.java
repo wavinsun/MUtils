@@ -1,9 +1,15 @@
 package cn.mutils.core.properties;
 
-import cn.mutils.core.INoProguard;
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+import proguard.annotation.KeepImplementations;
+
 import cn.mutils.core.beans.BeanField;
 
-public interface IPropertyItem extends INoProguard {
+@Keep
+@KeepClassMembers
+@KeepImplementations
+public interface IPropertyItem {
 
     IPropertyItem fromProperty(String value, BeanField itemField);
 

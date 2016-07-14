@@ -64,7 +64,7 @@ public class IntentExecutorDemoView extends StateView {
     class IntentExecutorAdapter extends PopMenuAdapter<IntentExecutor> {
 
         @Override
-        public IItemView<IntentExecutor> getItemView(int position) {
+        public IItemView<IntentExecutor> getItemView(int itemViewType) {
             return new IntentExecutorItemView(getContext());
         }
 

@@ -2,10 +2,16 @@ package cn.mutils.app.settings;
 
 import android.content.Context;
 
-import cn.mutils.core.IClearable;
-import cn.mutils.core.INoProguard;
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+import proguard.annotation.KeepImplementations;
 
-public interface IAssetItem extends INoProguard, IClearable {
+import cn.mutils.core.IClearable;
+
+@Keep
+@KeepClassMembers
+@KeepImplementations
+public interface IAssetItem extends IClearable {
 
     boolean getFromAsset(Context context);
 

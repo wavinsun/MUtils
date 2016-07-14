@@ -356,7 +356,7 @@ public class StringUtil {
      */
     public static String toJSON(Object obj) {
         try {
-            return JsonUtil.convert(obj);
+            return JsonUtil.toString(obj);
         } catch (Exception e) {
             return obj.toString();
         }

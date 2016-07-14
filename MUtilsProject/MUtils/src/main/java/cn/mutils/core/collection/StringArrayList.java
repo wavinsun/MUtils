@@ -1,13 +1,16 @@
 package cn.mutils.core.collection;
 
-import java.util.ArrayList;
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
 
-import cn.mutils.core.INoProguard;
+import java.util.ArrayList;
 
 /**
  * String ArrayList
  */
 @SuppressWarnings({"serial", "unused"})
-public class StringArrayList extends ArrayList<String> implements INoProguard {
+@Keep
+@KeepClassMembers
+public class StringArrayList extends ArrayList<String> {
 
 }

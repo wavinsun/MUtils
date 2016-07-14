@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import cn.mutils.app.demo.R;
 import cn.mutils.app.ui.StateView;
 import cn.mutils.app.ui.adapter.IItemView;
+import cn.mutils.app.ui.adapter.ItemAdapter;
 import cn.mutils.app.ui.adapter.ItemView;
-import cn.mutils.app.ui.adapter.UIAdapter;
 import cn.mutils.core.annotation.res.FindViewById;
 import cn.mutils.core.annotation.res.SetContentView;
 
@@ -59,16 +59,15 @@ public class ViewTypeDemoView extends StateView {
         public String title;
     }
 
-    class ViewTypeAdapter extends UIAdapter<ViewTypeItem> {
+    class ViewTypeAdapter extends ItemAdapter<ViewTypeItem> {
 
         public static final int TYPE_1 = 0;
         public static final int TYPE_2 = 1;
 
         @Override
-        public IItemView<ViewTypeItem> getItemView(int position) {
+        public IItemView<ViewTypeItem> getItemView(int itemViewType) {
             IItemView<ViewTypeItem> itemView = null;
-            int type = getItemViewType(position);
-            switch (type) {
+            switch (itemViewType) {
                 case TYPE_1:
                     itemView = new ViewTypeView1(getContext());
                     break;

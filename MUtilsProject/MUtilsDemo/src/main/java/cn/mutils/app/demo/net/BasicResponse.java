@@ -1,9 +1,12 @@
 package cn.mutils.app.demo.net;
 
-import cn.mutils.core.INoProguard;
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
 
 @SuppressWarnings("serial")
-public class BasicResponse implements INoProguard {
+@Keep
+@KeepClassMembers
+public class BasicResponse {
 
     public static final int CODE_OK = 0;
 

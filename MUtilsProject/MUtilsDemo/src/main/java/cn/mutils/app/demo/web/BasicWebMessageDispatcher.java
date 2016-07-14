@@ -47,7 +47,7 @@ public abstract class BasicWebMessageDispatcher<DATA extends BasicWebMessageData
         msg.callbacker = callbacker;
         try {
             msg.data = (DATA) ReflectUtil.getParamRawType(this.getClass(), 0).newInstance();
-            JsonUtil.convertFromJson(data, msg.data);
+            JsonUtil.fromJson(data, msg.data);
             return msg;
         } catch (Exception e) {
             return null;

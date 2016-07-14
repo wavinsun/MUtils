@@ -32,7 +32,7 @@ public abstract class WebMessageDispatcher<MESSAGE> implements IWebMessageDispat
     @Override
     public void notifyManager(MESSAGE message) {
         try {
-            mManager.onMessage(JsonUtil.convert(message));
+            mManager.onMessage(JsonUtil.toString(message));
         } catch (Exception e) {
             // Unknown Exception
         }
