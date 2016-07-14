@@ -19,7 +19,7 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 
-import cn.mutils.app.amap.R;
+import cn.mutils.app.R;
 
 @SuppressWarnings("unused")
 @SuppressLint("InflateParams")

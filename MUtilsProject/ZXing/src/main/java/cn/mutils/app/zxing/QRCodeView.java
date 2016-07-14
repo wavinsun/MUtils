@@ -9,6 +9,8 @@ import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.view.View;
 
+import cn.mutils.app.R;
+
 /**
  * QRCode view <br>
  * It is used to show data by QRCode

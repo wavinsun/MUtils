@@ -1,5 +1,7 @@
 package cn.mutils.app.zxing;
 
+import com.google.zxing.Result;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -14,8 +16,7 @@ import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.widget.RelativeLayout;
 
-import com.google.zxing.Result;
-
+import cn.mutils.app.R;
 import cn.mutils.app.ui.StateView;
 import cn.mutils.app.zxing.camera.CameraManager;
 import cn.mutils.app.zxing.decode.CaptureHandler;
