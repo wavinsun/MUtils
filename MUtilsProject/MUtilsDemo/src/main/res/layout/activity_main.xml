@@ -172,6 +172,10 @@
             <TextView android:id="@+id/recycler_adapter"
                  style="@style/MainBtn"
                  android:text="RecyclerAdapter"/>
+
+            <TextView android:id="@+id/cc"
+                style="@style/MainBtn"
+                android:text="CC"/>
             
         </cn.mutils.app.ui.FlowLayout>
     </ScrollView>

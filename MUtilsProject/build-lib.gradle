@@ -1,0 +1,9 @@
+apply plugin: 'com.android.library'
+apply from: '../build-ext.gradle'
+
+android{
+
+    // Multiple dex files define Lcn/.../BuildConfig
+    packageBuildConfig false
+
+}
