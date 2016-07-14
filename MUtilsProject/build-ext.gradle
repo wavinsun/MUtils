@@ -3,6 +3,10 @@ android{
     //more than one library with package name
     enforceUniquePackageName false
 
+    //AAPT err libpng warning
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+
     //Duplicate files copied in APK
     packagingOptions{
         exclude 'META-INF/DEPENDENCIES.txt'
@@ -19,8 +23,16 @@ android{
 
     //编译警告
     lintOptions {
+
+        //构建Release版本时开启lint检测
         checkReleaseBuilds false
+
+        //遇到Error时继续构建
         abortOnError false
+
+        //防止在发布的时候出现因MissingTranslation导致构建失败
+        disable 'MissingTranslation'
+
     }
 
     compileOptions {

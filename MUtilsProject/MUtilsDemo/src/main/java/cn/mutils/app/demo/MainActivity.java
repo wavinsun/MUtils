@@ -12,6 +12,7 @@ import cn.mutils.app.demo.ui.AlertDemoView;
 import cn.mutils.app.demo.ui.AnimTaskDemoView;
 import cn.mutils.app.demo.ui.BasicActivity;
 import cn.mutils.app.demo.ui.BusyDemoView;
+import cn.mutils.app.demo.ui.CCDemoView;
 import cn.mutils.app.demo.ui.ChannelDemoView;
 import cn.mutils.app.demo.ui.ConfItemDemoView;
 import cn.mutils.app.demo.ui.DateChooserDemoView;
@@ -69,7 +70,7 @@ public class MainActivity extends BasicActivity {
             R.id.pay, R.id.qrcode, R.id.share, R.id.action_sheet, R.id.amap, R.id.date_chooser, R.id.prompt,
             R.id.progress_view, R.id.tip_view, R.id.busy, R.id.path_button, R.id.hlinear_adapter, R.id.index_view,
             R.id.web_frame, R.id.intent_executor, R.id.umeng, R.id.surface_viewer, R.id.progress_icon, R.id.channel,
-            R.id.view_type, R.id.recycler_adapter})
+            R.id.view_type, R.id.recycler_adapter, R.id.cc})
     protected void onClick(View v) {
         Intent intent = new Intent(this, ShellActivity.class);
         ShellExtra extra = new ShellExtra();
@@ -166,6 +167,9 @@ public class MainActivity extends BasicActivity {
                 break;
             case R.id.recycler_adapter:
                 extra.setViewName(RecyclerAdapterDemoView.class.getName());
+                break;
+            case R.id.cc:
+                extra.setViewName(CCDemoView.class.getName());
                 break;
             default:
                 break;
