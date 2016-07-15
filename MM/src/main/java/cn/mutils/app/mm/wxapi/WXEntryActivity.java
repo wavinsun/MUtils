@@ -10,12 +10,12 @@ import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import cn.mutils.app.App;
-import cn.mutils.app.share.api.ShareWechatDelegate;
+import cn.mutils.app.mm.impl.ShareWechatImpl;
 import cn.mutils.app.ui.AppActivity;
 
 /**
- * WeChat entry activity<br>
- * Please make a subclass in your application like "xxx.xxx.xxx.wxapi.WXEntryActivity"
+ * WeChat entry activity<br> Please make a subclass in your application like
+ * "xxx.xxx.xxx.wxapi.WXEntryActivity"
  */
 @SuppressWarnings({"FieldCanBeLocal", "StatementWithEmptyBody"})
 public class WXEntryActivity extends AppActivity implements IWXAPIEventHandler {
@@ -43,7 +43,7 @@ public class WXEntryActivity extends AppActivity implements IWXAPIEventHandler {
                 if (resp instanceof SendAuth.Resp) {
                     // 第三方登录
                 }
-                if (resp.transaction.contains(ShareWechatDelegate.TRANSACTION)) {
+                if (resp.transaction.contains(ShareWechatImpl.TRANSACTION)) {
                     // 分享回调
                 }
                 break;

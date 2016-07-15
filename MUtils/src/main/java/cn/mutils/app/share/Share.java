@@ -2,15 +2,16 @@ package cn.mutils.app.share;
 
 import android.content.Context;
 
-import cn.mutils.app.share.api.ShareQQ;
-import cn.mutils.app.share.api.ShareQzone;
-import cn.mutils.app.share.api.ShareWechat;
-import cn.mutils.app.share.api.ShareWechatMoments;
+import cn.mutils.app.mm.IShareWechat;
+import cn.mutils.app.mm.IShareWechatMoments;
+import cn.mutils.app.qq.IShareQQ;
+import cn.mutils.app.qq.IShareQzone;
 import cn.mutils.app.share.intent.IntentShareQzone;
 import cn.mutils.app.share.intent.IntentShareTencentWeibo;
 import cn.mutils.app.share.intent.IntentShareWeibo;
-import cn.mutils.app.share.mob.MobShareTencentWeibo;
-import cn.mutils.app.share.mob.MobShareWeibo;
+import cn.mutils.app.ssdk.IMobShareTencentWeibo;
+import cn.mutils.app.ssdk.IMobShareWeibo;
+import cn.mutils.core.runtime.CC;
 
 public class Share extends ShareBase {
 
@@ -26,7 +27,7 @@ public class Share extends ShareBase {
             case PLATFORM_QQ:
                 switch (mMethod) {
                     case METHOD_API:
-                        wrapper = new ShareQQ(mContext).delegate();
+                        wrapper = CC.getService(IShareQQ.class);
                         break;
                     case METHOD_INTENT:
                         wrapper = null;
@@ -41,7 +42,7 @@ public class Share extends ShareBase {
             case PLATFORM_QZONE:
                 switch (mMethod) {
                     case METHOD_API:
-                        wrapper = new ShareQzone(mContext).delegate();
+                        wrapper = CC.getService(IShareQzone.class);
                         break;
                     case METHOD_INTENT:
                         wrapper = new IntentShareQzone(mContext);
@@ -62,7 +63,7 @@ public class Share extends ShareBase {
                         wrapper = new IntentShareWeibo(mContext);
                         break;
                     case METHOD_SHARE_SDK:
-                        wrapper = new MobShareWeibo(mContext).delegate();
+                        wrapper = CC.getService(IMobShareWeibo.class);
                         break;
                     default:
                         break;
@@ -71,7 +72,7 @@ public class Share extends ShareBase {
             case PLATFORM_WECHAT:
                 switch (mMethod) {
                     case METHOD_API:
-                        wrapper = new ShareWechat(mContext).delegate();
+                        wrapper = CC.getService(IShareWechat.class);
                         break;
                     case METHOD_INTENT:
                         wrapper = null;
@@ -86,7 +87,7 @@ public class Share extends ShareBase {
             case PLATFORM_WECHAT_MOMENTS:
                 switch (mMethod) {
                     case METHOD_API:
-                        wrapper = new ShareWechatMoments(mContext).delegate();
+                        wrapper = CC.getService(IShareWechatMoments.class);
                         break;
                     case METHOD_INTENT:
                         wrapper = null;
@@ -107,7 +108,7 @@ public class Share extends ShareBase {
                         wrapper = new IntentShareTencentWeibo(mContext);
                         break;
                     case METHOD_SHARE_SDK:
-                        wrapper = new MobShareTencentWeibo(mContext).delegate();
+                        wrapper = CC.getService(IMobShareTencentWeibo.class);
                         break;
                     default:
                         break;
@@ -121,6 +122,9 @@ public class Share extends ShareBase {
                 mListener.onError(this);
             }
             return;
+        }
+        if (wrapper.getContext() == null) {
+            wrapper.setContext(mContext);
         }
         wrapper.setTitle(mTitle);
         wrapper.setText(mText);

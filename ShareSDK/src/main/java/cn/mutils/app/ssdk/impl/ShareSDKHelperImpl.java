@@ -1,14 +1,12 @@
-package cn.mutils.app.ssdk;
-
+package cn.mutils.app.ssdk.impl;
 
 import android.content.Context;
 
+import cn.mutils.app.ssdk.IShareSDKHelper;
 import cn.mutils.app.util.AppUtil;
-import cn.mutils.app.util.ShareSDKHelper;
 import cn.sharesdk.framework.ShareSDK;
 
-@SuppressWarnings("unused")
-public class ShareSDKHelperDelegate extends ShareSDKHelper {
+public class ShareSDKHelperImpl implements IShareSDKHelper {
 
     @Override
     public boolean isShareSDKEnabled(Context context) {
