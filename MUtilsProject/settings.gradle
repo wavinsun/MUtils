@@ -1,1 +1,0 @@
-include ':MUtils', ':MUtilsDemo', ':JPush', ':Umeng', ':ShareSDK', ':UPPay', ':AMap', ':Alipay', ':ZXing', ':Archive', ':MM', ':QQ', ':FIR', ':SwipeListView'

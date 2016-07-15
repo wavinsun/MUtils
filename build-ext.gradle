@@ -1,4 +1,4 @@
-android{
+android {
 
     //more than one library with package name
     enforceUniquePackageName false
@@ -8,7 +8,7 @@ android{
     aaptOptions.useNewCruncher = false
 
     //Duplicate files copied in APK
-    packagingOptions{
+    packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
