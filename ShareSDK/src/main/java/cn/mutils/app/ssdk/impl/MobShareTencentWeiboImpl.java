@@ -1,20 +1,19 @@
-package cn.mutils.app.share.mob;
+package cn.mutils.app.ssdk.impl;
 
 import java.util.HashMap;
 
 import cn.mutils.app.share.ShareBase;
+import cn.mutils.app.ssdk.IMobShareTencentWeibo;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
-import cn.sharesdk.tencent.weibo.TencentWeibo.ShareParams;
+import cn.sharesdk.tencent.weibo.TencentWeibo;
 
-@SuppressWarnings("unused")
-public class MobShareWeiboDelegate extends ShareBase {
+public class MobShareTencentWeiboImpl extends ShareBase implements IMobShareTencentWeibo {
 
     @Override
     public int getPlatform() {
-        return PLATFORM_WEIBO;
+        return PLATFORM_TENCENT_WEIBO;
     }
 
     @Override
@@ -24,13 +23,13 @@ public class MobShareWeiboDelegate extends ShareBase {
 
     @Override
     public void share() {
-        Platform platform = ShareSDK.getPlatform(SinaWeibo.NAME);
+        Platform platform = ShareSDK.getPlatform(TencentWeibo.NAME);
         platform.setPlatformActionListener(new PlatformActionListener() {
 
             @Override
             public void onError(Platform platform, int action, Throwable t) {
                 if (mListener != null) {
-                    mListener.onError(MobShareWeiboDelegate.this);
+                    mListener.onError(MobShareTencentWeiboImpl.this);
                 }
             }
 
@@ -41,7 +40,7 @@ public class MobShareWeiboDelegate extends ShareBase {
                     if (mUrl != null) {
                         text += "\n" + mUrl;
                     }
-                    ShareParams params = new ShareParams();
+                    TencentWeibo.ShareParams params = new TencentWeibo.ShareParams();
                     params.setTitle(mTitle);
                     params.setTitleUrl(mUrl);
                     params.setText(text);
@@ -51,7 +50,7 @@ public class MobShareWeiboDelegate extends ShareBase {
                     platform.share(params);
                 } else if (action == Platform.ACTION_SHARE) {
                     if (mListener != null) {
-                        mListener.onComplete(MobShareWeiboDelegate.this);
+                        mListener.onComplete(MobShareTencentWeiboImpl.this);
                     }
                 }
             }
@@ -59,7 +58,7 @@ public class MobShareWeiboDelegate extends ShareBase {
             @Override
             public void onCancel(Platform platform, int action) {
                 if (mListener != null) {
-                    mListener.onCancel(MobShareWeiboDelegate.this);
+                    mListener.onCancel(MobShareTencentWeiboImpl.this);
                 }
             }
 

@@ -1,4 +1,4 @@
-package cn.mutils.app.share.api;
+package cn.mutils.app.qq.impl;
 
 import android.os.Bundle;
 
@@ -8,11 +8,11 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
 import cn.mutils.app.App;
+import cn.mutils.app.qq.IShareQzone;
 import cn.mutils.app.share.ShareBase;
 import cn.mutils.app.util.AppUtil;
 
-@SuppressWarnings("unused")
-public class ShareQzoneDelegate extends ShareBase {
+public class ShareQzoneImpl extends ShareBase implements IShareQzone {
 
     @Override
     public void share() {
@@ -32,21 +32,21 @@ public class ShareQzoneDelegate extends ShareBase {
             @Override
             public void onError(UiError err) {
                 if (mListener != null) {
-                    mListener.onError(ShareQzoneDelegate.this);
+                    mListener.onError(ShareQzoneImpl.this);
                 }
             }
 
             @Override
             public void onComplete(Object obj) {
                 if (mListener != null) {
-                    mListener.onComplete(ShareQzoneDelegate.this);
+                    mListener.onComplete(ShareQzoneImpl.this);
                 }
             }
 
             @Override
             public void onCancel() {
                 if (mListener != null) {
-                    mListener.onCancel(ShareQzoneDelegate.this);
+                    mListener.onCancel(ShareQzoneImpl.this);
                 }
             }
         });

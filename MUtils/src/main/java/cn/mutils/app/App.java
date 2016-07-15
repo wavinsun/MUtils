@@ -8,9 +8,9 @@ import java.lang.Thread.UncaughtExceptionHandler;
 
 import cn.mutils.app.jpush.IJPushHelper;
 import cn.mutils.app.os.IContextProvider;
+import cn.mutils.app.ssdk.IShareSDKHelper;
 import cn.mutils.app.umeng.IUmengHelper;
 import cn.mutils.app.util.AppUtil;
-import cn.mutils.app.util.ShareSDKHelper;
 import cn.mutils.core.codec.FlagUtil;
 import cn.mutils.core.log.Logs;
 import cn.mutils.core.runtime.CC;
@@ -60,7 +60,7 @@ public class App extends Application implements IContextProvider {
 
         mEdition = detectEdition();
         mUmengHelper = CC.getService(IUmengHelper.class);
-        if(mUmengHelper!=null){
+        if (mUmengHelper != null) {
             mFlags = FlagUtil.setFlags(mFlags, FLAG_UMENG, mUmengHelper.isUmengEnabled(this));
             if (isUmengEnabled()) {
                 mUmengHelper.initUmeng(this);
@@ -73,10 +73,12 @@ public class App extends Application implements IContextProvider {
                 mJPushHelper.initJPush(this);
             }
         }
-        ShareSDKHelper shareSDKHelper = new ShareSDKHelper();
-        mFlags = FlagUtil.setFlags(mFlags, FLAG_SHARE_SDK, shareSDKHelper.delegate().isShareSDKEnabled(this));
-        if (isShareSDKEnabled()) {
-            shareSDKHelper.delegate().initShareSDK(this);
+        IShareSDKHelper shareSDKHelper = CC.getService(IShareSDKHelper.class);
+        if (shareSDKHelper != null) {
+            mFlags = FlagUtil.setFlags(mFlags, FLAG_SHARE_SDK, shareSDKHelper.isShareSDKEnabled(this));
+            if (isShareSDKEnabled()) {
+                shareSDKHelper.initShareSDK(this);
+            }
         }
     }
 

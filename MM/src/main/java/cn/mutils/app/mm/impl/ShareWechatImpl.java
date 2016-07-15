@@ -1,4 +1,4 @@
-package cn.mutils.app.share.api;
+package cn.mutils.app.mm.impl;
 
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
@@ -7,10 +7,11 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import cn.mutils.app.App;
+import cn.mutils.app.mm.IShareWechat;
 import cn.mutils.app.share.ShareBase;
 import cn.mutils.app.util.AppUtil;
 
-public class ShareWechatDelegate extends ShareBase {
+public class ShareWechatImpl extends ShareBase implements IShareWechat {
 
     public static final String TRANSACTION = "webpage";
 

@@ -1,8 +1,10 @@
-package cn.mutils.app.share.api;
+package cn.mutils.app.mm.impl;
 
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 
-public class ShareWechatMomentsDelegate extends ShareWechatDelegate {
+import cn.mutils.app.mm.IShareWechatMoments;
+
+public class ShareWechatMomentsImpl extends ShareWechatImpl implements IShareWechatMoments {
 
     @Override
     public int getPlatform() {
