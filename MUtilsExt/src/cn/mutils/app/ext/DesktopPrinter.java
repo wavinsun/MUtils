@@ -17,8 +17,8 @@ import javax.swing.text.Document;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 
-import cn.mutils.app.core.graphics.Bounds;
-import cn.mutils.app.core.io.ISystemPrinter;
+import cn.mutils.core.graphics.Bounds;
+import cn.mutils.core.io.ISystemPrinter;
 
 /**
  * Desktop pinter to print system stream to desktop UI.
