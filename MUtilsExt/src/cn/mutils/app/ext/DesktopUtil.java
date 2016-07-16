@@ -12,7 +12,7 @@ import javax.swing.UIManager;
 
 import com.sun.jna.platform.FileUtils;
 
-import cn.mutils.app.core.graphics.Bounds;
+import cn.mutils.core.graphics.Bounds;
 
 /**
  * Desktop utility for Windows platform or Others.

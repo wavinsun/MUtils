@@ -81,4 +81,7 @@ dependencies {
     compile project(':QQ')
     compile project(':FIR')
     compile project(':SwipeListView')
+    compile project(':PhotoView')
+    compile project(':CharDet')
+    compile project(':WheelView')
 }

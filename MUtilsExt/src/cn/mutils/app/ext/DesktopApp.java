@@ -4,12 +4,12 @@ import java.awt.EventQueue;
 import java.awt.Window;
 import java.io.File;
 
-import cn.mutils.app.core.io.FileUtil;
-import cn.mutils.app.core.io.ISystemPrinter;
-import cn.mutils.app.core.io.SystemStream;
-import cn.mutils.app.core.log.Logs;
-import cn.mutils.app.core.runtime.OSRuntime;
-import cn.mutils.app.core.text.StringUtil;
+import cn.mutils.core.io.FileUtil;
+import cn.mutils.core.io.ISystemPrinter;
+import cn.mutils.core.io.SystemStream;
+import cn.mutils.core.log.Logs;
+import cn.mutils.core.runtime.OSRuntime;
+import cn.mutils.core.text.StringUtil;
 
 /**
  * Desktop application of framework
