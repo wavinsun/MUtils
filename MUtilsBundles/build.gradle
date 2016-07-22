@@ -1,0 +1,110 @@
+apply plugin: 'com.android.library'
+apply from: '../build-lib.gradle'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs = [
+                    "../MUtils/src/main/java",
+                    "../Alipay/src/main/java",
+                    "../AMap/src/main/java",
+                    "../Archive/src/main/java",
+                    "../CharDet/src/main/java",
+                    "../FIR/src/main/java",
+                    "../JPush/src/main/java",
+                    "../MM/src/main/java",
+                    "../PhotoView/src/main/java",
+                    "../QQ/src/main/java",
+                    "../ShareSDK/src/main/java",
+                    "../SwipeListView/src/main/java",
+                    "../Umeng/src/main/java",
+                    "../UPPay/src/main/java",
+                    "../WheelView/src/main/java",
+                    "../ZXing/src/main/java"
+            ]
+            res.srcDirs = [
+                    "../MUtils/src/main/res",
+                    "../Alipay/src/main/res",
+                    "../AMap/src/main/res",
+                    "../Archive/src/main/res",
+                    "../CharDet/src/main/res",
+                    "../FIR/src/main/res",
+                    "../JPush/src/main/res",
+                    "../MM/src/main/res",
+                    "../PhotoView/src/main/res",
+                    "../QQ/src/main/res",
+                    "../ShareSDK/src/main/res",
+                    "../SwipeListView/src/main/res",
+                    "../Umeng/src/main/res",
+                    "../UPPay/src/main/res",
+                    "../WheelView/src/main/res",
+                    "../ZXing/src/main/res"
+            ]
+            assets.srcDirs = [
+                    "../MUtils/src/main/assets",
+                    "../Alipay/src/main/assets",
+                    "../AMap/src/main/assets",
+                    "../Archive/src/main/assets",
+                    "../CharDet/src/main/assets",
+                    "../FIR/src/main/assets",
+                    "../JPush/src/main/assets",
+                    "../MM/src/main/assets",
+                    "../PhotoView/src/main/assets",
+                    "../QQ/src/main/assets",
+                    "../ShareSDK/src/main/assets",
+                    "../SwipeListView/src/main/assets",
+                    "../Umeng/src/main/assets",
+                    "../UPPay/src/main/assets",
+                    "../WheelView/src/main/assets",
+                    "../ZXing/src/main/assets"
+            ]
+            jniLibs.srcDirs = [
+                    "../JPush/src/main/jniLibs",
+                    "../Umeng/src/main/jniLibs",
+                    "../UPPay/src/main/jniLibs"
+            ]
+        }
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: '../MUtils/libs', include: ['*.jar'])
+    compile fileTree(dir: '../Alipay/libs', include: ['*.jar'])
+    compile fileTree(dir: '../AMap/libs', include: ['*.jar'])
+    compile fileTree(dir: '../Archive/libs', include: ['*.jar'])
+    compile fileTree(dir: '../CharDet/libs', include: ['*.jar'])
+    compile fileTree(dir: '../FIR/libs', include: ['*.jar'])
+    compile fileTree(dir: '../JPush/libs', include: ['*.jar'])
+    compile fileTree(dir: '../MM/libs', include: ['*.jar'])
+    compile fileTree(dir: '../PhotoView/libs', include: ['*.jar'])
+    compile fileTree(dir: '../QQ/libs', include: ['*.jar'])
+    compile fileTree(dir: '../ShareSDK/libs', include: ['*.jar'])
+    compile fileTree(dir: '../SwipeListView/libs', include: ['*.jar'])
+    compile fileTree(dir: '../Umeng/libs', include: ['*.jar'])
+    compile fileTree(dir: '../UPPay/libs', include: ['*.jar'])
+    compile fileTree(dir: '../WheelView/libs', include: ['*.jar'])
+    compile fileTree(dir: '../ZXing/libs', include: ['*.jar'])
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:support-v4:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+}
