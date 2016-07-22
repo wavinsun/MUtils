@@ -1,4 +1,5 @@
 include ':MUtils'
+include ':MUtilsBundles'
 include ':MUtilsDemo'
 include ':JPush'
 include ':Umeng'

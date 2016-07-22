@@ -1,2 +1,1 @@
-apply plugin: 'com.android.application'
 apply from: '../build-ext.gradle'
