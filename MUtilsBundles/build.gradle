@@ -37,7 +37,8 @@ android {
                     "../Umeng/src/main/java",
                     "../UPPay/src/main/java",
                     "../WheelView/src/main/java",
-                    "../ZXing/src/main/java"
+                    "../ZXing/src/main/java",
+                    "../SlidingUpPanel/src/main/java"
             ]
             res.srcDirs = [
                     "../MUtils/src/main/res",
@@ -55,7 +56,8 @@ android {
                     "../Umeng/src/main/res",
                     "../UPPay/src/main/res",
                     "../WheelView/src/main/res",
-                    "../ZXing/src/main/res"
+                    "../ZXing/src/main/res",
+                    "../SlidingUpPanel/src/main/res"
             ]
             assets.srcDirs = [
                     "../MUtils/src/main/assets",
@@ -73,7 +75,8 @@ android {
                     "../Umeng/src/main/assets",
                     "../UPPay/src/main/assets",
                     "../WheelView/src/main/assets",
-                    "../ZXing/src/main/assets"
+                    "../ZXing/src/main/assets",
+                    "../SlidingUpPanel/src/main/assets"
             ]
             jniLibs.srcDirs = [
                     "../JPush/src/main/jniLibs",
@@ -102,6 +105,7 @@ dependencies {
     compile fileTree(dir: '../UPPay/libs', include: ['*.jar'])
     compile fileTree(dir: '../WheelView/libs', include: ['*.jar'])
     compile fileTree(dir: '../ZXing/libs', include: ['*.jar'])
+    compile fileTree(dir: '../SlidingUpPanel/libs', include: ['*.jar'])
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
