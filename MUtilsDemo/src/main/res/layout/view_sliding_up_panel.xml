@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView style="@style/GoBtn"
+            android:layout_centerInParent="true"/>
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+            xmlns:sothree="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/sliding_layout"
+            sothree:panelHeight="68dp"
+            sothree:dragView="@+id/drag_title"
+            sothree:anchorPoint="0.25">
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null">
+        </FrameLayout>
+
+        <RelativeLayout
+                android:id="@+id/drag_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:clickable="true"
+                android:focusable="false"
+                android:orientation="vertical">
+            <FrameLayout
+                    android:id="@+id/title_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#F00">
+
+            </FrameLayout>
+            <RelativeLayout
+                    android:id="@+id/drag_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#DDD">
+            </RelativeLayout>
+
+            <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/drag_title"
+                    android:background="#FFF">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <Button android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Button"
+                            android:id="@+id/click_btn"/>
+
+                    <TextView
+                            android:layout_width="1000dp"
+                            android:layout_height="match_parent"
+                            android:text="TextView"
+                            android:textColor="#000"
+                            android:gravity="center"/>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#000"
+                    android:layout_alignParentBottom="true">
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+</RelativeLayout>

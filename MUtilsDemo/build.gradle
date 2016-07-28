@@ -84,4 +84,5 @@ dependencies {
     compile project(':PhotoView')
     compile project(':CharDet')
     compile project(':WheelView')
+    compile project(':SlidingUpPanel')
 }
