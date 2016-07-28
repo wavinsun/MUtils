@@ -176,6 +176,10 @@
             <TextView android:id="@+id/cc"
                 style="@style/MainBtn"
                 android:text="CC"/>
+
+            <TextView android:id="@+id/sliding_up_panel"
+                style="@style/MainBtn"
+                android:text="SlidingUpPanel"/>
             
         </cn.mutils.app.ui.FlowLayout>
     </ScrollView>
