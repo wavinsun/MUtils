@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="panelHeight" format="dimension"/>
+    <attr name="flingVelocity" format="integer"/>
+    <attr name="dragView" format="reference"/>
+    <attr name="anchorPointInParent" format="float"/>
+    <attr name="initialState" format="enum">
+        <enum name="expanded" value="0"/>
+        <enum name="collapsed" value="1"/>
+        <enum name="anchored" value="2"/>
+        <enum name="hidden" value="3"/>
+    </attr>
+    <attr name="scrollInterpolator" format="reference"/>
+    <attr name="slideRangePadding" format="dimension"/>
+    <attr name="anchorHeight" format="dimension"/>
+    <attr name="expandPointInParent" format="float"/>
+    <attr name="expandPoint" format="float"/>
+    <attr name="anchorPoint" format="float"/>
+    <attr name="sensitivity" format="float"/>
+
     <declare-styleable name="SlidingUpPanelLayout">
-        <attr name="panelHeight" format="dimension" />
-        <attr name="flingVelocity" format="integer" />
-        <attr name="dragView" format="reference" />
-        <attr name="scrollableView" format="reference" />
-        <attr name="anchorPoint" format="float" />
-        <attr name="initialState" format="enum">
-            <enum name="expanded" value="0" />
-            <enum name="collapsed" value="1" />
-            <enum name="anchored" value="2" />
-            <enum name="hidden" value="3" />
-        </attr>
-        <attr name="scrollInterpolator" format="reference" />
+        <attr name="panelHeight"/>
+        <attr name="flingVelocity"/>
+        <attr name="dragView"/>
+        <attr name="anchorPointInParent"/>
+        <attr name="initialState"/>
+        <attr name="scrollInterpolator"/>
+        <attr name="slideRangePadding"/>
+        <attr name="anchorHeight"/>
+        <attr name="expandPointInParent"/>
+        <attr name="expandPoint"/>
+        <attr name="anchorPoint"/>
+        <attr name="sensitivity"/>
     </declare-styleable>
 
 </resources>
