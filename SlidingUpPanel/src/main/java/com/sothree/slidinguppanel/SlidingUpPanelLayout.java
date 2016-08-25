@@ -97,6 +97,11 @@ public class SlidingUpPanelLayout extends ViewGroup {
     private PanelState mLastNotDraggingSlideState = DEFAULT_SLIDE_STATE;
 
     /**
+     * 上一次不包含影藏的状态
+     */
+    private PanelState mLastNotHiddenSlideState = DEFAULT_SLIDE_STATE;
+
+    /**
      * How far the panel is offset from its expanded position. range [0, 1] where 0 = collapsed, 1 =
      * expanded.
      */
@@ -251,7 +256,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
                     onPanelAnchored(panel);
                     break;
                 case EXPANDED:
-                    onPanelExpand(panel);
+                    onPanelExpanded(panel);
                     break;
                 case HIDDEN:
                     onPanelHidden(panel);
@@ -267,7 +272,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
         }
 
-        public void onPanelExpand(View panel) {
+        public void onPanelExpanded(View panel) {
 
         }
 
@@ -356,6 +361,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
         if (mDragViewResId != -1) {
             setDragView(findViewById(mDragViewResId));
         }
+        mSlideableView = getChildCount() == 2 ? getChildAt(1) : null;
     }
 
     public boolean isScrollAtTop() {
@@ -474,6 +480,18 @@ public class SlidingUpPanelLayout extends ViewGroup {
      */
     public void removePanelSlideListener(PanelSlideListener listener) {
         mPanelSlideListeners.remove(listener);
+    }
+
+    public int getViewDragState() {
+        return mDragHelper.getViewDragState();
+    }
+
+    public View getSlideableView() {
+        return mSlideableView;
+    }
+
+    public View getDragView() {
+        return mDragView;
     }
 
     /**
@@ -1089,10 +1107,14 @@ public class SlidingUpPanelLayout extends ViewGroup {
         PanelState oldState = mSlideState;
         mSlideState = state;
         beforePanelStateChangedDispatched();
+        if (mFirstLayout) {
+            return;
+        }
         dispatchOnPanelStateChanged(this, oldState, state);
     }
 
     private void beforePanelStateChangedDispatched() {
+        mLastNotHiddenSlideState = mSlideState != PanelState.HIDDEN ? mSlideState : mLastNotHiddenSlideState;
         if (mSlideState != PanelState.ANCHORED) {
             return;
         }
@@ -1158,6 +1180,14 @@ public class SlidingUpPanelLayout extends ViewGroup {
                     break;
             }
         }
+    }
+
+    public void showPanel() {
+        setPanelState(mLastNotHiddenSlideState);
+    }
+
+    public void hidePanel() {
+        setPanelState(PanelState.HIDDEN);
     }
 
     private void onPanelDragged(int newTop) {

@@ -1058,7 +1058,8 @@ public class ViewDragHelper {
                         break;
                     }
 
-                    final View toCapture = findTopChildUnder((int)mInitialMotionX[pointerId], (int)mInitialMotionY[pointerId]);
+                    //final View toCapture = findTopChildUnder((int)mInitialMotionX[pointerId], (int)mInitialMotionY[pointerId]);
+                    final View toCapture = findTopChildUnder((int) x, (int) y);
                     if (toCapture != null && checkTouchSlop(toCapture, dx, dy) &&
                             tryCaptureViewForDrag(toCapture, pointerId)) {
                         break;
@@ -1182,7 +1183,8 @@ public class ViewDragHelper {
                             break;
                         }
 
-                        final View toCapture = findTopChildUnder((int) mInitialMotionX[pointerId], (int) mInitialMotionY[pointerId]);
+                        //final View toCapture = findTopChildUnder((int) mInitialMotionX[pointerId], (int) mInitialMotionY[pointerId]);
+                        final View toCapture = findTopChildUnder((int) x, (int) y);
                         if (checkTouchSlop(toCapture, dx, dy) &&
                                 tryCaptureViewForDrag(toCapture, pointerId)) {
                             break;
