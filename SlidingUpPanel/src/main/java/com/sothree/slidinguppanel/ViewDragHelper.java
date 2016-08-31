@@ -754,11 +754,11 @@ public class ViewDragHelper {
             final int dx = x - mCapturedView.getLeft();
             final int dy = y - mCapturedView.getTop();
             
-            if(!keepGoing && dy != 0) { //fix #525
-                //Invalid drag state
-                mCapturedView.setTop(0);
-                return true;
-            }
+            //if(!keepGoing && dy != 0) { //fix #525
+            //    //Invalid drag state
+            //    mCapturedView.setTop(0);
+            //    return true;
+            //}
 
             if (dx != 0) {
                 mCapturedView.offsetLeftAndRight(dx);
@@ -1170,8 +1170,7 @@ public class ViewDragHelper {
                     // Check to see if any pointer is now over a draggable view.
                     final int pointerCount = MotionEventCompat.getPointerCount(ev);
                     for (int i = 0; i < pointerCount; i++) {
-                        final int pointerId = MotionEventCompat.getPointerId(ev, i)
-                                ;
+                        final int pointerId = MotionEventCompat.getPointerId(ev, i);
                         final float x = MotionEventCompat.getX(ev, i);
                         final float y = MotionEventCompat.getY(ev, i);
                         final float dx = x - mInitialMotionX[pointerId];

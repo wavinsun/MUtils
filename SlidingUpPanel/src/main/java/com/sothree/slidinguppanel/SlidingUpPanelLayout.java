@@ -1056,7 +1056,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 if (mScrollAtTop) {
                     float dy = y - mInitialMotionY;
                     if (dy >= dragSlop) {
-                        mDragHelper.shouldInterceptTouchEvent(ev);
+                        shouldInterceptTouchEvent(ev);
                         return true;
                     } else if (dy < -dragSlop) {
                         if (!isViewUnder(mDragView, (int) mInitialMotionX, (int) mInitialMotionY)) {
@@ -1075,7 +1075,15 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 break;
             }
         }
-        return mDragHelper.shouldInterceptTouchEvent(ev) || onInterceptTouchEventHorizontal(ev);
+        return shouldInterceptTouchEvent(ev) || onInterceptTouchEventHorizontal(ev);
+    }
+
+    private boolean shouldInterceptTouchEvent(MotionEvent ev) {
+        try {
+            return mDragHelper.shouldInterceptTouchEvent(ev);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
