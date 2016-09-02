@@ -18,6 +18,7 @@
     <attr name="expandPoint" format="float"/>
     <attr name="anchorPoint" format="float"/>
     <attr name="sensitivity" format="float"/>
+    <attr name="expandHeight" format="dimension"/>
 
     <declare-styleable name="SlidingUpPanelLayout">
         <attr name="panelHeight"/>
@@ -32,6 +33,7 @@
         <attr name="expandPoint"/>
         <attr name="anchorPoint"/>
         <attr name="sensitivity"/>
+        <attr name="expandHeight"/>
     </declare-styleable>
 
 </resources>

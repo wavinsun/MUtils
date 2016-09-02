@@ -91,10 +91,17 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
     private PanelState mSlideState = DEFAULT_SLIDE_STATE;
 
+    private PanelState mLastSlideState = DEFAULT_SLIDE_STATE;
+
     /**
      * If the current slide state is DRAGGING, this will store the last non dragging state
      */
     private PanelState mLastNotDraggingSlideState = DEFAULT_SLIDE_STATE;
+
+    /**
+     * 上一次不包含影藏的状态
+     */
+    private PanelState mLastNotHiddenSlideState = DEFAULT_SLIDE_STATE;
 
     /**
      * How far the panel is offset from its expanded position. range [0, 1] where 0 = collapsed, 1 =
@@ -133,6 +140,11 @@ public class SlidingUpPanelLayout extends ViewGroup {
     private boolean mFirstLayout = true;
 
     /**
+     * 当前的滑动状态是否是没有被布局的情况下设置的
+     */
+    private boolean mSlideStateWithoutLayout = true;
+
+    /**
      * 可滑动区域补白，可以为负数
      */
     private int mSlideRangePadding;
@@ -146,6 +158,11 @@ public class SlidingUpPanelLayout extends ViewGroup {
      * 悬挂位置，相对于父控件的百分比
      */
     private float mAnchorPointInParent = 1.0f;
+
+    /**
+     * 展开点高度
+     */
+    private int mExpandHeight = -1;
 
     /**
      * 展开位置，滑动到相对于父控件本身的该比例值时自动执行EXPANDED状态切换
@@ -251,7 +268,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
                     onPanelAnchored(panel);
                     break;
                 case EXPANDED:
-                    onPanelExpand(panel);
+                    onPanelExpanded(panel);
                     break;
                 case HIDDEN:
                     onPanelHidden(panel);
@@ -267,7 +284,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
         }
 
-        public void onPanelExpand(View panel) {
+        public void onPanelExpanded(View panel) {
 
         }
 
@@ -317,6 +334,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
                 mSlideRangePadding = ta.getDimensionPixelOffset(R.styleable.SlidingUpPanelLayout_slideRangePadding, 0);
                 mAnchorHeight = ta.getDimensionPixelSize(R.styleable.SlidingUpPanelLayout_anchorHeight, -1);
+                mExpandHeight = ta.getDimensionPixelOffset(R.styleable.SlidingUpPanelLayout_expandHeight, -1);
                 mExpandPointInParent = ta.getFloat(R.styleable.SlidingUpPanelLayout_expandPointInParent, 1.0f);
                 mExpandPoint = ta.getFloat(R.styleable.SlidingUpPanelLayout_expandPoint, 1.0f);
                 mAnchorPointInParent = ta.getFloat(R.styleable.SlidingUpPanelLayout_anchorPointInParent, 1.0f);
@@ -343,6 +361,9 @@ public class SlidingUpPanelLayout extends ViewGroup {
         if (mExpandPoint != 1.0f) {
             mExpandPointInParent = 1.0f;
         }
+        if (mExpandHeight != -1 && mExpandHeight > mPanelHeight) {
+            mExpandPoint = mExpandPointInParent = 1;
+        }
 
         mInterceptTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
@@ -356,6 +377,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
         if (mDragViewResId != -1) {
             setDragView(findViewById(mDragViewResId));
         }
+        mSlideableView = getChildCount() == 2 ? getChildAt(1) : null;
     }
 
     public boolean isScrollAtTop() {
@@ -476,6 +498,18 @@ public class SlidingUpPanelLayout extends ViewGroup {
         mPanelSlideListeners.remove(listener);
     }
 
+    public int getViewDragState() {
+        return mDragHelper.getViewDragState();
+    }
+
+    public View getSlideableView() {
+        return mSlideableView;
+    }
+
+    public View getDragView() {
+        return mDragView;
+    }
+
     /**
      * Set the draggable view portion. Use to null, to allow the whole panel to be draggable
      *
@@ -528,6 +562,40 @@ public class SlidingUpPanelLayout extends ViewGroup {
         return;
     }
 
+    public float getExpandPoint() {
+        return mExpandPoint;
+    }
+
+    public void setExpandPoint(float expandPoint) {
+        setExpandPoint(expandPoint, true);
+    }
+
+    private void setExpandPoint(float expandPoint, boolean resetMode) {
+        if (expandPoint > 0 && expandPoint <= 1) {
+            if (resetMode) {
+                mExpandHeight = -1;
+                mExpandPointInParent = 1;
+            }
+            mExpandPoint = expandPoint;
+        }
+    }
+
+    public int getExpandHeight() {
+        if (mExpandHeight == -1) {
+            return (int) (mExpandPoint * mSlideRange + mPanelHeight + getPaddingBottom());
+        }
+        return mExpandHeight;
+    }
+
+    public void setExpandHeight(int expandHeight) {
+        if (mExpandHeight == expandHeight) {
+            return;
+        }
+        mExpandHeight = expandHeight;
+        mExpandPoint = mExpandPointInParent = 1;
+        requestLayout();
+    }
+
     /**
      * 获取当前正在作用的额外悬挂高度
      */
@@ -564,7 +632,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
             }
             mAnchorPoint = anchorPoint;
             if (resetMode) {
-                mFirstLayout = true;
                 requestLayout();
             }
         }
@@ -655,12 +722,14 @@ public class SlidingUpPanelLayout extends ViewGroup {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mFirstLayout = true;
+        mSlideStateWithoutLayout = true;
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mFirstLayout = true;
+        mSlideStateWithoutLayout = true;
     }
 
     /**
@@ -722,6 +791,16 @@ public class SlidingUpPanelLayout extends ViewGroup {
         }
     }
 
+    private void computeExpandPoint(int heightSize) {
+        float slideRange = heightSize - mPanelHeight - getPaddingTop() - getPaddingBottom() - mSlideRangePadding;
+        if (slideRange != 0) {
+            float expandPoint = (mExpandHeight - mPanelHeight) / slideRange;
+            if (expandPoint != mExpandPoint) {
+                setExpandPoint(expandPoint, false);
+            }
+        }
+    }
+
     /**
      * 计算展开点百分比
      */
@@ -779,6 +858,10 @@ public class SlidingUpPanelLayout extends ViewGroup {
         }
         if (mExpandPointInParent != 1) {
             computeExpandPoint(mExpandPointInParent);
+        } else {
+            if (mExpandHeight != -1) {
+                computeExpandPoint(heightSize);
+            }
         }
         mSlideOffsetSlop = mSlideRange != 0 ? 1.0f / mSlideRange : 0.001f;
         if (mAnchorHeightExtras.size() != 0) {
@@ -935,6 +1018,11 @@ public class SlidingUpPanelLayout extends ViewGroup {
         }
 
         mFirstLayout = false;
+
+        if (mSlideStateWithoutLayout && mSlideState != PanelState.DRAGGING) {
+            mSlideStateWithoutLayout = false;
+            dispatchOnPanelStateChanged(mSlideableView, mLastSlideState, mSlideState);
+        }
     }
 
     @Override
@@ -981,7 +1069,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 if (mScrollAtTop) {
                     float dy = y - mInitialMotionY;
                     if (dy >= dragSlop) {
-                        mDragHelper.shouldInterceptTouchEvent(ev);
+                        shouldInterceptTouchEvent(ev);
                         return true;
                     } else if (dy < -dragSlop) {
                         if (!isViewUnder(mDragView, (int) mInitialMotionX, (int) mInitialMotionY)) {
@@ -1000,7 +1088,15 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 break;
             }
         }
-        return mDragHelper.shouldInterceptTouchEvent(ev) || onInterceptTouchEventHorizontal(ev);
+        return shouldInterceptTouchEvent(ev) || onInterceptTouchEventHorizontal(ev);
+    }
+
+    private boolean shouldInterceptTouchEvent(MotionEvent ev) {
+        try {
+            return mDragHelper.shouldInterceptTouchEvent(ev);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -1086,13 +1182,18 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
     private void setPanelStateInternal(PanelState state) {
         if (mSlideState == state && mSlideState != PanelState.ANCHORED) return;
+        mLastSlideState = mSlideState;
         PanelState oldState = mSlideState;
         mSlideState = state;
         beforePanelStateChangedDispatched();
+        if (mSlideStateWithoutLayout) {
+            return;
+        }
         dispatchOnPanelStateChanged(this, oldState, state);
     }
 
     private void beforePanelStateChangedDispatched() {
+        mLastNotHiddenSlideState = mSlideState != PanelState.HIDDEN ? mSlideState : mLastNotHiddenSlideState;
         if (mSlideState != PanelState.ANCHORED) {
             return;
         }
@@ -1115,10 +1216,15 @@ public class SlidingUpPanelLayout extends ViewGroup {
         if (state == null || state == PanelState.DRAGGING) {
             return;
         }
-        if (!isEnabled()
-                || (!mFirstLayout && mSlideableView == null)
-                || (state == mSlideState && state != PanelState.ANCHORED && anchorHeightExtra != -1)
-                || mSlideState == PanelState.DRAGGING) return;
+        if (!isEnabled() || (!mFirstLayout && mSlideableView == null)) {
+            return;
+        }
+        if (state == mSlideState && state != PanelState.ANCHORED && anchorHeightExtra != -1) {
+            return;
+        }
+        if (mSlideState == PanelState.DRAGGING && mDragHelper.getViewDragState() != ViewDragHelper.STATE_IDLE) {
+            return;
+        }
 
         if (state == PanelState.ANCHORED) {
             if (mSlideState == PanelState.ANCHORED) {
@@ -1158,6 +1264,33 @@ public class SlidingUpPanelLayout extends ViewGroup {
                     break;
             }
         }
+    }
+
+    public void setPanelState(PanelState state, int anchorHeightExtra, boolean animate) {
+        if (animate) {
+            setPanelState(state, anchorHeightExtra);
+            return;
+        }
+        mFirstLayout = true;
+        mSlideStateWithoutLayout = true;
+        if (mDragHelper.getViewDragState() != ViewDragHelper.STATE_IDLE) {
+            mDragHelper.abort();
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
+        setPanelState(state, anchorHeightExtra);
+        requestLayout();
+    }
+
+    public void setPanelState(PanelState state, boolean animate) {
+        setPanelState(state, -1, animate);
+    }
+
+    public void showPanel() {
+        setPanelState(mLastNotHiddenSlideState);
+    }
+
+    public void hidePanel() {
+        setPanelState(PanelState.HIDDEN);
     }
 
     private void onPanelDragged(int newTop) {
@@ -1257,6 +1390,9 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
         @Override
         public void onViewDragStateChanged(int state) {
+            if (mSlideStateWithoutLayout) {
+                return;
+            }
             if (mDragHelper.getViewDragState() == ViewDragHelper.STATE_IDLE) {
                 mSlideOffset = computeSlideOffset(mSlideableView.getTop());
 
@@ -1344,7 +1480,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 target = computePanelTopPosition(0.0f);
             } else if (mSlideOffset >= mExpandPoint) {
                 target = computePanelTopPosition(1.0f);
-            } else if (mSlideOffset >= (1.f + mAnchorPoint) / 2) {
+            } else if (mExpandPoint == 1 && mSlideOffset >= (1.f + mAnchorPoint) / 2) {
                 // zero velocity, and far enough from anchor point => expand to the top
                 target = computePanelTopPosition(1.0f);
             } else if (mSlideOffset >= mAnchorPoint / 2) {
