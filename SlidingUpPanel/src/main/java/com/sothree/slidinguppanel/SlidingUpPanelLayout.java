@@ -91,6 +91,8 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
     private PanelState mSlideState = DEFAULT_SLIDE_STATE;
 
+    private PanelState mLastSlideState = DEFAULT_SLIDE_STATE;
+
     /**
      * If the current slide state is DRAGGING, this will store the last non dragging state
      */
@@ -136,6 +138,11 @@ public class SlidingUpPanelLayout extends ViewGroup {
      * save/restore.
      */
     private boolean mFirstLayout = true;
+
+    /**
+     * 当前的滑动状态是否是没有被布局的情况下设置的
+     */
+    private boolean mSlideStateWithoutLayout = true;
 
     /**
      * 可滑动区域补白，可以为负数
@@ -625,7 +632,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
             }
             mAnchorPoint = anchorPoint;
             if (resetMode) {
-                mFirstLayout = true;
                 requestLayout();
             }
         }
@@ -716,12 +722,14 @@ public class SlidingUpPanelLayout extends ViewGroup {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mFirstLayout = true;
+        mSlideStateWithoutLayout = true;
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mFirstLayout = true;
+        mSlideStateWithoutLayout = true;
     }
 
     /**
@@ -1010,6 +1018,11 @@ public class SlidingUpPanelLayout extends ViewGroup {
         }
 
         mFirstLayout = false;
+
+        if (mSlideStateWithoutLayout && mSlideState != PanelState.DRAGGING) {
+            mSlideStateWithoutLayout = false;
+            dispatchOnPanelStateChanged(mSlideableView, mLastSlideState, mSlideState);
+        }
     }
 
     @Override
@@ -1169,10 +1182,11 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
     private void setPanelStateInternal(PanelState state) {
         if (mSlideState == state && mSlideState != PanelState.ANCHORED) return;
+        mLastSlideState = mSlideState;
         PanelState oldState = mSlideState;
         mSlideState = state;
         beforePanelStateChangedDispatched();
-        if (mFirstLayout) {
+        if (mSlideStateWithoutLayout) {
             return;
         }
         dispatchOnPanelStateChanged(this, oldState, state);
@@ -1202,10 +1216,15 @@ public class SlidingUpPanelLayout extends ViewGroup {
         if (state == null || state == PanelState.DRAGGING) {
             return;
         }
-        if (!isEnabled()
-                || (!mFirstLayout && mSlideableView == null)
-                || (state == mSlideState && state != PanelState.ANCHORED && anchorHeightExtra != -1)
-                || mSlideState == PanelState.DRAGGING) return;
+        if (!isEnabled() || (!mFirstLayout && mSlideableView == null)) {
+            return;
+        }
+        if (state == mSlideState && state != PanelState.ANCHORED && anchorHeightExtra != -1) {
+            return;
+        }
+        if (mSlideState == PanelState.DRAGGING && mDragHelper.getViewDragState() != ViewDragHelper.STATE_IDLE) {
+            return;
+        }
 
         if (state == PanelState.ANCHORED) {
             if (mSlideState == PanelState.ANCHORED) {
@@ -1245,6 +1264,25 @@ public class SlidingUpPanelLayout extends ViewGroup {
                     break;
             }
         }
+    }
+
+    public void setPanelState(PanelState state, int anchorHeightExtra, boolean animate) {
+        if (animate) {
+            setPanelState(state, anchorHeightExtra);
+            return;
+        }
+        mFirstLayout = true;
+        mSlideStateWithoutLayout = true;
+        if (mDragHelper.getViewDragState() != ViewDragHelper.STATE_IDLE) {
+            mDragHelper.abort();
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
+        setPanelState(state, anchorHeightExtra);
+        requestLayout();
+    }
+
+    public void setPanelState(PanelState state, boolean animate) {
+        setPanelState(state, -1, animate);
     }
 
     public void showPanel() {
@@ -1352,6 +1390,9 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
         @Override
         public void onViewDragStateChanged(int state) {
+            if (mSlideStateWithoutLayout) {
+                return;
+            }
             if (mDragHelper.getViewDragState() == ViewDragHelper.STATE_IDLE) {
                 mSlideOffset = computeSlideOffset(mSlideableView.getTop());
 
