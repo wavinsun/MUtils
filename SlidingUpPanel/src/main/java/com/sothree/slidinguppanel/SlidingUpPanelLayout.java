@@ -505,7 +505,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
     }
 
     public boolean isDragEnabled() {
-        return mDragEnabled && mSlideableView != null && mSlideState != PanelState.HIDDEN;
+        return mDragEnabled && mSlideableView != null;
     }
 
     /**
@@ -1556,8 +1556,8 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 } else if (mSlideOffset == 0) {
                     setPanelStateInternal(PanelState.COLLAPSED);
                 } else if (mSlideOffset < 0) {
+                    mSlideableView.setVisibility(View.GONE);
                     setPanelStateInternal(PanelState.HIDDEN);
-                    mSlideableView.setVisibility(View.INVISIBLE);
                 } else {
                     if (mAnchorPoint != 1 && Math.abs(mSlideOffset - mAnchorPoint) <= mSlideOffsetSlop) {
                         mAnchorHeightExtraIndex = -1;
