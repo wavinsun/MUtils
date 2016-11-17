@@ -1,4 +1,4 @@
-package com.autonavi.widget.slidinguppanel;
+package com.sothree.slidinguppanel;
 
 /**
  * 定义滚动虚拟视图，用于获取滚动的XY坐标
